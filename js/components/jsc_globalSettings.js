@@ -159,7 +159,7 @@ class CLSS_GlobalSettings extends React.Component {
   var v_telemetryModes = [];
   
   v_gadgets.push (
-              <div className="row margin_zero">
+              <div key="1" className="row margin_zero">
                 <div className="col-xs-6 col-sm-6 col-lg-6">
                   <div className="form-inline">
                     <div className="form-group">
@@ -190,7 +190,7 @@ class CLSS_GlobalSettings extends React.Component {
   if (CONST_DISABLE_ADSG == false)
   {
     check_btns.push (
-      <div className="btn-group css_margin_top_small" role="group" >
+      <div key="check_btns" className="btn-group css_margin_top_small" role="group" >
         <label className="checkbox-inline">
 			  <input id="toggle_GCS"    type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> GCS
 				</label>
@@ -206,7 +206,7 @@ class CLSS_GlobalSettings extends React.Component {
   else
   {
     check_btns.push (
-      <div className="btn-group css_margin_top_small" role="group" >
+      <div key="check_btns" className="btn-group css_margin_top_small" role="group" >
         <label className="checkbox-inline">
 	  		<input id="toggle_GCS"    type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> GCS
 				</label>
@@ -220,13 +220,13 @@ class CLSS_GlobalSettings extends React.Component {
 
     v_uploadFile.push (
               <div key='v_uploadFile0' className="row width_100 margin_zero css_margin_top_small ">
-                <div key='v_uploadFile1' className={"col-12 " + tele}>
-                  <div key='v_uploadFile2' className="form-inline">
-                    <div key='v_uploadFile3' className="form-group">
-                      <div key='v_uploadFile4' >
+                <div  className={"col-12 " + tele}>
+                  <div className="form-inline">
+                    <div className="form-group">
+                      
                         <label htmlFor="btn_filesWP" className="text-primary"><small>Mission&nbsp;File</small></label>
                         <input type="file" id="btn_filesWP" name="file" className="form-control input-xs input-sm css_margin_left_5"/>
-                      </div>
+                      
                     </div>
                   </div>
                    {check_btns}
@@ -241,7 +241,7 @@ class CLSS_GlobalSettings extends React.Component {
     
   
   v_telemetryModes.push (
-            <div className="row css_margin_top_small">
+            <div  key="v_telemetryModes"  className="row css_margin_top_small">
                 <div className={"col-xs-12 col-sm-12 col-lg-12 " + tele}>
                   <p className = 'text-primary'>Smart Telemetry</p>
                   <div className="btn-group" role="group" aria-label="Basic example">
