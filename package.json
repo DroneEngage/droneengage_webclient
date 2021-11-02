@@ -1,0 +1,23 @@
+{
+  "name": "andruav_local_website",
+  "version": "1.0.17",
+  "description": "Client Web for Andruav",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "drone",
+    "pixhawk",
+    "uav"
+  ],
+  "bin": {
+    "andruavlocalweb": "server.js"
+  },
+  "author": "Mohammad Said Hefny - rcmobilestuff <rcmobilestuff@gmail.com> (http://www.andruav.com)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1"
+  }
+}

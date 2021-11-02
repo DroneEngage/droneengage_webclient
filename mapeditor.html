@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+    <title>Andruav Geo Fence Manager</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger.css">	
+	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger-theme-future.css">
+	<script src="./js/react/react.js"></script>
+    <script src="./js/react/react-dom.js"></script>
+    <script src="./js/react/browser.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/css_styles.css">	
+	<link rel="stylesheet" type="text/css" href="./css/css_styles2.css">	
+    <link rel="stylesheet" type="text/css" href="./css/css_mapeditor.css">	
+		
+
+	<script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-3.4.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/bootstrap.min.js"></script>
+
+    <script language="JavaScript" type="text/javascript" src="./js/js_dictionary.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_strings.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/js_helpers.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_globals.js"></script>
+  	<script language="JavaScript" type="text/javascript" src="./js/js_eventEmitter.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/js_localStorage.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_speak.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_commands.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/js_andruavAuth.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_andruavUnit.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_andruavclient2.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_mapmission.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_mapeditor.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/messenger/messenger.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/messenger/messenger-theme-future.js"></script> 
+	<script type="text/babel" src="./js/components/jsc_login.js"></script>
+ 	<script type="text/babel" src="./js/components/jsc_fenceControl.js"></script>
+	<script type="text/babel" src="./js/components/jsc_fenceGlobalSettings.js"></script>
+	<script type="text/babel" src="./js/components/jsc_missionItemsControl.js"></script>
+
+	<script language="JavaScript" type="text/javascript" src="./js/js_mappage.js"></script>
+
+
+     </head>
+  <body>
+	<div id="rowheader" class="row margin_zero">
+	<div id="header"></div>
+    </div>
+	  
+	<div class='container-fluid text-center' id='mainBody'>
+		  
+	  
+    <div id="row1" class="row margin_zero">
+                <div id="row12" class="col col-sm-6 col-md-8">
+                    <div id="displays" class="container-fluid localcontainer">
+                        <!--  Maps & Displays -->
+                        <div class="monitorview " id="map_view">
+                            <div class="monitorview" id="message_log" style='display:none;'>&nbsp;</div>
+                            <div id='geofence_map' class="org_border fullscreen"></div>
+                        </div>
+                    </div>
+   
+
+					<!-- Save Modal w Action -->
+					<div id="modal_saveConfirmation" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title bg-danger"><strong>Attention:</strong> Delete Operation.</h4>
+						</div>
+						<div class="modal-body">
+							<p>Are you sure you want to delete current active Geo-Fence and replace it with new ones ?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-muted" data-dismiss="modal">Cancel</button>
+							<button id="geo_btn_confirm" type="button" class="btn btn-danger" data-dismiss="modal">Submit</button>
+						</div>
+						</div>
+
+					</div>
+					</div> 
+				
+				
+					<!-- General Model -->
+					<div id="modal_AlertConfirmation" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 id='modal-title' class="modal-title text-danger">3enwan</h4>
+						</div>
+						<div class="modal-body">
+							<p>Mota2aked wala la2</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-muted" data-dismiss="modal">Cancel</button>
+						</div>
+						</div>
+
+					</div>
+					</div> 
+					</div>
+
+					
+					<div id="row11" class="col col-sm-6 col-md-4">
+								<div class="row">	
+									<div id="login_div" class='col  col-sm-12 container-fluid localcontainer'></div>
+								</div>
+
+								<div class="row">	
+									<div id="video_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
+									type="button" id="btn_missions" class="btn btn-success btn-xs button_large">Mission Plans</button><button
+									type="button" id="btn_geofences" class="btn btn-success btn-xs button_large">Geo Feces</button>
+									</div>
+								</div>
+								<div id="fenceControl_section" class="row">	
+									<div id="fenceControl" class='col  col-sm-12 container-fluid localcontainer'></div>
+								</div>
+								<div id="c_missioncontrol_section" class="row">	
+									<div id="c_missioncontrol" class='col  col-sm-12 container-fluid localcontainer'></div>
+								</div>
+								<div id="fence_global_section" class="row">	
+									<div id="fence_global" class='col  col-sm-12 container-fluid localcontainer'></div>
+								</div>
+					</div>
+		</div>
+    
+   
+   
+	
+	</div>
+   <div id="footer"></div>
+  </body>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&libraries=drawing&callback=initMap"></script>
+    <script> 
+		$(function(){
+			
+		  $("#header").load("header.html"); 
+		  $("#footer").load("footer.html"); 
+			
+		});
+	</script>  
+
+</html>

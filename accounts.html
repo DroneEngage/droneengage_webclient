@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">	
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <script language="JavaScript" type="text/javascript" src="./js/js_siteselector.js"></script>
+	      <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <script src="./js/react/react.js"></script>
+        <script src="./js/react/react-dom.js"></script>
+        <script src="./js/react/browser.min.js"></script>
+		    <script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-3.4.1.min.js"></script>
+		    <script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-ui.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./js/bootstrap.min.js"></script>
+		    <link rel="stylesheet" type="text/css" href="./js/jquery/jquery-ui.min.css">
+        <link rel="stylesheet" type="text/css" href="./css/css_styles.css">
+        <link rel="stylesheet" type="text/css" href="./css/css_styles2.css">
+        <script language="JavaScript" type="text/javascript" src="./js/js_dictionary.js"></script>
+	      <script language="JavaScript" type="text/javascript" src="./js/js_helpers.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./js/js_globals.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./js/js_eventEmitter.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./js/js_localStorage.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./js/js_andruavAuth.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./js/js_captcha.js"></script>
+        
+        <script type="text/babel" src="./js/components/jsc_cmp_login.js"></script>
+      
+
+</head>
+
+    <style>
+
+
+
+    </style>
+
+     <script type="text/javascript">
+    function gui_alert(title,message,level)
+		 {
+			 $('#alert #title').html(title);
+			 $('#alert #title').html(title);
+			 $('#alert #msg').html(message);
+			 $('#alert').removeClass();
+			 $('#alert').addClass('alert alert-' + level);
+			 $('#alert').show();
+		 }
+
+		 function gui_alert_hide()
+		 {
+			 $('#alert').hide();
+		 }
+
+
+    function fn_do_modal_confirmation (p_title,p_message,p_callback,p_yesCaption,p_style)
+    {
+        if (p_style == null)
+        {
+            p_style = "bg-success";
+        }
+        $('#modal_saveConfirmation').children().find('h4#title').html(p_title);
+        $('#modal_saveConfirmation').children().find('h4#title').removeClass();
+        $('#modal_saveConfirmation').children().find('h4#title').addClass("modal-title " + p_style);
+        $('#modal_saveConfirmation').children().find('div.modal-body p#conf').html(p_message);
+        $('#modal_saveConfirmation').children().find('div.modal-body p#res').html("");
+        $('#modal_saveConfirmation').children().find('button#geo_btn_confirm').off('click');
+        $('#modal_saveConfirmation').children().find('button#geo_btn_confirm').unbind("click");
+        $('#modal_saveConfirmation').children().find('button#geo_btn_confirm').click(p_callback);
+        if (p_yesCaption!= null)
+        {
+            $('#modal_saveConfirmation').children().find('button#geo_btn_confirm').html(p_yesCaption);
+        }
+        $('#modal_saveConfirmation').modal('show');
+
+       
+    }
+
+    function  fn_clickRegenerate () {
+			
+			window.AndruavLibs.LocalStorage.setEmail($('#txtEmail').val());
+			window.AndruavLibs.LocalStorage.setAccessCode($('#txtAccessCode').val());
+			
+			window.AndruavLibs.AndruavPermissions.fn_regenerateLoginAfterLogin($('#txtEmail').val(),$('#txtAccessCode').val());
+		}
+
+           
+
+       $(document).ready (function ()
+       {
+          //triggered when modal is about to be shown
+          $('#deletemodal').on('show.bs.modal', function(e) {
+
+              //get data-id attribute of the clicked element
+              var pwdid = $(e.relatedTarget).data('pwdid');
+
+              //populate the textbox
+              $(e.currentTarget).find('#Heading').text("Delete access code " + pwdid + "?" );
+              $(e.currentTarget).attr('pwdid',pwdid);
+          });
+
+          window.AndruavLibs.EventEmitter.fn_subscribe ( EE_Auth_Account_Created,  this, 
+          function (p_sender,p_msg)
+          {
+            var v_Message = "<p class='text-success'>Access Code Created Successfully.</p>";
+            if (p_msg.hasOwnProperty(CONST_ACCESS_CODE_PARAMETER.toString()  === true))
+            {
+              v_Message += "<p class='text-success'>Access Code: <strong>" + p_msg[CONST_ACCESS_CODE_PARAMETER.toString()] + "</strong></p>"
+              
+            }
+            $('#modal_saveConfirmation').children().find('div.modal-body p#res').html(v_Message);          
+          });
+          
+          window.AndruavLibs.EventEmitter.fn_subscribe ( EE_Auth_Account_Regenerated,  this, 
+          function (p_sender,p_msg)
+          {
+            var v_Message = "<p class='text-success'>New Access Code Created Successfully.</p>";
+            
+            $('#modal_saveConfirmation').children().find('div.modal-body p#res').html(v_Message);          
+          });
+          
+          
+          window.AndruavLibs.EventEmitter.fn_subscribe ( EE_Auth_Account_BAD_Operation,  this, 
+          function (p_sender,p_msg)
+          {
+            if (p_msg != null)
+            {
+              var v_Message = "<p class='text-danger'>Operation Failed: <strong>" + p_msg[CONST_ERROR_MSG.toString()]+ "</strong></p>";          
+              if (p_msg.hasOwnProperty(CONST_ACCESS_CODE_PARAMETER.toString())  === true)
+              {
+                v_Message += "<p class='text-success'>Access Code: <strong>" + p_msg[CONST_ACCESS_CODE_PARAMETER.toString()] + "</strong></p>"
+              
+              }
+
+              $('#modal_saveConfirmation').children().find('div.modal-body p#res').html(v_Message);
+
+            }
+            else
+            {
+              $('#modal_saveConfirmation').children().find('div.modal-body p#res').html("<p class='text-danger'>Operation Failed: <strong> Cannot Reach Server </strong></p>");          
+            }
+
+          });
+          
+
+        });
+        
+    </script>
+<body>
+     <div id="header"></div>
+
+
+
+
+
+
+<div id="modal_saveConfirmation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 id="title" class="modal-title bg-success"><strong>Attention:</strong> Delete Operation.</h4>
+        </div>
+        <div class="modal-body">
+            <p id="conf">XAre you?</p>
+            <div class='row'>
+              <div class='col-sm-6'>
+                <div class="capbox">
+                  <div id="CaptchaDiv"></div>
+      
+                  <div class="capbox-inner">
+                  Type the above number:<br/>
+      
+                  <input type="hidden" id="txtCaptcha"/>
+                  <input type="text" name="CaptchaInput" id="CaptchaInput" size="15"/><br/>
+                  <br/><br/>
+                  </div>
+                </div>
+              </div>
+              <div class='col-sm-6'>
+              <p id="res">XAre you?</p>
+              </div>  
+            </div>
+            
+        <div class="modal-footer">
+            <button type="button" class="btn btn-muted" data-dismiss="modal">Cancel</button>
+            <button id="geo_btn_confirm" type="button" class="btn btn-danger" >Submit</button>
+        </div>
+        </div>
+
+        </div>
+    </div>
+</div> 
+
+
+<div class="">
+  <div class="container">
+        <div class="row margin_zero container ">
+          <div id="loginCtrl" class=""></div>
+        </div>
+        <div class="row margin_zero container">
+          <div id="help" class="">
+            <h3 class="text-primary" >Quick Help</h3>
+           <ol>
+             <li> If you dont have Access-Code please download <a href="https://play.google.com/store/apps/details?id=rcmobile.FPV&amp;hl=en" target="blank">Andruav</a> and generate your Main Access Code using Andruav as in this <a href="https://youtu.be/sytNIby_Pe8" target="blank">video</a>.</li>
+             <li> You can generate access code easily from this webpage. You can also regenerate your access code i.e. change it.</li>
+             <li> Make sure you use a valid email as access code is sent to your email.</li>
+             <li> Remember to enter the new access code manually in all Andruav devices.</li>
+           </ol>
+        </div>
+           
+        </div>
+     
+  </div>
+  
+  
+    <div id="footer"></div>
+     
+</body>
+
+<script src="./js/js_main_last.js"></script>
+
+
+</html>
