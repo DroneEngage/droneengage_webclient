@@ -1812,14 +1812,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         if ((v_andruavUnit.m_IsShutdown == false) && (v_andruavUnit.m_Power._FCB.p_hasPowerInfo == true))
         {
             // add FCB battery
-            rows.push (<div  className= "col-xs-1 col-sm-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
-            rows.push (<div className= "col-xs-1 col-sm-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div  className= "col-xs-4 col-sm-4 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 }><strong>{v_andruavUnit.m_unitName + " "} </strong><span className={' si-07x ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div  key={id +"fc1"}className= "col-xs-1 col-sm-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
+            rows.push (<div  key={id +"fc2"} className= "col-xs-1 col-sm-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ></div>);
+            rows.push (<div  key={id +"fc3"} className= "col-xs-4 col-sm-4 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 }><strong>{v_andruavUnit.m_unitName + " "} </strong><span className={' si-07x ' + online_class}>{online_text}</span></p></div>);
         }
         else
         {
-            rows.push (<div className= "col-xs-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div className= "col-xs-4 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 }><strong>{v_andruavUnit.m_unitName + " "} </strong><span className={' si-07x ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div key={id +"fc4"} className= "col-xs-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ></div>);
+            rows.push (<div key={id +"fc5"} className= "col-xs-4 padding_zero"  onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 }><strong>{v_andruavUnit.m_unitName + " "} </strong><span className={' si-07x ' + online_class}>{online_text}</span></p></div>);
         }
 
      
@@ -1829,11 +1829,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
              <div  key={id +"1"} id={id} className={"row css_margin_zero IsGCS_" + v_andruavUnit.m_IsGCS + " IsShutdown_" + v_andruavUnit.m_IsShutdown}>
              <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero'>        	
-                <div className= 'col-xs-3  col-sm-1 padding_zero'><img className=' cursor_hand gcs IsGCS_false' src={getVehicleIcon(v_andruavUnit)}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)}/></div>
-                <div className= 'col-xs-3  col-sm-1 padding_zero'><img className={'cursor_hand ' + camera_class  } src={camera_src} title='take image from mobile' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
-                <div className= 'col-xs-3  col-sm-1 padding_zero'><img className={'cursor_hand ' + video_class   } src={video_src} title='stream video from mobile' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
-                <div className= 'col-xs-3  col-sm-1 padding_zero'><img className={'cursor_hand ' + recvideo_class} src={recvideo_src} title='record video on drone mobile' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
-                <div className= 'col-xs-3  col-sm-1 padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>
+                <div key={id +"__1"} className= 'col-xs-3  col-sm-1 padding_zero'><img className=' cursor_hand gcs IsGCS_false' src={getVehicleIcon(v_andruavUnit)}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit(e,v_andruavUnit.partyID)}/></div>
+                <div key={id +"__2"} className= 'col-xs-3  col-sm-1 padding_zero'><img className={'cursor_hand ' + camera_class  } src={camera_src} title='take image from mobile' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__3"} className= 'col-xs-3  col-sm-1 padding_zero'><img className={'cursor_hand ' + video_class   } src={video_src} title='stream video from mobile' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__4"} className= 'col-xs-3  col-sm-1 padding_zero'><img className={'cursor_hand ' + recvideo_class} src={recvideo_src} title='record video on drone mobile' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__5"} className= 'col-xs-3  col-sm-1 padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>
                 
                  {rows}
             </div>
