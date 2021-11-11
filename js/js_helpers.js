@@ -2,7 +2,7 @@
 
 
 const CONST_MeterToKnot 		= 0.539957;
-const CONST_KNOT_TO_KM_HOUR = 1.852; 
+const CONST_KNOT_TO_KM_HOUR     = 1.852; 
 const CONST_FEET_TO_METER 		= 0.30479999;
 const CONST_METER_TO_FEET 		= 3.28084;
 const CONST_METER_TO_MILE       = 2.23694;  //m/s to mph
@@ -13,21 +13,21 @@ const CONST_PTx2				= Math.PI * 2;
 
 
 const CONST_NETWORK_TYPE_UNKNOWN 	= 0;
-const CONST_NETWORK_TYPE_GPRS 	= 1;
-const CONST_NETWORK_TYPE_EDGE 	= 2;
-const CONST_NETWORK_TYPE_UMTS 	= 3; 
-const CONST_NETWORK_TYPE_CDMA 	= 4; 
+const CONST_NETWORK_TYPE_GPRS 	    = 1;
+const CONST_NETWORK_TYPE_EDGE 	    = 2;
+const CONST_NETWORK_TYPE_UMTS 	    = 3; 
+const CONST_NETWORK_TYPE_CDMA 	    = 4; 
 const CONST_NETWORK_TYPE_EVDO_0 	= 5;
 const CONST_NETWORK_TYPE_EVDO_A 	= 6;
-const CONST_NETWORK_TYPE_1xRTT 	= 7; 
-const CONST_NETWORK_TYPE_HSDPA 	= 8;  
-const CONST_NETWORK_TYPE_HSUPA 	= 9;  
-const CONST_NETWORK_TYPE_HSPA 	= 10; 
+const CONST_NETWORK_TYPE_1xRTT 	    = 7; 
+const CONST_NETWORK_TYPE_HSDPA 	    = 8;  
+const CONST_NETWORK_TYPE_HSUPA 	    = 9;  
+const CONST_NETWORK_TYPE_HSPA 	    = 10; 
 const CONST_NETWORK_TYPE_EVDO_B 	= 12;
-const CONST_NETWORK_TYPE_IDEN 	= 11;
+const CONST_NETWORK_TYPE_IDEN 	    = 11;
 const CONST_NETWORK_TYPE_LTE 		= 13;
-const CONST_NETWORK_TYPE_EHRPD 	= 14;
-const CONST_NETWORK_TYPE_HSPAP 	= 15;
+const CONST_NETWORK_TYPE_EHRPD 	    = 14;
+const CONST_NETWORK_TYPE_HSPAP 	    = 15;
 var v_NETWORK_TYPE = ['Unknown','GPRS','EDGE','UTMS','CDMA','U+','U+','Unknown','U+','H','H','H+','H+','LTE','EHRPD','HSPAP'];
 
 
@@ -184,6 +184,17 @@ function pad(num, size) {
     return s.substr(s.length-size);
 }
 
+function array_to_ArrayBuffer (p_array) 
+{
+    const len = p_array.length;
+    var buf = new ArrayBuffer(len);
+    var	bufView= new Uint8Array(buf);
+    for (var k=0; k<len; ++k) {
+        bufView[k] = p_array[k];
+    }
+
+    return buf;
+}
 
 function fn_Str2BinaryArray (str)
 {
@@ -406,7 +417,7 @@ function fn_saveData (fileURL, fileName) {
 
 
 
-function getOS() {
+function fn_getOS() {
     var userAgent = window.navigator.userAgent,
         platform = window.navigator.platform,
         macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],

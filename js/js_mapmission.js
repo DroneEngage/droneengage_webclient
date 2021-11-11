@@ -28,11 +28,11 @@ class CLSS_AndruavMissionPlan
 	}
 
 
-	fn_togglePath (p_map4)
+	fn_togglePath ()
 	{
 		if (this.m_hidden == true)
 		{
-			this.fn_showMarkers(p_map4);
+			this.fn_showMarkers();
 		}
 		else
 		{
@@ -40,7 +40,7 @@ class CLSS_AndruavMissionPlan
 		}
 	}
 
-	fn_showMarkers (v_map)
+	fn_showMarkers ()
 	{
 		const v_len =this.v_markers.length;
 		if (v_len ==0) return ;
@@ -48,11 +48,11 @@ class CLSS_AndruavMissionPlan
 		for (let i =0;i<v_len;++i)
 		{
 			let p_m = this.v_markers[i];
-			p_m.setMap(v_map);
+			window.AndruavLibs.AndruavMap.fn_showItem(p_m);
 
 			if (p_m.m_next != null)
 			{
-				p_m.m_next.setMap (v_map);
+				window.AndruavLibs.AndruavMap.fn_showItem(p_m.m_next);
 			}
 		}
 
@@ -71,12 +71,14 @@ class CLSS_AndruavMissionPlan
 
 		for (let i =0;i<v_len;++i)
 		{
+			
 			let p_m = this.v_markers[i];
-			p_m.setMap(null);
+			// delete marker
+			window.AndruavLibs.AndruavMap.fn_hideItem(p_m);
 
 			if (p_m.m_next != null)
-			{
-				p_m.m_next.setMap (null);
+			{	// delete line
+				window.AndruavLibs.AndruavMap.fn_hideItem(p_m.m_next);
 			}
 
 		}
@@ -89,13 +91,13 @@ class CLSS_AndruavMissionPlan
 	{
 		if (marker.m_next != null)
 		{
-			marker.m_next.setMap (null);
+			window.AndruavLibs.AndruavMap.fn_hideItem(marker.m_next);
 		}
 		marker.m_next 	= undefined;
 		marker.distance = undefined;
 	};
 
-	fn_DrawStyle (v_color)
+	fn_drawStyle (v_color)
 	{
 		if (v_color == null)  
 		{
@@ -105,6 +107,11 @@ class CLSS_AndruavMissionPlan
 		this.m_pathColor = v_color;
 	}
 
+	/**
+	 * Draws path between markers
+	 * @param {*} v_enforceRedraw 
+	 * @returns 
+	 */
 	fn_updatePath (v_enforceRedraw) 
 	{
 		if (this.m_hidden) return ;
@@ -139,30 +146,36 @@ class CLSS_AndruavMissionPlan
 			
 			if (marker.m_next == null)
 			{
-				var arrowCoordinates = [
-							marker.getPosition(),
-							this.v_markers[i+1].getPosition()	
-						];
+				var arrowCoordinates = {
+							'from_pos': marker.getLatLng(),
+							'to_pos': this.v_markers[i+1].getLatLng()	
+				};
 
-				var distance = fn_calcDistance(marker.getPosition().lat(),marker.getPosition().lng(),
-				this.v_markers[i+1].getPosition().lat(),this.v_markers[i+1].getPosition().lng())
+				var distance = fn_calcDistance(arrowCoordinates.from_pos.lat, arrowCoordinates.from_pos.lng,
+					arrowCoordinates.to_pos.lat, arrowCoordinates.to_pos.lng);
 						
 				marker.distance = distance;
-						
-				marker.m_next = new google.maps.Polyline({
-							path: arrowCoordinates,
-							geodesic: true,
-							strokeColor: this.m_pathColor,
-							strokeOpacity: 8.0,
-							strokeWeight: this.v_highLight?2:1,
-							icons: [{
-									icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW},
-									offset: '100%'
-								}]
-							});
-				marker.setDraggable (this.v_highLight);
+				marker.m_next = window.AndruavLibs.AndruavMap.fn_DrawPath (arrowCoordinates.from_pos.lat, arrowCoordinates.from_pos.lng,
+					arrowCoordinates.to_pos.lat, arrowCoordinates.to_pos.lng,
+					{
+						color: this.m_pathColor,
+						opacity: 0.8,
+						weight: 4
+					});
+				// marker.m_next = new google.maps.Polyline({
+				// 			path: arrowCoordinates,
+				// 			geodesic: true,
+				// 			strokeColor: this.m_pathColor,
+				// 			strokeOpacity: 8.0,
+				// 			strokeWeight: this.v_highLight?2:1,
+				// 			icons: [{
+				// 					icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW},
+				// 					offset: '100%'
+				// 				}]
+				// 			});
+				//marker.setDraggable (this.v_highLight);
 
-				marker.m_next.setMap(window.v_map);
+				//marker.m_next.setMap(window.v_map);
 			}
 		}
 	}
@@ -196,7 +209,8 @@ class CLSS_AndruavMissionPlan
 		p_marker.order = 99;
 		p_marker.m_missionItem = {
 			alt:30,
-			missionType:CONST_WayPoint_TYPE_WAYPOINTSTEP,
+			m_missionType:CONST_WayPoint_TYPE_WAYPOINTSTEP,
+			m_frameType: mavlink20.MAV_FRAME_GLOBAL_RELATIVE_ALT,
 			m_speedRequired: false,
 			speed: 5,  // m/s
 			m_yawRequired: false,
@@ -208,10 +222,7 @@ class CLSS_AndruavMissionPlan
 		this.fn_orderItems();
 		this.fn_updatePath();
 
-		google.maps.event.addListener(p_marker, 'dragend', function(ev){
-			this.m_mission.fn_updatePath(true);
-        });
-                
+		   
         window.AndruavLibs.EventEmitter.fn_dispatch(EE_mapMissionUpdate,{mission:this});
 				
 	};
@@ -228,10 +239,10 @@ class CLSS_AndruavMissionPlan
 			if (this.v_markers[i].id == marker.id)
 			{
 				this.v_markers.splice(i,1);
-				marker.setMap(null);
+				window.AndruavLibs.AndruavMap.fn_hideItem(marker);
 				if (marker.m_next != null)
 				{	
-					marker.m_next.setMap(null);
+					window.AndruavLibs.AndruavMap.fn_hideItem(marker.m_next);
 					marker.m_next = undefined;
 					marker.distance = undefined;
 				}
@@ -260,11 +271,11 @@ class CLSS_AndruavMissionPlan
 			marker.m_mission = null;
 			if (marker.m_next != null)
 			{
-				marker.m_next.setMap(null); 
+				window.AndruavLibs.AndruavMap.fn_hideItem(marker.m_next);
 			}
 			
-			marker.setMap(null);
-			marker.EVT_onShapeDeleted(marker);
+			window.AndruavLibs.AndruavMap.fn_hideItem(marker);
+			//marker.EVT_onShapeDeleted(marker);
 		}
 
         this.v_markers = [];
@@ -305,24 +316,22 @@ class CLSS_AndruavMissionPlan
 
 	
 
-	fn_exportToJSONAndruav (p_PartyID)
+	fn_exportToJSONAndruav (p_missionV110, p_PartyID)
 	{
 		if (this.v_markers.length ==0)	 return;
 		
-		var v_cmd = CLSS_AndruavResala_WayPoints.fn_toJSON(this.v_markers);
+		// var v_cmd = CLSS_AndruavResala_WayPoints.fn_toJSON(this.v_markers);
 		
 		// Delete Old Shapes
-		if (v_cmd != null)
+		if (p_missionV110 != null)
 		{
 			if ((v_andruavClient != null) && (v_andruavClient.fn_isRegistered()==true))
 			{
 				v_andruavClient.API_requestDeleteWayPoint(p_PartyID,null); // deattach drones from all fences in the group
-				v_andruavClient.API_disableWayPointTasks(window.AndruavLibs.AndruavAuth.username,v_andruavClient.m_groupName,p_PartyID,'_drone_',1);
-				v_andruavClient.API_saveWayPointTasks(window.AndruavLibs.AndruavAuth.username,v_andruavClient.m_groupName,p_PartyID,'_drone_',1,v_cmd);
+				v_andruavClient.API_disableWayPointTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,p_PartyID,'_drone_',1);
+				v_andruavClient.API_saveWayPointTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,p_PartyID,'_drone_',1,p_missionV110);
 			}
 		}
-		
-		fn_console_log (JSON.stringify(v_cmd));
 	};
 
 	/**
@@ -334,11 +343,12 @@ class CLSS_AndruavMissionPlan
 		var missionCounter=0;
 		var missionSteps = [];
 				
-		var fn_addMissionItem = function (cmd,paramsArray)
+		var fn_addMissionItem = function (marker, cmd,m_paramsArray)
 		{
 			step = {};
 			step.cmd = cmd;
-			step.paramsArray = paramsArray;
+			step.m_frameType = marker.m_missionItem.m_frameType;
+			step.m_paramsArray = m_paramsArray;
 			missionSteps.push (step);
 		}
 
@@ -349,63 +359,67 @@ class CLSS_AndruavMissionPlan
 			var marker = this.v_markers[i];
 			var step={};
 			var nextstep = {};
-			switch (marker.m_missionItem.missionType)
+			switch (marker.m_missionItem.m_missionType)
 			{
 				case CONST_WayPoint_TYPE_WAYPOINTSTEP:
-					fn_addMissionItem(16,[0,5,0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
+					fn_addMissionItem(marker,16,[0,5,0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
 							
 					/*step.id = missionCounter;
 						step.cmd = 16;
+						step.frameType =e.g. mavlink20.MAV_FRAME_GLOBAL_RELATIVE_ALT;
 						step.param1 = 0; // Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
 						step.param2 = 5; // Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)
 						step.param3 = 0; // 0 to pass through the WP, if > 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.
 						step.param4 = 0.0; 
-						step.param5 = marker.getPosition().lat();
-						step.param6 = marker.getPosition().lng();
+						step.param5 = marker.getLatLng().lat;
+						step.param6 = marker.getLatLng().lng;
 						step.param7 = marker.m_missionItem.alt;
 					*/
 					break;
 				case CONST_WayPoint_TYPE_EKLA3:
-					fn_addMissionItem(22,[0.0,0.0,0.0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
-					fn_addMissionItem(16,[0,5,0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
+					fn_addMissionItem(marker,22,[0.0,0.0,0.0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
+					fn_addMissionItem(marker,16,[0,5,0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
 							
 					/*step.id = missionCounter;
 						step.cmd = 22;
+						step.frameType =e.g. mavlink20.MAV_FRAME_GLOBAL_RELATIVE_ALT;
 						step.param1 = 0.0;
 						step.param2 = 0.0;
 						step.param3 = 0.0;
 						step.param4 = 0.0;
-						step.param5 = marker.getPosition().lat();
-						step.param6 = marker.getPosition().lng();
+						step.param5 = marker.getLatLng().lat;
+						step.param6 = marker.getLatLng().lng;
 						step.param7 = marker.m_missionItem.alt;
 					*/
 					break;
 				case CONST_WayPoint_TYPE_HOBOOT:
-					fn_addMissionItem(21,[0.0,0.0,0.0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
+					fn_addMissionItem(marker,21,[0.0,0.0,0.0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
 					
 					/*step.id = missionCounter;
 						step.cmd = 21;
+						step.frameType =e.g. mavlink20.MAV_FRAME_GLOBAL_RELATIVE_ALT;
 						step.param1 = 0.0;
 						step.param2 = 0.0;
 						step.param3 = 0.0;
 						step.param4 = 0.0;
-						step.param5 = marker.getPosition().lat();
-						step.param6 = marker.getPosition().lng();
+						step.param5 = marker.getLatLng().lat;
+						step.param6 = marker.getLatLng().lng;
 						step.param7 = marker.m_missionItem.alt;
 					*/
 					break;
 				case CONST_WayPoint_TYPE_RTL:
-					fn_addMissionItem(16,[0,5,0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
-					fn_addMissionItem(20,[0,0,0.0,0.0,0.0,0.0,0.0]);
+					fn_addMissionItem(marker,16,[0,5,0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
+					fn_addMissionItem(marker,20,[0,0,0.0,0.0,0.0,0.0,0.0]);
 							
 					/*step.id = missionCounter;
 						step.cmd = 16;
+						step.frameType =e.g. mavlink20.MAV_FRAME_GLOBAL_RELATIVE_ALT;
 						step.param1 = 0; // Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)
 						step.param2 = 5; // Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)
 						step.param3 = 0; // 0 to pass through the WP, if > 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.
 						step.param4 = 0.0; 
-						step.param5 = marker.getPosition().lat();
-						step.param6 = marker.getPosition().lng();
+						step.param5 = marker.getLatLng().lat;
+						step.param6 = marker.getLatLng().lng;
 						step.param7 = marker.m_missionItem.alt;
 
 						nextstep.id = missionCounter;
@@ -444,11 +458,14 @@ class CLSS_AndruavMissionPlan
 					Mission Param #7	Empty
 				*/
 				
-				fn_addMissionItem(178,[1,
+				fn_addMissionItem(marker,178,[1,
 					marker.m_missionItem.speed,
 					1,
 					0.0,
-					0,0,0]);
+					0,
+					0,
+					0,
+					0]);
 						
 			}
 
@@ -466,11 +483,80 @@ class CLSS_AndruavMissionPlan
 					Mission Param #7	Empty
 				*/
 
-				fn_addMissionItem(115,[0,
+				fn_addMissionItem(marker,115,[
 					marker.m_missionItem.yaw, // param1
 					0, // defalt speed [AUTO_YAW_SLEW_RATE]
 					0, // direction is not effectve in absolute degree
 					0, // absolute heading
+					0,
+					0,
+					0]);
+							
+			}
+
+			if (marker.m_missionItem.eventFireRequired == true)
+			{
+				// fire event will use servo (16) as default or other suitable servo channel.
+				/*
+					MAV_CMD_DO_SET_SERVO	Set a servo to a desired PWM value.
+					Mission Param #1	Servo instance number.
+					Mission Param #2	Pulse Width Modulation.
+					Mission Param #3	Empty
+					Mission Param #4	Empty
+					Mission Param #5	Empty
+					Mission Param #6	Empty
+					Mission Param #7	Empty
+				*/
+
+				fn_addMissionItem(marker,183,[16,
+					marker.m_missionItem.eventFire,	// param1
+					0, // param2
+					0, 
+					0, 
+					0,
+					0]);
+							
+			}
+
+			if (marker.m_missionItem.eventWaitRequired == true)
+			{
+				// wait event will use servo (15) as default or other suitable servo channel.
+				/*
+					MAV_CMD_DO_SET_SERVO	183 Set a servo to a desired PWM value.
+					Mission Param #1	Servo instance number.
+					Mission Param #2	Pulse Width Modulation.
+					Mission Param #3	Empty
+					Mission Param #4	Empty
+					Mission Param #5	Empty
+					Mission Param #6	Empty
+					Mission Param #7	Empty
+				*/
+
+				fn_addMissionItem(marker,183,[15, 
+					marker.m_missionItem.eventWait, // param1
+					0, // param2
+					0, 
+					0, 
+					0,
+					0]);
+
+				// then insert MAV_CMD_NAV_DELAY 
+				/*
+					MAV_CMD_NAV_DELAY	93 Delay the next navigation command a number of seconds or until a specified time
+					1: Delay	Delay (-1 to enable time-of-day fields)	min: -1 increment:1	s
+					2: Hour	hour (24h format, UTC, -1 to ignore)	min: -1 max:23 increment:1	
+					3: Minute	minute (24h format, UTC, -1 to ignore)	min: -1 max:59 increment:1	
+					4: Second	second (24h format, UTC, -1 to ignore)	min: -1 max:59 increment:1	
+					5	Empty		
+					6	Empty		
+					7	Empty
+				*/
+				
+				fn_addMissionItem(marker,93,[0,
+					1, 							// param1
+					0, 							// param2
+					0, 
+					0, 
 					0,0]);
 							
 			}
@@ -482,11 +568,11 @@ class CLSS_AndruavMissionPlan
 		{
 			step = missionSteps[j];
 			var startWith = j>0?0:1;
-			var line = j +"\t" + startWith + "\t0\t" + step.cmd + "\t";
+			var line = j +"\t" + startWith + "\t"+ step.m_frameType+  "\t" + step.cmd + "\t";
 					
 			for (var k =0;k< 7; ++ k)
 			{
-				line += step.paramsArray[k] + "\t";
+				line += step.m_paramsArray[k] + "\t";
 			}
 
 			line += "1\r\n";
@@ -495,9 +581,7 @@ class CLSS_AndruavMissionPlan
 						
 		}
 				
-		fn_saveAs (MissionText,"Mission" + Date.now() + ".txt","text/plain;charset=utf-8");
-
-		return ;
+		return MissionText;
 	};
 	 
 }

@@ -1,8 +1,6 @@
 	$(function () {
-		
-		$("#header").load("header.html");
-		$("#footer").load("footer.html");
-		$('head').append('<link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />');
-		$(document).prop('title','Andruav Web Client');
-		
+		$("#header").load("header_de.html");
+			$("#footer").load("footer_de.html");
+			$('head').append('<link href="./images/de/favicon.ico" rel="shortcut icon" type="image/x-icon" />');
+			$(document).prop('title', 'DRONE ENGAGE Web Client');
 	});

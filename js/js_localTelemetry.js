@@ -17,20 +17,18 @@
 
 /*jshint esversion: 6 */
 
-_localTelemetry.prototype.fn_onWebSocketOpened     = function (e) { };
-_localTelemetry.prototype.fn_onWebSocketError      = function (e) { };
-_localTelemetry.prototype.fn_onError               = function (e) { };
-_localTelemetry.prototype.fn_onPacketReceived      = function (data) { };
-
-
-function _localTelemetry()
+class CLocalTelemetry
 {
-	var Me = this;
-	this.m_WebSocket  = null;
-	this.m_isConnected = false;
 
-    this.fn_init =  function init (callback)
+	constructor()
+	{
+		this.m_WebSocket  = null;
+		this.m_isConnected = false;
+	}
+
+	fn_init (callback)
     {
+		var Me = this;
 		if (this.m_WebSocket != null)
 		{
 			this.m_WebSocket.close()
@@ -69,26 +67,44 @@ function _localTelemetry()
 		}
     };
 
-	//this.init();
+	
+	fn_onWebSocketOpened  (e) {};
+	fn_onWebSocketError   (e) {};
+	fn_onError (e) {};
+	fn_onPacketReceived  (e) {};
 
-}
 
-_localTelemetry.prototype.fn_send = function (p_data, p_isbinary)
-{
-	try
+	fn_send (p_data, p_isbinary)
 	{
-		if (this.m_WebSocket.readyState != 1) 
+		try
 		{
-			this.fn_onError (null);
-			return;
+			if (this.m_WebSocket.readyState != 1) 
+			{
+				this.fn_onError (null);
+				return;
+			}
+			this.m_WebSocket.send (p_data, {binary: p_isbinary});
 		}
-		this.m_WebSocket.send (p_data, {binary: p_isbinary});
+		catch (e)
+		{	
+			this.fn_onError(e);	
+		}
 	}
-	catch (e)
-	{	
-		this.fn_onError(e);	
-	}
+
 }
 
 
-var LocalTelemetry = new _localTelemetry();
+/*jshint esversion: 6 */
+window.AndruavLibs = window.AndruavLibs || {REVISION: 'BETA' };
+
+(function(lib) {
+	"use strict";
+	if (typeof module === "undefined" || typeof module.exports === "undefined") {
+	  window.AndruavLibs.LocalTelemetry = lib; // in ordinary browser attach library to window
+	} else {
+	  module.exports = lib; // in nodejs
+	}
+  })(new CLocalTelemetry());
+  
+  
+

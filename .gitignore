@@ -1,4 +1,5 @@
 node_modules/*
 ssl-keys/*
 ssl-keys/*.*
-package-json.json
+ssl/
+package-lock.json
