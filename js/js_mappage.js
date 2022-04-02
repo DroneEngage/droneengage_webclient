@@ -116,68 +116,68 @@ var QueryString = function () {
 				const CONST_SOCKET_STATUS_UNREGISTERED 	=		7;   // connected but not registred
 				const CONST_SOCKET_STATUS_ERROR 		    =		8;   // Error
 
-				SOCKET_STATUS = ['Fresh','Connecting','Disconnecting','Disconnected','Connected','Registered','Error'];
+				c_SOCKET_STATUS = ['Fresh','Connecting','Disconnecting','Disconnected','Connected','Registered','Error'];
 				
-				param status: index of status in SOCKET_STATUS
+				param status: index of status in c_SOCKET_STATUS
 				param name: string name of status
 		 */
-	function fn_onSocketStatus (status,name)
-	{
-		window.AndruavLibs.EventEmitter.fn_dispatch(EE_onSocketStatus,{status:status,name:name});
-		counter +=1;
-		$('#message_log').append("<div class=\"log_ctrl\">" + counter + "- Socket Status:" + name + "</div>");
+	// function fn_onSocketStatus (status,name)
+	// {
+	// 	window.AndruavLibs.EventEmitter.fn_dispatch(EE_onSocketStatus,{status:status,name:name});
+	// 	counter +=1;
+	// 	$('#message_log').append("<div class=\"log_ctrl\">" + counter + "- Socket Status:" + name + "</div>");
 		
-		if (status == CONST_SOCKET_STATUS_REGISTERED)
-		{
-			//v_SpeakEngine.fn_speak ('Connected');
-			window.AndruavLibs.GoogleDraw.deleteAllShapes();
-			v_andruavClient.API_loadGeoFence (window.AndruavLibs.AndruavAuth.username,v_andruavClient.m_groupName,null,'_drone_',1);
+	// 	if (status == CONST_SOCKET_STATUS_REGISTERED)
+	// 	{
+	// 		//v_SpeakEngine.fn_speak ('Connected');
+	// 		window.AndruavLibs.GoogleDraw.deleteAllShapes();
+	// 		v_andruavClient.API_loadGeoFence (window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1);
 
-		}
+	// 	}
 		
-	}
+	// }
 	
-	function EVT_onOpen()
-	{
+	// function EVT_onOpen()
+	// {
 		
-		$('#andruavUnitGlobals').show();
+	// 	$('#andruavUnitGlobals').show();
 				
-		v_connectState = true;
-		v_connectRetries =0;
+	// 	v_connectState = true;
+	// 	v_connectRetries =0;
 
-		//$('#geo_main').show();
-	}
+	// 	//$('#geo_main').show();
+	// }
 	
 	
-	function EVT_onClose ()
-	{
-		//$('#geo_main').hide();
+	// function EVT_onClose ()
+	// {
+	// 	//$('#geo_main').hide();
 
-		counter +=1;
-		$('#message_log').append("<div class='log_ctrl'>" + counter + "- Connection Closed</div>");
+	// 	counter +=1;
+	// 	$('#message_log').append("<div class='log_ctrl'>" + counter + "- Connection Closed</div>");
 
 
-		if (v_andruavClient != null)
-		{
-			v_andruavClient.fn_disconnect();
-			v_andruavClient = null;
-		}
+	// 	if (v_andruavClient != null)
+	// 	{
+	// 		v_andruavClient.fn_disconnect();
+	// 		v_andruavClient = null;
+	// 	}
 				
-		if (v_connectState == true)
-		{
-			v_connectRetries = v_connectRetries + 1;
-			if (v_connectRetries >= 5)
-			{
-				v_SpeakEngine.fn_speak (CONST_Global_resources.en[8]);
-			}
+	// 	if (v_connectState == true)
+	// 	{
+	// 		v_connectRetries = v_connectRetries + 1;
+	// 		if (v_connectRetries >= 5)
+	// 		{
+	// 			v_SpeakEngine.fn_speak (CONST_Global_resources.en[8]);
+	// 		}
 			
-			setTimeout(fn_connect, 4000);
-		}
-		else
-		{
-			v_SpeakEngine.fn_speak (CONST_Global_resources.en[8]);
-		}
-	}
+	// 		setTimeout(fn_connect, 4000);
+	// 	}
+	// 	else
+	// 	{
+	// 		v_SpeakEngine.fn_speak (CONST_Global_resources.en[8]);
+	// 	}
+	// }
 
 
 	// var EVT_msgFromUnit_WayPointsUpdated = function (andruavUnit,missionIndexReached, status)
@@ -451,106 +451,107 @@ var QueryString = function () {
 	function fn_deleteShapesinDB()
 	{
 		window.AndruavLibs.GoogleDraw.deleteAllShapes();
-		v_andruavClient.API_disableGeoFenceTasks(window.AndruavLibs.AndruavAuth.username,v_andruavClient.m_groupName,null,'_drone_',1);
+		v_andruavClient.API_disableGeoFenceTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1);
 		
 		v_andruavClient.API_requestDeleteGeoFences(null,null); // deattach drones from all fences in the group
 		setTimeout (function ()
 			{
 				// because it can take time to update database so an early relead in vehicle will be false.
-					v_andruavClient.API_requestReloadLocalGroupGeoFenceTasks (null);
+				v_andruavClient.API_requestReloadLocalGroupGeoFenceTasks (null);
 			}, 3000);
 	}
 	
-	function fn_submitShapes () {
-			var cmdtxt = "";
-			var cmds=[];
+	
+	// function fn_submitShapes () {
+	// 		var cmdtxt = "";
+	// 		var cmds=[];
 			
 			
-			// validate Shapes Data - 1
-			if (window.AndruavLibs.GoogleDraw.getShapesCounts() == 0 ) return ;
-			// validate Shapes Data - 2 
-			window.AndruavLibs.GoogleDraw.getShapes ( function (shape) 
-			{
-				if (shape.geofenceInfo == null) 
-					{
-						window.AndruavLibs.GoogleDraw.fn_setShapeColor(shape,'#FF8C00');
-						fn_do_modal('Missing Information','Please enter missing fence data.');
-						return ;  // shape is not configured
-					}
-			});
+	// 		// validate Shapes Data - 1
+	// 		if (window.AndruavLibs.GoogleDraw.getShapesCounts() == 0 ) return ;
+	// 		// validate Shapes Data - 2 
+	// 		window.AndruavLibs.GoogleDraw.getShapes ( function (shape) 
+	// 		{
+	// 			if (shape.m_geofenceInfo == null) 
+	// 				{
+	// 					window.AndruavLibs.GoogleDraw.fn_setShapeColor(shape,'#FF8C00');
+	// 					fn_do_modal('Missing Information','Please enter missing fence data.');
+	// 					return ;  // shape is not configured
+	// 				}
+	// 		});
 			
-			// Delete Old Shapes
-			v_andruavClient.API_requestDeleteGeoFences(null,null); // deattach drones from all fences in the group
-			v_andruavClient.API_disableGeoFenceTasks(window.AndruavLibs.AndruavAuth.username,v_andruavClient.m_groupName,null,'_drone_',1);
+	// 		// Delete Old Shapes
+	// 		v_andruavClient.API_requestDeleteGeoFences(null,null); // deattach drones from all fences in the group
+	// 		v_andruavClient.API_disableGeoFenceTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1);
 						
-			window.AndruavLibs.GoogleDraw.getShapes ( function (shape) 
-				{
-					var cmd={};
-					if (!shape.valid) 
-					{
-						window.AndruavLibs.GoogleDraw.fn_setShapeColor(shape,'#FF8C00');
-						return ;  // shape is not configured
-					}
+	// 		window.AndruavLibs.GoogleDraw.getShapes ( function (shape) 
+	// 			{
+	// 				var cmd={};
+	// 				if (!shape.valid) 
+	// 				{
+	// 					window.AndruavLibs.GoogleDraw.fn_setShapeColor(shape,'#FF8C00');
+	// 					return ;  // shape is not configured
+	// 				}
 					
-					cmd.n = shape.geofenceInfo.geoFenceName;
-					//cmd.h = shape.geofenceInfo.isHardFence>0?true:false;
-					//cmd.i = shape.geofenceInfo.isHardFence;
-					cmd.a = shape.geofenceInfo.isHardFence;
-					cmd.o = shape.geofenceInfo.shouldKeepOutside?1:0;
-					cmd.r = shape.geofenceInfo.maximumDistance;
-					switch (shape.shapetype)
-					{
-						case google.maps.drawing.OverlayType.MARKER:
-						break;
+	// 				cmd.n = shape.m_geofenceInfo.m_geoFenceName;
+	// 				//cmd.h = shape.m_geofenceInfo.isHardFence>0?true:false;
+	// 				//cmd.i = shape.m_geofenceInfo.isHardFence;
+	// 				cmd.a = shape.m_geofenceInfo.isHardFence;
+	// 				cmd.o = shape.m_geofenceInfo.m_shouldKeepOutside?1:0;
+	// 				cmd.r = shape.m_geofenceInfo.m_maximumDistance;
+	// 				switch (shape.shapetype)
+	// 				{
+	// 					case google.maps.drawing.OverlayType.MARKER:
+	// 					break;
 						
-						case google.maps.drawing.OverlayType.POLYGON:
-						case google.maps.drawing.OverlayType.RECTANGLE:
-							cmd.t = FENCETYPE_PolygonFence;
-							for (var i=0; i<shape.latlngArray.length;++i)
-							{
-								var lnglat = {};
-								lnglat.a = shape.latlngArray[i].lat;
-								lnglat.g = shape.latlngArray[i].lng;
-								cmd[i] = lnglat;
-							}
-							cmd.c = shape.latlngArray.length;
-						break;
+	// 					case google.maps.drawing.OverlayType.POLYGON:
+	// 					case google.maps.drawing.OverlayType.RECTANGLE:
+	// 						cmd.t = FENCETYPE_PolygonFence;
+	// 						for (var i=0; i<shape.latlngArray.length;++i)
+	// 						{
+	// 							var lnglat = {};
+	// 							lnglat.a = shape.latlngArray[i].lat;
+	// 							lnglat.g = shape.latlngArray[i].lng;
+	// 							cmd[i] = lnglat;
+	// 						}
+	// 						cmd.c = shape.latlngArray.length;
+	// 					break;
 						
-						case google.maps.drawing.OverlayType.POLYLINE:
-							cmd.t = FENCETYPE_LinearFence;
-							for (var i=0; i<shape.latlngArray.length;++i)
-							{
-								var lnglat = {};
-								lnglat.a = shape.latlngArray[i].lat;
-								lnglat.g = shape.latlngArray[i].lng;
-								cmd[i] = lnglat;
-							}
-							cmd.c = shape.latlngArray.length;
-						break;
-						case google.maps.drawing.OverlayType.CIRCLE:
-							cmd.t = FENCETYPE_CylindersFence;
+	// 					case google.maps.drawing.OverlayType.POLYLINE:
+	// 						cmd.t = FENCETYPE_LinearFence;
+	// 						for (var i=0; i<shape.latlngArray.length;++i)
+	// 						{
+	// 							var lnglat = {};
+	// 							lnglat.a = shape.latlngArray[i].lat;
+	// 							lnglat.g = shape.latlngArray[i].lng;
+	// 							cmd[i] = lnglat;
+	// 						}
+	// 						cmd.c = shape.latlngArray.length;
+	// 					break;
+	// 					case google.maps.drawing.OverlayType.CIRCLE:
+	// 						cmd.t = FENCETYPE_CylindersFence;
 							
-							var lnglat = {};
-							lnglat.a = shape.centerlatlng.lat;
-							lnglat.g = shape.centerlatlng.lng;
-							cmd["0"] = lnglat;
-							cmd.c=1;
-						break;
-					}
-					if ((v_andruavClient != null) && (v_andruavClient.fn_isRegistered()==true))
-					{
-						v_andruavClient.API_saveGeoFenceTasks(window.AndruavLibs.AndruavAuth.username,v_andruavClient.m_groupName,null,'_drone_',1,cmd);
-					}
-					cmds.push (cmd);
-					cmdtxt = cmdtxt + JSON.stringify(cmd);
-					//$('#geo_msg').val(cmdtxt);
-				});
+	// 						var lnglat = {};
+	// 						lnglat.a = shape.centerlatlng.lat;
+	// 						lnglat.g = shape.centerlatlng.lng;
+	// 						cmd["0"] = lnglat;
+	// 						cmd.c=1;
+	// 					break;
+	// 				}
+	// 				if ((v_andruavClient != null) && (v_andruavClient.fn_isRegistered()==true))
+	// 				{
+	// 					v_andruavClient.API_saveGeoFenceTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1,cmd);
+	// 				}
+	// 				cmds.push (cmd);
+	// 				cmdtxt = cmdtxt + JSON.stringify(cmd);
+	// 				//$('#geo_msg').val(cmdtxt);
+	// 			});
 				
-				setTimeout (function ()
-						{
-							v_andruavClient.API_requestReloadLocalGroupGeoFenceTasks (null);
-						}, 3000);
-		}
+	// 			setTimeout (function ()
+	// 					{
+	// 						v_andruavClient.API_requestReloadLocalGroupGeoFenceTasks (null);
+	// 					}, 3000);
+	// 	}
 		
 		
 	
@@ -577,14 +578,14 @@ var QueryString = function () {
 					   var geoFence = new google.maps.Polyline({
 							path: p_geoFenceInfo.LngLatPoints,
 							geodesic: true,
-							strokeColor: p_geoFenceInfo.shouldKeepOutside==false?'#32CD32':'#FF1493',  
+							strokeColor: p_geoFenceInfo.m_shouldKeepOutside==false?'#32CD32':'#FF1493',  
 							strokeOpacity: 0.6,
 							strokeWeight: 5,
 							fillOpacity: 0.6,
 							});
 							
 							
-							geoFence.geofenceInfo= p_geoFenceInfo;
+							geoFence.m_geofenceInfo= p_geoFenceInfo;
 							geoFence.latlngArray = p_geoFenceInfo.LngLatPoints; 
 							geoFence.setEditable (true);
 							geoFence.setDraggable (true);
@@ -601,15 +602,15 @@ var QueryString = function () {
 						var geoFence = new google.maps.Polygon({
 							path: p_geoFenceInfo.LngLatPoints,
 							geodesic: true,
-							fillColor: p_geoFenceInfo.shouldKeepOutside==false?'#32CD32':'#FF1493',
-							strokeColor: p_geoFenceInfo.shouldKeepOutside==false?'#FFFFFF':'#FFFFFF',
+							fillColor: p_geoFenceInfo.m_shouldKeepOutside==false?'#32CD32':'#FF1493',
+							strokeColor: p_geoFenceInfo.m_shouldKeepOutside==false?'#FFFFFF':'#FFFFFF',
 							strokeOpacity: 0.8,
 							strokeWeight: 2,
 							fillOpacity: 0.6,
 							});
 							
 							
-							geoFence.geofenceInfo= p_geoFenceInfo;
+							geoFence.m_geofenceInfo= p_geoFenceInfo;
 							
 							
 							
@@ -630,17 +631,17 @@ var QueryString = function () {
 				     case CONST_TYPE_CylinderFence:
 				  
 						var geoFence = new google.maps.Circle({
-							fillColor: p_geoFenceInfo.shouldKeepOutside==false?'#32CD32':'#FF1493',
-							strokeColor: p_geoFenceInfo.shouldKeepOutside==false?'#FFFFFF':'#FFFFFF',
+							fillColor: p_geoFenceInfo.m_shouldKeepOutside==false?'#32CD32':'#FF1493',
+							strokeColor: p_geoFenceInfo.m_shouldKeepOutside==false?'#FFFFFF':'#FFFFFF',
 							strokeOpacity: 0.8,
 							strokeWeight: 2,
 							fillOpacity: 0.6,
 							map: window.v_map,
 							center: p_geoFenceInfo.LngLatPoints[0],
-							radius: parseInt(p_geoFenceInfo.maximumDistance)
+							radius: parseInt(p_geoFenceInfo.m_maximumDistance)
 							});
 							
-							geoFence.geofenceInfo= p_geoFenceInfo;
+							geoFence.m_geofenceInfo= p_geoFenceInfo;
 							geoFence.centerlatlng= p_geoFenceInfo.LngLatPoints[0]; 
 							geoFence.setEditable (true);
 							geoFence.setDraggable (true);
@@ -784,59 +785,59 @@ var QueryString = function () {
 							window.AndruavLibs.AndruavAuth.fn_do_loginAccount( $('#txtEmail').val(), $('#txtAccessCode').val());
 						}
 
-						if (window.AndruavLibs.AndruavAuth.logined==false)
-						{
-							Messenger().post({
-								  type: 'error',
-								  message:  'Please enter valid login data'
-								});
+						// if (window.AndruavLibs.AndruavAuth.logined==false)
+						// {
+						// 	Messenger().post({
+						// 		  type: 'error',
+						// 		  message:  'Please enter valid login data'
+						// 		});
 
-							if (v_connectState == true)
-							{
-								setTimeout(fn_connect, 4000);
-							}
+						// 	if (v_connectState == true)
+						// 	{
+						// 		setTimeout(fn_connect, 4000);
+						// 	}
 
-							return ;	
-						}
-						//var connectURL = 'http://andruav.com/arcs/globalarclight.html?accesscode='+ $('#txtAccessCode').val() + '&email=' + $('#txtEmail').val() + '&m_groupName=' + $('#txtGroupName').val() + '&m_unitName=' + $('#txtUnitID').val();
+						// 	return ;	
+						// }
+						// //var connectURL = 'http://andruav.com/arcs/globalarclight.html?accesscode='+ $('#txtAccessCode').val() + '&email=' + $('#txtEmail').val() + '&m_groupName=' + $('#txtGroupName').val() + '&m_unitName=' + $('#txtUnitID').val();
 						
 						
-						// create a group object
-						if (v_andruavClient == null)
-						{
+						// // create a group object
+						// if (v_andruavClient == null)
+						// {
 							
-								if (window.AndruavLibs.AndruavAuth.logined == false) return ;
-								v_andruavClient = AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
+						// 		if (window.AndruavLibs.AndruavAuth.logined == false) return ;
+						// 		v_andruavClient = AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
 							
 								
-								v_andruavClient.partyID = $('#txtUnitID').val().replace('#','_');
-								v_andruavClient.unitID = $('#txtUnitID').val();
-								v_andruavClient.m_groupName = $('#txtGroupName').val();
-								v_andruavClient.fn_init();
-								v_andruavClient.m_server_ip 													= window.AndruavLibs.AndruavAuth.m_server_ip;
-								v_andruavClient.m_server_port 													= window.AndruavLibs.AndruavAuth.m_server_port;
-								v_andruavClient.m_server_port_ss 												= window.AndruavLibs.AndruavAuth.m_server_port;
-								v_andruavClient.server_AuthKey													= window.AndruavLibs.AndruavAuth.server_AuthKey;
-								v_andruavClient.EVT_onOpen 														= EVT_onOpen;
-								v_andruavClient.EVT_onClose 													= EVT_onClose;
-								v_andruavClient.EVT_onDeleted 													= EVT_onDeleted;
-								v_andruavClient.fn_onSocketStatus 												= fn_onSocketStatus;
-								v_andruavClient.EVT_andruavUnitGeoFenceUpdated 									= EVT_andruavUnitGeoFenceUpdated;
+						// 		v_andruavClient.partyID = $('#txtUnitID').val().replace('#','_');
+						// 		v_andruavClient.unitID = $('#txtUnitID').val();
+						// 		v_andruavClient.m_groupName = $('#txtGroupName').val();
+						// 		v_andruavClient.fn_init();
+						// 		v_andruavClient.m_server_ip 													= window.AndruavLibs.AndruavAuth.m_server_ip;
+						// 		v_andruavClient.m_server_port 													= window.AndruavLibs.AndruavAuth.m_server_port;
+						// 		v_andruavClient.m_server_port_ss 												= window.AndruavLibs.AndruavAuth.m_server_port;
+						// 		v_andruavClient.server_AuthKey													= window.AndruavLibs.AndruavAuth.server_AuthKey;
+						// 		v_andruavClient.EVT_onOpen 														= EVT_onOpen;
+						// 		v_andruavClient.EVT_onClose 													= EVT_onClose;
+						// 		v_andruavClient.EVT_onDeleted 													= EVT_onDeleted;
+						// 		v_andruavClient.fn_onSocketStatus 												= fn_onSocketStatus;
+						// 		v_andruavClient.EVT_andruavUnitGeoFenceUpdated 									= EVT_andruavUnitGeoFenceUpdated;
 								
-								// v_andruavClient.EVT_msgFromUnit_WayPoints 					= EVT_msgFromUnit_WayPoints;
-								// v_andruavClient.EVT_msgFromUnit_WayPointsUpdated 			= EVT_msgFromUnit_WayPointsUpdated;
-								// v_andruavClient.EVT_msgFromUnit_NavInfo 					= EVT_msgFromUnit_NavInfo;
+						// 		// v_andruavClient.EVT_msgFromUnit_WayPoints 					= EVT_msgFromUnit_WayPoints;
+						// 		// v_andruavClient.EVT_msgFromUnit_WayPointsUpdated 			= EVT_msgFromUnit_WayPointsUpdated;
+						// 		// v_andruavClient.EVT_msgFromUnit_NavInfo 					= EVT_msgFromUnit_NavInfo;
 								
-								fn_console_log (SOCKET_STATUS);
+						// 		fn_console_log (c_SOCKET_STATUS);
 								
-								v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.sid);
-						}
-						else
-						{
+						// 		v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.sid);
+						// }
+						// else
+						// {
 							
-							v_andruavClient.API_delMe();	
+						// 	v_andruavClient.API_delMe();	
 								
-						}
+						// }
 				
 				
 				
@@ -876,6 +877,23 @@ var QueryString = function () {
 
 	function fn_on_ready()
 	{
+
+		if ((typeof(CONST_MAP_GOOLE) == "undefined") || (CONST_MAP_GOOLE === true))
+		{
+			var v_script = v_G_createElement('script');
+			v_script.type='text/javascript';
+				
+			//"https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&callback=initMap"
+			v_script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&libraries=drawing&callback=initMap";
+			v_G_document.body.append(v_script);
+		}
+		else
+		if ((typeof(CONST_MAP_GOOLE) != "undefined") && (CONST_MAP_GOOLE === false))
+		{
+			initMap();
+		}
+
+
 		//QueryString();
 		fn_enableDragging();
 
@@ -927,6 +945,10 @@ var QueryString = function () {
 
 
 	function initMap() {
+			AndruavLibs.AndruavMap.fn_initMap('mapid');
+
+			
+
 			window.v_map = new google.maps.Map(v_G_getElementById('geofence_map'), {
 			  center: {lat: -34.397, lng: 150.644},
 			  zoom: 8
@@ -939,8 +961,7 @@ var QueryString = function () {
 			window.AndruavLibs.GoogleDraw.EVT_onPolilineCreated 		= EVT_onPolilineCreated;
 			window.AndruavLibs.GoogleDraw.EVT_onShapeSelected 			= EVT_onShapeSelected;
 			window.AndruavLibs.GoogleDraw.EVT_onShapeUpdated 			= EVT_onShapeUpdated;
-			window.AndruavLibs.GoogleDraw.EVT_onShapeDeleted 			= EVT_onShapeDeleted;
-
+			
 			window.AndruavLibs.GoogleDraw.EVT_onShapeDeleteRequest 	= EVT_onShapeDeleteRequest;
 			
 			if (QueryString.lat == null)

@@ -58,7 +58,7 @@ img.css_goto_drone
 }
 
 /* fire fox */
-img.css_goto_drone:after  
+img.css_goto_drone:before  
 {
 	content:url('../images/gps_fix_32x32.png');
 }
@@ -223,6 +223,15 @@ img.css_camera_flash_off
 	content:url('../images/flash_bl_32x32.png');
 }
 
+img.css_tracking_on
+{
+	content:url('../images/following_enabled_32x32.png');
+}
+
+img.css_tracking_off
+{
+	content:url('../images/following_inactive_32x32.png');
+}
 
 /* fire fox */
 img.css_camera_flash_off:after  
@@ -347,6 +356,13 @@ div#bearing_main
 }
 
 
+div#modal_ctrl_parameters #parameters_sublist
+{
+	overflow-y: scroll !important;
+	height: 400px !important;
+	margin: 20px 5px  15px 5px !important;
+}
+
 div#modal_fpv_video
 {
 	position: relative;
@@ -376,7 +392,6 @@ div#modal_ctrl_yaw
 	position: absolute;
 	top: 200px;
 	left:100px;
-	background-color:white;
 	opacity:0.85;
 	float:left;
 }
@@ -389,7 +404,6 @@ div#modal_ctrl_yaw
 	top: 200px;
 	left:100px;
 	min-width: 500px !important;
-	background-color:white;
 	opacity:0.85;
 	float:left;
  }
@@ -403,15 +417,21 @@ div#modal_ctrl_yaw
 	opacity:0.85;
 	float:left;
  }
+ 
+ div#CTRL_cameraCtrl
+ {
+	 position: absolute;
+	 top:100px;
+ }
 
-
+ div#CTRL_streamCtrl
+{
+	position: absolute;
+	top:100px;
+}
  div#modal_ctrl_stream_dlg
  {
-	position: absolute;
-	top: 200px;
-	left:500px;
 	min-width: 400px !important;
-	background-color:white;
 	opacity:0.85;
 	float:left;
  }
@@ -429,7 +449,7 @@ div#modal_ctrl_yaw
 
  div#modal_gamepad_footer
  {
-	 background-color: white !important;
+	 
  }
 
  input#txt_defaultCircle
@@ -447,14 +467,13 @@ input#txt_defaultAltitude
 
 .ctrlbtn
 {
-	width: 60px !important;
-	max-width: 60px !important;
+	width: 90px !important;
+	height: 30px !important;
 }
 
 .ctrlbtn_lng
 {
 	width: 80px !important;
-	max-width: 80px !important;
 }
 
 
@@ -529,12 +548,12 @@ div#login_btn
 
 div#login_div
 {
-    background-color: white;
+    
 }
 
 div#andruavUnits
 {
-    background-color: white;
+    
 }
 
 input#txt_defaultCircle
@@ -742,7 +761,7 @@ div.msgerror {
 
 .textunit {
 	display: inline-block;
-	width: 100px !important;
+	width:160px !important;
 }
 
 
@@ -760,4 +779,42 @@ div.msgerror {
 .css_leaflet_icon
 {
 	background-color: transparent !important;
+}
+
+
+.lbl_prop
+{
+	
+}
+
+.txt_prop
+{
+
+}
+
+.btn_prop
+{
+	
+}
+
+
+.fence_tooltip:before {
+	right: 0;
+	margin-right: -12px;
+	border-color: transparent;
+	}
+
+
+.css_label_waypoint
+{
+	width: 50%;
+	height: 100%;
+}
+
+
+table.css_table_log
+{
+	max-height: 350px;
+	overflow: auto;
+	display:inline-block;
 }

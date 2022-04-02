@@ -34,7 +34,7 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         var PeerConnection =
             window.RTCPeerConnection    ||
-            window.mozRTCPeerConnection;
+            window.mozRTCPeerConnection ;
             // || // https://stackoverflow.com/questions/53251527/webrtc-video-is-not-displaying
             // window.webkitRTCPeerConnection;
     
@@ -60,9 +60,11 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         var rtcconfig = { 
             constraints: {
+                
                 mandatory: {
                     OfferToReceiveAudio: false,
                     OfferToReceiveVideo: true
+                    
                 },
                 optional: []
             },
@@ -73,35 +75,10 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
             },
             sdpSemantics: 'unified-plan',
             iceServers : [
-                { urls: 'stun:andruav.com:3479' },
-                { urls: 'turn:andruav.com:3479' , 'credential':'1234', 'username':'andruav' },
-                // { "urls" :
-            
-                // navigator.mozGetUserMedia    ? "stun:stun.services.mozilla.com" :
-                // navigator.webkitGetUserMedia ? "stun:stun.l.google.com:19302"   :
-                //                                "stun:23.21.150.121"
-                // },
-                //{urls:"stun:144.217.162.241"},
-                {urls: "stun:stun.l.google.com:19302"},
-                {urls: "stun:stun1.l.google.com:19302"},
-                {urls: "stun:stun2.l.google.com:19302"},
-                {urls: "stun:stun3.l.google.com:19302"},
-                {urls: "stun:stun4.l.google.com:19302"},
-                // {urls: "stun:23.21.150.121"},
-                // {urls: "stun:stunprotocol.org:3478"},
-                // {urls: "stun:stun01.sipphone.com"},
-                // {urls: "stun:stun.ekiga.net"},
-                // {urls: "stun:stun.fwdnet.net"},
-                // {urls: "stun:stun.ideasip.com"},
-                // {urls: "stun:stun.iptel.org"},
-                // {urls: "stun:stun.rixtelecom.se"},
-                // {urls: "stun:stun.schlund.de"},
-                // {urls: "stun:stunserver.org"},
-                // {urls: "stun:stun.softjoys.com"},
-                // {urls: "stun:stun.voiparound.com"},
-                // {urls: "stun:stun.voipbuster.com"},
-                // {urls: "stun:stun.voipstunt.com"},
-                // {urls: "stun:stun.voxgratia.org"},
+                //{ urls: 'turn:andruav.com:3478' , 'credential':'1234', 'username':'andruav' },
+                { urls: 'turn:104.131.188.164:3478' , 'credential':'1234', 'username':'andruav_ap' },
+                {urls: "stun:stun1.l.google.com:19302"}
+                
                 ] 
             };
              
@@ -209,29 +186,34 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
          // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         // Visually Display New Stream
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-        function onaddstream(talk,mediaStreamEvent) {
-            //var stream = mediaStreamEvent.streams[0]; // when adding it from onTrack
-            var stream = mediaStreamEvent.stream;
+        function onaddtrack(talk,mediaStreamEvent) {
+            var stream = mediaStreamEvent.streams[0];
             fn_console_log ("WEBRTC: TRACK-muted:" + stream.getVideoTracks()[0].muted);
-            var number = (mediaStreamEvent.srcElement || mediaStreamEvent.target).number;
             
             
             var targetVideoTrack = talk.targetVideoTrack.replace(/ /g,"_").toLowerCase();
             var len  = stream.getVideoTracks().length;
             var p = [];
-              
-            for (var i =0; i< len; ++ i)
-            {
-              if (stream.getVideoTracks()[i].id.toLowerCase() != targetVideoTrack)
-              {
-                  p.push (stream.getVideoTracks()[i].id);
-              }
-            }
+            
+            
+            if (window.chrome == true)
+            {   // Multiple tracks per stream can be implemented in Chrome.
+                // As in FireFox TrackID & Label are overwritten by new values so I cannot track them.
+                // A proposed solution is in this link https://stackoverflow.com/questions/65408744/in-webrtc-how-do-i-label-a-local-mediastream-so-that-a-remote-peer-can-identify
+                // which is to add extra data in the communication packet next to the offer.
+                for (var i =0; i< len; ++ i)
+                {
+                if (stream.getVideoTracks()[i].id.toLowerCase() != targetVideoTrack)
+                {
+                    p.push (stream.getVideoTracks()[i].id);
+                }
+                }
 
-            // remove tracks that are not equal to target track.
-            for (var i =0; i< p.length; ++ i)
-            {
-              stream.removeTrack(stream.getTrackById(p[i]));
+                // remove tracks that are not equal to target track.
+                for (var i =0; i< p.length; ++ i)
+                {
+                stream.removeTrack(stream.getTrackById(p[i]));
+                }
             }
 
 
@@ -260,22 +242,14 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
                 talk.onError            = (dialconfig.onError        != null? dialconfig.onError         : talk.onError);
                 talk.onConnect          = (dialconfig.onConnect      != null? dialconfig.onConnect       : talk.onConnect);
                 talk.onDisplayVideo     = (dialconfig.onDisplayVideo != null? dialconfig.onDisplayVideo  : talk.onDisplayVideo);
-                talk.onAddStream        = (dialconfig.onAddStream    != null? dialconfig.onAddStream     : talk.onAddStream);
                 talk.onClosing          = (dialconfig.onClosing      != null? dialconfig.onClosing       : talk.onClosing);    
                 talk.onDisconnected     = (dialconfig.onDisconnected != null? dialconfig.onDisconnected  : talk.onDisconnected);
                 talk.onOrphanDisconnect = (dialconfig.onOrphanDisconnect != null? dialconfig.onOrphanDisconnect  : talk.onOrphanDisconnect);
                 talk.pc.onremovestream  = (dialconfig.onRemovestream != null? dialconfig.onRemovestream  : talk.onRemovestream);
-                talk.pc.onaddstream     = function (mediaStreamEvent)
-                {
-                    talk.onConnect(talk);
-                    onaddstream (talk,mediaStreamEvent);
-                    talk.onDisplayVideo (talk);
-                    
-                }
                 talk.pc.ontrack = function(mediaStreamEvent) {
-                    // onaddstream (talk,mediaStreamEvent);
-                    // talk.onDisplayVideo (talk);
-                    fn_console_log (event);
+                    talk.onConnect(talk);
+                    onaddtrack (talk,mediaStreamEvent);
+                    talk.onDisplayVideo (talk);
                 }
                 if (talk.closed) return;
                 transmit( dialconfig.number, dialconfig.targetVideoTrack ,{ joinme : true} );
@@ -305,9 +279,7 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
             {
                 pv_join (dialconfig);
             }
-            
-           
-           
+
             return talk;
         };
         
@@ -323,13 +295,6 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
             
             debugcb(message);
             v_andruavClient.API_WebRTC_Signalling(phone,message);
-            // Recurse if Requested for
-            if (!times) return;
-            time = time || 1;
-            if (time++ >= times) return;
-            setTimeout( function(){
-                //transmit( phone, channel,packet, times, time );
-            }, 150 );
         }
     
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -352,8 +317,6 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
 
             if (!talk || talk.closed) return;
     
-                   
-                 
             // If Hangup Request
             if (p_signal.packet.hangup) return talk.hangup(false);
     

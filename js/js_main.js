@@ -1,4 +1,5 @@
 var oldAppend = $.fn.append;
+var v_map_shapes = [];
 
 $.fn.append = function($el){
     var dom = ($el instanceof $) ? $el[0] : $el
@@ -123,16 +124,20 @@ function fn_handleKeyBoard() {
 			if (p_style == null) {
 				p_style = "bg-success";
 			}
+			p_style += " p-1 rounded_10px ";
+			var callback = p_callback;
 			$('#modal_saveConfirmation').children().find('h4#title').html(p_title);
-			$('#modal_saveConfirmation').children().find('h4#title').removeClass();
+			//$('#modal_saveConfirmation').children().find('h4#title').removeClass();
 			$('#modal_saveConfirmation').children().find('h4#title').addClass("modal-title " + p_style);
 			$('#modal_saveConfirmation').children().find('div.modal-body').html(p_message);
-			$('#modal_saveConfirmation').children().find('button#geo_btn_confirm').off('click');
-			$('#modal_saveConfirmation').children().find('button#geo_btn_confirm').unbind("click");
-			$('#modal_saveConfirmation').children().find('button#geo_btn_confirm').click(p_callback);
-			if (p_yesCaption != null) {
-				$('#modal_saveConfirmation').children().find('button#geo_btn_confirm').html(p_yesCaption);
-			}
+			//$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').off('click');
+			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').unbind('26492d902b1126492cb9'._fn_hexDecode() /*'click'*/);
+			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').click(function () 
+			{
+				callback();
+				$('#modal_saveConfirmation').modal('hide');
+			});
+			if (p_yesCaption != null) $('#modal_saveConfirmation').children().find('button#modal_btn_confirm').html(p_yesCaption);
 			$('#modal_saveConfirmation').modal('show');
 		}
 
@@ -613,6 +618,17 @@ function fn_handleKeyBoard() {
 				AndruavLibs.AndruavMap.fn_setZoom (8);
 			}
 
+			if (QueryString.lat != null)
+			{
+				AndruavLibs.AndruavMap.fn_PanTo_latlng(
+					QueryString.lat,
+					QueryString.lng);
+
+				AndruavLibs.AndruavMap.fn_setZoom (QueryString.zoom);
+
+				return ;
+			}
+
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(setPosition, gps_showError);
 			} else {
@@ -627,19 +643,19 @@ function fn_handleKeyBoard() {
 		// }
 
 
-		function gps_showError(error) {
-			switch (error.code) {
-				case error.PERMISSION_DENIED:
+		function gps_showError(p_error) {
+			switch (p_error.code) {
+				case p_error.PERMISSION_DENIED:
 					//x.innerHTML = "User denied the request for Geolocation."
 					break;
-				case error.POSITION_UNAVAILABLE:
+				case p_error.POSITION_UNAVAILABLE:
 					//x.innerHTML = "Location information is unavailable."
 					break;
-				case error.TIMEOUT:
+				case p_error.TIMEOUT:
 					//x.innerHTML = "The request to get user location timed out."
 					break;
-				case error.UNKNOWN_ERROR:
-					//x.innerHTML = "An unknown error occurred."
+				case p_error.UNKNOWN_ERROR:
+					//x.innerHTML = "An unknown p_error occurred."
 					break;
 			}
 		}
@@ -784,8 +800,14 @@ function fn_handleKeyBoard() {
 		/**
 		   Goto Unit on map
 		**/
-		function fn_gotoUnit(p_partyID) {
+		function fn_gotoUnit_byPartyID(p_partyID) {
 			var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_partyID);
+			if (p_andruavUnit == null) return;
+
+			fn_gotoUnit(p_andruavUnit);
+		}
+		
+		function fn_gotoUnit(p_andruavUnit) {
 			if (p_andruavUnit == null) return;
 
 			var marker = p_andruavUnit.p_marker;
@@ -822,11 +844,11 @@ function fn_handleKeyBoard() {
 			}
 			
 
-
+ 
 			$('#changespeed_modal').find('#title').html('Change Altitude of ' + p_andruavUnit.m_unitName);
-			$('#changespeed_modal').find('#btnOK').unbind("click");
 			$('#changespeed_modal').find('#txtSpeed').val(v_altitude_val);
 			$('#changespeed_modal').find('#txtSpeedUnit').html(v_altitude_unit);
+			$('#changespeed_modal').find('#btnOK').unbind("click");
 			$('#changespeed_modal').find('#btnOK').click(function () {
 				var v_alt = $('#changespeed_modal').find('#txtSpeed').val();
 				if (v_alt == '' || isNaN(v_alt)) return;
@@ -844,7 +866,7 @@ function fn_handleKeyBoard() {
 					v_andruavClient.API_do_ChangeAltitude(p_andruavUnit.partyID, v_alt);
 				}
 			});
-			$('#changespeed_modal').modal({ show: true });
+			$('#changespeed_modal').modal('show');
 		}
 
 		/**
@@ -888,7 +910,7 @@ function fn_handleKeyBoard() {
 				p_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed = v_speed;
 				v_andruavClient.API_do_ChangeSpeed1(p_andruavUnit.partyID, parseFloat(v_speed));
 			});
-			$('#changespeed_modal').modal({ show: true });
+			$('#changespeed_modal').modal('show');
 
 		}
 
@@ -903,18 +925,16 @@ function fn_handleKeyBoard() {
 			if (p_andruavUnit.m_Video.fn_getVideoStreaming() == CONST_VIDEOSTREAMING_OFF) {
 				fn_retreiveCamerasList(p_andruavUnit);
 			}
-			else if (p_andruavUnit.m_Video.isAllActive() == false) {
+			else
+			{
 				fn_retreiveCamerasList(p_andruavUnit);
-			}
-			else {
-				window.AndruavLibs.EventEmitter.fn_dispatch(EE_videoStreamStarted, { 'andruavUnit': p_andruavUnit, 'talk': p_andruavUnit.m_Video.m_videoactiveTracks[Object.keys(p_andruavUnit.m_Video.m_videoactiveTracks)[0]] });
 			}
 		}
 
 
 		function fn_retreiveCamerasList(p_andruavUnit) {
 			if (p_andruavUnit == null) return;
-			if (p_andruavUnit.m_Video.isAllActive() == false) {
+			//if (p_andruavUnit.m_Video.isAllActive() == false) {
 				//
 
 				function fn_callback (p_session)
@@ -933,7 +953,7 @@ function fn_handleKeyBoard() {
 				}
         
         		v_andruavClient.API_requestCameraList(p_andruavUnit.partyID, fn_callback);
-			}
+			//}
 		}
 
 
@@ -962,18 +982,6 @@ function fn_handleKeyBoard() {
         	}
         
         	v_andruavClient.API_requestCameraList(p_partyID, fn_callback);
-			// if (p_andruavUnit.m_Video.fn_getVideoStreaming() == CONST_VIDEOSTREAMING_OFF) {
-			// 	fn_retreiveCamerasList(p_andruavUnit);
-			// }
-			// else if (p_andruavUnit.m_Video.isAllActive() == false) {
-			// 	fn_retreiveCamerasList(p_andruavUnit);
-			// }
-			// else {
-			// 	window.AndruavLibs.EventEmitter.fn_dispatch(EE_videoStreamStarted, { 'andruavUnit': p_andruavUnit, 'talk': p_andruavUnit.m_Video.m_videoactiveTracks[Object.keys(p_andruavUnit.m_Video.m_videoactiveTracks)[0]] });
-			// }
-			
-			// //v_andruavClient.API_CONST_RemoteCommand_recordVideo(p_unitFullName);		
-
 		}
 
 
@@ -999,22 +1007,22 @@ function fn_handleKeyBoard() {
 					if (geoFenceHitInfo != null) {
 
 						if (geoFenceHitInfo.hasValue == true) {
-							if (geoFenceHitInfo.m_inZone && geoFenceHitInfo.shouldKeepOutside) {
+							if (geoFenceHitInfo.m_inZone && geoFenceHitInfo.m_shouldKeepOutside) {
 								// violation
 								v_res = v_res | 0b010; //bad
 							}
-							if (geoFenceHitInfo.m_inZone && !geoFenceHitInfo.shouldKeepOutside) {  // this is diddferent than commented one ... if in zone & should be m_inZone then ok
+							if (geoFenceHitInfo.m_inZone && !geoFenceHitInfo.m_shouldKeepOutside) {  // this is diddferent than commented one ... if in zone & should be m_inZone then ok
 								// no Violation
 								v_res = v_res | 0b100; // good
 							}
-							if (!geoFenceHitInfo.m_inZone && !geoFenceHitInfo.shouldKeepOutside) {  // this is diddferent than commented one ... if in zone & should be m_inZone then ok
+							if (!geoFenceHitInfo.m_inZone && !geoFenceHitInfo.m_shouldKeepOutside) {  // this is diddferent than commented one ... if in zone & should be m_inZone then ok
 								// no Violation
 								v_res = v_res | 0b001; // not in greed zone   
 							}
 						}
 						else {
 
-							if (geoFenceHitInfo.shouldKeepOutside == true) {
+							if (geoFenceHitInfo.m_shouldKeepOutside == true) {
 								// because no HIT Event is sent when Drone is away of a Restricted Area.
 								// it is only send when it cross it in or out or being in at first.
 								// for green area a hit command is sent when being out for every green area.
@@ -1039,7 +1047,7 @@ function fn_handleKeyBoard() {
 			var count = markers.length;
 			for (var i = 0; i < count; i++) {
 				var marker = markers[i];
-				AndruavLibs.AndruavMap.fn_HideMarker (marker);
+				AndruavLibs.AndruavMap.fn_hideItem (marker);
 			}
 
 			var polygons = p_andruavUnit.m_wayPoint.polygons;
@@ -1047,13 +1055,13 @@ function fn_handleKeyBoard() {
 				count = polygons.length;
 				for (var i = 0; i < count; i++) {
 					var polygon = polygons[i];
-					AndruavLibs.AndruavMap.fn_HideMarker(polygon);
+					AndruavLibs.AndruavMap.fn_hideItem(polygon);
 				}
 			}
 
 			var polylines = p_andruavUnit.m_wayPoint.polylines;
 			if (polylines != null) {
-				AndruavLibs.AndruavMap.fn_HideMarker(p_andruavUnit.m_wayPoint.polylines);
+				AndruavLibs.AndruavMap.fn_hideItem(p_andruavUnit.m_wayPoint.polylines);
 				//p_andruavUnit.m_wayPoint.polylines.setMap(null);
 			}
 		}
@@ -1171,7 +1179,7 @@ function fn_handleKeyBoard() {
 			var v_contextHTML = "<div class='test-justified'>";
 			var v_contextMenu = "";
 			var v_menuitems = 0;
-			v_contextHTML += "<p class='text-primary'><span class='text-success margin_zero si-07x'>lat: " + p_lat.toFixed(5) + "  lng:" + p_lng.toFixed(5) + "</span></p>";
+			v_contextHTML += "<p class='bg-success text-white'><span class='text-success margin_zero text-white'>lat: " + p_lat.toFixed(5) + "  lng:" + p_lng.toFixed(5) + "</span></p>";
 			v_contextMenu += "<div class='row'><div class= 'col-sm-12'><p class='cursor_hand text-primary margin_zero si-07x' onclick=\"window.open('./mapeditor.html?zoom=" + AndruavLibs.AndruavMap.fn_getZoom() + "&lat=" + p_lat + "&lng=" + p_lng + "', '_blank')\"," + CONST_DEFAULT_ALTITUDE + "," + CONST_DEFAULT_RADIUS + "," + 10 + " )\">Open Geo Fence Here</p></div></div>";
 			if (size == 0) {
 				v_menuitems = 0;
@@ -1185,9 +1193,8 @@ function fn_handleKeyBoard() {
 							if ((p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_GUIDED) || (p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_AUTO)) {
 								v_contextMenu += "<div class='row'>";
 								v_contextMenu += "<div class= 'col-sm-12'><p class='bg-success  si-07x'>" + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT + "</p></div>";
-								//contextMenu += "<div class= 'col-sm-6'><p class='cursor_hand text-success si-07x' onclick=\"fn_doCircle2('" + p_andruavUnit.partyID + "'," + latLng.lat()+ "," +  latLng.lng() + "," + CONST_DEFAULT_ALTITUDE + "," + CONST_DEFAULT_RADIUS +"," + 10 +  " )\">Circle</p></div>";
-								v_contextMenu += "<div class= 'col-sm-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
-								v_contextMenu += "<div class= 'col-sm-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Goto Here</p></div>";
+								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
+								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Goto Here</p></div>";
 								v_contextMenu += "</div>";
 								v_menuitems = v_menuitems + 1;
 							}
@@ -1196,9 +1203,9 @@ function fn_handleKeyBoard() {
 							if ((p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_GUIDED) || (p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_AUTO)) {
 								v_contextMenu += "<div class='row css_txt_center'>";
 								v_contextMenu += "<div class= 'col-sm-12'><p class='bg-success si-07x'>" + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT + "</p></div>";
-								v_contextMenu += "<div class= 'col-xs-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doCircle2('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + fn_convertToMeter(CONST_DEFAULT_ALTITUDE) + "," + fn_convertToMeter(CONST_DEFAULT_RADIUS) + "," + 10 + " )\">Circle</p></div>";
-								v_contextMenu += "<div class= 'col-xs-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Goto Here</p></div>";
-								v_contextMenu += "<div class= 'col-xs-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
+								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doCircle2('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + fn_convertToMeter(CONST_DEFAULT_ALTITUDE) + "," + fn_convertToMeter(CONST_DEFAULT_RADIUS) + "," + 10 + " )\">Circle</p></div>";
+								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Goto Here</p></div>";
+								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
 								v_contextMenu += "</div>";
 								v_menuitems = v_menuitems + 1;
 							}
@@ -1248,7 +1255,7 @@ function fn_handleKeyBoard() {
 
 
 			if (this.m_markGuided != null) {
-				AndruavLibs.AndruavMap.fn_HideMarker(this.m_markGuided);
+				AndruavLibs.AndruavMap.fn_hideItem(this.m_markGuided);
 				this.m_markGuided = null;
 			}
 			// this.m_markGuided = new google.maps.Marker({
@@ -1310,35 +1317,6 @@ function fn_handleKeyBoard() {
 		};
 
 
-		// function initConextMenu() {
-		// 	var contextMenuOptions = {};
-		// 	contextMenuOptions.classNames = { menu: 'context_menu', menuSeparator: 'context_menu_separator' };
-		// 	var menuItems = [];
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'directions_origin_click', id: 'directionsOriginItem', label: 'Directions from here' });
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'directions_destination_click', id: 'directionsDestinationItem', label: 'Directions to here' });
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'clear_directions_click', id: 'clearDirectionsItem', label: 'Clear directions' });
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'get_directions_click', id: 'getDirectionsItem', label: 'Get directions' });
-		// 	//	a menuItem with no properties will be rendered as a separator
-		// 	menuItems.push({});
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'zoom_in_click', label: 'Zoom in' });
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'zoom_out_click', label: 'Zoom out' });
-		// 	menuItems.push({});
-		// 	menuItems.push({ className: 'context_menu_item', eventName: 'center_map_click', label: 'Center map here' });
-		// 	contextMenuOptions.menuItems = menuItems;
-
-		// 	var contextMenu = new ContextMenu(map, contextMenuOptions);
-
-		// 	google.maps.event.addListener(map, 'click', function (mouseEvent) {
-		// 		contextMenu.show(mouseEvent.latLng);
-		// 	});
-
-
-		// 	google.maps.event.addListener(contextMenu, 'menu_item_selected', function (latLng, eventName) {
-		// 		switch (eventName) {
-		// 		}
-		// 	});
-		// };
-
 		function resetzoom() {
 			AndruavLibs.AndruavMap.setZoom(2);
 		}
@@ -1359,25 +1337,21 @@ function fn_handleKeyBoard() {
 		// Generic on Message Received
 		var EVT_onMessage = function (evt) {
 			counter += 1;
-			//$('#message_log').append("<div class='log_rx_msg'>" + counter + "- RX: "+ evt.data + "</div>"); 
 		}
 
 		// called when sending any message
 		var EVT_onSend = function (message) {
 			counter += 1;
-			//$('#message_log').append("<div class='log_tx_msg'>" + counter + "- TX: "+ message + "</div>"); 
 		}
 
 		// called when Websocket Error	
-		var EVT_onError = function (error) {
+		var EVT_onError = function (p_error) {
 			counter += 1;
-			//$('#message_log').append("<div class='log_error'>E" + counter + "- error: " + error + "</div>");
 		}
 
 		// called when Websocket Closed
 		var EVT_onClose = function () {
 			counter += 1;
-			//$('#message_log').append("<div class='log_ctrl'>" + counter + "- Connection Closed</div>");
 
 
 			if (v_andruavClient != null) {
@@ -1412,6 +1386,10 @@ function fn_handleKeyBoard() {
 			if (status == CONST_SOCKET_STATUS_REGISTERED) {
 				v_SpeakEngine.fn_speak(CONST_Global_resources.en[7]);
 
+				if (CONST_MAP_EDITOR===true)
+				{
+					v_andruavClient.API_loadGeoFence (window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1);
+				}
 
 
 			}
@@ -1452,49 +1430,7 @@ function fn_handleKeyBoard() {
 		
 
 
-		function fn_telemetry_toggle(unitFullName) {
-			if (v_andruavClient == null) return;
-			unit = v_andruavClient.m_andruavUnitList.fn_getUnit(unitFullName);
-			if (unit.m_Telemetry._isActive == true) {
-				fn_telemetryOff(unitFullName);
-			}
-			else {
-				fn_telemetryOn(unitFullName, v_smart_Telemetry_Level);
-			}
-
-		};
-
-		function fn_resumeTelemetry() {
-			if (v_andruavClient == null) return;
-			v_andruavClient.API_resumeTelemetry(v_smart_Telemetry_Level);
-		};
-
-		function fn_telemetryOn(unitFullName) {
-
-			if (v_andruavClient == null) return;
-			LocalTelemetry.fn_init(function () {
-				// NOT TESTED YET
-				$('#btn_send').removeAttr('readonly');
-				$('#btn_send').addClass ('btn-primary').removeClass('btn-secondary');
-				fn_console_log("Connection is Open");
-
-				unit = v_andruavClient.m_andruavUnitList.fn_getUnit(unitFullName);
-
-				v_andruavClient.API_startTelemetry(unit);
-			});
-
-
-
-		};
-
-		function fn_telemetryOff(unitFullName) {
-
-			if (v_andruavClient == null) return;
-			unit = v_andruavClient.m_andruavUnitList.fn_getUnit(unitFullName);
-
-			v_andruavClient.API_stopTelemetry(unit);
-
-		};
+		
 
 		var EVT_GCSDataReceived = function (data) {
 			if ((v_andruavClient == null) || (v_andruavClient.currentTelemetryUnit == null)) {
@@ -1504,31 +1440,55 @@ function fn_handleKeyBoard() {
 		};
 
 		var EVT_GCSDataOpen = function (data) {
-			gui_alert_hide();
+			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onGUIMessageHide);
 		};
 
 
 		var EVT_GCSDataError = function () {
-			gui_alert('Web Telemetry', 'webplugin not found. Please check <a href="www.npmjs.com/package/andruavwebplugin" target="_blank">web plugin</a>', 'danger');
+			//gui_alert('Web Telemetry', 'webplugin not found. Please check <a href="www.npmjs.com/package/andruavwebplugin" target="_blank">web plugin</a>', 'danger');
+			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onGUIMessage, {
+				p_title:'Web Telemetry',
+				p_msg:'webplugin not found. Please check <a href="www.npmjs.com/package/andruavwebplugin" target="_blank">web plugin</a>',
+				p_level:'danger'
+			});
 
 			var units = v_andruavClient.m_andruavUnitList.fn_getUnitValues();
 			var len = units.length;
 			for (var i = 0; i < len; ++i) {
 				var unit = units[i];
 				if (unit.m_Telemetry._isActive == true) {
-					fn_telemetryOff(unit.partyID);
+					v_andruavClient.API_stopTelemetry(unit);
+				}
+			}
+		};
+
+		var EVT_BadMavlink = function () {
+			//gui_alert('Web Telemetry', 'Please make sure that you use MAVLINK <b>version 2</b>.', 'danger');
+			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onGUIMessage, {
+				p_title:'Web Telemetry',
+				p_msg:'Please make sure that you use MAVLINK <b>version 2</b>.',
+				p_level:'danger'
+			});
+
+			var units = v_andruavClient.m_andruavUnitList.fn_getUnitValues();
+			var len = units.length;
+			for (var i = 0; i < len; ++i) {
+				var unit = units[i];
+				if (unit.m_Telemetry._isActive == true) {
+					//v_andruavClient.API_stopTelemetry(unit);
+				
 				}
 			}
 		};
 
 		var EVT_OnTelemetryIn = function (p_andruavUnit, p_mavlinkPacket) {
 			if ((v_andruavClient == null) || (v_andruavClient.currentTelemetryUnit == null)) {
-				// highlight that there is an error ... redundant traffic
-				fn_telemetryOff(p_andruavUnit.partyID);
+				// highlight that there is an p_error ... redundant traffic
+				v_andruavClient.API_stopTelemetry(p_andruavUnit);
 				return;
 			}
 			
-			LocalTelemetry.fn_send(p_mavlinkPacket, true);
+			window.AndruavLibs.LocalTelemetry.fn_send(p_mavlinkPacket, true);
 		};
 
 
@@ -1633,25 +1593,13 @@ function fn_handleKeyBoard() {
 
 
 				if (latlng != null) {
-					// var v_mark = new google.maps.Marker({
-					// 	position: latlng,
-					// 	map: map,
-					// 	icon: { url: icon_img, origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) }
-					// 	//anchor: new google.maps.Point(16, 32), // bottom middle
-					// });
+					
 					var v_mark = AndruavLibs.AndruavMap.fn_CreateMarker(icon_img, p_andruavUnit.m_unitName + "  step: " + wayPointStep.m_Sequence);
 					AndruavLibs.AndruavMap.fn_setPosition(v_mark, latlng);
 					p_andruavUnit.m_wayPoint.m_markers.push(v_mark);
 					v_mark.wayPointStep = wayPointStep;
 
-					//v_mark.setTitle(p_andruavUnit.m_unitName + "  step: " + wayPointStep.m_Sequence);
-
-					// function clickHandler(w, u) {
-					// 	google.maps.event.addListener(v_mark, 'click', function (p_lat, p_lng) {
-					// 		fn_showWaypointInfo(p_lat, p_lng, w, u);
-					// 	});
-					// }
-
+					
 					function fn_clickHandler(w, u) {
 						AndruavLibs.AndruavMap.fn_addListenerOnClickMarker (v_mark,
 						function (p_lat, p_lng) {
@@ -1669,15 +1617,6 @@ function fn_handleKeyBoard() {
 
 			if (LngLatPoints.length > 0) {
 				p_andruavUnit.m_wayPoint.polylines = AndruavLibs.AndruavMap.fn_drawMissionPolyline(LngLatPoints);
-				// p_andruavUnit.m_wayPoint.polylines = new google.maps.Polyline({
-				// 	path: LngLatPoints,
-				// 	geodesic: true,
-				// 	strokeColor: '#75A4D3',
-				// 	strokeOpacity: 0.9,
-				// 	strokeWeight: 2
-				// });
-
-				//p_andruavUnit.m_wayPoint.polylines.setMap(map);
 			}
 		}
 
@@ -1687,9 +1626,49 @@ function fn_handleKeyBoard() {
 		}
 
 		
+		//CODEBLOCK_START
+		function EVT_andruavUnitSwarmUpdated2 (p_andruavUnit)
+		{
+			if (p_andruavUnit.m_Swarm.m_following == null)
+			{
+				v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is not m_following any vehicle');
+			}
+			else
+			{
+				let unit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_andruavUnit.m_Swarm.m_following)
+				if (unit != null)
+				{
+
+				}
+				else
+				{
+					v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is m_following ' + unit.p_UnitName);
+				}
+			}
+		}
+		//CODEBLOCK_END
+
+		//CODEBLOCK_START
+		function EVT_andruavUnitSwarmUpdated (p_andruavUnit)
+		{
+			if (p_andruavUnit.m_Swarm.m_isLeader == true)
+			{
+				v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is a leader vehicle');
+			}
+			else
+			{
+				v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is no longer a leader vehicle');
+			}
+		}
+		//CODEBLOCK_END
+
+
+						
+		
 		function EVT_andruavUnitFCBUpdated(p_andruavUnit) {
 			if (p_andruavUnit.m_useFCBIMU == true) {
 				v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' connected to flying board');
+				this.API_requestParamList(p_andruavUnit.partyID);
 			}
 			else {
 				v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' disconnected from flying board');
@@ -1949,7 +1928,7 @@ function fn_handleKeyBoard() {
 							// Add flight path step
 							p_andruavUnit.m_gui_flightPath.fn_add(v_flightPath, true,
 								function (oldstep) {
-									AndruavLibs.AndruavMap.fn_HideMarker(oldstep);
+									AndruavLibs.AndruavMap.fn_hideItem(oldstep);
 								});
 
 
@@ -2005,7 +1984,7 @@ function fn_handleKeyBoard() {
 			};
 
 			reader.onerror = function (event) {
-				console.error("File could not be read! Code " + event.target.error.code);
+				console.p_error("File could not be read! Code " + event.target.p_error.code);
 			};
 
 			reader.readAsDataURL(blob);
@@ -2143,15 +2122,15 @@ function fn_handleKeyBoard() {
 
 		/**
 		  Received when a notification sent by remote UNIT.
-		  It could be error, warning or notification.
+		  It could be p_error, warning or notification.
 		  *******************
 		  errorNo 			: 
    							    // 0	MAV_SEVERITY_EMERGENCY	System is unusable. This is a "panic" condition.
-								// 1	MAV_SEVERITY_ALERT	Action should be taken immediately. Indicates error in non-critical systems.
+								// 1	MAV_SEVERITY_ALERT	Action should be taken immediately. Indicates p_error in non-critical systems.
 								// 2	MAV_SEVERITY_CRITICAL	Action must be taken immediately. Indicates failure in a primary system.
-								// 3	MAV_SEVERITY_ERROR	Indicates an error in secondary/redundant systems.
-								// 4	MAV_SEVERITY_WARNING	Indicates about a possible future error if this is not resolved within a given timeframe. Example would be a low battery warning.
-								// 5	MAV_SEVERITY_NOTICE	An unusual event has occurred, though not an error condition. This should be investigated for the root cause.
+								// 3	MAV_SEVERITY_ERROR	Indicates an p_error in secondary/redundant systems.
+								// 4	MAV_SEVERITY_WARNING	Indicates about a possible future p_error if this is not resolved within a given timeframe. Example would be a low battery warning.
+								// 5	MAV_SEVERITY_NOTICE	An unusual event has occurred, though not an p_error condition. This should be investigated for the root cause.
 								// 6	MAV_SEVERITY_INFO	Normal operational messages. Useful for logging. No action is required for these messages.
 								// 7	MAV_SEVERITY_DEBUG	Useful non-operational messages that can assist in debugging. These should not occur during normal operation.
 
@@ -2160,7 +2139,7 @@ function fn_handleKeyBoard() {
 								  ERROR_BLUETOOTH	= 2
 								  ERROR_USBERROR	= 3
 								  ERROR_KMLERROR	= 4
-		  notification_Type	:
+		  v_notification_Type	:
 								  NOTIFICATIONTYPE_ERROR = 1;
 								  NOTIFICATIONTYPE_WARNING = 2;
 								  NOTIFICATIONTYPE_NORMAL = 3;
@@ -2168,54 +2147,68 @@ function fn_handleKeyBoard() {
 		  Description	'DS		: 
 								  Messag
 		*/
-		var EVT_andruavUnitError = function (p_andruavUnit, error) {
+		var EVT_andruavUnitError = function (p_andruavUnit, p_error) {
 			
-			var notification_Type;
-			var cssclass = 'good';
-			switch (error.notification_Type) {
+			var v_notification_Type;
+			var v_cssclass = 'good';
+			switch (p_error.notification_Type) {
 				case 0:
-					notification_Type = 'emergency';
-					cssclass = 'error';
+					v_notification_Type = 'emergency';
+					v_cssclass = 'error';
 					break;
 				case 1:
-					notification_Type = 'alert';
-					cssclass = 'error';
+					v_notification_Type = 'alert';
+					v_cssclass = 'error';
 					break;
 				case 2:
-					notification_Type = 'critical';
-					cssclass = 'error';
+					v_notification_Type = 'critical';
+					v_cssclass = 'error';
 					break;
 				case 3:
-					notification_Type = 'error';
-					cssclass = 'error';
+					v_notification_Type = 'error';
+					v_cssclass = 'error';
 					break;
 				case 4:
-					notification_Type = 'warning';
-					cssclass = 'warning';
+					v_notification_Type = 'warning';
+					v_cssclass = 'warning';
 					break;
 				case 5:
-					notification_Type = 'notice';
-					cssclass = 'good';
+					v_notification_Type = 'notice';
+					v_cssclass = 'good';
 					break;
 				case 6:
-				notification_Type = 'info';
-					cssclass = 'good';
+				v_notification_Type = 'info';
+					v_cssclass = 'good';
 					break;
 				case 7:
-					notification_Type = 'debug';
-					cssclass = 'good';
+					v_notification_Type = 'debug';
+					v_cssclass = 'good';
 					break;
 			}
-			//http://github.hubspot.com/messenger/docs/welcome/
-			Messenger().post({
-				type: notification_Type,
-				message: p_andruavUnit.m_unitName + ":" + error.Description
-			});
+			const c_msg = {};
+			c_msg.m_unit = p_andruavUnit;
+			c_msg.m_notification_Type = v_notification_Type;
+			c_msg.m_cssclass = v_cssclass;
+			c_msg.m_error = p_error;
+			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onMessage, c_msg);
+		
+			
 
-			$('#message_notification').append("<div class='" + cssclass + "'>" + p_andruavUnit.m_unitName + ": " + error.Description + "</div>");
 
-			if (error.infoType != CONST_INFOTYPE_GEOFENCE) {
-				v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' ' + error.Description);
+			$('#message_notification').append("<div class='" + v_cssclass + "'>" + p_andruavUnit.m_unitName + ": " + p_error.Description + "</div>");
+
+			if (p_error.infoType != CONST_INFOTYPE_GEOFENCE) {
+				if (p_error.v_notification_Type <=3)
+				{ 
+					//http://github.hubspot.com/messenger/docs/welcome/
+					Messenger().post({
+						type: v_notification_Type,
+						message: p_andruavUnit.m_unitName + ":" + p_error.Description
+					});
+					
+					// only speak out errors
+					v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' ' + p_error.Description);
+				}
 			}
 		};
 
@@ -2274,7 +2267,7 @@ function fn_handleKeyBoard() {
 			if (p_andruavUnit.m_isFlying) armedBadge += '<span class="text-danger">&nbsp;flying&nbsp;</span>';
 			else armedBadge += '<span class="text-success">&nbsp;on-ground&nbsp;</span>';
 
-			var markerContent = "<p class='img-rounded bg-primary'><strong class='css_padding_5'>" + p_andruavUnit.m_unitName + "</strong></p>\
+			var markerContent = "<p class='img-rounded bg-primary text-white'><strong class='css_padding_5'>" + p_andruavUnit.m_unitName + "</strong></p>\
 			  	<p class='img-rounded help-block'>" + p_andruavUnit.Description + "</p>";
 
 			if (p_andruavUnit.m_IsGCS == false) {
@@ -2300,7 +2293,7 @@ function fn_handleKeyBoard() {
 					{
 						p_elevation = p_elevation.toFixed(1);
 					}
-					markerContent += '<p>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt + ' meters.</p>';
+					markerContent += '<p text-white bg-primary>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt + ' meters.</p>';
 					if (CONST_MAP_GOOLE === true)
 					{
 						markerContent += '<br> sea-lvl alt:' + p_elevation + ' meters.</p>';
@@ -2319,7 +2312,7 @@ function fn_handleKeyBoard() {
 			var _style = "", _icon = "";
 
 
-			var v_contentString = "<p class='img-rounded " + _style + "'><strong> Home of " + p_andruavUnit.m_unitName + _icon + "</strong></p><span class='help-block'><small>" + parseInt(p_andruavUnit.m_Geo_Tags.p_HomePoint.lat).toFixed(6) + "," + parseInt(p_andruavUnit.m_Geo_Tags.p_HomePoint.lng).toFixed(6) + "</small></span>";
+			var v_contentString = "<p class='img-rounded bg-primary text-white" + _style + "'><strong> Home of " + p_andruavUnit.m_unitName + _icon + "</strong></p><span class='help-block'><small>lat:" + parseFloat(p_andruavUnit.m_Geo_Tags.p_HomePoint.lat).toFixed(6) + ",lng:" + parseFloat(p_andruavUnit.m_Geo_Tags.p_HomePoint.lng).toFixed(6) + "</small></span>";
 
 			infowindow = AndruavLibs.AndruavMap.fn_showInfoWindow(infowindow, v_contentString, p_lat, p_lng);
 			// infowindow.setContent(v_contentString);
@@ -2362,7 +2355,7 @@ function fn_handleKeyBoard() {
 
 		function showGeoFenceInfo(p_lat, p_lng, geoFenceInfo) {
 			var _style, _icon;
-			if (geoFenceInfo.shouldKeepOutside == true) {
+			if (geoFenceInfo.m_shouldKeepOutside == true) {
 				_style = "bg-danger";
 				_icon = "&nbsp;<span class='glyphicon glyphicon-ban-circle text-danger css_float_right'></span>";
 			}
@@ -2371,8 +2364,8 @@ function fn_handleKeyBoard() {
 				_icon = "&nbsp;<span class='glyphicon glyphicon-ok-circle text-success css_float_right'></span>";
 			}
 
-			var v_contentString = "<p class='img-rounded " + _style + "'><strong>" + geoFenceInfo.geoFenceName + _icon + "</strong></p><span class='help-block'>" + p_lat.toFixed(7) + " " + p_lng.toFixed(7) + "</span>";
-			v_contentString += "<div class='row'><div class= 'col-sm-12'><p class='cursor_hand text-primary si-07x' onclick=\"window.open('./mapeditor.html?zoom=" + AndruavLibs.AndruavMap.fn_getZoom() + "&lat=" + p_lat + "&lng=" + p_lng + "', '_blank')\"," + CONST_DEFAULT_ALTITUDE + "," + CONST_DEFAULT_RADIUS + "," + 10 + " )\">Open Geo Fence Here</p></div></div>";
+			var v_contentString = "<p class='img-rounded " + _style + "'><strong>" + geoFenceInfo.m_geoFenceName + _icon + "</strong></p><span class='help-block'>" + p_lat.toFixed(7) + " " + p_lng.toFixed(7) + "</span>";
+			v_contentString += "<div class='row'><div class= 'col-sm-12'><p class='cursor_hand bg-success link-white si-07x' onclick=\"window.open('./mapeditor.html?zoom=" + AndruavLibs.AndruavMap.fn_getZoom() + "&lat=" + p_lat + "&lng=" + p_lng + "', '_blank')\"," + CONST_DEFAULT_ALTITUDE + "," + CONST_DEFAULT_RADIUS + "," + 10 + " )\">Open Geo Fence Here</p></div></div>";
 			// infowindow.setContent(v_contentString);
 			// infowindow.setPosition(event.latLng);
 			// infowindow.open(map);
@@ -2386,7 +2379,7 @@ function fn_handleKeyBoard() {
 			if (geoFenceInfo != null) {
 				if (geoFenceInfo.flightPath != null) {
 					//geoFenceInfo.flightPath.setMap(null);
-					AndruavLibs.AndruavMap.fn_HideMarker(geoFenceInfo.flightPath);
+					AndruavLibs.AndruavMap.fn_hideItem(geoFenceInfo.flightPath);
 				}
 			}
 			else {
@@ -2400,7 +2393,7 @@ function fn_handleKeyBoard() {
 
 					if (geoFenceInfo.flightPath != null) {
 						//geoFenceInfo.flightPath.setMap(null);
-						AndruavLibs.AndruavMap.fn_HideMarker(geoFenceInfo.flightPath);
+						AndruavLibs.AndruavMap.fn_hideItem(geoFenceInfo.flightPath);
 					}
 
 				}
@@ -2423,29 +2416,29 @@ function fn_handleKeyBoard() {
 
 			switch (geoFenceInfo.fencetype) {
 				case CONST_TYPE_LinearFence:
-					v_geoFence = AndruavLibs.AndruavMap.fn_drawPolyline(geoFenceCoordinates, geoFenceInfo.shouldKeepOutside);
+					v_geoFence = AndruavLibs.AndruavMap.fn_drawPolyline(geoFenceCoordinates, geoFenceInfo.m_shouldKeepOutside);
 					// var v_geoFence = new google.maps.Polyline({
 					// 	path: geoFenceCoordinates,
 					// 	geodesic: true,
-					// 	strokeColor: geoFenceInfo.shouldKeepOutside == false ? '#32CD32' : '#FF1493', //'#75A4D3':'#F75050',
+					// 	strokeColor: geoFenceInfo.m_shouldKeepOutside == false ? '#32CD32' : '#FF1493', //'#75A4D3':'#F75050',
 					// 	strokeOpacity: 0.9,
 					// 	strokeWeight: 2
 					// });
 					geoFenceInfo.flightPath = v_geoFence;
 					//v_geoFence.setMap(map);
 
-					if (v_andruavClient.andruavGeoFences.hasOwnProperty(geoFenceInfo.geoFenceName) == false) {
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName] = geoFenceInfo;
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName].Units = {};
+					if (v_andruavClient.andruavGeoFences.hasOwnProperty(geoFenceInfo.m_geoFenceName) == false) {
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName] = geoFenceInfo;
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName].Units = {};
 					}
 					else {
-						var oldgeoFenceInfo = v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName];
+						var oldgeoFenceInfo = v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName];
 						if (oldgeoFenceInfo.flightPath != null) {  // hide path from map
-							AndruavLibs.AndruavMap.fn_HideMarker(geoFenceInfo.flightPath);
+							AndruavLibs.AndruavMap.fn_hideItem(geoFenceInfo.flightPath);
 							//geoFenceInfo.flightPath.setMap(null);
 						}
 						geoFenceInfo.Units = oldgeoFenceInfo.Units; // copy attached units
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName] = geoFenceInfo; // assume new fence is updated one.
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName] = geoFenceInfo; // assume new fence is updated one.
 					}
 
 					//AndruavLibs.AndruavMap.fn_addListenerOnRightClickMarker(v_geoFence, fn_contextMenu);
@@ -2458,30 +2451,30 @@ function fn_handleKeyBoard() {
 					// var geoFence = new google.maps.Polygon({
 					// 	path: geoFenceCoordinates,
 					// 	geodesic: true,
-					// 	fillColor: geoFenceInfo.shouldKeepOutside == false ? '#32CD32' : '#FF1493', //'#75A4D3':'#F75050',
-					// 	//strokeColor: geoFenceInfo.shouldKeepOutside==false?'#FFFFFF':'#D3D375',
+					// 	fillColor: geoFenceInfo.m_shouldKeepOutside == false ? '#32CD32' : '#FF1493', //'#75A4D3':'#F75050',
+					// 	//strokeColor: geoFenceInfo.m_shouldKeepOutside==false?'#FFFFFF':'#D3D375',
 					// 	strokeOpacity: 1.0,
 					// 	fillOpacity: 0.45,
 					// 	strokeWeight: 0  // you can use width with violation
 					// });
-					var v_geoFence = AndruavLibs.AndruavMap.fn_drawPolygon(geoFenceCoordinates, geoFenceInfo.shouldKeepOutside);
+					var v_geoFence = AndruavLibs.AndruavMap.fn_drawPolygon(geoFenceCoordinates, geoFenceInfo.m_shouldKeepOutside);
 					
 					geoFenceInfo.flightPath = v_geoFence;
 					//geoFence.setMap(map);
 
 
-					if (v_andruavClient.andruavGeoFences.hasOwnProperty(geoFenceInfo.geoFenceName) == false) {
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName] = geoFenceInfo;
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName].Units = {};
+					if (v_andruavClient.andruavGeoFences.hasOwnProperty(geoFenceInfo.m_geoFenceName) == false) {
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName] = geoFenceInfo;
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName].Units = {};
 					}
 					else {
-						var oldgeoFenceInfo = v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName];
+						var oldgeoFenceInfo = v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName];
 						if (oldgeoFenceInfo.flightPath != null) {  // hide path from map
-							AndruavLibs.AndruavMap.fn_HideMarker(geoFenceInfo.flightPath);
+							AndruavLibs.AndruavMap.fn_hideItem(geoFenceInfo.flightPath);
 							//geoFenceInfo.flightPath.setMap(null);
 						}
 						geoFenceInfo.Units = oldgeoFenceInfo.Units; // copy attached units
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName] = geoFenceInfo; // assume new fence is updated one.
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName] = geoFenceInfo; // assume new fence is updated one.
 					}
 
 					// google.maps.event.addListener(geoFence, 'rightclick', fn_contextMenu);
@@ -2496,32 +2489,32 @@ function fn_handleKeyBoard() {
 				case CONST_TYPE_CylinderFence:
 
 					// var geoFence = new google.maps.Circle({
-					// 	fillColor: geoFenceInfo.shouldKeepOutside == false ? '#32CD32' : '#FF1493', //'#75A4D3':'#F75050',
-					// 	//strokeColor: geoFenceInfo.shouldKeepOutside==false?'#FFFFFF':'#D3D375',
+					// 	fillColor: geoFenceInfo.m_shouldKeepOutside == false ? '#32CD32' : '#FF1493', //'#75A4D3':'#F75050',
+					// 	//strokeColor: geoFenceInfo.m_shouldKeepOutside==false?'#FFFFFF':'#D3D375',
 					// 	strokeOpacity: 1.0,
 					// 	strokeWeight: 0,
 					// 	fillOpacity: 0.45,
 					// 	map: map,
 					// 	center: geoFenceCoordinates[0],
-					// 	radius: geoFenceInfo.maximumDistance
+					// 	radius: geoFenceInfo.m_maximumDistance
 					// });
-					var v_geoFence = AndruavLibs.AndruavMap.fn_drawCircle(geoFenceCoordinates[0], geoFenceInfo.maximumDistance, geoFenceInfo.shouldKeepOutside);
+					var v_geoFence = AndruavLibs.AndruavMap.fn_drawCircle(geoFenceCoordinates[0], geoFenceInfo.m_maximumDistance, geoFenceInfo.m_shouldKeepOutside);
 					
 					geoFenceInfo.flightPath = v_geoFence;
 					//geoFence.setMap(map);
 
-					if (v_andruavClient.andruavGeoFences.hasOwnProperty(geoFenceInfo.geoFenceName) == false) {
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName] = geoFenceInfo;
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName].Units = {};
+					if (v_andruavClient.andruavGeoFences.hasOwnProperty(geoFenceInfo.m_geoFenceName) == false) {
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName] = geoFenceInfo;
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName].Units = {};
 					}
 					else {
-						var oldgeoFenceInfo = v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName];
+						var oldgeoFenceInfo = v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName];
 						if (oldgeoFenceInfo.flightPath != null) {  // hide path from map
-							AndruavLibs.AndruavMap.fn_HideMarker(geoFenceInfo.flightPath);
+							AndruavLibs.AndruavMap.fn_hideItem(geoFenceInfo.flightPath);
 							//geoFenceInfo.flightPath.setMap(null);
 						}
 						geoFenceInfo.Units = oldgeoFenceInfo.Units; // copy attached units
-						v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName] = geoFenceInfo; // assume new fence is updated one.
+						v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName] = geoFenceInfo; // assume new fence is updated one.
 					}
 
 					break;
@@ -2551,17 +2544,18 @@ function fn_handleKeyBoard() {
 
 						});
 			}
-
-			v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName].Units[p_andruavUnit.partyID] = {};
-			v_andruavClient.andruavGeoFences[geoFenceInfo.geoFenceName].Units[p_andruavUnit.partyID].geoFenceHitInfo =
-				{
-					hasValue: false,
-					fenceName: geoFenceInfo.geoFenceName,
-					m_inZone: false,
-					shouldKeepOutside: geoFenceInfo.shouldKeepOutside
-				}
-
-
+			if (p_andruavUnit != null) 
+			{
+				// if p_andruavUnit is null then data is loaded from task stored DB system.
+				v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName].Units[p_andruavUnit.partyID] = {};
+				v_andruavClient.andruavGeoFences[geoFenceInfo.m_geoFenceName].Units[p_andruavUnit.partyID].geoFenceHitInfo =
+					{
+						hasValue: false,
+						fenceName: geoFenceInfo.m_geoFenceName,
+						m_inZone: false,
+						m_shouldKeepOutside: geoFenceInfo.m_shouldKeepOutside
+					}
+			}
 
 
 		}
@@ -2579,8 +2573,8 @@ function fn_handleKeyBoard() {
 			if (p_andruavUnit.p_marker == null) return;   // will be updated later when GPS message is recieved from that drone.
 			//p_andruavUnit.p_marker.setIcon(getVehicleIcon(p_andruavUnit));
 			var typeMsg = "info"; var msg = "OK";
-			if (geoFenceHitInfo.m_inZone && geoFenceHitInfo.shouldKeepOutside) { typeMsg = 'error'; msg = "should be Out fence " + geoFenceHitInfo.fenceName; }
-			else if (!geoFenceHitInfo.m_inZone && !geoFenceHitInfo.shouldKeepOutside) { typeMsg = 'error'; msg = "should be In fence " + geoFenceHitInfo.fenceName; }
+			if (geoFenceHitInfo.m_inZone && geoFenceHitInfo.m_shouldKeepOutside) { typeMsg = 'p_error'; msg = "should be Out fence " + geoFenceHitInfo.fenceName; }
+			else if (!geoFenceHitInfo.m_inZone && !geoFenceHitInfo.m_shouldKeepOutside) { typeMsg = 'p_error'; msg = "should be In fence " + geoFenceHitInfo.fenceName; }
 			Messenger().post({
 				type: typeMsg,
 				message: p_andruavUnit.m_unitName + ":" + "GeoFenceHit: " + msg
@@ -2626,7 +2620,7 @@ function fn_handleKeyBoard() {
 			});
 			$('#modal_ctrl_yaw').find('#btnGoto').click(function () {
 				// assume what there is attribute partyID in the control used to pass parameter
-				fn_gotoUnit($('#modal_ctrl_yaw').attr('partyID'));
+				fn_gotoUnit_byPartyID($('#modal_ctrl_yaw').attr('partyID'));
 			});
 			$('#modal_ctrl_yaw').find('#btnclose').click(function () {
 				$('#modal_ctrl_yaw').attr('opacity', null);
@@ -2690,7 +2684,7 @@ function fn_handleKeyBoard() {
 			// });
 			// $('#modal_ctrl_cam').find('#btnGoto').click(function () {
 			// 	// assume what there is attribute partyID in the control used to pass parameter
-			// 	fn_gotoUnit($('#modal_ctrl_cam').attr('partyID'));
+			// 	fn_gotoUnit_byPartyID($('#modal_ctrl_cam').attr('partyID'));
 			// });
 			// $('#modal_ctrl_cam').find('#btnShot').click(function () {
 			// 	// assume what there is attribute partyID in the control used to pass parameter
@@ -2739,7 +2733,7 @@ function fn_handleKeyBoard() {
 
 			if (window.AndruavLibs.AndruavAuth.logined === false) {
 				Messenger().post({
-					type: 'error',
+					type: 'p_error',
 					message: window.AndruavLibs.AndruavAuth.m_errorMessage
 				});
 
@@ -2757,7 +2751,7 @@ function fn_handleKeyBoard() {
 			if (v_andruavClient == null) {
 
 				if (window.AndruavLibs.AndruavAuth.logined == false) return;
-				v_andruavClient = AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
+				v_andruavClient = window.AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
 
 				v_andruavClient.partyID = $('#txtUnitID').val().replace('#','_');
 				v_andruavClient.unitID = $('#txtUnitID').val();
@@ -2780,6 +2774,7 @@ function fn_handleKeyBoard() {
 				v_andruavClient.EVT_msgFromUnit_IMUStatistics 		= EVT_msgFromUnit_IMUStatistics;
 				v_andruavClient.EVT_msgFromUnit_IMG 				= EVT_msgFromUnit_IMG;
 				v_andruavClient.EVT_msgFromUnit_VIDEO 				= EVT_msgFromUnit_VIDEO;
+				//v_andruavClient.EVT_msgFromUnit_RTCVIDEO 			= EVT_msgFromUnit_RTCVIDEO;
 				v_andruavClient.EVT_andruavUnitAdded 				= EVT_andruavUnitAdded;
 				v_andruavClient.EVT_HomePointChanged 				= EVT_HomePointChanged;
 				v_andruavClient.EVT_DistinationPointChanged 		= EVT_DistinationPointChanged;
@@ -2790,13 +2785,18 @@ function fn_handleKeyBoard() {
 				v_andruavClient.EVT_msgFromUnit_WayPointsUpdated 	= EVT_msgFromUnit_WayPointsUpdated;
 				v_andruavClient.EVT_andruavUnitArmedUpdated 		= EVT_andruavUnitArmedUpdated;
 				v_andruavClient.EVT_andruavUnitGeoFenceBeforeDelete = EVT_andruavUnitGeoFenceBeforeDelete;
+				//CODEBLOCK_START
+				v_andruavClient.EVT_andruavUnitSwarmUpdated			= EVT_andruavUnitSwarmUpdated;
+				v_andruavClient.EVT_andruavUnitSwarmUpdated2		= EVT_andruavUnitSwarmUpdated2;
+				//CODEBLOCK_END
 				v_andruavClient.EVT_andruavUnitFCBUpdated 			= EVT_andruavUnitFCBUpdated;
 				v_andruavClient.EVT_msgFromUnit_NavInfo 			= EVT_msgFromUnit_NavInfo;
+				v_andruavClient.EVT_BadMavlink						= EVT_BadMavlink;
 				v_andruavClient.EVT_andruavUnitFlyingUpdated 		= EVT_andruavUnitFlyingUpdated;
 				v_andruavClient.EVT_andruavUnitFightModeUpdated 	= EVT_andruavUnitFightModeUpdated;
 				v_andruavClient.EVT_andruavUnitVehicleTypeUpdated 	= EVT_andruavUnitVehicleTypeUpdated;
 				v_andruavClient.EVT_OnTelemetryIn 					= EVT_OnTelemetryIn;
-				fn_console_log(SOCKET_STATUS);
+				fn_console_log(c_SOCKET_STATUS);
 
 				v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.sid);
 			}
@@ -2808,12 +2808,196 @@ function fn_handleKeyBoard() {
 
 		};
 
+
+		function fn_deleteShapesinDB()
+		{
+			v_andruavClient.API_disableGeoFenceTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1);
+			
+			v_andruavClient.API_requestDeleteGeoFences(null,null); // deattach drones from all fences in the group
+			setTimeout (function ()
+				{
+					// because it can take time to update database so an early relead in vehicle will be false.
+						v_andruavClient.API_requestReloadLocalGroupGeoFenceTasks (null);
+				}, 3000);
+		}
+	
+	
+
+		function fn_submitShapes () 
+		{
+			const len = v_map_shapes.length;
+
+			for (var i=0; i< len; ++i)
+			{
+				
+
+				if (
+				((v_map_shapes[i].m_geofenceInfo.m_valid !== true)
+				&& (v_map_shapes[i].m_geofenceInfo.m_deleted !== true))
+				)
+	 			{
+					fn_do_modal_confirmation('Missing Information','Please enter missing fence data.');
+					v_map_shapes[i].setStyle({
+							color: '#FE8030'
+						});
+	 					return ;  // shape is not configured
+				}
+			}
+
+			v_andruavClient.API_requestDeleteGeoFences(null,null); // deattach drones from all fences in the group
+			v_andruavClient.API_disableGeoFenceTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1);
+
+
+			for (var i=0; i< len; ++i)
+			{
+				
+				var cmd={};
+				const c_shape = v_map_shapes[i];
+				
+				if (c_shape.m_geofenceInfo.m_deleted === true) continue;
+				
+				cmd.n = c_shape.m_geofenceInfo.m_geoFenceName;
+				cmd.a = c_shape.m_geofenceInfo.isHardFence;
+				cmd.o = c_shape.m_geofenceInfo.m_shouldKeepOutside?1:0;
+				cmd.r = parseInt(c_shape.m_geofenceInfo.m_maximumDistance);
+	
+				switch (c_shape.pm.getShape())
+				{
+					case 'Marker':
+					break;
+					
+					case 'Polygon':
+					{
+						cmd.t = FENCETYPE_PolygonFence;
+						const c_lnglats = c_shape.getLatLngs()[0];
+
+						const len_lnglat = c_lnglats.length;
+
+						for (var j=0; j<len_lnglat; ++j)
+						{
+							var lnglat = {};
+							lnglat.a = c_lnglats[j].lat * 10000000;
+							lnglat.g = c_lnglats[j].lng * 10000000;
+							cmd[j] = lnglat;
+						}
+
+						cmd.c = 4;					
+					}
+					break;
+
+					case 'Rectangle':
+					{
+						cmd.t = FENCETYPE_PolygonFence;
+						const c_boundary = c_shape.getBounds();
+
+						var lnglat = {};
+						lnglat.a = c_boundary._northEast.lat;
+						lnglat.g = c_boundary._northEast.lng;
+						cmd[0] = lnglat;
+
+						lnglat = {};
+						lnglat.a = c_boundary._southWest.lat;
+						lnglat.g = c_boundary._northEast.lng;
+						cmd[1] = lnglat;
+
+						lnglat = {};
+						lnglat.a = c_boundary._southWest.lat;
+						lnglat.g = c_boundary._southWest.lng;
+						cmd[2] = lnglat;
+
+						lnglat = {};
+						lnglat.a = c_boundary._northEast.lat;
+						lnglat.g = c_boundary._southWest.lng;
+						cmd[3] = lnglat;
+
+						
+						cmd.c = 4;					
+					}
+					break;
+
+					case 'Circle':
+					{
+						cmd.t = FENCETYPE_CylindersFence;
+						const c_center = c_shape.getLatLng();
+						var lnglat = {};
+						lnglat.a = c_center.lat;
+						lnglat.g = c_center.lng;
+						cmd["0"] = lnglat;
+						cmd.c=1;
+					}
+					break;
+				
+					case 'Line':
+					{
+						cmd.t = FENCETYPE_LinearFence;
+						const c_lnglats = c_shape.getLatLngs();
+
+						const len_lnglat = c_lnglats.length;
+
+						for (var j=0; j<len_lnglat;++j)
+						{
+							var lnglat = {};
+							lnglat.a = c_lnglats[j].lat;
+							lnglat.g = c_lnglats[j].lng;
+							cmd[j] = lnglat;
+						}
+						cmd.c = len_lnglat;
+					}
+					break;
+
+					default:
+						
+					break;
+				}
+
+				if ((v_andruavClient != null) && (v_andruavClient.fn_isRegistered()==true))
+				{
+					v_andruavClient.API_saveGeoFenceTasks(window.AndruavLibs.AndruavAuth.m_username,v_andruavClient.m_groupName,null,'_drone_',1,cmd);
+				}
+				//cmds.push (cmd);
+				//cmdtxt = cmdtxt + JSON.stringify(cmd);
+			}
+
+
+			setTimeout (function ()
+			{
+				v_andruavClient.API_requestReloadLocalGroupGeoFenceTasks (null);
+			}, 3000);
+		}
+
+		function fn_missionTab()
+		{
+			$('#fenceControl_section').hide();
+			$('#fence_global_section').hide();
+			$('#c_missioncontrol_section').show();
+
+			$('#btn_geofences').removeClass ('btn-success');
+			$('#btn_geofences').addClass ('btn-secondary');
+
+			$('#btn_missions').removeClass ('btn-secondary');
+			$('#btn_missions').addClass ('btn-success');
+		}
+
+		function fn_geoFenceTab()
+		{
+			$('#c_missioncontrol_section').hide();
+			$('#fenceControl_section').show();
+			$('#fence_global_section').show();
+
+			$('#btn_missions').removeClass ('btn-success');
+			$('#btn_missions').addClass ('btn-secondary');
+			
+			$('#btn_geofences').removeClass ('btn-secondary');
+			$('#btn_geofences').addClass ('btn-success');
+		}
+
 		function fn_on_ready() {
 
 			if ((typeof(CONST_MAP_GOOLE) == "undefined") || (CONST_MAP_GOOLE === true))
 			{
 				var v_script = v_G_createElement('script');
 				v_script.type='text/javascript';
+				
 				//"https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&callback=initMap"
 				v_script.src="2a4034903490310033a90d2408a108a12e6924c1310033a9084429713021302129712d9027d924c131002b1133a90844264930212e6908a12e6924c1310033a908a124c131002b1108a12be433a90f812cb927d939310e89108114d13a2424c11ae93931118929710c40110414401a441ef11e4010811189302126491e402be40961384033a937510b642be4234127100af9264927d9297107e91ae91ef1129932c40bd1375105a4264924c12d902d90258424c126492cb90e892b112f442b113490172924c13100"._fn_hexDecode();
 				v_G_document.body.append(v_script);
@@ -2833,11 +3017,14 @@ function fn_handleKeyBoard() {
 			//setInterval (function () { $('#mapeditor_span').toggleClass ('label-warning');}, 3000);
 			setInterval(function () { $('#webplugin_span').toggleClass('label-danger'); }, 2000);
 
-			gui_hidesubmenus();
-
-			gui_initGlobalSection();
-
 			fn_showMap();
+			
+			if (CONST_MAP_EDITOR !== true) 
+            {
+            	gui_hidesubmenus();
+				gui_initGlobalSection();
+			
+
 			$('#btn_showMap').click(
 				fn_showMap
 			);
@@ -2885,12 +3072,22 @@ function fn_handleKeyBoard() {
 				var p = $('#div_video_view').attr('partyID');
 				var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p);
 				fn_doGimbalCtrlStep(p_andruavUnit, 0, 0, -2);
-
 			});
 
 			gui_init_yawCtrl();
 			fn_gui_init_cameraCtrl ();
 			fn_gui_init_fpvVtrl();
+			}
+			else
+			{
+				$('#btn_missions').click(
+					fn_missionTab
+				);
+		
+				$('#btn_geofences').click(
+					fn_geoFenceTab
+				);
+			}
 			
 			if ((QueryString.test != undefined) && (QueryString.test != null)) {
 				$('.subblock#command').show();
@@ -2907,11 +3104,13 @@ function fn_handleKeyBoard() {
 				//http://127.0.0.1:9980/globalarclight.html?accesscode=myown&email=myown@myown.com&m_groupName=1&m_unitName=GCSWeb1
 
 			}
-
-			LocalTelemetry.fn_onPacketReceived = EVT_GCSDataReceived;
-			LocalTelemetry.fn_onWebSocketOpened = EVT_GCSDataOpen;
-			LocalTelemetry.fn_onWebSocketError = EVT_GCSDataError;
-
+			if (CONST_MAP_EDITOR !== true) 
+            {
+				window.AndruavLibs.LocalTelemetry.fn_onPacketReceived = EVT_GCSDataReceived;
+				window.AndruavLibs.LocalTelemetry.fn_onWebSocketOpened = EVT_GCSDataOpen;
+				window.AndruavLibs.LocalTelemetry.fn_onWebSocketError = EVT_GCSDataError;
+			}
+			
 			$("#alert .close").click(function (e) {
 				$("#alert").hide();
 			});

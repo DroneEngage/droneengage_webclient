@@ -1,9 +1,9 @@
 // Last time updated: 2017-02-10 4:43:51 AM UTC
 
 // ________________
-// RecordRTC v5.4.0
+// C_RecordRTC v5.4.0
 
-// Open-Sourced: https://github.com/muaz-khan/RecordRTC
+// Open-Sourced: https://github.com/muaz-khan/C_RecordRTC
 
 // --------------------------------------------------
 // Muaz Khan     - www.MuazKhan.com
@@ -13,29 +13,29 @@
 'use strict';
 
 // ____________
-// RecordRTC.js
+// C_RecordRTC.js
 
 /**
- * {@link https://github.com/muaz-khan/RecordRTC|RecordRTC} is a JavaScript-based media-recording library for modern web-browsers (supporting WebRTC getUserMedia API). It is optimized for different devices and browsers to bring all client-side (pluginfree) recording solutions in single place.
+ * {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC} is a JavaScript-based media-recording library for modern web-browsers (supporting WebRTC getUserMedia API). It is optimized for different devices and browsers to bring all client-side (pluginfree) recording solutions in single place.
  * @summary JavaScript audio/video recording library runs top over WebRTC getUserMedia API.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
- * @typedef RecordRTC
+ * @typedef C_RecordRTC
  * @class
  * @example
- * var recordRTC = RecordRTC(mediaStream, {
+ * var recordRTC = C_RecordRTC(mediaStream, {
  *     type: 'video' // audio or video or gif or canvas
  * });
  *
  * // or, you can also use the "new" keyword
- * var recordRTC = new RecordRTC(mediaStream[, config]);
+ * var recordRTC = new C_RecordRTC(mediaStream[, config]);
  * @see For further information:
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  * @param {object} config - {type:"video", disableLogs: true, numberOfAudioChannels: 1, bufferSize: 0, sampleRate: 0, video: HTMLVideoElement, etc.}
  */
 
-function RecordRTC(mediaStream, config) {
+function C_RecordRTC(mediaStream, config) {
     if (!mediaStream) {
         throw 'MediaStream is mandatory.';
     }
@@ -44,7 +44,7 @@ function RecordRTC(mediaStream, config) {
         type: 'video'
     };
 
-    config = new RecordRTCConfiguration(mediaStream, config);
+    config = new C_RecordRTCConfiguration(mediaStream, config);
 
     // a reference to user's recordRTC object
     var self = this;
@@ -242,7 +242,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method starts recording. It doesn't take any arguments.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.startRecording();
@@ -253,7 +253,7 @@ function RecordRTC(mediaStream, config) {
          * This method stops recording. It takes a single "callback" argument. It is suggested to get blob or URI in the callback to make sure all encoders finished their jobs.
          * @param {function} callback - This callback function is invoked after completion of all encoding jobs.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function(videoURL) {
@@ -266,7 +266,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method pauses the recording process.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.pauseRecording();
@@ -276,7 +276,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method resumes the recording process.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.resumeRecording();
@@ -286,7 +286,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method initializes the recording process.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.initRecorder();
@@ -296,7 +296,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method sets the recording duration.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.setRecordingDuration();
@@ -323,7 +323,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method can be used to clear/reset all the recorded data.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.clearRecordedData();
@@ -343,7 +343,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * It is equivalent to <code class="str">"recordRTC.blob"</code> property.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -365,7 +365,7 @@ function RecordRTC(mediaStream, config) {
          * This method returns the DataURL. It takes a single "callback" argument.
          * @param {function} callback - DataURL is passed back over this callback.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -379,7 +379,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method returns the Virutal/Blob URL. It doesn't take any arguments.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -397,7 +397,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method saves the blob/file to disk (by invoking save-as dialog). It takes a single (optional) argument i.e. FileName
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -415,7 +415,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * This method gets a blob from indexed-DB storage. It takes a single "callback" argument.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.getFromDisk(function(dataURL) {
@@ -427,7 +427,7 @@ function RecordRTC(mediaStream, config) {
                 return console.warn(WARNING);
             }
 
-            RecordRTC.getFromDisk(config.type, callback);
+            C_RecordRTC.getFromDisk(config.type, callback);
         },
 
         /**
@@ -435,7 +435,7 @@ function RecordRTC(mediaStream, config) {
          * @type {Array.<Array>}
          * @param {Array} arrayOfWebPImages - Array of webp images.
          * @method
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * var arrayOfWebPImages = [];
@@ -460,7 +460,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * It is equivalent to <code class="str">"recordRTC.getBlob()"</code> method.
          * @property {Blob} blob - Recorded Blob can be accessed using this property.
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -475,7 +475,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * @todo Add descriptions.
          * @property {number} bufferSize - Either audio device's default buffer-size, or your custom value.
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -487,7 +487,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * @todo Add descriptions.
          * @property {number} sampleRate - Audio device's default sample rates.
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -499,7 +499,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * @todo Add descriptions.
          * @property {ArrayBuffer} buffer - Audio ArrayBuffer, supported only in Chrome.
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -511,7 +511,7 @@ function RecordRTC(mediaStream, config) {
         /**
          * @todo Add descriptions.
          * @property {DataView} view - Audio DataView, supported only in Chrome.
-         * @memberof RecordRTC
+         * @memberof C_RecordRTC
          * @instance
          * @example
          * recordRTC.stopRecording(function() {
@@ -526,7 +526,7 @@ function RecordRTC(mediaStream, config) {
         return returnObject;
     }
 
-    // if someone wants to use RecordRTC with the "new" keyword.
+    // if someone wants to use C_RecordRTC with the "new" keyword.
     for (var prop in returnObject) {
         this[prop] = returnObject[prop];
     }
@@ -541,15 +541,15 @@ function RecordRTC(mediaStream, config) {
  * @param {string} type - 'all' or 'audio' or 'video' or 'gif'
  * @param {function} callback - Callback function to get all stored blobs.
  * @method
- * @memberof RecordRTC
+ * @memberof C_RecordRTC
  * @example
- * RecordRTC.getFromDisk('all', function(dataURL, type){
+ * C_RecordRTC.getFromDisk('all', function(dataURL, type){
  *     if(type === 'audio') { }
  *     if(type === 'video') { }
  *     if(type === 'gif')   { }
  * });
  */
-RecordRTC.getFromDisk = function(type, callback) {
+C_RecordRTC.getFromDisk = function(type, callback) {
     if (!callback) {
         throw 'callback is mandatory.';
     }
@@ -570,15 +570,15 @@ RecordRTC.getFromDisk = function(type, callback) {
  * This method can be used to store recorded blobs into IndexedDB storage.
  * @param {object} options - {audio: Blob, video: Blob, gif: Blob}
  * @method
- * @memberof RecordRTC
+ * @memberof C_RecordRTC
  * @example
- * RecordRTC.writeToDisk({
+ * C_RecordRTC.writeToDisk({
  *     audio: audioBlob,
  *     video: videoBlob,
  *     gif  : gifBlob
  * });
  */
-RecordRTC.writeToDisk = function(options) {
+C_RecordRTC.writeToDisk = function(options) {
     //fn_console_log('Writing recorded blob(s) to disk!');
     options = options || {};
     if (options.audio && options.video && options.gif) {
@@ -642,33 +642,33 @@ RecordRTC.writeToDisk = function(options) {
 };
 
 if (typeof module !== 'undefined' /* && !!module.exports*/ ) {
-    module.exports = RecordRTC;
+    module.exports = C_RecordRTC;
 }
 
 if (typeof define === 'function' && define.amd) {
-    define('RecordRTC', [], function() {
-        return RecordRTC;
+    define('C_RecordRTC', [], function() {
+        return C_RecordRTC;
     });
 }
 
 // __________________________
-// RecordRTC-Configuration.js
+// C_RecordRTC-Configuration.js
 
 /**
- * {@link RecordRTCConfiguration} is an inner/private helper for {@link RecordRTC}.
- * @summary It configures the 2nd parameter passed over {@link RecordRTC} and returns a valid "config" object.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * {@link C_RecordRTCConfiguration} is an inner/private helper for {@link C_RecordRTC}.
+ * @summary It configures the 2nd parameter passed over {@link C_RecordRTC} and returns a valid "config" object.
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
- * @typedef RecordRTCConfiguration
+ * @typedef C_RecordRTCConfiguration
  * @class
  * @example
- * var options = RecordRTCConfiguration(mediaStream, options);
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * var options = C_RecordRTCConfiguration(mediaStream, options);
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  * @param {object} config - {type:"video", disableLogs: true, numberOfAudioChannels: 1, bufferSize: 0, sampleRate: 0, video: HTMLVideoElement, getNativeBlob:true, etc.}
  */
 
-function RecordRTCConfiguration(mediaStream, config) {
+function C_RecordRTCConfiguration(mediaStream, config) {
     if (config.recorderType && !config.type) {
         if (config.recorderType === WhammyRecorder || config.recorderType === CanvasRecorder) {
             config.type = 'video';
@@ -720,16 +720,16 @@ function RecordRTCConfiguration(mediaStream, config) {
 // fn_getRecorderType.js
 
 /**
- * {@link fn_getRecorderType} is an inner/private helper for {@link RecordRTC}.
+ * {@link fn_getRecorderType} is an inner/private helper for {@link C_RecordRTC}.
  * @summary It returns best recorder-type available for your browser.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef fn_getRecorderType
  * @class
  * @example
  * var RecorderType = fn_getRecorderType(options);
  * var recorder = new RecorderType(options);
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  * @param {object} config - {type:"video", disableLogs: true, numberOfAudioChannels: 1, bufferSize: 0, sampleRate: 0, video: HTMLVideoElement, etc.}
  */
@@ -800,9 +800,9 @@ function fn_getRecorderType(mediaStream, config) {
 // MRecordRTC.js
 
 /**
- * MRecordRTC runs on top of {@link RecordRTC} to bring multiple recordings in a single place, by providing simple API.
- * @summary MRecordRTC stands for "Multiple-RecordRTC".
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * MRecordRTC runs on top of {@link C_RecordRTC} to bring multiple recordings in a single place, by providing simple API.
+ * @summary MRecordRTC stands for "Multiple-C_RecordRTC".
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef MRecordRTC
  * @class
@@ -822,7 +822,7 @@ function fn_getRecorderType(mediaStream, config) {
  * };
  * recorder.startRecording();
  * @see For further information:
- * @see {@link https://github.com/muaz-khan/RecordRTC/tree/master/MRecordRTC|MRecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC/tree/master/MRecordRTC|MRecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  */
 
@@ -895,7 +895,7 @@ function MRecordRTC(mediaStream) {
                 recorderType = mediaType.audio;
             }
 
-            this.audioRecorder = new RecordRTC(mediaStream, {
+            this.audioRecorder = new C_RecordRTC(mediaStream, {
                 type: 'audio',
                 bufferSize: this.bufferSize,
                 sampleRate: this.sampleRate,
@@ -934,7 +934,7 @@ function MRecordRTC(mediaStream) {
                 }
             }
 
-            this.videoRecorder = new RecordRTC(newStream, {
+            this.videoRecorder = new C_RecordRTC(newStream, {
                 type: 'video',
                 video: this.video,
                 canvas: this.canvas,
@@ -970,7 +970,7 @@ function MRecordRTC(mediaStream) {
             if (typeof mediaType.gif === 'function') {
                 recorderType = mediaType.gif;
             }
-            this.gifRecorder = new RecordRTC(mediaStream, {
+            this.gifRecorder = new C_RecordRTC(mediaStream, {
                 type: 'gif',
                 frameRate: this.frameRate || 200,
                 quality: this.quality || 10,
@@ -1182,7 +1182,7 @@ function MRecordRTC(mediaStream) {
      * recorder.writeToDisk();
      */
     this.writeToDisk = function() {
-        RecordRTC.writeToDisk({
+        C_RecordRTC.writeToDisk({
             audio: this.audioRecorder,
             video: this.videoRecorder,
             gif: this.gifRecorder
@@ -1234,7 +1234,7 @@ function MRecordRTC(mediaStream) {
  *     if(type === 'gif')   { }
  * });
  */
-MRecordRTC.getFromDisk = RecordRTC.getFromDisk;
+MRecordRTC.getFromDisk = C_RecordRTC.getFromDisk;
 
 /**
  * This method can be used to store recorded blobs into IndexedDB storage.
@@ -1248,10 +1248,10 @@ MRecordRTC.getFromDisk = RecordRTC.getFromDisk;
  *     gif  : gifBlob
  * });
  */
-MRecordRTC.writeToDisk = RecordRTC.writeToDisk;
+MRecordRTC.writeToDisk = C_RecordRTC.writeToDisk;
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.MRecordRTC = MRecordRTC;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.MRecordRTC = MRecordRTC;
 }
 
 var browserFakeUserAgent = 'Fake/5.0 (FakeOS) AppleWebKit/123 (KHTML, like Gecko) Fake/12.3.4567.89 Fake/123.45';
@@ -1470,7 +1470,7 @@ if (typeof MediaStream !== 'undefined') {
  * @returns {string} - formafted string
  * @example
  * bytesToSize(1024*1024*5) === '5 GB'
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  */
 function bytesToSize(bytes) {
     var k = 1000;
@@ -1487,7 +1487,7 @@ function bytesToSize(bytes) {
  * @param {string} fileName - Optional file name e.g. "Recorded-Video.webm"
  * @example
  * invokeSaveAsDialog(blob or file, [optional] fileName);
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  */
 function invokeSaveAsDialog(file, fileName) {
     if (!file) {
@@ -1545,13 +1545,13 @@ function invokeSaveAsDialog(file, fileName) {
 // Storage.js
 
 /**
- * Storage is a standalone object used by {@link RecordRTC} to store reusable objects e.g. "new AudioContext".
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * Storage is a standalone object used by {@link C_RecordRTC} to store reusable objects e.g. "new AudioContext".
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @example
  * Storage.AudioContext === webkitAudioContext
  * @property {webkitAudioContext} AudioContext - Keeps a reference to AudioContext object.
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  */
 
 var Storage = {};
@@ -1562,8 +1562,8 @@ if (typeof AudioContext !== 'undefined') {
     Storage.AudioContext = webkitAudioContext;
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.Storage = Storage;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.Storage = Storage;
 }
 
 function isMediaRecorderCompatible() {
@@ -1620,9 +1620,9 @@ function isMediaRecorderCompatible() {
  */
 
 /**
- * MediaStreamRecorder is an abstraction layer for "MediaRecorder API". It is used by {@link RecordRTC} to record MediaStream(s) in Firefox.
+ * MediaStreamRecorder is an abstraction layer for "MediaRecorder API". It is used by {@link C_RecordRTC} to record MediaStream(s) in Firefox.
  * @summary Runs top over MediaRecorder API.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef MediaStreamRecorder
  * @class
@@ -1642,7 +1642,7 @@ function isMediaRecorderCompatible() {
  *     // or
  *     var blob = recorder.blob;
  * });
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  * @param {object} config - {disableLogs:true, initCallback: function, mimeType: "video/webm", onAudioProcessStarted: function}
  */
@@ -1944,8 +1944,8 @@ function MediaStreamRecorder(mediaStream, config) {
     })();
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.MediaStreamRecorder = MediaStreamRecorder;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.MediaStreamRecorder = MediaStreamRecorder;
 }
 
 // source code from: http://typedarray.org/wp-content/projects/WebAudioRecorder/script.js
@@ -1954,9 +1954,9 @@ if (typeof RecordRTC !== 'undefined') {
 // StereoAudioRecorder.js
 
 /**
- * StereoAudioRecorder is a standalone class used by {@link RecordRTC} to bring "stereo" audio-recording in chrome.
+ * StereoAudioRecorder is a standalone class used by {@link C_RecordRTC} to bring "stereo" audio-recording in chrome.
  * @summary JavaScript standalone object for stereo audio recording.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef StereoAudioRecorder
  * @class
@@ -1969,7 +1969,7 @@ if (typeof RecordRTC !== 'undefined') {
  * recorder.stop(function(blob) {
  *     video.src = URL.createObjectURL(blob);
  * });
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  * @param {object} config - {sampleRate: 44100, bufferSize: 4096, numberOfAudioChannels: 1, etc.}
  */
@@ -2474,17 +2474,17 @@ function StereoAudioRecorder(mediaStream, config) {
     jsAudioNode.connect(context.destination);
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.StereoAudioRecorder = StereoAudioRecorder;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.StereoAudioRecorder = StereoAudioRecorder;
 }
 
 // _________________
 // CanvasRecorder.js
 
 /**
- * CanvasRecorder is a standalone class used by {@link RecordRTC} to bring HTML5-Canvas recording into video WebM. It uses HTML2Canvas library and runs top over {@link Whammy}.
+ * CanvasRecorder is a standalone class used by {@link C_RecordRTC} to bring HTML5-Canvas recording into video WebM. It uses HTML2Canvas library and runs top over {@link Whammy}.
  * @summary HTML2Canvas recording into video WebM.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef CanvasRecorder
  * @class
@@ -2494,7 +2494,7 @@ if (typeof RecordRTC !== 'undefined') {
  * recorder.stop(function(blob) {
  *     video.src = URL.createObjectURL(blob);
  * });
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {HTMLElement} htmlElement - querySelector/getElementById/getElementsByTagName[0]/etc.
  * @param {object} config - {disableLogs:true, initCallback: function}
  */
@@ -2784,17 +2784,17 @@ function CanvasRecorder(htmlElement, config) {
     var whammy = new Whammy.Video(100);
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.CanvasRecorder = CanvasRecorder;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.CanvasRecorder = CanvasRecorder;
 }
 
 // _________________
 // WhammyRecorder.js
 
 /**
- * WhammyRecorder is a standalone class used by {@link RecordRTC} to bring video recording in Chrome. It runs top over {@link Whammy}.
+ * WhammyRecorder is a standalone class used by {@link C_RecordRTC} to bring video recording in Chrome. It runs top over {@link Whammy}.
  * @summary Video recording feature in Chrome.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef WhammyRecorder
  * @class
@@ -2804,7 +2804,7 @@ if (typeof RecordRTC !== 'undefined') {
  * recorder.stop(function(blob) {
  *     video.src = URL.createObjectURL(blob);
  * });
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object fetched using getUserMedia API or generated using captureStreamUntilEnded or WebAudio API.
  * @param {object} config - {disableLogs: true, initCallback: function, video: HTMLVideoElement, etc.}
  */
@@ -3147,8 +3147,8 @@ function WhammyRecorder(mediaStream, config) {
     var whammy;
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.WhammyRecorder = WhammyRecorder;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.WhammyRecorder = WhammyRecorder;
 }
 
 // https://github.com/antimatter15/whammy/blob/master/LICENSE
@@ -3160,9 +3160,9 @@ if (typeof RecordRTC !== 'undefined') {
 // should we provide an option to record via Whammy.js or MediaRecorder API is a better solution?
 
 /**
- * Whammy is a standalone class used by {@link RecordRTC} to bring video recording in Chrome. It is written by {@link https://github.com/antimatter15|antimatter15}
+ * Whammy is a standalone class used by {@link C_RecordRTC} to bring video recording in Chrome. It is written by {@link https://github.com/antimatter15|antimatter15}
  * @summary A real time javascript webm encoder based on a canvas hack.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef Whammy
  * @class
@@ -3170,7 +3170,7 @@ if (typeof RecordRTC !== 'undefined') {
  * var recorder = new Whammy().Video(15);
  * recorder.add(context || canvas || dataURL);
  * var output = recorder.compile();
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  */
 
 var Whammy = (function() {
@@ -3585,17 +3585,17 @@ var Whammy = (function() {
     };
 })();
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.Whammy = Whammy;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.Whammy = Whammy;
 }
 
 // ______________ (indexed-db)
 // DiskStorage.js
 
 /**
- * DiskStorage is a standalone object used by {@link RecordRTC} to store recorded blobs in IndexedDB storage.
+ * DiskStorage is a standalone object used by {@link C_RecordRTC} to store recorded blobs in IndexedDB storage.
  * @summary Writing blobs into IndexedDB.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @example
  * DiskStorage.Store({
@@ -3615,7 +3615,7 @@ if (typeof RecordRTC !== 'undefined') {
  * @property {function} Store - This method stores blobs in IndexedDB.
  * @property {function} onError - This function is invoked for any known/unknown error.
  * @property {string} dataStoreName - Name of the ObjectStore created in IndexedDB storage.
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  */
 
 
@@ -3761,16 +3761,16 @@ var DiskStorage = {
     dbName: null
 };
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.DiskStorage = DiskStorage;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.DiskStorage = DiskStorage;
 }
 
 // ______________
 // GifRecorder.js
 
 /**
- * GifRecorder is standalone calss used by {@link RecordRTC} to record video or canvas into animated gif.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * GifRecorder is standalone calss used by {@link C_RecordRTC} to record video or canvas into animated gif.
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef GifRecorder
  * @class
@@ -3780,7 +3780,7 @@ if (typeof RecordRTC !== 'undefined') {
  * recorder.stop(function(blob) {
  *     img.src = URL.createObjectURL(blob);
  * });
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStream} mediaStream - MediaStream object or HTMLCanvasElement or CanvasRenderingContext2D.
  * @param {object} config - {disableLogs:true, initCallback: function, width: 320, height: 240, frameRate: 200, quality: 10}
  */
@@ -4013,8 +4013,8 @@ function GifRecorder(mediaStream, config) {
     var gifEncoder;
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.GifRecorder = GifRecorder;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.GifRecorder = GifRecorder;
 }
 
 // ______________________
@@ -4027,7 +4027,7 @@ if (typeof RecordRTC !== 'undefined') {
 /**
  * MultiStreamRecorder can record multiple videos in single container.
  * @summary Multi-videos recorder.
- * @license {@link https://github.com/muaz-khan/RecordRTC#license|MIT}
+ * @license {@link https://github.com/muaz-khan/C_RecordRTC#license|MIT}
  * @author {@link http://www.MuazKhan.com|Muaz Khan}
  * @typedef MultiStreamRecorder
  * @class
@@ -4043,7 +4043,7 @@ if (typeof RecordRTC !== 'undefined') {
  *     // or
  *     var blob = recorder.blob;
  * });
- * @see {@link https://github.com/muaz-khan/RecordRTC|RecordRTC Source Code}
+ * @see {@link https://github.com/muaz-khan/C_RecordRTC|C_RecordRTC Source Code}
  * @param {MediaStreams} mediaStreams - Array of MediaStreams.
  * @param {object} config - {disableLogs:true, frameInterval: 10, mimeType: "video/webm"}
  */
@@ -4335,6 +4335,6 @@ function MultiStreamRecorder(arrayOfMediaStreams, options) {
     };
 }
 
-if (typeof RecordRTC !== 'undefined') {
-    RecordRTC.MultiStreamRecorder = MultiStreamRecorder;
+if (typeof C_RecordRTC !== 'undefined') {
+    C_RecordRTC.MultiStreamRecorder = MultiStreamRecorder;
 }

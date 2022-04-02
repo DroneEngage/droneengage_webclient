@@ -5,46 +5,74 @@
     <title>Andruav Geo Fence Manager</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script language="JavaScript" type="text/javascript" src="./js/js_siteselector.js"></script>
+	<link rel="stylesheet" href="./scss/custom.scss">
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger.css">	
 	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger-theme-future.css">
-	<script src="./js/react/react.js"></script>
-    <script src="./js/react/react-dom.js"></script>
-    <script src="./js/react/browser.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/leaflet.1.7.css">
+	<link rel="stylesheet" type="text/css" href="./css/leaflet-geoman.css">
 	<link rel="stylesheet" type="text/css" href="./css/css_styles.css">	
 	<link rel="stylesheet" type="text/css" href="./css/css_styles2.css">	
-    <link rel="stylesheet" type="text/css" href="./css/css_mapeditor.css">	
-		
+    <link rel="stylesheet" type="text/css" href="./css/css_mapeditor.css">
+	
+	
+	<script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-3.6.0.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
 
-	<script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-3.4.1.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="./js/bootstrap.min.js"></script>
-
-    <script language="JavaScript" type="text/javascript" src="./js/js_dictionary.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/events.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/jspack.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/underscore-esm-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/js_mavlink_v2.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_mavlinkftpprotocol.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_dictionary.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_strings.js"></script>
     <script language="JavaScript" type="text/javascript" src="./js/js_helpers.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_globals.js"></script>
-  	<script language="JavaScript" type="text/javascript" src="./js/js_eventEmitter.js"></script>
-    <script language="JavaScript" type="text/javascript" src="./js/js_localStorage.js"></script>
+	<script language="JavaScript" type="text/javascript" >
+	CONST_MAP_EDITOR = true;
+	</script>
+  	<script language="JavaScript" type="text/javascript" src="./js/js_localStorage.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_speak.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_eventEmitter.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_commands.js"></script>
-    <script language="JavaScript" type="text/javascript" src="./js/js_andruavAuth.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/js_circularBuffer.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/leaf/leaflet.1.7.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/leaf/leaflet.rotatedMarker.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/leaf/leaflet-geoman.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_andruavAuth.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_andruavUnit.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_andruavclient2.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_mapmission.js"></script>
-	<script language="JavaScript" type="text/javascript" src="./js/js_mapeditor.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_leafletmap.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/messenger/messenger.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/messenger/messenger-theme-future.js"></script> 
-	<script type="text/babel" src="./js/components/jsc_login.js"></script>
- 	<script type="text/babel" src="./js/components/jsc_fenceControl.js"></script>
-	<script type="text/babel" src="./js/components/jsc_fenceGlobalSettings.js"></script>
-	<script type="text/babel" src="./js/components/jsc_missionItemsControl.js"></script>
+	
+	<script src="./js/react2/babel.js"></script>    
+    <script src="./js/react2/react.development.js"></script>    
+	<script src="./js/react2/react-dom.development.js"></script>    
+	<script>
+		Babel.registerPreset("my-preset", {
+		  presets: [
+			[Babel.availablePresets["es2015"], { "modules": false }],
+			[Babel.availablePresets["react"]]
+  
+		  ],
+		  plugins: [
+			[Babel.availablePlugins["transform-modules-umd"]]
+		  ],
+		  moduleId: "main"
+		});
+	  </script>
 
-	<script language="JavaScript" type="text/javascript" src="./js/js_mappage.js"></script>
+	
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_login.jsx"></script>
+ 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_fenceControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_fenceGlobalSettings.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_missionItemsControl.jsx"></script>
 
-
-     </head>
+	<script language="JavaScript" type="text/javascript" src="./js/js_main.js"></script>
+	</head>
   <body>
 	<div id="rowheader" class="row margin_zero">
 	<div id="header"></div>
@@ -59,7 +87,7 @@
                         <!--  Maps & Displays -->
                         <div class="monitorview " id="map_view">
                             <div class="monitorview" id="message_log" style='display:none;'>&nbsp;</div>
-                            <div id='geofence_map' class="org_border fullscreen"></div>
+                            <div id='mapid' class="org_border fullscreen"></div>
                         </div>
                     </div>
    
@@ -67,19 +95,17 @@
 					<!-- Save Modal w Action -->
 					<div id="modal_saveConfirmation" class="modal fade" role="dialog">
 					<div class="modal-dialog">
-
-						<!-- Modal content-->
 						<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title bg-danger"><strong>Attention:</strong> Delete Operation.</h4>
-						</div>
-						<div class="modal-body">
+							<div class="modal-header">
+								<h4 id="title" class="modal-title bg-success p-1 text-white"><strong>Attention:</strong> Delete Operation.</h4>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+						<div class="modal-body  text-white">
 							<p>Are you sure you want to delete current active Geo-Fence and replace it with new ones ?</p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-muted" data-dismiss="modal">Cancel</button>
-							<button id="geo_btn_confirm" type="button" class="btn btn-danger" data-dismiss="modal">Submit</button>
+							<button type="button" class="btn btn-muted" data-bs-dismiss="modal">Cancel</button>
+							<button id="modal_btn_confirm" type="button" class="btn btn-danger" data-bs-dismiss="modal" >Submit</button>
 						</div>
 						</div>
 
@@ -94,10 +120,10 @@
 						<!-- Modal content-->
 						<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 id='modal-title' class="modal-title text-danger">3enwan</h4>
+							<h4 id="title" class="modal-title bg-success p-1 text-white"><strong>Attention:</strong> Delete Operation.</h4>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body">
+						<div class="modal-body  text-white">
 							<p>Mota2aked wala la2</p>
 						</div>
 						<div class="modal-footer">
@@ -117,12 +143,12 @@
 
 								<div class="row">	
 									<div id="video_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
-									type="button" id="btn_missions" class="btn btn-success btn-xs button_large">Mission Plans</button><button
-									type="button" id="btn_geofences" class="btn btn-success btn-xs button_large">Geo Feces</button>
+									type="button" id="btn_missions" class="btn btn-success btn-sm button_large">Mission Plans</button><button
+									type="button" id="btn_geofences" class="btn btn-success btn-sm button_large">Geo Feces</button>
 									</div>
 								</div>
 								<div id="fenceControl_section" class="row">	
-									<div id="fenceControl" class='col  col-sm-12 container-fluid localcontainer'></div>
+									<div id="fenceControl" class='col  col-sm-12 m-1 p-1'></div>
 								</div>
 								<div id="c_missioncontrol_section" class="row">	
 									<div id="c_missioncontrol" class='col  col-sm-12 container-fluid localcontainer'></div>
@@ -140,14 +166,6 @@
    <div id="footer"></div>
   </body>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&libraries=drawing&callback=initMap"></script>
-    <script> 
-		$(function(){
-			
-		  $("#header").load("header.html"); 
-		  $("#footer").load("footer.html"); 
-			
-		});
-	</script>  
+    <script src="./js/js_main_last.js"></script>  
 
 </html>

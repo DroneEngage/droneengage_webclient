@@ -6,15 +6,18 @@
 *********************************************************************************** */
 
 
-var CLSS_CustomCircularBuffer = function (p_length)
+class CLSS_CustomCircularBuffer 
 {
 
+    constructor (p_length)
+    {
     this.m_buffer = new Array(p_length);
     this.m_head = 0;
     this.m_tail = 0;
     this.m_unitCount =0;
+    }
 
-    this.fn_add = function (p_toAdd, p_forgetOld,fn_onDeleteCallBack) 
+    fn_add (p_toAdd, p_forgetOld,fn_onDeleteCallBack) 
     {
             if ((p_forgetOld == true) || (this.m_unitCount < this.m_buffer.length))
             {
@@ -35,7 +38,7 @@ var CLSS_CustomCircularBuffer = function (p_length)
             this.m_head = this.m_head % this.m_buffer.length;
     }
 
-    this.fn_get = function (p_ignoreUnderFlow)
+    fn_get (p_ignoreUnderFlow)
     {
         var t = null;
         if (this.m_unitCount ==0) return null;
@@ -57,20 +60,20 @@ var CLSS_CustomCircularBuffer = function (p_length)
         return t;
     }
 
-    this.fn_flush = function ()
+    fn_flush  ()
     {
         this.m_head = 0;
         this.m_tail = 0;
         this.m_unitCount =0;
     }
 
-    this.toString = function ()
+    toString  ()
     {
          return "CLSS_CustomCircularBuffer(size=" + this.m_buffer.length + ", head=" + this.m_head + ", tail=" + this.m_tail + ")";
     }
 
 
-    this.fn_bufferFull = function ()
+    fn_bufferFull  ()
     {
         return  (this.m_unitCount >= this.m_buffer.length);
     }

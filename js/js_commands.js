@@ -131,7 +131,9 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 		return wayPoint;
 	}
 	
-
+	/**
+	 * Converts mission to Andruav JSON commands.
+	 */
 	static fn_toJSON (p_markers)
     {
 		var v_cmd = {};
@@ -144,14 +146,14 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 			var step = {};
 			var currentWayPoint = null;
 			var marker = p_markers[i];
-			switch (marker.m_missionItem.missionType)
+			switch (marker.m_missionItem.m_missionType)
 			{
 				case CONST_WayPoint_TYPE_WAYPOINTSTEP:
 					step = {};
 					step.t = CONST_WayPoint_TYPE_WAYPOINTSTEP;
 					step.s = seq;
-					step.a = (/*String.format(Locale.US, "%4.6f", */marker.getPosition().lat());
-					step.g = (/*String.format(Locale.US, "%4.6f", */marker.getPosition().lng());
+					step.a = (/*String.format(Locale.US, "%4.6f", */marker.getLatLng().lat);
+					step.g = (/*String.format(Locale.US, "%4.6f", */marker.getLatLng().lng);
 					step.l = (/*String.format(Locale.US, "%4.6f", */marker.m_missionItem.alt);
 					step.h = (/*String.format(Locale.US, "%4.6f", */0);
 					step.y = (/*String.format(Locale.US, "%4.6f", */0);
@@ -163,15 +165,15 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 								step.param2 = 5; // Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)
 								step.param3 = 0; // 0 to pass through the WP, if > 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.
 								step.param4 = 0.0; 
-								step.param5 = marker.getPosition().lat();
-								step.param6 = marker.getPosition().lng();
+								step.param5 = marker.getLatLng().lat;
+								step.param6 = marker.getLatLng().lng;
 								step.param7 = marker.m_missionItem.alt;
 								*/
 					seq +=1;
 					break;
 				case CONST_WayPoint_TYPE_EKLA3:
-								//fn_addMissionItem(22,[0.0,0.0,0.0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
-								//fn_addMissionItem(16,[0,5,0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
+								//fn_addMissionItem(22,[0.0,0.0,0.0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
+								//fn_addMissionItem(16,[0,5,0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
 					step = {};
 					step.t = CONST_WayPoint_TYPE_EKLA3;
 					step.s = seq;
@@ -183,8 +185,8 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 					step = {};
 					step.t = CONST_WayPoint_TYPE_WAYPOINTSTEP;
 					step.s = seq;
-					step.a = (/*String.format(Locale.US, "%4.6f", */marker.getPosition().lat());
-					step.g = (/*String.format(Locale.US, "%4.6f", */marker.getPosition().lng());
+					step.a = (/*String.format(Locale.US, "%4.6f", */marker.getLatLng().lat);
+					step.g = (/*String.format(Locale.US, "%4.6f", */marker.getLatLng().lng);
 					step.l = (/*String.format(Locale.US, "%4.6f", */marker.m_missionItem.alt);
 					step.h = (/*String.format(Locale.US, "%4.6f", */0);
 					step.y = (/*String.format(Locale.US, "%4.6f", */0);
@@ -197,20 +199,20 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 					step.param2 = 0.0;
 					step.param3 = 0.0;
 					step.param4 = 0.0;
-					step.param5 = marker.getPosition().lat();
-					step.param6 = marker.getPosition().lng();
+					step.param5 = marker.getLatLng().lat;
+					step.param6 = marker.getLatLng().lng;
 					step.param7 = marker.m_missionItem.alt;
 					*/
 					seq +=1;
 					break;
 				
 				case CONST_WayPoint_TYPE_HOBOOT:
-					//fn_addMissionItem(21,[0.0,0.0,0.0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
+					//fn_addMissionItem(21,[0.0,0.0,0.0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
 					step = {};
 					step.t = CONST_WayPoint_TYPE_HOBOOT;
 					step.s = seq;
-					step.a = (/*String.format(Locale.US, "%4.6f", */marker.getPosition().lat());
-					step.g = (/*String.format(Locale.US, "%4.6f", */marker.getPosition().lng());
+					step.a = (/*String.format(Locale.US, "%4.6f", */marker.getLatLng().lat);
+					step.g = (/*String.format(Locale.US, "%4.6f", */marker.getLatLng().lng);
 					step.l = (/*String.format(Locale.US, "%4.6f", */marker.m_missionItem.alt);
 					v_cmd[seq.toString()]= step;
 					
@@ -220,15 +222,15 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 					step.param2 = 0.0;
 					step.param3 = 0.0;
 					step.param4 = 0.0;
-					step.param5 = marker.getPosition().lat();
-					step.param6 = marker.getPosition().lng();
+					step.param5 = marker.getLatLng().lat;
+					step.param6 = marker.getLatLng().lng;
 					step.param7 = marker.m_missionItem.alt;
 					*/
 					seq +=1;
 					break;
 				
 				case CONST_WayPoint_TYPE_RTL:
-					//fn_addMissionItem(16,[0,5,0,0.0,marker.getPosition().lat(),marker.getPosition().lng(),marker.m_missionItem.alt]);
+					//fn_addMissionItem(16,[0,5,0,0.0,marker.getLatLng().lat,marker.getLatLng().lng,marker.m_missionItem.alt]);
 					//fn_addMissionItem(20,[0,0,0.0,0.0,0.0,0.0,0.0]);
 					step = {};
 					step.t = CONST_WayPoint_TYPE_RTL;
@@ -242,8 +244,8 @@ class CLSS_AndruavResala_WayPoints extends CLSS_AndruavResala
 					step.param2 = 5; // Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)
 					step.param3 = 0; // 0 to pass through the WP, if > 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.
 					step.param4 = 0.0; 
-					step.param5 = marker.getPosition().lat();
-					step.param6 = marker.getPosition().lng();
+					step.param5 = marker.getLatLng().lat;
+					step.param6 = marker.getLatLng().lng;
 					step.param7 = marker.m_missionItem.alt;
 
 					nextstep.id = missionCounter;

@@ -6,8 +6,6 @@ html {
 }
 
 body {
-    background-color: #ffffff;
-
     margin:0;
     height: 100%;
     width: 100%;
@@ -95,7 +93,12 @@ h1.font-thin
 	top:0;
 }
 
-
+.centered 
+{
+	position: fixed; /* or absolute */
+	top: 50%;
+	left: 50%;
+}
 
 
 .trans {
@@ -128,12 +131,30 @@ h1.font-thin
 	margin-right: 10px;
 }
 
-.modal-title 
+/* .modal-title 
 {
 	padding-left: 5px !important;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	
+} */
+
+.width_fit
+{
+	width: fit-content !important;
+}
+
+.width_fit_max
+{
+	width: max-content !important;
+}
+
+.modaless{
+    top:10%;
+    left:50%;
+    bottom:auto;
+    right:auto;
+    margin-left:-300px;
 }
 .rtl
 {
@@ -353,7 +374,6 @@ div#header {
     width:100%;
 	font: bold 16px arial, helvetica, sans-serif;
 	
-	background-color: #FFFFFF
 }
 
 
@@ -736,6 +756,7 @@ tr.IsShutdown_false td.camera.m_IsGCS_false
     .gi-5x{font-size: 5em;}
       
 	.si-05x{font-size: 0.5em;}
+	.si-06x{font-size: 0.6em;}
 	.si-07x{font-size: 0.7em;}
 	.si-09x{font-size: 0.9em;}
 	   
@@ -750,7 +771,6 @@ tr.IsShutdown_false td.camera.m_IsGCS_false
     
     .bg-4 { 
     background-color: #2f2f2f;
-    color: #ffffff;
     }
  
     .bg-5

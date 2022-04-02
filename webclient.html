@@ -12,21 +12,28 @@
 					  img-src http://192.168.1.139:88  'self' https://maps.googleapis.com https://maps.gstatic.com data: image/svg+xml; 
 					  font-src https: 'self' https://fonts.googleapis.com/css https://fonts.gstatic.com;"> -->
 	<meta charset="utf-8">
+	<meta http-equiv="Pragma" content="no-cache">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script language="JavaScript" type="text/javascript" src="./js/js_siteselector.js"></script>
+	<link rel="stylesheet" href="./scss/custom.scss">
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	
 	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger.css">
 	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger-theme-future.css">
 	<link rel="stylesheet" type="text/css" href="./css/leaflet.1.7.css">
-	<script src="./js/react/react.js"></script>
-	<script src="./js/react/react-dom.js"></script>
-	<script src="./js/react/browser.min.js"></script>
-	<script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/leaflet-geoman.css">
+	
+	<title>Including Bootstrap Icons in HTML</title>
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="./bootstrap-icons/font/bootstrap-icons.css">
+
+	<script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-3.6.0.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/jquery/jquery-ui.min.js"></script>
-	<script language="JavaScript" type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/jquery.kontrol.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/leaf/leaflet.1.7.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/leaf/leaflet.rotatedMarker.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/leaf/leaflet-geoman.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/events.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/jspack.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/3rdparty/underscore-esm-min.js"></script>
@@ -38,6 +45,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/css_styles2.css">
 	<link rel="stylesheet" type="text/css" href="./css/css_gamepad.css">
 	<script language="JavaScript" type="text/javascript" src="./js/js_mavlink_v2.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./js/js_mavlinkftpprotocol.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_dictionary.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_strings.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_helpers.js"></script>
@@ -59,14 +67,38 @@
 	<script language="JavaScript" type="text/javascript" src="./js/js_leafletmap.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/messenger/messenger.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/messenger/messenger-theme-future.js"></script>
-	<script type="text/babel" src="./js/components/knob.js"></script>
-	<script type="text/babel" src="./js/components/jsc_login.js"></script>
-	<script type="text/babel" src="./js/components/jsc_unitControl.js"></script>
-	<script type="text/babel" src="./js/components/jsc_globalSettings.js"></script>
-	<script type="text/babel" src="./js/components/jsc_videoDisplayComponent.js"></script>
-	<script type="text/babel" src="./js/components/jsc_streamDialogControl.js"></script>
-	<script type="text/babel" src="./js/components/jsc_cameraDialogControl.js"></script>
-	<script type="text/babel" src="./js/components/jsc_gamepadControl.js"></script>
+	
+	<script src="./js/react2/babel.js"></script>    
+    <script src="./js/react2/react.development.js"></script>    
+	<script src="./js/react2/react-dom.development.js"></script>    
+	<script>
+		Babel.registerPreset("my-preset", {
+		  presets: [
+			[Babel.availablePresets["es2015"], { "modules": false }],
+			[Babel.availablePresets["react"]]
+  
+		  ],
+		  plugins: [
+			[Babel.availablePlugins["transform-modules-umd"]]
+		  ],
+		  moduleId: "main"
+		});
+	</script>
+
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_ctrl_hudControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_ctrl_directionsControl.jsx"></script>
+
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_login.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_messagesControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_unitControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_globalSettings.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_gui_message.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_videoDisplayComponent.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_streamDialogControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_cameraDialogControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_servoControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_gamepadControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_unitParametersList.jsx"></script>
 	
 	<script language="JavaScript" type="text/javascript" src="js/js_main.js"></script>
 
@@ -80,6 +112,9 @@
 	
 	<div class='container-fluid text-center' id='mainBody'>
 		<div id="row1" class="row margin_zero">
+			<div id='CTRL_streamCtrl' >
+					
+			</div>
 			<div id="row12" class="col-sm-6 col-md-6 col-lg-8">
 				<div id="displays" class="container-fluid localcontainer">
 					<!--  Maps & Displays -->
@@ -88,8 +123,8 @@
 
 					</div>
 					<div id="video_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
-							type="button" id="btn_showMap" class="btn btn-danger btn-xs ctrlbtn">MAP</button><button
-							type="button" id="btn_showVideo" class="btn btn-warning btn-xs ctrlbtn">Camera</button>
+							type="button" id="btn_showMap" class="btn btn-danger btn-sm ctrlbtn"><strong>MAP</strong></button><button
+							type="button" id="btn_showVideo" class="btn btn-warning btn-sm ctrlbtn"><strong>CAMERA</strong></button>
 					</div>
 					<div class="monitorview " id="div_map_view">
 						<div id='mapid' class="org_border fullscreen"></div>
@@ -101,11 +136,21 @@
 					
 				</div>
 				<!-- displays-->
-				<div id="modal_fpv" data-toggle="tooltip" title="image" class="localcontainer css_ontop">
-					<button id="btnclose" type="btnclose" class="close">&times;</button>
+				<div id="modal_fpv"  title="image" class="localcontainer css_ontop">
+					<div class="card-header">
+						<div class="row">
+						  <div class="col-10">
+							<h3 class="text-success text-start">Image</h3>
+						  </div>
+						  <div class="col-2 float-right">
+						  <button id="btnclose" type="button" class="btn-close"></button>
+						   </div>
+						</div>
+					  </div>
 					<div id="modal_fpv_img" class="form-group text-center">
 						<img id='unitImg' class="img-rounded" src='images/camera_img.png' />
 					</div>
+					
 					<div id="modal_fpv_footer" class="form-group text-center localcontainer">
 						<button id="unitImg_save" type="button" class="btn btn-danger">Save</button>
 						<button id="btnGoto" type="button" class="btn btn-success">Goto</button>
@@ -113,19 +158,30 @@
 				</div>
 
 
-				<div id="modal_ctrl_yaw" title="YAW Control" class="localcontainer css_ontop">
-					<button id="btnclose" type="btnclose" class="close">&times;</button>
+				<div id="modal_ctrl_yaw" title="YAW Control" class="card css_ontop border-light p-2">
+					<div class="card-header">
+						<div class="row">
+						  <div class="col-10">
+							<h3 class="text-success text-start">YAW</h3>
+						  </div>
+						  <div class="col-2 float-right">
+						  <button id="btnclose" type="button" class="btn-close"></button>
+						   </div>
+						</div>
+					  </div>
+					<div class="card-body">
 					<div id="yaw_knob_out" class="form-group text-centermodal_dialog_style">
 						<input id="yaw_knob" class=" input-sm dial" data-width="180" data-height="180" data-min=0
 							data-max=360 value="0" />
 					</div>
-					<div id="modal_yaw_knob_footer" class="form-group text-center localcontainer">
+				</div>
+				<div id="modal_yaw_knob_footer" class="form-group text-center ">
 						<div class = "row">
 							<div class="btn-group">
-								<button id="opaque_btn" type="button" class="btn btn-xs btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">opaque</button>
-								<button id="btnGoto" type="button" class="btn btn-xs btn-success">Goto</button>
-								<button id="btnYaw" type="button" class="btn btn-xs btn-danger">YAW</button>
-								<button id="btnResetYaw" type="button" class="btn btn-xs btn-warning">reset YAW</button>
+								<button id="opaque_btn" type="button" class="btn btn-sm btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">opaque</button>
+								<button id="btnGoto" type="button" class="btn btn-sm btn-success">Goto</button>
+								<button id="btnYaw" type="button" class="btn btn-sm btn-danger">YAW</button>
+								<button id="btnResetYaw" type="button" class="btn btn-sm btn-warning">reset YAW</button>
 							</div>
 						</div>
 					</div>
@@ -135,14 +191,14 @@
 					
 				</div>
 
-				<div id='CTRL_streamCtrl'>
-					
-				</div>
 				
 				<div id='sercoCtrl'>
 					
 				</div>
 				
+				<div id='modal_uplCtrl'>
+					
+				</div>
 				<div id='gamepadCtrl'>
 					
 				</div>
@@ -151,15 +207,17 @@
 			</div>
 			<!--  EOF row12 -->
 			<div id="row11" class="col-sm-6 col-md-6 col-lg-4">
+				
+				
 				<div class="row">
-					<div id="login_div" class=' col-sm-12 container-fluid localcontainer'>
+					<div id="login_div" class=' col-sm-12 padding_zero'>
 					</div>
 					<!-- EOF login -->
 				</div>
 
 				<div class="row">
-					<div id='andruavUnits' class='col-sm-12 container-fluid localcontainer'>
-						<div id="andruavUnits_in" class='container-fluid gray_border localcontainer'>
+					<div id='andruavUnits' class='col-sm-12 padding_zero'>
+						<div id="andruavUnits_in" class=''>
 							<p class="bg-warning  text-center">
 								<strong>Global Settings</strong>
 							</p>
@@ -171,14 +229,10 @@
 							</p>
 							<!-- EOF andruavUnits_in -->
 						</div>
-						<div id="alertdiv" class="container-fluid gray_border localcontainer">
-							<div id="alert" class="alert alert-danger">
-								<button type="button" class="close" aria-hidden="true">&times;</button>
-								<strong id='title'>Title!</strong>
-								<p id='msg'> Alert body ... </p>
-							</div>
+						<div id="guiMessageCtrl">
 						</div>
-						<div id='andruavUnitList' class='container-fluid gray_border localcontainer'></div>
+						
+						<div id='andruavUnitList' class=''></div>
 						<!-- EOF andruavUnits -->
 					</div>
 				</div>
@@ -214,82 +268,47 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="changespeed_modal">
+		<div id="changespeed_modal"  class="modal fade"  role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h4 id='title' class="modal-title text-primary">Change Speed</h4>
+						<h4 id='title' class="modal-title bg-warning rounded_10px p-1 text-white">Change Speed</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="container"></div>
 					<div class="modal-body">
+					<div class="container"></div>
 						<div class="input-group">
-							<input id="txtSpeed" type="text" class="form-control" placeholder=""
+							<input id="txtSpeed" type="text" class="form-control rounded-3 me-3" placeholder=""
 								aria-describedby="basic-addon2">
 							<span id="txtSpeedUnit" class="input-group-addon">meters</span>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<!--<a href="#" data-dismiss="modal" class="btn">Close</a>-->
-						<button id="btnCancel" type="button" data-dismiss="modal" class="btn btn-muted">Cancel</button>
-						<button id="btnOK" type="button" data-dismiss="modal" class="btn btn-success">GO</button>
+						<button id="btnCancel" type="button" data-bs-dismiss="modal" class="btn btn-muted">Cancel</button>
+						<button id="btnOK" type="button" data-bs-dismiss="modal" class="btn btn-warning">GO</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- Save Modal w Action -->
-		<div id="modal_saveConfirmation" class="modal fade" role="dialog">
+		<div id="modal_saveConfirmation" class="modal fade"  role="dialog">
 			<div class="modal-dialog">
-
-				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 id="title" class="modal-title bg-success"><strong>Attention:</strong> Delete Operation.</h4>
+						<h4 id="title" class="modal-title bg-success p-1 text-white"><strong>Attention:</strong> Delete Operation.</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body text-white">
 						<p>Are you sure you want to delete current active Geo-Fence and replace it with new ones ?</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-muted" data-dismiss="modal">Cancel</button>
-						<button id="geo_btn_confirm" type="button" class="btn btn-danger"
-							data-dismiss="modal">Submit</button>
+						<button id="btnCancel" type="button" data-bs-dismiss="modal" class="btn btn-secondary" >Cancel</button>
+						<button id="modal_btn_confirm" type="button" data-bs-dismiss="modal" class="btn btn-danger">Submit</button>
 					</div>
 				</div>
-
 			</div>
 		</div>
-		<!--
-			<div class="hidden">
-			<div id="div_video_template" >
-				<div id='css_tvideo-div'>
-				</div>
-				<div id="css_video_ctrl_panel" class="row margin_zero">
-							<div class="col-xs-6">
-								<div class="btn-group">
-										<button id="btnclose" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Close</button>
-										<button id="btn_videorecord" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Record Web</button>
-										<button id="btnGoto" type="button" class="btn btn-success">Goto</button>
-								</div>
-							</div>
-							<div id='gimbaldiv' class="col-xs-6">
-								<div>
-									<button id="btnpitchp" type="button" class="btn btn-primary btn-xs">P +</button>
-									<button id="btnrollp" type="button" class="btn btn-primary btn-xs">R +</button>
-									<button id="btnyawp" type="button" class="btn btn-primary btn-xs">Y +</button>
-								</div>
-								<div>
-									<button id="btnpitchm" type="button" class="btn btn-primary btn-xs">P -</button>
-									<button id="btnrollm" type="button" class="btn btn-primary btn-xs">R -</button>
-									<button id="btnyawm" type="button" class="btn btn-primary btn-xs">Y -</button>
-									
-								</div>
-							</div>
-						</div>
-
-			</div>
-			</div>
-			-->
+		
 		<div id="footer"></div>
 </body>
 

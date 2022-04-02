@@ -1,160 +1,151 @@
-var AndruavLibs = AndruavLibs || { REVISION: 'BETA' };
+/*jshint esversion: 6 */
 
-(function (global)
-{
 
-    var Me = this;
-	
-    this.isSupported = function ()
-    {
-        return (typeof(Storage) !== "undefined")
-    }
+class C_LocalStorage {
 
-    function init()
-    {
-        if (Me.isSupported())
-        {
-            // reset defaults with saved values if exist
-            v_useMetricSystem               = Me.fn_getMetricSystem();
-            v_gamePadMode                   = Me.fn_getGamePadMode();
-            CONST_DEFAULT_ALTITUDE          = Me.fn_getDefaultAltitude();
-            CONST_DEFAULT_RADIUS            = Me.fn_getDefaultRadius();
+    constructor() {
+        if (this.isSupported()) { // reset defaults with saved values if exist
+            v_useMetricSystem = this.fn_getMetricSystem();
+            v_gamePadMode = this.fn_getGamePadMode();
+            CONST_DEFAULT_ALTITUDE = this.fn_getDefaultAltitude();
+            CONST_DEFAULT_RADIUS = this.fn_getDefaultRadius();
         }
     }
 
 
+    isSupported() {
+        return(typeof(Storage) !== "undefined")
+    }
 
+    getDefaultAttribute(name, defaultValue) {
+        if (!this.isSupported()) 
+            return defaultValue;
+        
 
-    function getDefaultAttribute (name,defaultValue)
-    {
-        if (!Me.isSupported()) return defaultValue;
-
-        if (localStorage[name] != null)
-        {
-            return localStorage[name];     
-        }
-        else
-        {
+        if (localStorage[name] != null) {
+            return localStorage[name];
+        } else {
             return defaultValue;
         }
     }
 
 
-
-    this.fn_setLanguage = function (value)
-    {
+    fn_setLanguage = function (value) {
         localStorage._vLang = value;
     }
 
-    this.fn_getLanguage = function ()
-    {
-        return getDefaultAttribute ('_vLang',"en");
+    fn_getLanguage = function () {
+        return this.getDefaultAttribute('_vLang', "en");
     }
 
 
-    this.fn_setEmail = function (value)
-    {
+    fn_setEmail = function (value) {
         localStorage._vEmail = value;
     }
 
-    this.fn_getEmail = function ()
-    {
-        return getDefaultAttribute ('_vEmail',"");
+    fn_getEmail = function () {
+        return this.getDefaultAttribute('_vEmail', "");
     }
 
-    this.fn_setAccessCode = function (value)
-    {
+    fn_setAccessCode = function (value) {
         localStorage._vAccessCode = value;
     }
 
-    this.fn_getAccessCode= function ()
-    {
-        return getDefaultAttribute ('_vAccessCode',"");
+    fn_getAccessCode = function () {
+        return this.getDefaultAttribute('_vAccessCode', "");
     }
 
 
-    this.fn_setUnitID = function (bool)
-    {
+    fn_setUnitID = function (bool) {
         localStorage._vUnitID = bool;
     }
 
-    this.fn_getUnitID = function ()
-    {
-        return getDefaultAttribute ('_vUnitID',"WebGCS1");
+    fn_getUnitID = function () {
+        return this.getDefaultAttribute('_vUnitID', "WebGCS1");
     }
 
-    this.fn_setGroupName = function (value)
-    {
+    fn_setGroupName = function (value) {
         localStorage._vGroupName = value;
     }
 
-    this.fn_getGroupName = function ()
-    {
-        return getDefaultAttribute ('_vGroupName',"1");
+    fn_getGroupName = function () {
+        return this.getDefaultAttribute('_vGroupName', "1");
     }
 
-   
 
-    this.fn_setMetricSystem = function (p_bool)
-    {
+    fn_setMetricSystem = function (p_bool) {
         localStorage._vv_useMetricSystem = p_bool;
     }
 
-    this.fn_getMetricSystem = function ()
-    {
-        return (getDefaultAttribute ('_vv_useMetricSystem',v_useMetricSystem) == 'true');
+    fn_getMetricSystem = function () {
+        return(this.getDefaultAttribute('_vv_useMetricSystem', v_useMetricSystem) == 'true');
     }
 
-    this.fn_getGamePadMode = function ()
-    {
-        return parseInt(getDefaultAttribute ('_vv_gamePadMode',2));
+    fn_getGamePadMode = function () {
+        return parseInt(this.getDefaultAttribute('_vv_gamePadMode', 2));
     }
 
-    this.fn_setGamePadMode = function (p_mode)
-    {
+    fn_setGamePadMode = function (p_mode) {
         localStorage._vv_gamePadMode = p_mode;
     }
 
-    this.fn_setDefaultAltitude = function (value)
-    {
-        if (!this.isSupported)
-        {
-             CONST_DEFAULT_ALTITUDE = value;    
+    fn_setDefaultAltitude = function (value) {
+        if (!this.isSupported) {
+            CONST_DEFAULT_ALTITUDE = value;
         }
         localStorage._vDefaultAltitude = value;
     }
 
-    this.fn_getDefaultAltitude = function (value)
-    {
-        return parseInt(getDefaultAttribute ('_vDefaultAltitude',CONST_DEFAULT_ALTITUDE));
+    fn_getDefaultAltitude = function (value) {
+        return parseInt(this.getDefaultAttribute('_vDefaultAltitude', CONST_DEFAULT_ALTITUDE));
     }
 
-    this.fn_setDefaultRadius = function (value)
-    {
+    fn_setDefaultRadius = function (value) {
         localStorage._vDefaultRadius = value;
     }
 
-    this.fn_getDefaultRadius = function (value)
-    {
-        return parseInt(getDefaultAttribute ('_vDefaultRadius',CONST_DEFAULT_RADIUS));
+    fn_getDefaultRadius = function (value) {
+        return parseInt(this.getDefaultAttribute('_vDefaultRadius', CONST_DEFAULT_RADIUS));
     }
 
+
+    fn_setSpeechEnabled = function (p_enabled) {
+        localStorage._vv_speechEnabled = p_enabled;
+    }
+
+    fn_getSpeechEnabled = function () {
+        return  this.getDefaultAttribute('_vv_speechEnabled', true);
+    }
+
+    fn_setVolume = function (value) {
+        localStorage._vDefaultVolume = value;
+    }
+
+    fn_getVolume = function () {
+        return parseInt(this.getDefaultAttribute('_vDefaultVolume', CONST_DEFAULT_VOLUME));
+    }
+
+    fn_setAdvancedOptionsEnabled = function (value) {
+        localStorage._vAdvancedOptionsEnabled = value;
+    }
+
+    fn_getAdvancedOptionsEnabled = function () {
+        return this.getDefaultAttribute('_vAdvancedOptionsEnabled', true);
+    }
     
-    init();
-	
-    global.LocalStorage = this;
-    
-}) (AndruavLibs);
+}
 
 
-   
+window.AndruavLibs = window.AndruavLibs || {
+    REVISION: 'BETA'
+};
 
 
-(function(lib) {
-  "use strict";
-  if (typeof module === "undefined" || typeof module.exports === "undefined") {
-    window.AndruavLibs = lib; // in ordinary browser attach library to window
-  } else {
-    module.exports = lib; // in nodejs
-  }
-})(AndruavLibs);
+(function (lib) {
+    "use strict";
+    if (typeof module === "undefined" || typeof module.exports === "undefined") {
+        window.AndruavLibs.LocalStorage = lib; // in ordinary browser attach library to window
+    } else {
+        module.exports = lib; // in nodejs
+    }
+})(new C_LocalStorage());
