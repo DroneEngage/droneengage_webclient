@@ -233,7 +233,7 @@ class CLSS_SearchableTargets extends React.Component {
     render ()
     {
         //CODEBLOCK_START
-        if (CONST_THIS_IS_PUBLIC_VERSION===true)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
         {
             // used to test behavior after removing code and as double check
             return (<div />);
@@ -946,7 +946,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         
         res.btn_servo_class         = " btn-success ";
 
-        if ((CONST_THIS_IS_PUBLIC_VERSION == true ) || (fn_isOnANdruavSite() == true))
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED == false )
         {
             res.btn_servo_class = " disabled hidden ";
         }
@@ -1249,7 +1249,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_now = (new Date()).valueOf() ;
         if (v_andruavUnit.m_isFlying == true) 
         {
-            if (v_andruavUnit.m_FlyingLastStartTime != undefined)
+            if ((v_andruavUnit.m_FlyingLastStartTime != undefined) || (v_andruavUnit.m_FlyingLastStartTime === 0))
             {
                 //v_flyingTime = fn_getTimeSpanDetails_Shortest ( v_now, v_andruavUnit.m_FlyingLastStartTime );
                 /**
@@ -1613,7 +1613,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
                         </div>
                         <div className= 'col-2  margin_2px padding_zero'>
-                        <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/>
+                        {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
                         </div>
                         <div className= 'col-1  margin_2px padding_zero'>
                         </div>

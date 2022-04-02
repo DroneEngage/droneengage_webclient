@@ -344,8 +344,8 @@ class CAndruavUnitObject
 		this.m_unitName;
 		this.partyID					= null;
 		this.m_groupName;
-		this.m_isFlying				= false; 
-		this.m_FlyingLastStartTime		= 0; 
+		this.m_isFlying					= false; 
+		this.m_FlyingLastStartTime		= 0; // flight duration of latest or current flight.
 		this.m_FlyingTotalDuration		= 0; 
 		this.m_flightMode				= CONST_FLIGHT_CONTROL_UNKNOWN;
 		this.m_isArmed					= false;

@@ -8,7 +8,7 @@ class CLSS_ServoUnit extends React.Component {
         var btn_min_disabled = false;
         var btn_max_disabled = false;
 
-        if ((this.props.prop_value == null) || (this.props.prop_partyID == null)) 
+        if ((this.props.prop_value == null) || (this.props.prop_partyid == null)) 
         {
             btn_min_css = ' btn-outline-secondary ';
             btn_max_css = ' btn-outline-secondary ';
@@ -35,7 +35,7 @@ class CLSS_ServoUnit extends React.Component {
             <div className='row  margin_zero small'>
                 <div className='row  margin_zero'>
                     <div className='col-12  margin_zero'>
-                    <p id={'min'+this.props.prop_channel} className={'label ' + btn_min_css} onClick={ (e) => v_andruavClient.API_do_ServoChannel(this.props.prop_partyID, this.props.prop_channel, 0)} >MIN</p>
+                    <p id={'min'+this.props.prop_channel} className={'label ' + btn_min_css} onClick={ (e) => v_andruavClient.API_do_ServoChannel(this.props.prop_partyid, this.props.prop_channel, 0)} >MIN</p>
                     </div>
                 </div>
                 <div className='row  margin_zero'>
@@ -45,7 +45,7 @@ class CLSS_ServoUnit extends React.Component {
                 </div>
                 <div className='row  margin_zero'>
                     <div className='col-12  margin_zero'>
-                    <p id={'min'+this.props.prop_channel} className={'label ' + btn_max_css} onClick={ (e) => v_andruavClient.API_do_ServoChannel(this.props.prop_partyID, this.props.prop_channel, 9999)} >MAX</p>
+                    <p id={'min'+this.props.prop_channel} className={'label ' + btn_max_css} onClick={ (e) => v_andruavClient.API_do_ServoChannel(this.props.prop_partyid, this.props.prop_channel, 9999)} >MAX</p>
                     </div>
                 </div>
             </div>
@@ -162,22 +162,22 @@ class CLSS_ServoControl extends React.Component {
         {
             const c_partyID = p_andruavUnit.partyID;
             return (
-                <div id="modal_ctrl_servo" title="SERVO Control" className="localcontainer css_ontop" prop_partyID={c_partyID}>
+                <div id="modal_ctrl_servo" title="SERVO Control" className="localcontainer css_ontop" prop_partyid={c_partyID}>
                             <button id="btnclose" type="btnclose" className="close">&times;</button>
                             <h4 id="title" className="modal-title text-primary">Servo's of' {p_andruavUnit.m_unitName} </h4>
                             <div id="ctrl_main" className="form-group text-center container modal_dialog_style" >
                             <div className='row'>
                                 <div className='col-md-3 margi'>
-                                    <CLSS_ServoUnit prop_partyID={c_partyID} prop_channel = '9' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo1} prop_name='Key 1'></CLSS_ServoUnit>
+                                    <CLSS_ServoUnit prop_partyid={c_partyID} prop_channel = '9' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo1} prop_name='Key 1'></CLSS_ServoUnit>
                                 </div>
                                 <div className='col-md-3'>
-                                    <CLSS_ServoUnit prop_partyID={c_partyID} prop_channel = '10' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo2} prop_name='Key 2'></CLSS_ServoUnit>
+                                    <CLSS_ServoUnit prop_partyid={c_partyID} prop_channel = '10' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo2} prop_name='Key 2'></CLSS_ServoUnit>
                                 </div>
                                 <div className='col-md-3'>
-                                    <CLSS_ServoUnit prop_partyID={c_partyID} prop_channel = '11' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo3} prop_name='Key 3'></CLSS_ServoUnit>
+                                    <CLSS_ServoUnit prop_partyid={c_partyID} prop_channel = '11' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo3} prop_name='Key 3'></CLSS_ServoUnit>
                                 </div>
                                 <div className='col-md-3'>
-                                    <CLSS_ServoUnit prop_partyID={c_partyID} prop_channel = '12' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo4} prop_name='Key 4'></CLSS_ServoUnit>
+                                    <CLSS_ServoUnit prop_partyid={c_partyID} prop_channel = '12' prop_value ={p_andruavUnit.m_Servo.m_values.m_servo4} prop_name='Key 4'></CLSS_ServoUnit>
                                 </div>
                             </div>
                             </div>

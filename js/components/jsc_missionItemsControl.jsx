@@ -293,7 +293,7 @@ class CMissionActions extends React.Component {
             this.props.p_shape.m_missionItem.m_yawRequired = (this.props.p_shape.m_missionItem.yaw != null) ;
         }
        
-        if (CONST_THIS_IS_PUBLIC_VERSION===false)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
 		{
             this.props.p_shape.m_missionItem.eventFire = this.eventFire.fn_getValue();
             this.props.p_shape.m_missionItem.eventFireRequired = (this.props.p_shape.m_missionItem.eventFire != null);
@@ -322,7 +322,7 @@ class CMissionActions extends React.Component {
         var v_event_firing = [];
         
         //CODEBLOCK_START
-        if (CONST_THIS_IS_PUBLIC_VERSION===false)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
 		{
             v_event_firing.push(<CFieldChecked  required={this.props.p_shape.m_missionItem.eventWaitRequired == true} txtLabel='wait_event' itemid={v_itemID + 'wv'} txtValue={this.props.p_shape.m_missionItem.eventWait}  ref={instance => {this.eventWait = instance}} />)
             v_event_firing.push(<CFieldChecked  required={this.props.p_shape.m_missionItem.eventFireRequired == true} txtLabel='fire_event' itemid={v_itemID + 'fv'} txtValue={this.props.p_shape.m_missionItem.eventFire}  ref={instance => {this.eventFire = instance}} />)
@@ -569,7 +569,7 @@ class MissionControlPanel extends React.Component {
         var v_saveAsTask = [];
 
         //CODEBLOCK_START
-        if (CONST_THIS_IS_PUBLIC_VERSION===false)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
 		{
             v_saveAsTask.push (<button  id="geo_btn_geosave_db"  className="btn btn-danger btn-sm ctrlbtn" title ="Save into System" type="button" onClick={ (e) => this.fn_saveDBMission(e) } >Save</button>);
             v_saveAsTask.push (<button  id="geo_btn_geodelete_db_me"  className="btn btn-danger btn-sm ctrlbtn" title ="Delete Any Related Mission from System for this Unit" type="button" onClick={ (e) => this.fn_deleteDBMission(e) } >Delete</button>);
@@ -591,7 +591,7 @@ class MissionControlPanel extends React.Component {
 
             
             //CODEBLOCK_START
-            if (CONST_THIS_IS_PUBLIC_VERSION===false)
+            if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
 			{
             v_partyIDCtrl.push (
                 <div id="geofence" className ="row margin_zero css_margin_top_small">
@@ -608,7 +608,7 @@ class MissionControlPanel extends React.Component {
             );
             }
             //CODEBLOCK_END
-            if (CONST_THIS_IS_PUBLIC_VERSION===true)
+            if (CONST_EXPERIMENTAL_FEATURES_ENABLED===true)
 			{
                 // overwrite with this if public version 
                 v_partyIDCtrl = [];        

@@ -130,7 +130,7 @@ class CLSS_CVideoScreen extends React.Component {
     fn_targetDetected (p_me,p_unit)
     {
         //CODEBLOCK_START
-        if (CONST_THIS_IS_PUBLIC_VERSION===true)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
         {   
             // used to test behavior after removing code and as double check
             return ;
@@ -203,7 +203,7 @@ class CLSS_CVideoScreen extends React.Component {
     fnl_canvas(p_targets)
     {
         //CODEBLOCK_START
-        if (CONST_THIS_IS_PUBLIC_VERSION===true)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
         {   
             // used to test behavior after removing code and as double check
             return ;
@@ -372,7 +372,7 @@ class CLSS_CVideoScreen extends React.Component {
     fnl_div_clicked (e)
     {
         //CODEBLOCK_START
-        if (CONST_THIS_IS_PUBLIC_VERSION===true)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
         {   
             // used to test behavior after removing code and as double check
             return ;
@@ -511,7 +511,7 @@ class CLSS_CVideoScreen extends React.Component {
         }
 
         var v_btns=[];
-        if (CONST_THIS_IS_PUBLIC_VERSION===true)
+        if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
 		{   
         
             v_btns.push (<div key="btn" id="css_video_ctrl_panel" className="row  margin_2px css_padding_zero">

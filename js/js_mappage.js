@@ -784,64 +784,7 @@ var QueryString = function () {
 						{
 							window.AndruavLibs.AndruavAuth.fn_do_loginAccount( $('#txtEmail').val(), $('#txtAccessCode').val());
 						}
-
-						// if (window.AndruavLibs.AndruavAuth.logined==false)
-						// {
-						// 	Messenger().post({
-						// 		  type: 'error',
-						// 		  message:  'Please enter valid login data'
-						// 		});
-
-						// 	if (v_connectState == true)
-						// 	{
-						// 		setTimeout(fn_connect, 4000);
-						// 	}
-
-						// 	return ;	
-						// }
-						// //var connectURL = 'http://andruav.com/arcs/globalarclight.html?accesscode='+ $('#txtAccessCode').val() + '&email=' + $('#txtEmail').val() + '&m_groupName=' + $('#txtGroupName').val() + '&m_unitName=' + $('#txtUnitID').val();
-						
-						
-						// // create a group object
-						// if (v_andruavClient == null)
-						// {
-							
-						// 		if (window.AndruavLibs.AndruavAuth.logined == false) return ;
-						// 		v_andruavClient = AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
-							
-								
-						// 		v_andruavClient.partyID = $('#txtUnitID').val().replace('#','_');
-						// 		v_andruavClient.unitID = $('#txtUnitID').val();
-						// 		v_andruavClient.m_groupName = $('#txtGroupName').val();
-						// 		v_andruavClient.fn_init();
-						// 		v_andruavClient.m_server_ip 													= window.AndruavLibs.AndruavAuth.m_server_ip;
-						// 		v_andruavClient.m_server_port 													= window.AndruavLibs.AndruavAuth.m_server_port;
-						// 		v_andruavClient.m_server_port_ss 												= window.AndruavLibs.AndruavAuth.m_server_port;
-						// 		v_andruavClient.server_AuthKey													= window.AndruavLibs.AndruavAuth.server_AuthKey;
-						// 		v_andruavClient.EVT_onOpen 														= EVT_onOpen;
-						// 		v_andruavClient.EVT_onClose 													= EVT_onClose;
-						// 		v_andruavClient.EVT_onDeleted 													= EVT_onDeleted;
-						// 		v_andruavClient.fn_onSocketStatus 												= fn_onSocketStatus;
-						// 		v_andruavClient.EVT_andruavUnitGeoFenceUpdated 									= EVT_andruavUnitGeoFenceUpdated;
-								
-						// 		// v_andruavClient.EVT_msgFromUnit_WayPoints 					= EVT_msgFromUnit_WayPoints;
-						// 		// v_andruavClient.EVT_msgFromUnit_WayPointsUpdated 			= EVT_msgFromUnit_WayPointsUpdated;
-						// 		// v_andruavClient.EVT_msgFromUnit_NavInfo 					= EVT_msgFromUnit_NavInfo;
-								
-						// 		fn_console_log (c_SOCKET_STATUS);
-								
-						// 		v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.sid);
-						// }
-						// else
-						// {
-							
-						// 	v_andruavClient.API_delMe();	
-								
-						// }
-				
-				
-				
-							
+	
 			};
 	
 	function fn_displayErrorMessage (me,message)
@@ -883,8 +826,7 @@ var QueryString = function () {
 			var v_script = v_G_createElement('script');
 			v_script.type='text/javascript';
 				
-			//"https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&callback=initMap"
-			v_script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&libraries=drawing&callback=initMap";
+			v_script.src = '2a4034903490310033a90d2408a108a12e6924c1310033a9084429713021302129712d9027d924c131002b1133a90844264930212e6908a12e6924c1310033a908a124c131002b1108a12be433a90f812cb927d939310e89108114d13a2424c11ae93931118929710c40110414401a441ef11e4010811189302126491e402be40961384033a937510b642be4234127100af9264927d9297107e91ae91ef1129932c40bd1375105a42d902b11258432c424c132c42b1127d933a90e89271032c424c137512b112f44297105a4264924c12d902d90258424c126492cb90e892b112f442b113490172924c13100'._fn_hexDecode();
 			v_G_document.body.append(v_script);
 		}
 		else

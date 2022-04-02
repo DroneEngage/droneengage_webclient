@@ -33,10 +33,7 @@ class CAndruavAuth {
         window._localserverPort = 9211;
 
         this._m_ver = '5.0.0';
-        this.m_auth_ip = 'cloud.ardupilot.org'; 
-        if (CONST_TEST_MODE == true) {
-            this.m_auth_ip = CONST_TEST_MODE_IP;
-        }
+        this.m_auth_ip = CONST_TEST_MODE_IP; 
         this._m_auth_port = '19408';
         this._m_auth_ports = '19408'; 
         this._m_permissions_ = '';

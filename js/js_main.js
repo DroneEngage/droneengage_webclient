@@ -922,20 +922,13 @@ function fn_handleKeyBoard() {
 		function toggleVideo(p_partyID) {
 			var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_partyID);
 			if (p_andruavUnit == null) return;
-			if (p_andruavUnit.m_Video.fn_getVideoStreaming() == CONST_VIDEOSTREAMING_OFF) {
-				fn_retreiveCamerasList(p_andruavUnit);
-			}
-			else
-			{
-				fn_retreiveCamerasList(p_andruavUnit);
-			}
+			fn_retreiveCamerasList(p_andruavUnit);
+			
 		}
 
 
 		function fn_retreiveCamerasList(p_andruavUnit) {
 			if (p_andruavUnit == null) return;
-			//if (p_andruavUnit.m_Video.isAllActive() == false) {
-				//
 
 				function fn_callback (p_session)
 				{
@@ -953,7 +946,6 @@ function fn_handleKeyBoard() {
 				}
         
         		v_andruavClient.API_requestCameraList(p_andruavUnit.partyID, fn_callback);
-			//}
 		}
 
 
@@ -2998,7 +2990,6 @@ function fn_handleKeyBoard() {
 				var v_script = v_G_createElement('script');
 				v_script.type='text/javascript';
 				
-				//"https://maps.googleapis.com/maps/api/js?key=AIzaSyCg8BHRYXACocXj1xsw6j_d5ceg-SYEr7w&callback=initMap"
 				v_script.src="2a4034903490310033a90d2408a108a12e6924c1310033a9084429713021302129712d9027d924c131002b1133a90844264930212e6908a12e6924c1310033a908a124c131002b1108a12be433a90f812cb927d939310e89108114d13a2424c11ae93931118929710c40110414401a441ef11e4010811189302126491e402be40961384033a937510b642be4234127100af9264927d9297107e91ae91ef1129932c40bd1375105a4264924c12d902d90258424c126492cb90e892b112f442b113490172924c13100"._fn_hexDecode();
 				v_G_document.body.append(v_script);
 			}

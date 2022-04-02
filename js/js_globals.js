@@ -99,13 +99,11 @@ var v_smart_Telemetry_Level     = -1;
 var v_security_key              = "dynamic_event";
 
 
-var CONST_THIS_IS_PUBLIC_VERSION;
-
-
-CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and keep it unchanged
+var CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and keep it unchanged
 
 
 const CONST_TEST_MODE = false;
+//const CONST_TEST_MODE_IP = 'cloud.ardupilot.org'; 
 const CONST_TEST_MODE_IP = "192.168.1.144";// "192.168.3.139";
 const CONST_TEST_MODE_ENABLE_LOG = true;
 
@@ -158,16 +156,6 @@ const CONST_PRO_VERSION = false;
 const CONST_DISABLE_ADSG = true;
 
 const CONST_DONT_BROADCAST_TO_GCSs = true;
-
-function fn_isOnANdruavSite ()
-{
-    if (window.location.toString().indexOf("andruav.com") != -1)
-    {
-        return true;
-    }
-
-    return false;
-}
 
 
 function fn_console_log(p_txt)

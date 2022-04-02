@@ -50,6 +50,83 @@ class CLSS_FireEvent extends React.Component {
 }
 
 
+class CLSS_DisplayItems extends React.Component {
+
+  constructor()
+	{
+		super ();
+		this.state = {
+		    
+		};
+  }
+  
+  componentDidMount()
+  {
+    $('#toggle_GCS').prop("checked", v_en_GCS);      
+    $('#toggle_DRONE').prop("checked", v_en_Drone);      
+    $('#toggle_ADSB').prop("checked", v_EnableADSB);      
+    
+    $('#toggle_GCS').change(function (e)
+        {
+          var state = $(this).prop('checked');
+          v_en_GCS = state;
+          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
+        });
+          
+    $('#toggle_DRONE').change(function (e)
+        {
+          var state = $(this).prop('checked');
+          v_en_Drone = state;
+          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
+        });
+          
+          
+    $('#toggle_ADSB').change(function (e)
+        {
+          var state = $(this).prop('checked');
+          v_EnableADSB = state;
+          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
+        });
+  }
+
+  render () 
+  {
+    var v_check_btns = [];
+    if (CONST_DISABLE_ADSG == false)
+    {
+      v_check_btns.push (
+        <div key="check_btns" className="btn-group css_margin_top_small" role="group" >
+          <label className="checkbox-inline text-white">
+          <input id="toggle_GCS"    type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> GCS
+          </label>
+          <label className="checkbox-inline text-white">
+          <input id="toggle_DRONE"  type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> Drone
+          </label>
+          <label className="checkbox-inline text-white">
+          <input id="toggle_ADSB"   type="checkbox" data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> ADSB
+          </label> 
+        </div>
+        );
+    }
+    
+    v_check_btns.push (
+        <div key="check_btns" className="btn-group css_margin_top_small" role="group" >
+          <label className="checkbox-inline text-white me-3">
+          <input id="toggle_GCS"    type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> GCS
+          </label>
+          <label className="checkbox-inline text-white me-3">
+          <input id="toggle_DRONE"  type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> Drone
+          </label>
+        </div>
+      );
+  
+      return (
+        <div>{v_check_btns}</div>
+        );
+  }
+
+  
+}
 class CLSS_Preferences extends React.Component {
   constructor()
 	{
@@ -152,9 +229,6 @@ class CLSS_GlobalSettings extends React.Component {
 
  shouldComponentUpdate(nextProps, nextState) {
     
-  //  fn_console_log ('nextProps ' + JSON.stringify(nextProps) + ' nextState ' + JSON.stringify(nextState));
-    
-
     if (this.props.CONST_DEFAULT_ALTITUDE !== nextState.CONST_DEFAULT_ALTITUDE) {
      return true;
     }
@@ -205,36 +279,7 @@ class CLSS_GlobalSettings extends React.Component {
 				window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_Auth_Logined,this);
   }
   
-  componentDidMount()
-  {
-    $('#toggle_GCS').prop("checked", v_en_GCS);      
-    $('#toggle_DRONE').prop("checked", v_en_Drone);      
-    $('#toggle_ADSB').prop("checked", v_EnableADSB);      
-    
-    $('#toggle_GCS').change(function (e)
-        {
-          var state = $(this).prop('checked');
-          v_en_GCS = state;
-          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
-        });
-          
-    $('#toggle_DRONE').change(function (e)
-        {
-          var state = $(this).prop('checked');
-          v_en_Drone = state;
-          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
-        });
-          
-          
-    $('#toggle_ADSB').change(function (e)
-        {
-          var state = $(this).prop('checked');
-          v_EnableADSB = state;
-          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
-        });
   
-      
-    }
 
 
   onChange (e) {
@@ -250,8 +295,6 @@ class CLSS_GlobalSettings extends React.Component {
       this.setState ({CONST_DEFAULT_ALTITUDE:CONST_DEFAULT_ALTITUDE});
       this.setState ({CONST_DEFAULT_RADIUS:CONST_DEFAULT_RADIUS});
 
-     
-  
   }
 
 
@@ -308,38 +351,6 @@ class CLSS_GlobalSettings extends React.Component {
     );
 
 
-  var check_btns = [];
-  if (CONST_DISABLE_ADSG == false)
-  {
-    check_btns.push (
-      <div key="check_btns" className="btn-group css_margin_top_small" role="group" >
-        <label className="checkbox-inline text-white">
-			  <input id="toggle_GCS"    type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> GCS
-				</label>
-				<label className="checkbox-inline text-white">
-				<input id="toggle_DRONE"  type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> Drone
-				</label>
-				<label className="checkbox-inline text-white">
-				<input id="toggle_ADSB"   type="checkbox" data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> ADSB
-				</label> 
-      </div>
-      );
-  }
-  else
-  {
-    check_btns.push (
-      <div key="check_btns" className="btn-group css_margin_top_small" role="group" >
-        <label className="checkbox-inline text-white me-3">
-	  		<input id="toggle_GCS"    type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> GCS
-				</label>
-				<label className="checkbox-inline text-white me-3">
-				<input id="toggle_DRONE"  type="checkbox"  data-toggle="toggle"  data-size="mini" data-height="20" data-width="47" data-onstyle="success" data-offstyle="danger"/> Drone
-				</label>
-      </div>
-    );
-  }
-
-
     v_uploadFile.push (
               <div key='v_uploadFile0' className="row width_100 margin_zero css_margin_top_small ">
                 <div  className={"col-12 " + tele}>
@@ -351,7 +362,6 @@ class CLSS_GlobalSettings extends React.Component {
                       
                     </div>
                   </div>
-                   {check_btns}
                 </div>
               </div>
       );
@@ -404,6 +414,7 @@ class CLSS_GlobalSettings extends React.Component {
                     </div>
                     <div className="tab-pane fade" id={"settings_preference"}>
                       <CLSS_Preferences/>
+                      <CLSS_DisplayItems/>
                     </div>
                 </div>
             
