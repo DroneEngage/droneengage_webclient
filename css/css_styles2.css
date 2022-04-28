@@ -469,13 +469,32 @@ input#txt_defaultAltitude
 {
 	width: 90px !important;
 	height: 30px !important;
+	font-size: 12px !important;
+	font-weight: bold !important;
 }
+
 
 .ctrlbtn_lng
 {
 	width: 80px !important;
+	font-size: 12px !important;
+	font-weight: bold !important;
 }
 
+.flgtctrlbtn
+{
+	width: 70px !important;
+	height: 30px !important;
+	font-size: 12px !important;
+	font-weight: bold !important;
+}
+
+.flgtctrlbtn_lng
+{
+	width: 70px !important;
+	font-size: 12px !important;
+	font-weight: bold !important;
+}
 
 
 .nav-tabs > li > a
@@ -761,7 +780,7 @@ div.msgerror {
 
 .textunit {
 	display: inline-block;
-	width:140px !important;
+	width:135px !important;
 }
 
 

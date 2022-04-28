@@ -9,7 +9,6 @@ export class CLSS_CTRL_HUD extends React.Component {
 
     draw (p_pitch_deg, p_roll_deg, p_yaw_deg) 
     {
-        //fn_console_log("pitch_deg:" + pitch_deg + "  roll_deg:" + roll_deg);
         const c_canvas=$('#' + this.props.id + ' #ctrl_hud')[0];
         const c_ctx = c_canvas.getContext('2d');
         c_canvas.width  = 50;

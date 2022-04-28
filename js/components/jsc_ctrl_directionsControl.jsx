@@ -59,8 +59,9 @@ export class CLSS_CTRL_DIRECTIONS extends React.Component {
         // 2- Target to override tip of bearing
         c_ctx.beginPath();
         c_ctx.arc(centerX, centerY, radius, v_target_start, v_target_end, false);
-        c_ctx.lineWidth = 2;
-        c_ctx.strokeStyle = '#000000';
+        c_ctx.lineWidth = 3;
+        c_ctx.fillStyle = '#FFFFFF';
+        c_ctx.strokeStyle = '#FFFFFF';
         c_ctx.closePath();
         c_ctx.stroke();
 

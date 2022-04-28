@@ -1124,6 +1124,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         res.btn_takeoff_class      = " btn-outline-light ";
                         res.btn_manual_class	   = " btn-danger ";
                         res.btn_stabilize_class	   = " btn-danger ";
+                        res.btn_brake_class 	    = " btn-primary  disabled hidden ";
+                        res.btn_hold_class 	        = " btn-primary  disabled hidden ";
                         break;
         
                 default: 
@@ -1646,82 +1648,82 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             case  VEHICLE_PLANE:
                 ctrl.push(<div key="rc1" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_arm' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
-                    <button id='btn_climb' type='button' className={'btn btn-sm  ctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
-                    <button id='btn_takeoff' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
-                    <button id='btn_land' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_land_class } onClick={ (e) => this.fn_doLand(p_andruavUnit)}>&nbsp;Land&nbsp;</button>
-                    <button id='btn_surface' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
-                    <button id='btn_auto' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
-                    <button id='btn_guided' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
-                    <button id='btn_break' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBreak(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
-                    <button id='btn_hold' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
-                    <button id='btn_loiter' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
+                    <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
+                    <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
+                    <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
+                    <button id='btn_land' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_land_class } onClick={ (e) => this.fn_doLand(p_andruavUnit)}>&nbsp;Land&nbsp;</button>
+                    <button id='btn_surface' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
+                    <button id='btn_auto' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
+                    <button id='btn_guided' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
+                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBreak(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
+                    <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
+                    <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     </div></div>);
         
                 ctrl.push(<div key="rc2" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_posh' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
-                    <button id='btn_manual' type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
-                    <button id='btn_stabilize' type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_stabilize_class } onClick={ (e) => this.fn_doStabilize(p_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
-                    <button id='btn_rtl' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
-                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_rtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
-                    <button id='btn_cruse' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
-                    <button id='btn_fbwa' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
-                    <button id='btn_fbwb' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
-                    <button id='btn_yaw' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(p_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
-                    <button id='btn_speed' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,p_andruavUnit,p_andruavUnit.m_Nav_Info.p_Location.speed!=null?p_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
-                    <button id='btn_servos' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,p_andruavUnit)}>&nbsp;SRV&nbsp;</button>
+                    <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
+                    <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
+                    <button id='btn_stabilize' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_stabilize_class } onClick={ (e) => this.fn_doStabilize(p_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
+                    <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
+                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
+                    <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
+                    <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
+                    <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
+                    <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(p_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
+                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,p_andruavUnit,p_andruavUnit.m_Nav_Info.p_Location.speed!=null?p_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
+                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,p_andruavUnit)}>&nbsp;SRV&nbsp;</button>
                     </div></div>);
             
             
                 ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_telemetry' type='button' className={'btn btn-sm  ctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
-                    <button id='btn_refreshwp' type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
-                    <button id='btn_writewp'  type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
-                    <button id='btn_clearwp'   type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
-                    <button id='btn_webRX'      type='button' className={'btn btn-sm ctrlbtn_lng ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm ctrlbtn_lng ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm ctrlbtn_lng ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
-                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm ctrlbtn_lng ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
+                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
+                    <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
+                    <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
+                    <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
+                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
+                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn_lng ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
+                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
+                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
                     break;
 
             default:
                 ctrl.push(<div key="rc1" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_arm' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
-                    <button id='btn_climb' type='button' className={'btn btn-sm  ctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
-                    <button id='btn_takeoff' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
-                    <button id='btn_land' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_land_class } onClick={ (e) => this.fn_doLand(p_andruavUnit)}>&nbsp;Land&nbsp;</button>
-                    <button id='btn_surface' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
-                    <button id='btn_auto' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
-                    <button id='btn_guided' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
-                    <button id='btn_break' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBreak(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
-                    <button id='btn_hold' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
+                    <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
+                    <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
+                    <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
+                    <button id='btn_land' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_land_class } onClick={ (e) => this.fn_doLand(p_andruavUnit)}>&nbsp;Land&nbsp;</button>
+                    <button id='btn_surface' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
+                    <button id='btn_auto' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
+                    <button id='btn_guided' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
+                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBreak(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
+                    <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
                     </div></div>);
         
                 ctrl.push(<div key="rc2" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_posh' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
-                    <button id='btn_loiter' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
-                    <button id='btn_manual' type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
-                    <button id='btn_rtl' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
-                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_rtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
-                    <button id='btn_cruse' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
-                    <button id='btn_fbwa' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
-                    <button id='btn_fbwb' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
-                    <button id='btn_yaw' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(p_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
-                    <button id='btn_speed' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,p_andruavUnit,p_andruavUnit.m_Nav_Info.p_Location.speed!=null?p_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
-                    <button id='btn_servos' type='button' className={'btn btn-sm  ctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,p_andruavUnit)}>&nbsp;SRV&nbsp;</button>
+                    <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
+                    <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
+                    <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
+                    <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
+                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
+                    <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
+                    <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
+                    <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
+                    <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(p_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
+                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,p_andruavUnit,p_andruavUnit.m_Nav_Info.p_Location.speed!=null?p_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
+                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,p_andruavUnit)}>&nbsp;SRV&nbsp;</button>
                     </div></div>);
         
         
                 ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_telemetry' type='button' className={'btn btn-sm  ctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
-                    <button id='btn_refreshwp' type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
-                    <button id='btn_writewp'  type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
-                    <button id='btn_clearwp'   type='button' className={'btn btn-sm ctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
-                    <button id='btn_webRX'      type='button' className={'btn btn-sm ctrlbtn_lng ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm ctrlbtn_lng ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm ctrlbtn_lng ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
-                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm ctrlbtn_lng ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
+                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
+                    <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
+                    <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
+                    <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
+                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
+                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn_lng ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
+                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
+                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
         
                 break;
