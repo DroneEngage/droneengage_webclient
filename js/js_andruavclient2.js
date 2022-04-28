@@ -2610,7 +2610,7 @@ class CAndruavClient {
 	*/
     prv_parseUnitMavlinkMessage(p_unit, p_mavlinkPacket) {
         let p_mavlinkProcessor = new MAVLink20Processor(null, 0, 0);
-        const p_mavlinkMessages = p_mavlinkProcessor.parseBuffer(new Uint8Array(p_mavlinkPacket));
+        const p_mavlinkMessages = p_mavlinkProcessor.parseBuffer(new Int8Array(p_mavlinkPacket));
         const len = p_mavlinkMessages.length;
         for (var i = 0; i < len; ++ i) {
             let c_mavlinkMessage = p_mavlinkMessages[i];

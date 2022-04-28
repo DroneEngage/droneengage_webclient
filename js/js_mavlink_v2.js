@@ -11960,7 +11960,7 @@ MAVLink20Processor.prototype.decode = function(msgbuf) {
     //put any truncated 0's back in
     if (paylen > payload.length) {
         var zeros = new Uint8Array(paylen - payload.length)
-        var c = new Int8Array(payload.length + zeros.length);
+        var c = new Uint8Array(payload.length + zeros.length);
         c.set(payload);
         c.set(zeros, payload.length);
         payload =  c; //Buffer.concat([payload, Buffer.alloc(paylen - payload.length)]);
