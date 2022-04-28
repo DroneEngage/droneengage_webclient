@@ -736,6 +736,21 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     }
 
 
+    fn_doQStabilize(p_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QSTABILIZE);
+    }
+    fn_doQLoiter(p_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QLOITER);
+    }
+    fn_doQHover(p_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QHOVER);
+    }
+    fn_doQLand(p_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QLAND);
+    }
+    fn_doQRTL(p_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QRTL);
+    }
 
     
     
@@ -756,8 +771,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_LOITER);
     }
 
-    fn_doBreak(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_BREAK);
+    fn_doBrake(p_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_BRAKE);
     }
 
     fn_doHold(p_andruavUnit) {
@@ -916,33 +931,38 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     hlp_getflightButtonStyles (p_andruavUnit)
 	{
 	    var res = {};
-		res.btn_arm_class           = "";
-        res.btn_climb_class         = "";
-        res.btn_takeoff_class       = " disabled hidden ";
-		res.btn_climb_text          = "Climb";
-		res.btn_land_class          = "";
-        res.btn_surface_class       = " disabled hidden ";
-        res.btn_auto_class          = "";
-        res.btn_guided_class        = "";
-        res.btn_brake_class         = "";
-        res.btn_hold_class          = "";
-        res.btn_brake_text          = "";
-		res.btn_manual_class        = "";
-        res.btn_stabilize_class     = " disabled hidden";
-        res.btn_alt_hold_class      = "";
-        res.btn_pos_hold_class      = "";
-        res.btn_loiter_class        = "";
-        res.btn_rtl_class           = "";
-        res.btn_takeCTRL_class      = "";
-        res.btn_releaseCTRL_class   = "";
-        res.btn_sendParameters_class  = "";
-		res.btn_circle_class        = "";
-		res.btn_yaw_class           = "";
-		res.btn_speed_class         = "";
-        res.btn_cruise_class        = "";
-        res.btn_fbwa_class          = "";
-        res.btn_tele_class          = "";
-        res.btn_load_wp_class       = "";
+		res.btn_arm_class               = "";
+        res.btn_climb_class             = "";
+        res.btn_takeoff_class           = " disabled hidden ";
+		res.btn_climb_text              = "Climb";
+		res.btn_land_class              = "";
+        res.btn_surface_class           = " disabled hidden ";
+        res.btn_auto_class              = "";
+        res.btn_guided_class            = "";
+        res.btn_brake_class             = "";
+        res.btn_hold_class              = "";
+        res.btn_brake_text              = "";
+		res.btn_manual_class            = "";
+        res.btn_stabilize_class         = " disabled hidden";
+        res.btn_alt_hold_class          = "";
+        res.btn_pos_hold_class          = "";
+        res.btn_loiter_class            = "";
+        res.btn_rtl_class               = "";
+        res.btn_takeCTRL_class          = "";
+        res.btn_releaseCTRL_class       = "";
+        res.btn_sendParameters_class    = "";
+		res.btn_circle_class            = "";
+		res.btn_yaw_class               = "";
+		res.btn_speed_class             = "";
+        res.btn_cruise_class            = "";
+        res.btn_fbwa_class              = "";
+        res.btn_tele_class              = "";
+        res.btn_load_wp_class           = "";
+        res.btn_q_stabilize             = " disabled hidden";
+        res.btn_q_loiter                = " disabled hidden";
+        res.btn_q_hover                 = " disabled hidden";
+        res.btn_q_land                  = " disabled hidden";
+        res.btn_q_rtl                   = " disabled hidden";
         
         res.btn_servo_class         = " btn-success ";
 
@@ -1046,7 +1066,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_hold_class 	        = " btn-primary  disabled hidden ";
                     res.btn_alt_hold_class      = " disabled hidden ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
-                    res.btn_loiter_class 	    = " btn-primary  ";
+                    res.btn_loiter_class 	    = " btn-danger  ";
                     res.btn_rtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class   = c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
@@ -1054,6 +1074,12 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_fbwa_class 	 	    = " btn-primary  ";
                     res.btn_yaw_class 	 	    = " btn-primary  disabled hidden   ";
                     res.btn_speed_class 	    = " btn-success  ";
+
+                    res.btn_q_stabilize         = " btn-primary ";
+                    res.btn_q_loiter            = " btn-danger ";
+                    res.btn_q_hover             = " btn-primary ";
+                    res.btn_q_land              = " btn-warning ";
+                    res.btn_q_rtl               = " btn-primary ";
                 break; 
 
                 default:
@@ -1121,11 +1147,16 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         break;
 
                 case  VEHICLE_PLANE:
-                        res.btn_takeoff_class      = " btn-outline-light ";
-                        res.btn_manual_class	   = " btn-danger ";
-                        res.btn_stabilize_class	   = " btn-danger ";
+                        res.btn_takeoff_class       = " btn-outline-light ";
+                        res.btn_manual_class	    = " btn-outline-light ";
+                        res.btn_stabilize_class	    = " btn-outline-light ";
                         res.btn_brake_class 	    = " btn-primary  disabled hidden ";
                         res.btn_hold_class 	        = " btn-primary  disabled hidden ";
+                        res.btn_q_stabilize         = " btn-outline-light ";
+                        res.btn_q_loiter            = " btn-outline-light ";
+                        res.btn_q_hover             = " btn-outline-light ";
+                        res.btn_q_land              = " btn-outline-light ";
+                        res.btn_q_rtl               = " btn-outline-light ";
                         break;
         
                 default: 
@@ -1655,7 +1686,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_surface' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
                     <button id='btn_auto' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
                     <button id='btn_guided' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
-                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBreak(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
+                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBrake(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
                     <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     </div></div>);
@@ -1675,6 +1706,15 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     </div></div>);
             
             
+                ctrl.push(<div key="rc22" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                    <button id='btn_q_sblt' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_stabilize } onClick={ (e) => this.fn_doQStabilize(p_andruavUnit)}>&nbsp;Q-Stab&nbsp;</button>
+                    <button id='btn_q_loiter' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_loiter } onClick={ (e) => this.fn_doQLoiter(p_andruavUnit)}>&nbsp;Q-Loiter&nbsp;</button>
+                    <button id='btn_q_hover' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_hover } onClick={ (e) => this.fn_doQHover(p_andruavUnit)}>&nbsp;Q-Hover&nbsp;</button>
+                    <button id='btn_q_land' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_land } title="RTL mode"  onClick={ (e) => this.fn_doQLand(p_andruavUnit)}>&nbsp;Q-Land&nbsp;</button>
+                    <button id='btn_q_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_rtl } title="Smart RTL"  onClick={ (e) => this.fn_doQRTL(p_andruavUnit)}>&nbsp;Q-RTL&nbsp;</button>
+                    </div></div>);
+    
+    
                 ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
@@ -1696,7 +1736,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_surface' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
                     <button id='btn_auto' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
                     <button id='btn_guided' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
-                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBreak(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
+                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBrake(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
                     <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
                     </div></div>);
         

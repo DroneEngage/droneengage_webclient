@@ -504,7 +504,7 @@ class CAndruavClient {
                 if (p_packet.p_buttonIndex == 1) { // RED
                     if (p_packet.p_buttons[p_packet.p_buttonIndex].m_longPress === true) {
                         if (c_now - p_me.m_lastgamePadCommandTime[1] > CONST_GAMEPAD_REPEATED) {
-                            p_me.API_do_FlightMode(p_me.m_gamePadUnit.partyID, CONST_FLIGHT_CONTROL_BREAK);
+                            p_me.API_do_FlightMode(p_me.m_gamePadUnit.partyID, CONST_FLIGHT_CONTROL_BRAKE);
                             p_me.m_lastgamePadCommandTime[1] = c_now;
                             return;
                         }

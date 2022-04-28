@@ -1077,6 +1077,7 @@ function fn_handleKeyBoard() {
 
 
 		function hlp_getFlightMode(p_andruavUnit) {
+			//These are Andruav flight modes not Ardupilot flight modes. They are mapped in mavlink plugin
 			var text = "undefined";
 			if (p_andruavUnit.m_flightMode != null) {
 				switch (p_andruavUnit.m_flightMode) {
@@ -1131,7 +1132,7 @@ function fn_handleKeyBoard() {
 					case CONST_FLIGHT_CONTROL_FBWB:
 						text = "FBW B";
 						break;
-					case CONST_FLIGHT_CONTROL_BREAK:
+					case CONST_FLIGHT_CONTROL_BRAKE:
 						text = "Brake";
 						break;
 					case CONST_FLIGHT_CONTROL_HOLD:
@@ -1139,6 +1140,21 @@ function fn_handleKeyBoard() {
 						break;
 					case CONST_FLIGHT_CONTROL_SURFACE:
 						text = "Surface";
+						break;
+					case CONST_FLIGHT_CONTROL_QHOVER:
+						text = "QHover";
+						break;
+					case CONST_FLIGHT_CONTROL_QLOITER:
+						text = "QLoiter";
+						break;
+					case CONST_FLIGHT_CONTROL_QSTABILIZE:
+						text = "QStabilize";
+						break;
+					case CONST_FLIGHT_CONTROL_QLAND:
+						text = "QLand";
+						break;
+					case CONST_FLIGHT_CONTROL_QRTL:
+						text = "QRTL";
 						break;
 					case CONST_FLIGHT_CONTROL_INITIALIZE:
 						text = "Initializing";
