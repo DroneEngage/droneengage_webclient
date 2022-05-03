@@ -52,7 +52,8 @@ class CLSS_ParameterItem extends  React.Component {
             return ;
         }
         var me = this;
-        fn_do_modal_confirmation("Confirmation", "Write Parameter to FCB ?", function () {
+        fn_do_modal_confirmation("Confirmation", "Write Parameter to FCB ?", function (p_approved) {
+            if (p_approved === false) return;
             window.AndruavLibs.AndruavClient.API_WriteParameter(me.props.prop_unit, me.props.prop_param);
             window.AndruavLibs.EventEmitter.fn_dispatch(EE_displayParameters, me.props.prop_unit);
         }, "YES");
@@ -216,7 +217,8 @@ class CLSS_UnitParametersList extends React.Component {
         if (this.state.p_unit == null) return ;
         
         var me = this;
-        fn_do_modal_confirmation("Confirmation", "Undo all modified values?", function () {
+        fn_do_modal_confirmation("Confirmation", "Undo all modified values?", function (p_approved) {
+            if (p_approved === false) return;
             me.fn_doResetParameters();
         }, "YES");
     }
@@ -227,7 +229,8 @@ class CLSS_UnitParametersList extends React.Component {
         if (this.state.p_unit == null) return ;
 
         var me = this;
-        fn_do_modal_confirmation("Confirmation", "Release all parameters from FCB?", function () {
+        fn_do_modal_confirmation("Confirmation", "Release all parameters from FCB?", function (p_approved) {
+            if (p_approved === false) return;
             window.AndruavLibs.AndruavClient.API_requestParamList(me.state.p_unit);
         }, "YES");
     }
@@ -236,7 +239,8 @@ class CLSS_UnitParametersList extends React.Component {
     {
         if (this.state.p_unit == null) return ;
         var me = this;
-        fn_do_modal_confirmation("Confirmation", "Write Parameter to FCB?", function () {
+        fn_do_modal_confirmation("Confirmation", "Write Parameter to FCB?", function (p_approved) {
+            if (p_approved === false) return;
             window.AndruavLibs.AndruavClient.API_WriteAllParameters(me.state.p_unit);
         }, "YES");
     }

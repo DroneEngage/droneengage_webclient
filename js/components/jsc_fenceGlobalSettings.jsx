@@ -84,17 +84,32 @@ class CLSS_FenceGlobalSettingsControl extends React.Component {
 
     fn_Reload_confirmation ()
     {
-        fn_do_modal_confirmation ("Clear & Reload ?", "Are you sure you want to reload shapes?", this.fn_Reload);
+        fn_do_modal_confirmation ("Clear & Reload ?", "Are you sure you want to reload shapes?", 
+        function (p_approved)
+        {
+            if (p_approved === false) return;
+			this.fn_Reload
+        });
     }
 
     fn_delete_confirmation () 
     {
-        fn_do_modal_confirmation (res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['6'], res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['7'], this.fn_deleteShapesinDB);
+        fn_do_modal_confirmation (res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['6'], res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['7'], 
+        function (p_approved)
+        {
+            if (p_approved === false) return;
+            this.fn_deleteShapesinDB
+        });
 	}
   
     fn_submit_confirmation ()
     {
-	    fn_do_modal_confirmation (res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['8'],res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['9'],fn_submitShapes);
+	    fn_do_modal_confirmation (res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['8'],res_FenceCLSS_GlobalSettingsControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['9'],
+        function (p_approved)
+        {
+            if (p_approved === false) return;
+			fn_submitShapes
+        });
 	}
 
     componentWillUnmount () {

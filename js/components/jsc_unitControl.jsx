@@ -618,8 +618,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         if (p_andruavUnit == null) return;
 
         fn_do_modal_confirmation("Delete Mission for " + p_andruavUnit.m_unitName,
-            "Are you sure you want to delete mission?", function () {
-                v_andruavClient.API_clearWayPoints(p_andruavUnit, p_fromFCB);
+            "Are you sure you want to delete mission?", function (p_approved) {
+                if (p_approved === false) return;
+				v_andruavClient.API_clearWayPoints(p_andruavUnit, p_fromFCB);
 
             }, "YES", "bg-danger text-white");
     }
@@ -681,15 +682,30 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     }
 
     fn_doArm(p_andruavUnit) {
-        
-        v_andruavClient.API_do_Arm(p_andruavUnit.partyID, true, false);
+        if (p_andruavUnit != null) {
+            fn_do_modal_confirmation("DANGEROUS: FORCE ADMING  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT,
+                "OVERRIDE ARM checkHasForceUpdateAfterProcessing. Are You SURE?", function (p_approved) {
+                    if (p_approved === false) 
+                    {
+                        v_andruavClient.API_do_Arm(p_andruavUnit.partyID, true, false);
+                        return;
+                    }
+                    else
+                    {
+					    v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
+                        v_andruavClient.API_do_Arm(p_andruavUnit.partyID, true, true);
+                        return ;
+                    }
+                }, "FORCED-ARM", "bg-danger text-white", "ARM");
+        }
     }
 
     fn_doDisarm(p_andruavUnit) {
         if (p_andruavUnit != null) {
             fn_do_modal_confirmation("DANGEROUS: EMERGENCY DISARM  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT,
-                "STOP all MOTORS and if vehicle in air will CRASH. Are You SURE?", function () {
-                    v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
+                "STOP all MOTORS and if vehicle in air will CRASH. Are You SURE?", function (p_approved) {
+                    if (p_approved === false) return;
+					v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
                     v_andruavClient.API_do_Arm(p_andruavUnit.partyID, false, true);
                 }, "KILL-MOTORS", "bg-danger text-white");
 
@@ -948,6 +964,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         res.btn_pos_hold_class          = "";
         res.btn_loiter_class            = "";
         res.btn_rtl_class               = "";
+        res.btn_srtl_class              = "";
         res.btn_takeCTRL_class          = "";
         res.btn_releaseCTRL_class       = "";
         res.btn_sendParameters_class    = "";
@@ -991,7 +1008,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_alt_hold_class      = " disabled hidden  ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
                     res.btn_loiter_class	    = " btn-danger  disabled hidden "; // used in boat only
-                    res.btn_rtl_class 		    = " btn-primary  ";
+                    res.btn_rtl_class 		    = " btn-primary  rounded-1 ";
+                    res.btn_srtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_cruise_class  	    = " btn-primary disabled hidden ";
@@ -1018,7 +1036,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_alt_hold_class      = " btn-danger  ";
                     res.btn_pos_hold_class      = " btn-danger  ";
                     res.btn_loiter_class 	    = " btn-danger  ";
-                    res.btn_rtl_class 		    = " btn-primary  ";
+                    res.btn_rtl_class 		    = " btn-primary rounded-1 ";
+                    res.btn_srtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_cruise_class  	    = " btn-primary disabled hidden ";
@@ -1046,6 +1065,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_pos_hold_class      = " disabled hidden ";
                     res.btn_loiter_class 	    = " disabled hidden ";
                     res.btn_rtl_class 		    = " disabled hidden ";
+                    res.btn_srtl_class 		    = " disabled hidden ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_yaw_class 	 	    = " btn-success  ";
@@ -1065,9 +1085,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_brake_class 	    = " btn-primary  disabled hidden ";
                     res.btn_hold_class 	        = " btn-primary  disabled hidden ";
                     res.btn_alt_hold_class      = " disabled hidden ";
-                    res.btn_pos_hold_class      = " disabled hidden  ";
+                    res.btn_pos_hold_class      = " disabled hidden ";
                     res.btn_loiter_class 	    = " btn-danger  ";
-                    res.btn_rtl_class 		    = " btn-primary  ";
+                    res.btn_rtl_class 		    = " btn-primary rounded-1 ";
+                    res.btn_srtl_class 		    = " btn-primary ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class   = c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_cruise_class  	    = " btn-primary  ";
@@ -1095,7 +1116,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     res.btn_alt_hold_class      = " disabled hidden ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
                     res.btn_loiter_class 	    = " btn-primary  ";
-                    res.btn_rtl_class 		    = " btn-primary  ";
+                    res.btn_rtl_class 		    = " btn-primary rounded-1 ";
+                    res.btn_srtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_cruise_class  	    = " btn-primary  ";
@@ -1119,8 +1141,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             res.btn_stabilize_class     = " btn-outline-light  disabled hidden ";
             res.btn_pos_hold_class      = " disabled disabled hidden  ";
             res.btn_loiter_class 		= " disabled hidden ";
-			res.btn_rtl_class 			= " btn-outline-light  ";
-			res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+			res.btn_rtl_class 			= " btn-outline-light rounded-1 ";
+			res.btn_srtl_class 		    = " btn-outline-light  ";
+            res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
             res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
             res.btn_cruise_class  	    = " btn-primary disabled hidden ";
             res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
@@ -1696,7 +1719,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
                     <button id='btn_stabilize' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_stabilize_class } onClick={ (e) => this.fn_doStabilize(p_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
                     <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
-                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
+                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_srtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
                     <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
                     <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
                     <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
@@ -1716,14 +1739,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     
     
                 ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
+                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
                     <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
-                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn_lng ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
-                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
+                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
+                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
+                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
+                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
                     break;
 
@@ -1745,7 +1768,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
                     <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
-                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
+                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_srtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
                     <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
                     <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
                     <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
@@ -1756,14 +1779,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         
         
                 ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn_lng ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
+                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
                     <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
-                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn_lng ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
-                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn_lng ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
+                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
+                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
+                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
+                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
         
                 break;

@@ -41,7 +41,8 @@ class CLSS_LoginControl extends React.Component {
 		
 		fn_do_modal_confirmation ("<strong>Attention: </strong>Access Code" ,
 				"Create New Access Code.<br>You will need to define the new accesscode in ALL your Andruav units.<br> \
-				Make sure you use a valid email because the access code will be sent to it.",function () {
+				Make sure you use a valid email because the access code will be sent to it.",function (p_approved) {
+					if (p_approved === false) return;
 					if (CCaptcha.fn_validCaptcha() === true)
 					{
 						window.AndruavLibs.AndruavAuth.fn_generateAccessCode($('#txtEmail').val());
@@ -54,7 +55,8 @@ class CLSS_LoginControl extends React.Component {
 
 	fn_clickRegenerate (e) {
 		fn_do_modal_confirmation ("<strong>Attention: </strong>Access Code" ,
-				"Create New Access Code.<br>You will get a new Access Code via email only, abd the current one will be invalid. You need to copy and paste the new Access Code in all other Andruav mobiles.",function () {
+				"Create New Access Code.<br>You will get a new Access Code via email only, abd the current one will be invalid. You need to copy and paste the new Access Code in all other Andruav mobiles.",function (p_approved) {
+					if (p_approved === false) return;
 					if (CCaptcha.fn_validCaptcha() === true)
 					{
 						window.AndruavLibs.AndruavAuth.fn_regenerateAccessCode($('#txtEmail').val());

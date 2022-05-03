@@ -120,7 +120,7 @@ function fn_handleKeyBoard() {
 		var recordRTC;
 
 
-		function fn_do_modal_confirmation(p_title, p_message, p_callback, p_yesCaption, p_style) {
+		function fn_do_modal_confirmation(p_title, p_message, p_callback, p_yesCaption, p_style, p_noCaption) {
 			if (p_style == null) {
 				p_style = "bg-success";
 			}
@@ -131,13 +131,30 @@ function fn_handleKeyBoard() {
 			$('#modal_saveConfirmation').children().find('h4#title').addClass("modal-title " + p_style);
 			$('#modal_saveConfirmation').children().find('div.modal-body').html(p_message);
 			//$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').off('click');
-			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').unbind('26492d902b1126492cb9'._fn_hexDecode() /*'click'*/);
+			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').unbind('click');
 			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').click(function () 
 			{
-				callback();
+				callback(true);
 				$('#modal_saveConfirmation').modal('hide');
 			});
-			if (p_yesCaption != null) $('#modal_saveConfirmation').children().find('button#modal_btn_confirm').html(p_yesCaption);
+			$('#modal_saveConfirmation').children().find('button#btnCancel').unbind('click');
+			$('#modal_saveConfirmation').children().find('button#btnCancel').click(function () 
+			{
+				callback(false);
+				$('#modal_saveConfirmation').modal('hide');
+			});
+			if (p_yesCaption == null)
+			{
+				p_yesCaption = "Yes";
+			} 
+			if (p_noCaption == null)
+			{
+				p_noCaption = "Canel;"
+			}
+
+			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').html(p_yesCaption);
+			$('#modal_saveConfirmation').children().find('button#btnCancel').html(p_noCaption);
+			
 			$('#modal_saveConfirmation').modal('show');
 		}
 
@@ -772,7 +789,8 @@ function fn_handleKeyBoard() {
 
 			var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_partyID);
 			if (p_andruavUnit != null) {
-				fn_do_modal_confirmation("Set Home Location for  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT, "Changing Home Location changes RTL destination. Are you Sure?", function () {
+				fn_do_modal_confirmation("Set Home Location for  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT, "Changing Home Location changes RTL destination. Are you Sure?", function (p_approved) {
+					if (p_approved === false) return;
 					v_SpeakEngine.fn_speak('home sent');
 					v_andruavClient.API_do_SetHomeLocation(p_partyID, p_latitude, p_longitude, p_altitude);
 
