@@ -985,23 +985,23 @@ class CAndruavClient {
         
 
         switch (window.AndruavLibs.LocalStorage.fn_getGamePadMode()) {
-            case 1: v_axis = [0, 3, 2, 1];
+            case 1: v_axis = [0, 3, 2, 1]; // PITCH3  _ RUDD0        #    THR1    _  ROLL2
                 break;
-            case 2: v_axis = [0, 1, 2, 3];
+            case 2: v_axis = [0, 1, 2, 3]; // THR1    _ RUDD0        #    PITCH3  _  ROLL2
                 break;
-            case 3: v_axis = [2, 3, 0, 1];
+            case 3: v_axis = [2, 3, 0, 1]; // PITCH3  _ ROLL2        #    THR1    _  RUDD0
                 break;
-            case 4: v_axis = [2, 1, 0, 3];
+            case 4: v_axis = [2, 1, 0, 3]; // THR1    _ ROLL2        #    PITCH3  _  RUDD0 
                 break;
 
         }
 
         // IMPORTANT: Convert [-1,1] to [0,1000] IMPORTANT: -1 means channel release so min is 0
         let p_msg = {
-            'R': parseInt(parseFloat(p_axes[v_axis[0]]) * 500 + 500), // Rudder
+            'R': parseInt(parseFloat(p_axes[v_axis[0]]) * 500 + 500),  // Rudder
             'T': parseInt(-parseFloat(p_axes[v_axis[1]]) * 500 + 500), // Throttle
-            'A': parseInt(parseFloat(p_axes[v_axis[2]]) * 500 + 500), // Aileron
-            'E': parseInt(-parseFloat(p_axes[v_axis[3]]) * 500 + 500), // Elevator
+            'A': parseInt(parseFloat(p_axes[v_axis[2]]) * 500 + 500),  // Aileron
+            'E': parseInt(parseFloat(p_axes[v_axis[3]]) * 500 + 500),  // Elevator
         };
 
         fn_console_log(p_msg);

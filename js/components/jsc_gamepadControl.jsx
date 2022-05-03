@@ -268,15 +268,14 @@ class CLSS_GamePadControl extends React.Component {
                             </div>
                             
                             <div className = "col-4">
-                            <div className="dropdown">
-                                <button className="btn  btn-sm btn-danger" type="button" data-toggle="dropdown">{"Mode " + c_mode.toString() + " "}
-                                <span className="caret"></span></button>
-                                <ul className="dropdown-menu">
-                                    <li><a className={" cursor_hand " + (c_mode==1?"list-group-item active":"list-group-item")} onClick={ (e) => this.fn_changeMode(1)}>mode 1</a></li>
-                                    <li><a className={" cursor_hand " + (c_mode==2?"list-group-item active":"list-group-item")} onClick={ (e) => this.fn_changeMode(2)}>mode 2</a></li>
-                                    <li><a className={" cursor_hand " + (c_mode==3?"list-group-item active":"list-group-item")} onClick={ (e) => this.fn_changeMode(3)}>mode 3</a></li>
-                                    <li><a className={" cursor_hand " + (c_mode==4?"list-group-item active":"list-group-item")} onClick={ (e) => this.fn_changeMode(4)}>mode 4</a></li>
-                                </ul>
+                                <div className="nav-item dropdown">
+                                    <button className="btn  btn-sm btn-danger dropdown-toggle show" data-bs-toggle="dropdown"aria-haspopup="true" aria-expanded="false">{"Mode " + c_mode.toString() + " "}</button>
+                                    <div className="dropdown-menu show" data-popper-placement="bottom-start">
+                                    <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(1)}>Mode 1</a>
+                                    <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(2)}>Mode 2</a>
+                                    <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(3)}>Mode 3</a>
+                                    <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(4)}>Mode 4</a>
+                                    </div>
                                 </div>
                             </div>    
                             
