@@ -33,7 +33,14 @@ class CAndruavAuth {
         window._localserverPort = 9211;
 
         this._m_ver = '5.0.0';
-        this.m_auth_ip = CONST_TEST_MODE_IP; 
+        if (CONST_TEST_MODE === true)
+        {
+            this.m_auth_ip = CONST_TEST_MODE_IP; 
+        }
+        else
+        {
+            this.m_auth_ip = CONST_PROD_MODE_IP;
+        }
         this._m_auth_port = '19408';
         this._m_auth_ports = '19408'; 
         this._m_permissions_ = '';
@@ -115,7 +122,7 @@ class CAndruavAuth {
         'gr': "1",
         'app': 'andruav',
         'ver': this._m_ver,
-        'ex': fn_eval(("349032c439313b1937512b112f442710302137510844310024c132c427d92f443490084427103021264935792e6927d92f443490084434902b1134902d9027d90d99040000513d09264924c1349026492a400400064027d9069104003b1905f110812f44271032c4357924c1366405f10d993d09")._fn_hexDecode()),
+        'ex': fn_eval("try{window.parent.document.title; \t}catch (e) {'Andruav';}"),
         'at': 'g' // GCS
     };
 
