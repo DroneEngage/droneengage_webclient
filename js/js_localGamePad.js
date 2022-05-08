@@ -157,34 +157,50 @@ class CAndruavGamePad {
 
         var v_axesChanged = false;
         const c_now = Date.now();
-        console.log ("xx",p_gamepad.axes);
+        //console.log ("xx",p_gamepad.axes);
         if (c_padStatus.p_ctrl_type==GAME_PAD_WAILLY_PPM)
         {
-            if (c_padStatus.p_axes[0] != p_gamepad.axes[5]*2) {
+            // Rudder
+            let val = (p_gamepad.axes[5]*2).toFixed(2);
+            if (val>1) val = 1;
+            if (val<-1) val = -1;
+            if (c_padStatus.p_axes[0] != val) {
                 v_axesChanged = true;
-                c_padStatus.p_axes[0] = p_gamepad.axes[5].toFixed(2)*2;
-                if (c_padStatus.p_axes[0]>1) c_padStatus.p_axes[0] = 1;
-                if (c_padStatus.p_axes[0]<-1) c_padStatus.p_axes[0] = -1;
+                c_padStatus.p_axes[0] = val;
+                
             }
-            if (c_padStatus.p_axes[1] != p_gamepad.axes[2*2]) {
+            // Throttlr
+            val = (p_gamepad.axes[2]*2).toFixed(2);
+            if (val>1) val = 1;
+            if (val<-1) val = -1;
+            if (c_padStatus.p_axes[1] != val) {
                 v_axesChanged = true;
-                c_padStatus.p_axes[1] = p_gamepad.axes[2].toFixed(2)*2;
-                if (c_padStatus.p_axes[1]>1) c_padStatus.p_axes[1] = 1;
-                if (c_padStatus.p_axes[1]<-1) c_padStatus.p_axes[1] = -1;
+                c_padStatus.p_axes[1] = val;
+                
             }
-            if (c_padStatus.p_axes[2] != p_gamepad.axes[0]*2) {
+            // ROLL
+            val = (p_gamepad.axes[0]*2).toFixed(2);
+            if (val>1) val = 1;
+            if (val<-1) val = -1;
+            if (c_padStatus.p_axes[2] != val) {
                 v_axesChanged = true;
-                c_padStatus.p_axes[2] = p_gamepad.axes[0].toFixed(2)*2;
-                if (c_padStatus.p_axes[2]>1) c_padStatus.p_axes[2] = 1;
-                if (c_padStatus.p_axes[2]<-1) c_padStatus.p_axes[2] = -1;
+                c_padStatus.p_axes[2] = val;
+                
             }
-            if (c_padStatus.p_axes[3] != -p_gamepad.axes[1]*2) {
+            // PITCH
+            val = -(p_gamepad.axes[1]*2).toFixed(2);
+            if (val>1) val = 1;
+            if (val<-1) val = -1;
+            if (c_padStatus.p_axes[3] != val) {
                 v_axesChanged = true;
-                c_padStatus.p_axes[3] = -p_gamepad.axes[1].toFixed(2)*2;
-                if (c_padStatus.p_axes[3]>1) c_padStatus.p_axes[3] = 1;
-                if (c_padStatus.p_axes[3]<-1) c_padStatus.p_axes[3] = -1;
+                c_padStatus.p_axes[3] = val;
+                
             }
-            if ((v_axesChanged === true)) {
+
+            // send if there are changes or not sending for more than a second then send to avoid timeout from vehicle.
+            // the 1000 defines the maximum delay between messages. 
+            // minimum delay between messages are defined in js_andruavclient2.js CONST_sendRXChannels_Interval
+            if ((v_axesChanged === true) || ((c_now - this.v_lastUpdateSent) > 1000)) {
                 window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Axes_Updated);
                 this.v_lastUpdateSent = c_now;
             }
