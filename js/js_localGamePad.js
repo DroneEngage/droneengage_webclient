@@ -13,9 +13,14 @@
 "use strict";
 
 // single GamePad status that is stored inside this.v_controllers
+
+
+const GAME_PAD_MICROSOFT  = 1;
+const GAME_PAD_WAILLY_PPM = 2;
 class fn_Obj_padStatus {
     constructor() 
     {
+    this.p_ctrl_type = GAME_PAD_MICROSOFT;
     this.p_axes = [-1, 0, 0, 0];
 
     this.p_buttons = [];
@@ -37,14 +42,14 @@ class fn_Obj_padStatus {
 class CAndruavGamePad {
 
     constructor() {
-        this.c_haveEvents = '13b124c12e6927d9310024c127101299366427d92f443490'._fn_hexDecode(); // /* 'GamepadEvent' */ in window;
+        this.c_haveEvents = 'GamepadEvent'; 
         this.v_lastUpdateSent = Date.now();
         this.v_controllers = {};
         
 
         if (this.c_haveEvents) {
-            window.addEventListener('297124c12e6927d9310024c12710264930212f442f4427d92649349027d92710'._fn_hexDecode() /* "gamepadconnected" */, this.fn_onConnect);
-            window.addEventListener('297124c12e6927d9310024c1271027102b1133a9264930212f442f4427d92649349027d92710'._fn_hexDecode() /* "gamepaddisconnected" */, this.fn_onDisconnect);
+            window.addEventListener('gamepadconnected', this.fn_onConnect);
+            window.addEventListener('gamepaddisconnected', this.fn_onDisconnect);
             
         } else {
             setInterval(this.fn_scangamepads, 500);
@@ -114,6 +119,10 @@ class CAndruavGamePad {
 
     fn_addgamepad(me, p_gamepad) {
         var v_padStatus = new fn_Obj_padStatus();
+        if ((p_gamepad.id.indexOf("06f7")!=-1) && (p_gamepad.id.indexOf("0003")!=-1))
+        {
+            v_padStatus.p_ctrl_type = GAME_PAD_WAILLY_PPM;
+        }
         me.v_controllers[p_gamepad.index] = v_padStatus;
         v_padStatus.p_connected = true;
         v_padStatus.p_vibration = (p_gamepad.vibrationActuator != null);
@@ -148,43 +157,77 @@ class CAndruavGamePad {
 
         var v_axesChanged = false;
         const c_now = Date.now();
-
-        for (var j = 0; j < 4; ++ j) {
-            if (c_padStatus.p_axes[j] != p_gamepad.axes[j]) {
+        console.log ("xx",p_gamepad.axes);
+        if (c_padStatus.p_ctrl_type==GAME_PAD_WAILLY_PPM)
+        {
+            if (c_padStatus.p_axes[0] != p_gamepad.axes[5]*2) {
                 v_axesChanged = true;
-                c_padStatus.p_axes[j] = p_gamepad.axes[j].toFixed(2);
-
+                c_padStatus.p_axes[0] = p_gamepad.axes[5].toFixed(2)*2;
+                if (c_padStatus.p_axes[0]>1) c_padStatus.p_axes[0] = 1;
+                if (c_padStatus.p_axes[0]<-1) c_padStatus.p_axes[0] = -1;
+            }
+            if (c_padStatus.p_axes[1] != p_gamepad.axes[2*2]) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[1] = p_gamepad.axes[2].toFixed(2)*2;
+                if (c_padStatus.p_axes[1]>1) c_padStatus.p_axes[1] = 1;
+                if (c_padStatus.p_axes[1]<-1) c_padStatus.p_axes[1] = -1;
+            }
+            if (c_padStatus.p_axes[2] != p_gamepad.axes[0]*2) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[2] = p_gamepad.axes[0].toFixed(2)*2;
+                if (c_padStatus.p_axes[2]>1) c_padStatus.p_axes[2] = 1;
+                if (c_padStatus.p_axes[2]<-1) c_padStatus.p_axes[2] = -1;
+            }
+            if (c_padStatus.p_axes[3] != -p_gamepad.axes[1]*2) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[3] = -p_gamepad.axes[1].toFixed(2)*2;
+                if (c_padStatus.p_axes[3]>1) c_padStatus.p_axes[3] = 1;
+                if (c_padStatus.p_axes[3]<-1) c_padStatus.p_axes[3] = -1;
+            }
+            if ((v_axesChanged === true)) {
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Axes_Updated);
+                this.v_lastUpdateSent = c_now;
             }
         }
+        else if (c_padStatus.p_ctrl_type==GAME_PAD_MICROSOFT)
+        {
 
-        if ((v_axesChanged === true) || ((c_now - this.v_lastUpdateSent) > 1000)) {
-            window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Axes_Updated);
-            this.v_lastUpdateSent = c_now;
-        }
-
-        var v_buttonChanged = false;
-
-        for (var i = 0; i <= 5; ++ i) {
-            const c_pressed = p_gamepad.buttons[i].pressed;
-            if (c_padStatus.p_buttons[i].m_pressed != c_pressed) {
-                v_buttonChanged = true;
-                c_padStatus.p_buttons[i].m_pressed = p_gamepad.buttons[i].pressed;
-                c_padStatus.p_buttons[i].m_timestamp = Date.now();
-                c_padStatus.p_buttons[i].m_longPress = false;
-                if (v_buttonChanged === true) {
-                    var v_Packet = {};
-                    v_Packet.p_buttonIndex = i;
-                    v_Packet.p_buttons = c_padStatus.p_buttons;
-                    window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Button_Updated, v_Packet);
+            for (var j = 0; j < 4; ++ j) {
+                if (c_padStatus.p_axes[j] != p_gamepad.axes[j]) {
+                    v_axesChanged = true;
+                    c_padStatus.p_axes[j] = p_gamepad.axes[j].toFixed(2);
                 }
-            } else {
-                if ((c_pressed === true) && (c_padStatus.p_buttons[i].m_longPress === false) && ((Date.now() - c_padStatus.p_buttons[i].m_timestamp) > CONST_GAMEPAD_LONG_PRESS)) { // long press
-                    var v_Packet = {};
-                    v_Packet.p_buttonIndex = i;
-                    v_Packet.p_buttons = c_padStatus.p_buttons;
-                    c_padStatus.p_buttons[i].m_longPress = true;
-                    window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Button_Updated, v_Packet);
-                    fn_console_log("button " + i + " long press");
+            }
+
+            if ((v_axesChanged === true) ) {
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Axes_Updated);
+                this.v_lastUpdateSent = c_now;
+            }
+
+            var v_buttonChanged = false;
+
+            for (var i = 0; i <= 5; ++ i) {
+                const c_pressed = p_gamepad.buttons[i].pressed;
+                if (c_padStatus.p_buttons[i].m_pressed != c_pressed) {
+                    v_buttonChanged = true;
+                    c_padStatus.p_buttons[i].m_pressed = p_gamepad.buttons[i].pressed;
+                    c_padStatus.p_buttons[i].m_timestamp = Date.now();
+                    c_padStatus.p_buttons[i].m_longPress = false;
+                    if (v_buttonChanged === true) {
+                        var v_Packet = {};
+                        v_Packet.p_buttonIndex = i;
+                        v_Packet.p_buttons = c_padStatus.p_buttons;
+                        window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Button_Updated, v_Packet);
+                    }
+                } else {
+                    if ((c_pressed === true) && (c_padStatus.p_buttons[i].m_longPress === false) && ((Date.now() - c_padStatus.p_buttons[i].m_timestamp) > CONST_GAMEPAD_LONG_PRESS)) { // long press
+                        var v_Packet = {};
+                        v_Packet.p_buttonIndex = i;
+                        v_Packet.p_buttons = c_padStatus.p_buttons;
+                        c_padStatus.p_buttons[i].m_longPress = true;
+                        window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Button_Updated, v_Packet);
+                        fn_console_log("button " + i + " long press");
+                    }
                 }
             }
 
