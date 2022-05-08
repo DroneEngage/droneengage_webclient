@@ -2319,7 +2319,7 @@ function fn_handleKeyBoard() {
 					{
 						p_elevation = p_elevation.toFixed(1);
 					}
-					markerContent += '<p text-white bg-primary>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt + ' meters.</p>';
+					markerContent += '<p text-white bg-primary>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt.toFixed(3) + ' meters.</p>';
 					if (CONST_MAP_GOOLE === true)
 					{
 						markerContent += '<br> sea-lvl alt:' + p_elevation + ' meters.</p>';
