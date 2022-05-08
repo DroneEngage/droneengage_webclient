@@ -267,18 +267,18 @@ class CLSS_GamePadControl extends React.Component {
                                 <button id="btnGoto" type="button" className="btn  btn-sm btn-success">Goto</button>
                             </div>
                             
-                            <div className = "col-4">
-                                <div className="nav-item dropdown">
-                                    <button className="btn  btn-sm btn-danger dropdown-toggle show" data-bs-toggle="dropdown"aria-haspopup="true" aria-expanded="false">{"Mode " + c_mode.toString() + " "}</button>
-                                    <div className="dropdown-menu show" data-popper-placement="bottom-start">
+                            <div className="col-4 btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <button type="button" className="btn-sm btn-danger">{"Mode " + c_mode.toString() + " "}</button>
+                                <div className="btn-group" role="group">
+                                    <button id="btnGroupDrop2" type="button" className="btn-sm btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop2">
                                     <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(1)}>Mode 1</a>
                                     <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(2)}>Mode 2</a>
                                     <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(3)}>Mode 3</a>
                                     <a className="dropdown-item" href="#" onClick={ (e) => this.fn_changeMode(4)}>Mode 4</a>
                                     </div>
                                 </div>
-                            </div>    
-                            
+                            </div>
                         </div>
                     </div>
                 </div>);
