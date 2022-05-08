@@ -149,7 +149,7 @@ function fn_handleKeyBoard() {
 			} 
 			if (p_noCaption == null)
 			{
-				p_noCaption = "Canel;"
+				p_noCaption = "Cancel"
 			}
 
 			$('#modal_saveConfirmation').children().find('button#modal_btn_confirm').html(p_yesCaption);
