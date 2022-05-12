@@ -105,7 +105,7 @@ var CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and
 const CONST_TEST_MODE = true;
 const CONST_PROD_MODE_IP = 'cloud.ardupilot.org'; 
 const CONST_TEST_MODE_IP = "192.168.1.144";// "192.168.3.139";
-const CONST_TEST_MODE_ENABLE_LOG = true;
+const CONST_TEST_MODE_ENABLE_LOG = false;
 
 //"www.andruav.com"._fn_hexEncode();  
 //const CONST_PROD_MODE_IP = "www.andruav.com";

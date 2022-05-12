@@ -711,6 +711,7 @@ div.modal_dialog_style
 	list-style-type: none !important;
 	padding: 2px !important;
 	margin: 0 !important;
+	font-size: small !important;
 
 }
 .css_hud_div

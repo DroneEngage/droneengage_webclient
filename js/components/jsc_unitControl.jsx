@@ -684,7 +684,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     fn_doArm(p_andruavUnit) {
         if (p_andruavUnit != null) {
             fn_do_modal_confirmation("DANGEROUS: FORCE ADMING  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT,
-                "OVERRIDE ARM checkHasForceUpdateAfterProcessing. Are You SURE?", function (p_approved) {
+                "OVERRIDE ARM .. Are You SURE?", function (p_approved) {
                     if (p_approved === false) 
                     {
                         v_andruavClient.API_do_Arm(p_andruavUnit.partyID, true, false);
@@ -1686,11 +1686,21 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     renderControl (p_andruavUnit)
     {
 
-        if ((p_andruavUnit.m_useFCBIMU == false) 
+        if ((p_andruavUnit.m_useFCBIMU === false) 
         ||((p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_DroneKit_Telemetry)
             && (p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_Mavlink_Telemetry)))
         {
             return ;
+        }
+
+        if (p_andruavUnit.m_Telemetry.m_isGCSBlocked === true)
+        {
+
+            return (
+                <div id='ctrl_k'>
+                    <p className="text-danger user-select-none">BLOCKED By RC in the Field</p> 
+                </div>
+            );
         }
 
         var btn = this.hlp_getflightButtonStyles(p_andruavUnit);
@@ -1701,7 +1711,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         switch (p_andruavUnit.m_VehicleType)
         {
             case  VEHICLE_PLANE:
-                ctrl.push(<div key="rc1" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key="rc1" id='rc1' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
                     <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
                     <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
@@ -1714,7 +1724,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     </div></div>);
         
-                ctrl.push(<div key="rc2" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key="rc2" id='rc2'  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
                     <button id='btn_stabilize' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_stabilize_class } onClick={ (e) => this.fn_doStabilize(p_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
@@ -1729,7 +1739,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     </div></div>);
             
             
-                ctrl.push(<div key="rc22" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key="rc22" id='rc22'  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_q_sblt' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_stabilize } onClick={ (e) => this.fn_doQStabilize(p_andruavUnit)}>&nbsp;Q-Stab&nbsp;</button>
                     <button id='btn_q_loiter' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_loiter } onClick={ (e) => this.fn_doQLoiter(p_andruavUnit)}>&nbsp;Q-Loiter&nbsp;</button>
                     <button id='btn_q_hover' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_hover } onClick={ (e) => this.fn_doQHover(p_andruavUnit)}>&nbsp;Q-Hover&nbsp;</button>
@@ -1738,7 +1748,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     </div></div>);
     
     
-                ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl2.push (<div key="rc3"  id='rc3' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
@@ -1751,7 +1761,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     break;
 
             default:
-                ctrl.push(<div key="rc1" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key="rc1"  id='rc1' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
                     <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
                     <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
@@ -1763,7 +1773,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
                     </div></div>);
         
-                ctrl.push(<div key="rc2" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key="rc2"  id='rc2' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
@@ -1778,7 +1788,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     </div></div>);
         
         
-                ctrl2.push (<div key="rc3" className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
@@ -1794,7 +1804,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         
 
         return (
-            <div>
+            <div id='ctrl_k'>
             <div className= 'row'>
             {ctrl}
             </div>
@@ -1983,7 +1993,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
                     </li>
                 </ul>
-                <div id="myTabContent" className="tab-content">
+                <div id="myTabContent" className="tab-content padding_zero">
                     <div className="tab-pane fade  active show pt-2" id={"home" + v_andruavUnit.partyID}>
                             {this.renderIMU(v_andruavUnit)}
                             {this.renderControl(v_andruavUnit)}
@@ -2145,7 +2155,7 @@ class CLSS_AndruavUnitList extends React.Component {
 
     return (
 
-                <div key='main'>{unit}</div>
+                <div key='main' className='margin_zero row'>{unit}</div>
                 // <div key='main'>
                 //         <div className="accordion" id="accordionExample">
                 //             {unit}
