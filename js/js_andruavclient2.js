@@ -1781,7 +1781,22 @@ class CAndruavClient {
                         p_unit.m_GPS_Info.gpsMode = p_jmsg.GM;
                         p_unit.m_Permissions = p_jmsg.p;
 
+                        
+                        if (p_jmsg.hasOwnProperty('dv') == true) {
+                            p_unit.m_isDE = true;
+                            if(p_unit.m_version != p_jmsg['dv'])
+                            {
+                                p_unit.m_version == p_jmsg['dv'];
+                                Me.EVT_andruavUnitError (p_unit, {
+                                    notification_Type:5,
+                                    Description: "DE SW ver:" + p_unit.m_version
+                                });
+                            }
+                        }
+                        
                         if (p_jmsg.hasOwnProperty('B') == true) {
+                            v_trigger_on_vehicleblocked = (p_unit.m_Telemetry.m_isGCSBlocked !== p_jmsg.B)
+
                             p_unit.m_Telemetry.m_isGCSBlocked = p_jmsg.B;
                         }
 
@@ -1861,7 +1876,18 @@ class CAndruavClient {
                         v_trigger_on_FCB = (p_unit.m_useFCBIMU != p_jmsg.FI);
                         p_unit.m_useFCBIMU = p_jmsg.FI;
 
-
+                        if (p_jmsg.hasOwnProperty('dv') == true) {
+                            p_unit.m_isDE = true;
+                            p_unit.m_version = p_jmsg['dv'];
+                            setTimeout(function () {
+                                Me.EVT_andruavUnitError (p_unit, {
+                                    notification_Type:5,
+                                    Description: "DE SW ver:" + p_unit.m_version
+                                });
+                
+                            }, 1000);
+                        }
+                        
                         if (p_jmsg.hasOwnProperty('B') == true) {
                             p_unit.m_Telemetry.m_isGCSBlocked = p_jmsg.B;
                         }

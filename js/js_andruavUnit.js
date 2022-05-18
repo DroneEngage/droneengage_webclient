@@ -343,6 +343,7 @@ class CAndruavUnitObject
 	{
 		this.m_IsMe 					= false;
 		this.m_IsGCS 					= true;
+		this.m_isDE						= false; // is Drone Engage
 		this.m_IsShutdown 				= false;
 		this.Description 				= "";
 		this.m_inZone 					= null;  // name of A ZONE  that the unit is IN. 
@@ -355,10 +356,11 @@ class CAndruavUnitObject
 		this.m_flightMode				= CONST_FLIGHT_CONTROL_UNKNOWN;
 		this.m_isArmed					= false;
 		this.m_useFCBIMU				= false;
-		this.m_VehicleType 			= VEHICLE_UNKNOWN;
+		this.m_VehicleType 				= VEHICLE_UNKNOWN;
 		this.m_lastActiveTime 			= 0;
 		this.m_telemetry_protocol 		= CONST_No_Telemetry;
-		this.m_enum_userStatus 		= 0;	
+		this.m_enum_userStatus 			= 0;	
+		this.m_version 					= "null";
 		this.init();
 	}
 
@@ -400,18 +402,18 @@ class CAndruavUnitObject
 		this.m_GPS_Info	= {m_isValid:false};
 		this.m_Nav_Info = new C_NavInfo(this);
 
-	Object.seal(this.m_Nav_Info);
-	this.m_Geo_Tags 				= new C_GeoTags(this);
-	this.m_Telemetry				= new C_Telemetry(this);
-	this.m_Servo 					= new C_Servo(this);
-	this.m_Gimbal 					= {m_pitch:0, m_roll:0, m_yaw:0};
-	this.m_Video					= new C_Video(this);
-	this.m_DetectedTargets			= new C_DetectedTargets(this);
-										
-	this.m_Swarm 				= new C_Swarm(this);
-	this.m_SignalStatus			= {m_wifi:false, m_mobile:false, m_mobileSignalLevel:0, m_mobileNetworkType:0, m_mobileNetworkTypeRank:0};
-	
-	this.m_FCBParameters 		= new C_FCBParameters(this);
+		Object.seal(this.m_Nav_Info);
+		this.m_Geo_Tags 				= new C_GeoTags(this);
+		this.m_Telemetry				= new C_Telemetry(this);
+		this.m_Servo 					= new C_Servo(this);
+		this.m_Gimbal 					= {m_pitch:0, m_roll:0, m_yaw:0};
+		this.m_Video					= new C_Video(this);
+		this.m_DetectedTargets			= new C_DetectedTargets(this);
+											
+		this.m_Swarm 					= new C_Swarm(this);
+		this.m_SignalStatus				= {m_wifi:false, m_mobile:false, m_mobileSignalLevel:0, m_mobileNetworkType:0, m_mobileNetworkTypeRank:0};
+		
+		this.m_FCBParameters 			= new C_FCBParameters(this);
 	};
 	
 

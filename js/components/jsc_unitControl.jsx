@@ -1958,12 +1958,12 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             // add FCB battery
             rows.push (<div  key={id +"fc1"}className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
             rows.push (<div  key={id +"fc2"} className= "col-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 }><strong>{v_andruavUnit.m_unitName + " "} </strong><span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={"version:" + v_andruavUnit.m_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
         else
         {
             rows.push (<div key={id +"fc4"} className= "col-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 }><strong>{v_andruavUnit.m_unitName + " "} </strong><span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={"version:" + v_andruavUnit.m_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
 
      
@@ -1973,7 +1973,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
              <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none'>        	
-                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false' src={getVehicleIcon(v_andruavUnit)}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
+                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false' src={getVehicleIcon(v_andruavUnit)}  title={"version:" + v_andruavUnit.m_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
                 <div key={id +"__2"} className= 'col-1  padding_zero'><img className={'cursor_hand ' + camera_class  } src={camera_src} title='take image from mobile' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__3"} className= 'col-1  padding_zero'><img className={'cursor_hand ' + video_class   } src={video_src} title='stream video from mobile' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__4"} className= 'col-1  padding_zero'><img className={'cursor_hand ' + recvideo_class} src={recvideo_src} title='record video on drone mobile' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
