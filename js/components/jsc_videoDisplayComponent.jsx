@@ -530,7 +530,6 @@ class CLSS_CVideoScreen extends React.Component {
             </div>);
             
         }
-        //CODEBLOCK_START
         else
         {
             v_btns.push (<div id="css_video_ctrl_panel" className="row  margin_2px css_padding_zero">
@@ -550,10 +549,9 @@ class CLSS_CVideoScreen extends React.Component {
             <div key="14" className="col-1"></div>
             </div>);
         }
-        //CODEBLOCK_END
 
         return (
-        <div id={divID} className={"css_videoScreen tab-pane fade in " + this.props.first}>
+        <div id={divID} className={"css_videoScreen tab-pane fade " + this.props.first}>
                 <h4 key="h" className='bg-primary text-white rounded_6px'>{andruavUnit.m_unitName + ' track: ' + andruavUnit.m_Video.m_videoTracks[this.props.obj.v_index].ln}</h4>
                     {v_btns}
                     <div key="d2" className='row'>
@@ -680,7 +678,9 @@ render() {
                 _first ="";
             }
 
-            out_h.push (<li key ={'h'+v_key} className="nav-item"><a data-toggle="tab" className={"nav-link " + _first} href={'#' + andruavUnit.partyID + v_obj.v_track}>{andruavUnit.m_unitName + ' #' + v_obj.v_index}</a></li>);
+            out_h.push (<li key ={'h'+v_key} className="nav-item">
+                    <a className={"nav-link user-select-none  " + _first} data-bs-toggle="tab"  href={'#' + andruavUnit.partyID + v_obj.v_track}>{andruavUnit.m_unitName + ' #' + v_obj.v_index}</a>
+                </li>);
             out_b.push (<CLSS_CVideoScreen key ={v_key}  first={_first}  obj={v_obj}/>);
         }
     }
@@ -688,10 +688,10 @@ render() {
 
     return (
         <div className="container-fluid localcontainer">
-            <ul  className="nav nav-pills">
+            <ul  className="nav  nav-tabs">
             {out_h}
             </ul>
-            <div  className="tab-content">
+            <div  id="videoTabContent" className="tab-content">
             {out_b}
             </div>
         </div>
