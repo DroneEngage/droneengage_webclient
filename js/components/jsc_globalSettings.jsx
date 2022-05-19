@@ -264,6 +264,10 @@ class CLSS_GlobalSettings extends React.Component {
 			  
   }
 
+  fn_resumeTelemetry() {
+    //if (v_andruavClient == null) return;
+    v_andruavClient.API_resumeTelemetry(v_smart_Telemetry_Level);
+  };
 
   fn_onAuthStatus (me,res) {
       me.forceUpdate();
@@ -271,7 +275,7 @@ class CLSS_GlobalSettings extends React.Component {
 
   updateSmartTelemetry (e,v) {
       v_smart_Telemetry_Level = v;
-      fn_resumeTelemetry();
+      this.fn_resumeTelemetry();
   }
   
  

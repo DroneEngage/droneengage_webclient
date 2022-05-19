@@ -479,10 +479,7 @@ class CLSS_AndruavUnit extends React.Component {
 
     
 
-    fn_resumeTelemetry() {
-        if (v_andruavClient == null) return;
-        v_andruavClient.API_resumeTelemetry(v_smart_Telemetry_Level);
-    };
+    
 
     fn_telemetryOn(p_andruavUnit) {
 
