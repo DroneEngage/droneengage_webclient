@@ -1,6 +1,8 @@
 import {CLSS_AndruavMessageLog} from './jsc_messagesControl.jsx' // add extension to allow encryptor to see it as same as file name.
 import {CLSS_CTRL_HUD} from './jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './jsc_ctrl_directionsControl.jsx'
+import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
+import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
 
 
 class CLSS_AndruavSwarmLeaders extends React.Component {
@@ -667,130 +669,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     }
    
 
-    fn_ToggleArm(p_andruavUnit) {
-        if (p_andruavUnit != null) {
-            if (p_andruavUnit.m_isArmed) {
-                this.fn_doDisarm(p_andruavUnit);
-            }
-            else {
-                this.fn_doArm(p_andruavUnit);
-            }
-        }
-    }
-
-    fn_doArm(p_andruavUnit) {
-        if (p_andruavUnit != null) {
-            fn_do_modal_confirmation("DANGEROUS: FORCE ADMING  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT,
-                "OVERRIDE ARM .. Are You SURE?", function (p_approved) {
-                    if (p_approved === false) 
-                    {
-                        v_andruavClient.API_do_Arm(p_andruavUnit.partyID, true, false);
-                        return;
-                    }
-                    else
-                    {
-					    v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
-                        v_andruavClient.API_do_Arm(p_andruavUnit.partyID, true, true);
-                        return ;
-                    }
-                }, "FORCED-ARM", "bg-danger text-white", "ARM");
-        }
-    }
-
-    fn_doDisarm(p_andruavUnit) {
-        if (p_andruavUnit != null) {
-            fn_do_modal_confirmation("DANGEROUS: EMERGENCY DISARM  " + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT,
-                "STOP all MOTORS and if vehicle in air will CRASH. Are You SURE?", function (p_approved) {
-                    if (p_approved === false) return;
-					v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
-                    v_andruavClient.API_do_Arm(p_andruavUnit.partyID, false, true);
-                }, "KILL-MOTORS", "bg-danger text-white");
-
-
-        }
-    }
-
-    fn_doTakeOffPlane(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_TAKEOFF);
-    }
-
-    fn_doLand(p_andruavUnit) {
-        v_andruavClient.API_do_Land(p_andruavUnit.partyID);
-    }
-
-    fn_doSurface(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_SURFACE);
-    }
-
-    fn_doManual(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_MANUAL);
-    }
-
-    fn_doStabilize(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_STABILIZE);
-    }
-
-    fn_doRTL(p_andruavUnit, smart) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, smart == true ? CONST_FLIGHT_CONTROL_SMART_RTL : CONST_FLIGHT_CONTROL_RTL);
-    }
-
-
-    fn_doCruise(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_CRUISE);
-    }
-
-
-    fn_doFBWA(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_FBWA);
-    }
-
-    fn_doFBWB(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_FBWB);
-    }
-
-
-    fn_doQStabilize(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QSTABILIZE);
-    }
-    fn_doQLoiter(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QLOITER);
-    }
-    fn_doQHover(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QHOVER);
-    }
-    fn_doQLand(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QLAND);
-    }
-    fn_doQRTL(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_QRTL);
-    }
-
     
-    
-
-    fn_doGuided(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_GUIDED);
-    }
-
-    fn_doAuto(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_AUTO);
-    }
-
-    fn_doPosHold(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_POSTION_HOLD);
-    }
-
-    fn_doLoiter(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_LOITER);
-    }
-
-    fn_doBrake(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_BRAKE);
-    }
-
-    fn_doHold(p_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(p_andruavUnit.partyID, CONST_FLIGHT_CONTROL_HOLD);
-    }
 
 
     fn_connectToFCB (p_andruavUnit)
@@ -944,39 +823,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     hlp_getflightButtonStyles (p_andruavUnit)
 	{
 	    var res = {};
-		res.btn_arm_class               = "";
-        res.btn_climb_class             = "";
-        res.btn_takeoff_class           = " disabled hidden ";
-		res.btn_climb_text              = "Climb";
-		res.btn_land_class              = "";
-        res.btn_surface_class           = " disabled hidden ";
-        res.btn_auto_class              = "";
-        res.btn_guided_class            = "";
-        res.btn_brake_class             = "";
-        res.btn_hold_class              = "";
-        res.btn_brake_text              = "";
-		res.btn_manual_class            = "";
-        res.btn_stabilize_class         = " disabled hidden";
-        res.btn_alt_hold_class          = "";
-        res.btn_pos_hold_class          = "";
-        res.btn_loiter_class            = "";
-        res.btn_rtl_class               = "";
-        res.btn_srtl_class              = "";
         res.btn_takeCTRL_class          = "";
         res.btn_releaseCTRL_class       = "";
         res.btn_sendParameters_class    = "";
-		res.btn_circle_class            = "";
-		res.btn_yaw_class               = "";
-		res.btn_speed_class             = "";
-        res.btn_cruise_class            = "";
-        res.btn_fbwa_class              = "";
         res.btn_tele_class              = "";
         res.btn_load_wp_class           = "";
-        res.btn_q_stabilize             = " disabled hidden";
-        res.btn_q_loiter                = " disabled hidden";
-        res.btn_q_hover                 = " disabled hidden";
-        res.btn_q_land                  = " disabled hidden";
-        res.btn_q_rtl                   = " disabled hidden";
         
         res.btn_servo_class         = " btn-success ";
 
@@ -991,198 +842,15 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
 		if (p_andruavUnit.m_isArmed==true) 
 		{
-            switch (p_andruavUnit.m_VehicleType)
-            {
-                case VEHICLE_ROVER:
-                    res.btn_arm_class 		    = " btn-danger";
-                    res.btn_climb_class 	    = " btn-outline-light disabled hidden ";
-                    res.btn_land_class 		    = " btn-outline-light disabled hidden ";
-                    res.btn_surface_class       = " disabled hidden ";
-                    res.btn_auto_class 		    = " btn-primary  ";
-                    res.btn_takeoff_class       = " btn-outline-light disabled hidden ";
-                    res.btn_guided_class 	    = " btn-primary  ";
-                    res.btn_manual_class	    = " btn-primary  ";
-                    res.btn_alt_hold_class      = " disabled hidden  ";
-                    res.btn_pos_hold_class      = " disabled hidden  ";
-                    res.btn_loiter_class	    = " btn-danger  disabled hidden "; // used in boat only
-                    res.btn_rtl_class 		    = " btn-primary  rounded-1 ";
-                    res.btn_srtl_class 		    = " btn-primary  ";
-                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
-                    res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-                    res.btn_cruise_class  	    = " btn-primary disabled hidden ";
-                    res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
-                    res.btn_yaw_class 	 	    = " btn-outline-light disabled hidden ";
-                    res.btn_brake_class 	    = " btn-primary disabled hidden ";
-                    res.btn_hold_class          = " btn-primary  ";
-                    res.btn_speed_class	 	    = " btn-success  ";
-                break;
-                    
-                case VEHICLE_TRI:
-                case VEHICLE_QUAD:
-                    res.btn_takeoff_class       = " btn-outline-light disabled hidden ";
-                    res.btn_arm_class 		    = " btn-danger";
-                    res.btn_climb_class 	    = " btn-warning  ";
-                    res.btn_land_class 		    = " btn-warning  ";
-                    res.btn_surface_class       = " disabled hidden ";
-                    res.btn_auto_class 		    = " btn-primary  ";
-                    res.btn_guided_class 	    = " btn-primary  ";
-                    res.btn_brake_class 	    = " btn-primary  ";
-                    res.btn_hold_class 	        = " btn-primary disabled hidden ";
-                    res.btn_manual_class	    = " btn-outline-light disabled hidden ";
-                    res.btn_manual_onclick      = " ";
-                    res.btn_alt_hold_class      = " btn-danger  ";
-                    res.btn_pos_hold_class      = " btn-danger  ";
-                    res.btn_loiter_class 	    = " btn-danger  ";
-                    res.btn_rtl_class 		    = " btn-primary rounded-1 ";
-                    res.btn_srtl_class 		    = " btn-primary  ";
-                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
-                    res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-                    res.btn_cruise_class  	    = " btn-primary disabled hidden ";
-                    res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
-                    res.btn_yaw_class 	 	    = " btn-success  ";
-                    res.btn_speed_class 	    = " btn-success  ";
-                break;
-
-                case VEHICLE_SUBMARINE:
-                    res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                    res.btn_arm_class 		    = " btn-danger ";
-                    res.btn_climb_class 	    = " btn-warning  ";
-                    res.btn_climb_text          = "dive";
-		            res.btn_land_class 		    = " disabled hidden ";
-                    res.btn_surface_class       = " btn-warning ";
-                    res.btn_auto_class 		    = " btn-primary ";
-                    res.btn_guided_class 	    = " btn-primary ";
-                    res.btn_brake_class 	    = " disabled hidden ";
-                    res.btn_hold_class 	        = " disabled hidden ";
-                    res.btn_manual_class	    = " disabled hidden ";
-                    res.btn_manual_onclick      = " ";
-                    res.btn_cruise_class  	    = " disabled hidden ";
-                    res.btn_fbwa_class 	 	    = " disabled hidden ";
-                    res.btn_alt_hold_class      = " disabled hidden ";
-                    res.btn_pos_hold_class      = " disabled hidden ";
-                    res.btn_loiter_class 	    = " disabled hidden ";
-                    res.btn_rtl_class 		    = " disabled hidden ";
-                    res.btn_srtl_class 		    = " disabled hidden ";
-                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
-                    res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-                    res.btn_yaw_class 	 	    = " btn-success  ";
-                    res.btn_speed_class 	    = " btn-success  ";
-                break;
-                
-                case  VEHICLE_PLANE:
-                    // https://ardupilot.org/plane/docs/flight-modes.html
-                    res.btn_arm_class 		    = " btn-danger ";
-                    res.btn_climb_class 	    = " btn-warning ";
-                    res.btn_takeoff_class       = " btn-warning ";
-                    res.btn_land_class 		    = " disabled hidden ";
-                    res.btn_auto_class 		    = " btn-primary  ";
-                    res.btn_guided_class 	    = " btn-primary  ";
-                    res.btn_manual_class	    = " btn-danger   ";
-                    res.btn_stabilize_class     = " btn-danger   ";
-                    res.btn_brake_class 	    = " btn-primary  disabled hidden ";
-                    res.btn_hold_class 	        = " btn-primary  disabled hidden ";
-                    res.btn_alt_hold_class      = " disabled hidden ";
-                    res.btn_pos_hold_class      = " disabled hidden ";
-                    res.btn_loiter_class 	    = " btn-danger  ";
-                    res.btn_rtl_class 		    = " btn-primary rounded-1 ";
-                    res.btn_srtl_class 		    = " btn-primary ";
-                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
-                    res.btn_releaseCTRL_class   = c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-                    res.btn_cruise_class  	    = " btn-primary  ";
-                    res.btn_fbwa_class 	 	    = " btn-primary  ";
-                    res.btn_yaw_class 	 	    = " btn-primary  disabled hidden   ";
-                    res.btn_speed_class 	    = " btn-success  ";
-
-                    res.btn_q_stabilize         = " btn-primary ";
-                    res.btn_q_loiter            = " btn-danger ";
-                    res.btn_q_hover             = " btn-primary ";
-                    res.btn_q_land              = " btn-warning ";
-                    res.btn_q_rtl               = " btn-primary ";
-                break; 
-
-                default:
-                    // https://ardupilot.org/plane/docs/flight-modes.html
-                    res.btn_arm_class 		    = " btn-danger ";
-                    res.btn_climb_class 	    = " btn-warning  ";
-                    res.btn_land_class 		    = " btn-warning  ";
-                    res.btn_auto_class 		    = " btn-primary  ";
-                    res.btn_guided_class 	    = " btn-primary  ";
-                    res.btn_manual_class	    = " btn-outline-light  ";
-                    res.btn_brake_class 	    = " btn-primary  disabled hidden ";
-                    res.btn_hold_class 	        = " btn-primary  disabled hidden ";
-                    res.btn_alt_hold_class      = " disabled hidden ";
-                    res.btn_pos_hold_class      = " disabled hidden  ";
-                    res.btn_loiter_class 	    = " btn-primary  ";
-                    res.btn_rtl_class 		    = " btn-primary rounded-1 ";
-                    res.btn_srtl_class 		    = " btn-primary  ";
-                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
-                    res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-                    res.btn_cruise_class  	    = " btn-primary  ";
-                    res.btn_fbwa_class 	 	    = " btn-primary  ";
-                    res.btn_yaw_class 	 	    = " btn-success  ";
-                    res.btn_speed_class 	    = " btn-success  ";
-                break;
-            }				
-							
+            res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+            res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
 		}
 		else
 		{
             // NOT ARMED
 
-			res.btn_arm_class 			= " btn-outline-light ";
-			res.btn_climb_class 		= " btn-outline-light disabled hidden ";
-			res.btn_land_class 			= " btn-outline-light disabled hidden ";
-            res.btn_auto_class 			= " btn-outline-light disabled hidden ";
-			res.btn_guided_class 		= " btn-outline-light  ";
-            res.btn_manual_class	    = " btn-outline-light  disabled hidden ";
-            res.btn_stabilize_class     = " btn-outline-light  disabled hidden ";
-            res.btn_pos_hold_class      = " disabled disabled hidden  ";
-            res.btn_loiter_class 		= " disabled hidden ";
-			res.btn_rtl_class 			= " btn-outline-light rounded-1 ";
-			res.btn_srtl_class 		    = " btn-outline-light  ";
-            res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+			res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
             res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-            res.btn_cruise_class  	    = " btn-primary disabled hidden ";
-            res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
-		    res.btn_yaw_class 	 		= " btn-outline-light disabled hidden ";
-		    res.btn_speed_class 	    = " btn-outline-light disabled hidden ";
-            
-            switch (p_andruavUnit.m_VehicleType)
-            {
-                case VEHICLE_SUBMARINE:
-                        res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                        res.btn_hold_class 		    = " btn-outline-light  ";
-                        break;
-                case VEHICLE_ROVER:
-                        res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                        res.btn_brake_class         = " btn-outline-light disabled hidden ";
-                        res.btn_hold_class 		    = " btn-outline-light  ";
-                        break;
-
-                case VEHICLE_TRI:
-                case VEHICLE_QUAD:
-                        res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                        res.btn_brake_class         = " btn-outline-light  ";
-                        res.btn_hold_class 		    = " btn-outline-light disabled hidden ";
-                        break;
-
-                case  VEHICLE_PLANE:
-                        res.btn_takeoff_class       = " btn-outline-light ";
-                        res.btn_manual_class	    = " btn-outline-light ";
-                        res.btn_stabilize_class	    = " btn-outline-light ";
-                        res.btn_brake_class 	    = " btn-primary  disabled hidden ";
-                        res.btn_hold_class 	        = " btn-primary  disabled hidden ";
-                        res.btn_q_stabilize         = " btn-outline-light ";
-                        res.btn_q_loiter            = " btn-outline-light ";
-                        res.btn_q_hover             = " btn-outline-light ";
-                        res.btn_q_land              = " btn-outline-light ";
-                        res.btn_q_rtl               = " btn-outline-light ";
-                        break;
-        
-                default: 
-                    break;
-            } 				
-
 		}
 
 
@@ -1701,91 +1369,21 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         }
 
         var btn = this.hlp_getflightButtonStyles(p_andruavUnit);
-        var ctrl=[];
+        var ctrl_flight_controller=[];
         var ctrl2=[];
         
 
-        switch (p_andruavUnit.m_VehicleType)
+        switch (p_andruavUnit.m_autoPilot)
         {
-            case  VEHICLE_PLANE:
-                ctrl.push(<div key="rc1" id='rc1' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
-                    <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
-                    <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
-                    <button id='btn_land' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_land_class } onClick={ (e) => this.fn_doLand(p_andruavUnit)}>&nbsp;Land&nbsp;</button>
-                    <button id='btn_surface' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
-                    <button id='btn_auto' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
-                    <button id='btn_guided' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
-                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBrake(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
-                    <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
-                    <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
-                    </div></div>);
-        
-                ctrl.push(<div key="rc2" id='rc2'  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
-                    <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
-                    <button id='btn_stabilize' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_stabilize_class } onClick={ (e) => this.fn_doStabilize(p_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
-                    <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
-                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_srtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
-                    <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
-                    <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
-                    <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
-                    <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(p_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
-                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,p_andruavUnit,p_andruavUnit.m_Nav_Info.p_Location.speed!=null?p_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
-                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,p_andruavUnit)}>&nbsp;SRV&nbsp;</button>
-                    </div></div>);
-            
-            
-                ctrl.push(<div key="rc22" id='rc22'  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_q_sblt' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_stabilize } onClick={ (e) => this.fn_doQStabilize(p_andruavUnit)}>&nbsp;Q-Stab&nbsp;</button>
-                    <button id='btn_q_loiter' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_loiter } onClick={ (e) => this.fn_doQLoiter(p_andruavUnit)}>&nbsp;Q-Loiter&nbsp;</button>
-                    <button id='btn_q_hover' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_hover } onClick={ (e) => this.fn_doQHover(p_andruavUnit)}>&nbsp;Q-Hover&nbsp;</button>
-                    <button id='btn_q_land' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_land } title="RTL mode"  onClick={ (e) => this.fn_doQLand(p_andruavUnit)}>&nbsp;Q-Land&nbsp;</button>
-                    <button id='btn_q_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_rtl } title="Smart RTL"  onClick={ (e) => this.fn_doQRTL(p_andruavUnit)}>&nbsp;Q-RTL&nbsp;</button>
-                    </div></div>);
-    
-    
-                ctrl2.push (<div key="rc3"  id='rc3' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
-                    <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
-                    <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
-                    <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
-                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
-                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
-                    </div></div>);
-                    break;
-
+            case mavlink20.MAV_AUTOPILOT_PX4:
+                ctrl_flight_controller.push(<CLSS_CTRL_PX4_FLIGHT_CONTROL key={p_andruavUnit.partyID + "_ctrl_fc"} id={p_andruavUnit.partyID + "_ctrl_fc"} v_andruavUnit={p_andruavUnit}/>);
+            break;
             default:
-                ctrl.push(<div key="rc1"  id='rc1' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(p_andruavUnit)}>&nbsp;ARM&nbsp;</button>
-                    <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(p_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
-                    <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(p_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
-                    <button id='btn_land' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_land_class } onClick={ (e) => this.fn_doLand(p_andruavUnit)}>&nbsp;Land&nbsp;</button>
-                    <button id='btn_surface' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_surface_class } onClick={ (e) => this.fn_doSurface(p_andruavUnit)}>&nbsp;Surface&nbsp;</button>
-                    <button id='btn_auto' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_class } onClick={ (e) => this.fn_doAuto(p_andruavUnit)}>&nbsp;Auto&nbsp;</button>
-                    <button id='btn_guided' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_guided_class } onClick={ (e) => this.fn_doGuided(p_andruavUnit)}>&nbsp;Guided </button>
-                    <button id='btn_break' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_brake_class } onClick={ (e) => this.fn_doBrake(p_andruavUnit)}>&nbsp;Brake&nbsp;</button>
-                    <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(p_andruavUnit)}>&nbsp;Hold&nbsp;</button>
-                    </div></div>);
-        
-                ctrl.push(<div key="rc2"  id='rc2' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
-                    <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(p_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
-                    <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(p_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
-                    <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(p_andruavUnit)}>&nbsp;Manual&nbsp;</button>
-                    <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
-                    <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_srtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(p_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
-                    <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(p_andruavUnit)}>&nbsp;Cruise&nbsp;</button>
-                    <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(p_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
-                    <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(p_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
-                    <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(p_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
-                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,p_andruavUnit,p_andruavUnit.m_Nav_Info.p_Location.speed!=null?p_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
-                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,p_andruavUnit)}>&nbsp;SRV&nbsp;</button>
-                    </div></div>);
-        
-        
-                ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl_flight_controller.push(<CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL key={p_andruavUnit.partyID + "_ctrl_fc"} id={p_andruavUnit.partyID + "_ctrl_fc"} v_andruavUnit={p_andruavUnit}/>);
+            break;
+        }
+
+        ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
@@ -1796,14 +1394,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
         
-                break;
-        }
+
+        
         
 
         return (
             <div id='ctrl_k'>
             <div className= 'row'>
-            {ctrl}
+            {ctrl_flight_controller}
             </div>
             <div className= 'row'>
             {ctrl2}

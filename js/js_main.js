@@ -1180,6 +1180,54 @@ function fn_handleKeyBoard() {
 					case CONST_FLIGHT_MOTOR_DETECT:
 						text = "Motor Detect";
 						break;
+					case CONST_FLIGHT_PX4_MANUAL:
+						text = "Manual";
+						break;
+					case CONST_FLIGHT_PX4_ALT_HOLD:
+						text = "Alt-Hold";
+						break;
+					case CONST_FLIGHT_PX4_OFF_AUTO_TAKEOFF:
+						text = "Takeoff";
+						break;
+					case CONST_FLIGHT_PX4_OFF_AUTO_MISSION:
+						text = "Mission";
+						break;
+					case CONST_FLIGHT_PX4_OFF_AUTO_HOLD:
+						text = "Hold";
+						break;
+					case CONST_FLIGHT_PX4_OFF_AUTO_RTL:
+						text = "RTL";
+						break;
+					case CONST_FLIGHT_PX4_OFF_AUTO_LAND:
+						text = "Land";
+						break;
+					case CONST_FLIGHT_PX4_AUTO_FOLLOW_TARGET:
+						text = "Follow";
+						break;
+					case CONST_FLIGHT_PX4_AUTO_PRECLAND:
+						text = "Precland";
+						break;
+					case CONST_FLIGHT_PX4_OFF_VTOL_TAKEOFF:
+						text = "VT-Takeoff";
+						break;
+					case CONST_FLIGHT_PX4_OFF_ACRO:
+						text = "Motor Detect";
+						break;
+					case CONST_FLIGHT_PX4_STABILIZE:
+						text = "Stabilize";
+						break;
+					case CONST_FLIGHT_PX4_OFF_BOARD:
+						text = "Off-Board";
+						break;
+					case CONST_FLIGHT_PX4_RATTITUDE:
+						text = "R-ATT";
+						break;
+					case CONST_FLIGHT_PX4_POSCTL_POSCTL:
+						text = "Pos-Ctrl";
+						break;
+					case CONST_FLIGHT_PX4_POSCTL_ORBIT:
+						text = "Orbit";
+						break;
 					case CONST_FLIGHT_CONTROL_UNKNOWN:
 					default:
 						text = "Unknown";
