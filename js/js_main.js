@@ -1211,7 +1211,7 @@ function fn_handleKeyBoard() {
 						text = "VT-Takeoff";
 						break;
 					case CONST_FLIGHT_PX4_OFF_ACRO:
-						text = "Motor Detect";
+						text = "Acro";
 						break;
 					case CONST_FLIGHT_PX4_STABILIZE:
 						text = "Stabilize";
