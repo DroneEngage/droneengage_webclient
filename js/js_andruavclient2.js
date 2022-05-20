@@ -64,6 +64,7 @@ const c_SOCKET_STATUS = [
     'Error'
 ];
 
+
 // Tasks Scope
 const CONST_TASK_SCOPE_GLOBAL = 0;
 const CONST_TASK_SCOPE_GLOBAL_ACCOUNT = 1;
@@ -1782,7 +1783,7 @@ class CAndruavClient {
                         p_unit.m_Permissions = p_jmsg.p;
 
                         
-                        if (p_jmsg.hasOwnProperty('dv') == true) {
+                        if (p_jmsg.hasOwnProperty('dv') === true) {
                             p_unit.m_isDE = true;
                             if(p_unit.m_version != p_jmsg['dv'])
                             {
@@ -1794,45 +1795,50 @@ class CAndruavClient {
                             }
                         }
                         
-                        if (p_jmsg.hasOwnProperty('B') == true) {
+                        if (p_jmsg.hasOwnProperty('B') === true) {
                             v_trigger_on_vehicleblocked = (p_unit.m_Telemetry.m_isGCSBlocked !== p_jmsg.B)
 
                             p_unit.m_Telemetry.m_isGCSBlocked = p_jmsg.B;
                         }
 
-                        if (p_jmsg.hasOwnProperty('C') == true) { 
+                        if (p_jmsg.hasOwnProperty('C') === true) { 
                             p_unit.m_Telemetry.fn_updateTelemetry(p_jmsg.C);
                         }
 
-                        if (p_jmsg.hasOwnProperty('FI') != true) {
+                        if (p_jmsg.hasOwnProperty('FI') !== true) {
                             p_jmsg.FI = false;
                         }
                         p_unit.m_useFCBIMU = p_jmsg.FI;
 
-                        if (p_jmsg.hasOwnProperty('SD') != true) {
+                        if (p_jmsg.hasOwnProperty('SD') !== true) {
                             p_jmsg.SD = false;
                         }
                         p_unit.m_IsShutdown = p_jmsg.SD;
 
-                        if (p_jmsg.hasOwnProperty('FM') != true) {
+                        if (p_jmsg.hasOwnProperty('AP') === true) {
+                            p_unit.m_autoPilot = p_jmsg.AP;
+                        }
+                        
+
+                        if (p_jmsg.hasOwnProperty('FM') !== true) {
                             p_jmsg.FM = false;
                         }
                         v_trigger_on_flightMode = (p_unit.m_flightMode != p_jmsg.FM);
                         p_unit.m_flightMode = p_jmsg.FM;
 
-                        if (p_jmsg.hasOwnProperty('AR') != true) {
+                        if (p_jmsg.hasOwnProperty('AR') !== true) {
                             p_jmsg.AR = false;
                         }
                         v_trigger_on_armed = (p_unit.m_isArmed != p_jmsg.AR);
                         p_unit.m_isArmed = p_jmsg.AR;
 
-                        if (p_jmsg.hasOwnProperty('FL') != true) {
+                        if (p_jmsg.hasOwnProperty('FL') !== true) {
                             p_jmsg.FL = false;
                         }
                         v_trigger_on_flying = (p_unit.m_isFlying != p_jmsg.FL);
                         p_unit.m_isFlying = p_jmsg.FL;
 
-                        if (p_jmsg.hasOwnProperty('z') == true) {
+                        if (p_jmsg.hasOwnProperty('z') === true) {
                             p_unit.m_FlyingLastStartTime = p_jmsg.z / 1000; // to seconds
                         }
 
@@ -1840,7 +1846,7 @@ class CAndruavClient {
                             p_unit.m_FlyingTotalDuration = p_jmsg.a  / 1000; // to seconds
                         }
 
-                        if ((p_jmsg.hasOwnProperty('o') == true) && (p_jmsg.o != 0)) { // SwarmMemberLeaderFormation
+                        if ((p_jmsg.hasOwnProperty('o') === true) && (p_jmsg.o != 0)) { // SwarmMemberLeaderFormation
                             v_trigger_on_swarm_status = (p_unit.m_Swarm.m_isLeader != true);
                             p_unit.m_Swarm.m_isLeader = true;
                             p_unit.m_Swarm.m_formation = p_jmsg.o;
@@ -1850,7 +1856,7 @@ class CAndruavClient {
                             p_unit.m_Swarm.m_formation = null;
                         }
 
-                        if ((p_jmsg.hasOwnProperty('q') == true) && (p_jmsg.q != "")){
+                        if ((p_jmsg.hasOwnProperty('q') === true) && (p_jmsg.q != "")){
                             v_trigger_on_swarm_status2 = (p_unit.m_Swarm.m_following != p_jmsg.q);
                             p_unit.m_Swarm.m_following = p_jmsg.q;
                         } else {
@@ -1897,6 +1903,9 @@ class CAndruavClient {
                         if (p_jmsg.hasOwnProperty('FM') == true) {
                             v_trigger_on_flightMode = (p_unit.m_flightMode != p_jmsg.FM);
                             p_unit.m_flightMode = p_jmsg.FM;
+                        }
+                        if (p_jmsg.hasOwnProperty('AP') === true) {
+                            p_unit.m_autoPilot = p_jmsg.AP;
                         }
                         if (p_jmsg.hasOwnProperty('AR') == true) {
                             v_trigger_on_armed = (p_unit.m_isArmed != p_jmsg.AR);
