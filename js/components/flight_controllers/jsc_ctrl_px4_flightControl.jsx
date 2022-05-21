@@ -65,7 +65,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 case VEHICLE_SUBMARINE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_manual_ctl_class            = " disabled hidden ";
+                    res.btn_climb_text                  = "Dive";
+			        res.btn_manual_ctl_class            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " disabled hidden ";
                     res.btn_alt_ctl_class               = " disabled hidden ";

@@ -1186,19 +1186,19 @@ function fn_handleKeyBoard() {
 					case CONST_FLIGHT_PX4_ALT_HOLD:
 						text = "Alt-Hold";
 						break;
-					case CONST_FLIGHT_PX4_OFF_AUTO_TAKEOFF:
+					case CONST_FLIGHT_PX4_AUTO_TAKEOFF:
 						text = "Takeoff";
 						break;
-					case CONST_FLIGHT_PX4_OFF_AUTO_MISSION:
+					case CONST_FLIGHT_PX4_AUTO_MISSION:
 						text = "Mission";
 						break;
-					case CONST_FLIGHT_PX4_OFF_AUTO_HOLD:
+					case CONST_FLIGHT_PX4_AUTO_HOLD:
 						text = "Hold";
 						break;
-					case CONST_FLIGHT_PX4_OFF_AUTO_RTL:
+					case CONST_FLIGHT_PX4_AUTO_RTL:
 						text = "RTL";
 						break;
-					case CONST_FLIGHT_PX4_OFF_AUTO_LAND:
+					case CONST_FLIGHT_PX4_AUTO_LAND:
 						text = "Land";
 						break;
 					case CONST_FLIGHT_PX4_AUTO_FOLLOW_TARGET:
@@ -1207,10 +1207,10 @@ function fn_handleKeyBoard() {
 					case CONST_FLIGHT_PX4_AUTO_PRECLAND:
 						text = "Precland";
 						break;
-					case CONST_FLIGHT_PX4_OFF_VTOL_TAKEOFF:
+					case CONST_FLIGHT_PX4_VTOL_TAKEOFF:
 						text = "VT-Takeoff";
 						break;
-					case CONST_FLIGHT_PX4_OFF_ACRO:
+					case CONST_FLIGHT_PX4_ACRO:
 						text = "Acro";
 						break;
 					case CONST_FLIGHT_PX4_STABILIZE:
@@ -1264,7 +1264,8 @@ function fn_handleKeyBoard() {
 					var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(keys[i]);
 					if ((p_andruavUnit != null) && (p_andruavUnit.m_IsGCS != true)) {
 						if (p_andruavUnit.m_VehicleType == VEHICLE_ROVER) {
-							if ((p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_GUIDED) || (p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_AUTO)) {
+							if ((p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_GUIDED) || (p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_AUTO) 
+							|| (p_andruavUnit.m_flightMode == CONST_FLIGHT_PX4_AUTO_HOLD)) {
 								v_contextMenu += "<div class='row'>";
 								v_contextMenu += "<div class= 'col-sm-12'><p class='bg-success  si-07x'>" + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT + "</p></div>";
 								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
@@ -1274,7 +1275,8 @@ function fn_handleKeyBoard() {
 							}
 						}
 						else {
-							if ((p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_GUIDED) || (p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_AUTO)) {
+							if ((p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_GUIDED) || (p_andruavUnit.m_flightMode == CONST_FLIGHT_CONTROL_AUTO)
+								|| (p_andruavUnit.m_flightMode == CONST_FLIGHT_PX4_AUTO_HOLD)) {
 								v_contextMenu += "<div class='row css_txt_center'>";
 								v_contextMenu += "<div class= 'col-sm-12'><p class='bg-success si-07x'>" + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT + "</p></div>";
 								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doCircle2('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + fn_convertToMeter(CONST_DEFAULT_ALTITUDE) + "," + fn_convertToMeter(CONST_DEFAULT_RADIUS) + "," + 10 + " )\">Circle</p></div>";

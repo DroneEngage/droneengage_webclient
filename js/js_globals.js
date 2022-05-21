@@ -12,13 +12,13 @@ const CONST_DFM_SAFE                = 1000; // less than 1 Km is safe.
 // Metric System        
 var v_useMetricSystem               = true;
 
-var CONST_DEFAULT_ALTITUDE          = 100; // 100 m
-var CONST_DEFAULT_RADIUS            = 50; // 50 m
-var CONST_DEFAULT_ALTITUDE_min      = 1; //m		
-var CONST_DEFAULT_ALTITUDE_STEP     = 3; //m		
-var CONST_DEFAULT_RADIUS_min        = 5;
-var CONST_DEFAULT_SPEED_MIN         = 5;  //m/s
-var CONST_DEFAULT_SPEED_STEP        = 1; //m/s
+var CONST_DEFAULT_ALTITUDE          = 100;  // 100 m
+var CONST_DEFAULT_RADIUS            = 50;   // 50 m
+var CONST_DEFAULT_ALTITUDE_min      = 1;    //  m		
+var CONST_DEFAULT_ALTITUDE_STEP     = 3;    //  m		
+var CONST_DEFAULT_RADIUS_min        = 5;    //  m
+var CONST_DEFAULT_SPEED_MIN         = 5;    //  m/s
+var CONST_DEFAULT_SPEED_STEP        = 1;    //  m/s
 var CONST_DEFAULT_VOLUME            = 50;
 // GUI 
 const CONST_DEFAULT_FLIGHTPATH_STEPS_COUNT = 40;
@@ -104,7 +104,7 @@ var CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and
 
 const CONST_TEST_MODE = true;
 const CONST_PROD_MODE_IP = 'cloud.ardupilot.org'; 
-const CONST_TEST_MODE_IP = "192.168.1.144";// "192.168.3.139";
+const CONST_TEST_MODE_IP = "192.168.1.144";
 const CONST_TEST_MODE_ENABLE_LOG = false;
 
 //"www.andruav.com"._fn_hexEncode();  
