@@ -10,8 +10,6 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 	{
 	    var res = {};
 		res.btn_arm_class                   = "";
-        res.btn_climb_class                 = "";
-        res.btn_climb_text                  = "Climb";
         res.btn_manual_ctl_class            = "";
         res.btn_acro_ctl_class              = "";
         res.btn_stabilize_class             = "";
@@ -50,7 +48,6 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 case VEHICLE_TRI:
                 case VEHICLE_QUAD:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 	            = " btn-warning  ";
                     res.btn_manual_ctl_class            = " btn-danger ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " btn-danger ";
@@ -68,8 +65,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 case VEHICLE_SUBMARINE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_text                  = "Dive";
-			        res.btn_manual_ctl_class            = " disabled hidden ";
+                    res.btn_manual_ctl_class            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " disabled hidden ";
                     res.btn_alt_ctl_class               = " disabled hidden ";
@@ -128,8 +124,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
             {
                 case VEHICLE_SUBMARINE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 		        = " disabled hidden ";
-			        res.btn_manual_ctl_class            = " disabled hidden ";
+                    res.btn_manual_ctl_class            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " disabled hidden ";
                     res.btn_alt_ctl_class               = " disabled hidden ";
@@ -165,7 +160,6 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 case VEHICLE_TRI:
                 case VEHICLE_QUAD:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 		        = " btn-outline-light ";
                     res.btn_manual_ctl_class            = " btn-outline-light ";
                     res.btn_acro_ctl_class              = " btn-outline-light ";
                     res.btn_stabilize_class             = " btn-outline-light ";
@@ -183,8 +177,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 case  VEHICLE_PLANE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 		        = " btn-outline-light ";
-			        res.btn_manual_ctl_class            = " btn-outline-light ";
+                    res.btn_manual_ctl_class            = " btn-outline-light ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " btn-outline-light ";
                     res.btn_alt_ctl_class               = " btn-outline-light ";
@@ -252,7 +245,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
     }
 
     fn_doHold(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_AUTO_HOLD);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_AUTO_HOLD);
     }
 
     fn_doManual(v_andruavUnit) {
@@ -264,7 +257,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
     }
 
     fn_doAcro(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_ACRO);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_ACRO);
     }
 
     fn_doAltCtl(v_andruavUnit) {
@@ -276,19 +269,19 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
     }
 
     fn_doTakeoff(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_AUTO_TAKEOFF);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_AUTO_TAKEOFF);
     }
 
     fn_doLand(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_AUTO_LAND);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_AUTO_LAND);
     }
 
     fn_doMission(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_AUTO_MISSION);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_AUTO_MISSION);
     }
 
     fn_doRTL(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_AUTO_RTL);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_AUTO_RTL);
     }
 
     fn_doPosCtl(v_andruavUnit) {
@@ -300,7 +293,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
     }
 
     fn_doVtolTakeOff(v_andruavUnit) {
-        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_VTOL_TAKEOFF);
+        v_andruavClient.API_do_FlightMode(this.props.v_andruavUnit.partyID, CONST_FLIGHT_PX4_OFF_VTOL_TAKEOFF);
     }
 
     componentDidMount() {
@@ -320,13 +313,12 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
             default:
                 ctrl.push(<div key={this.props.id+"rc1"}  id={this.props.id+"rc1"}  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(this.props.v_andruavUnit)}>&nbsp;ARM&nbsp;</button>
-                    <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(this.props.v_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
-                    <button id='btn_auto_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_takeoff_class}  onClick={ () => this.fn_doTakeoff(this.props.v_andruavUnit)}>&nbsp;Takeoff&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_manual_ctl_class}  title='ARM / DISARM' onClick={ () => this.fn_doManual(this.props.v_andruavUnit)}>&nbsp;Manual&nbsp;</button>
                     <button id='btn_acro_ctl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_acro_ctl_class}  onClick={ () => this.fn_doAcro(this.props.v_andruavUnit)}>&nbsp;ACRO&nbsp;</button>
                     <button id='btn_stabilize' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_stabilize_class}   onClick={ () => this.fn_doStabilize(this.props.v_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
                     <button id='btn_alt_ctl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_alt_ctl_class}  title='Altitude Control' onClick={ () => this.fn_doAltCtl(this.props.v_andruavUnit)}>&nbsp;Alt-CTL&nbsp;</button>
                     <button id='btn_r_attd' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_r_attd_class}  title='R-ATTITUDE' onClick={ () => this.fn_doRAttitude(this.props.v_andruavUnit)}>&nbsp;R-ATT&nbsp;</button>
+                    <button id='btn_auto_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_takeoff_class}  onClick={ () => this.fn_doTakeoff(this.props.v_andruavUnit)}>&nbsp;Takeoff&nbsp;</button>
                     </div></div>);
         
                 ctrl.push(<div key={this.props.id+"rc2"}   id={this.props.id+"rc2"}  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
