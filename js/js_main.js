@@ -1210,7 +1210,7 @@ function fn_handleKeyBoard() {
 					case CONST_FLIGHT_PX4_VTOL_TAKEOFF:
 						text = "VT-Takeoff";
 						break;
-					case CONST_FLIGHT_PX4_OFF_ACRO:
+					case CONST_FLIGHT_PX4_ACRO:
 						text = "Acro";
 						break;
 					case CONST_FLIGHT_PX4_STABILIZE:
