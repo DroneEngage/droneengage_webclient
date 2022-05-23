@@ -25,7 +25,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
         res.btn_auto_vtol_takeoff_class     = "";
         res.btn_pos_ctl_class               = "";
         res.btn_pos_orbit_class             = "";
-
+        res.btn_yaw_class                   = "";
+		
 		if (p_andruavUnit.m_isArmed==true) 
 		{
             switch (p_andruavUnit.m_VehicleType)
@@ -33,7 +34,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 case VEHICLE_ROVER:
                     res.btn_arm_class                   = " btn-danger ";
                     res.btn_manual_ctl_class            = " btn-primary ";
-                    res.btn_climb_class 	            = " disabled hidden ";
+                    res.btn_yaw_class                   = " disabled hidden ";
+		            res.btn_climb_class 	            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " disabled hidden ";
                     res.btn_alt_ctl_class               = " disabled hidden ";
@@ -51,7 +53,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 case VEHICLE_TRI:
                 case VEHICLE_QUAD:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 	            = " btn-warning  ";
+                    res.btn_yaw_class                   = " btn-success ";
+		            res.btn_climb_class 	            = " btn-warning  ";
                     res.btn_manual_ctl_class            = " btn-danger ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " btn-danger ";
@@ -69,7 +72,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 case VEHICLE_SUBMARINE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_text                  = "Dive";
+                    res.btn_yaw_class                   = " btn-success ";
+		            res.btn_climb_text                  = "Dive";
 			        res.btn_climb_class 	            = " disabled hidden ";
                     res.btn_takeoff_class               = " disabled hidden ";
 		            res.btn_manual_ctl_class            = " disabled hidden ";
@@ -89,7 +93,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 
                 case  VEHICLE_PLANE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 	            = " disabled hidden ";
+                    res.btn_yaw_class                   = " disabled hidden ";
+		            res.btn_climb_class 	            = " disabled hidden ";
                     res.btn_manual_ctl_class            = " btn-primary ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " btn-danger ";
@@ -107,7 +112,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 default:
                     res.btn_arm_class                   = " disabled hidden ";
-                    res.btn_climb_class 	            = " disabled hidden ";
+                    res.btn_yaw_class                   = " disabled hidden ";
+		            res.btn_climb_class 	            = " disabled hidden ";
                     res.btn_manual_ctl_class            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " disabled hidden ";
@@ -133,7 +139,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
             {
                 case VEHICLE_SUBMARINE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 	            = " btn-outline-light ";
+                    res.btn_yaw_class                   = " btn-outline-light ";
+		            res.btn_climb_class 	            = " btn-outline-light ";
                     res.btn_climb_text                  = "Dive";
                     res.btn_manual_ctl_class            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
@@ -152,7 +159,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 case VEHICLE_ROVER:
                     res.btn_arm_class                   = " btn-outline-light ";
-                    res.btn_manual_ctl_class            = " btn-outline-light ";
+                    res.btn_yaw_class                   = " disabled hidden  ";
+		            res.btn_manual_ctl_class            = " btn-outline-light ";
                     res.btn_climb_class 	            = " disabled hidden ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " disabled hidden ";
@@ -172,7 +180,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 case VEHICLE_TRI:
                 case VEHICLE_QUAD:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 	            = " btn-outline-light ";
+                    res.btn_yaw_class                   = " btn-outline-light ";
+		            res.btn_climb_class 	            = " btn-outline-light ";
                     res.btn_manual_ctl_class            = " btn-outline-light ";
                     res.btn_acro_ctl_class              = " btn-outline-light ";
                     res.btn_stabilize_class             = " btn-outline-light ";
@@ -190,7 +199,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 
                 case  VEHICLE_PLANE:
                     res.btn_arm_class                   = " btn-danger ";
-                    res.btn_climb_class 	            = " btn-outline-light ";
+                    res.btn_yaw_class                   = " disabled hidden ";
+		            res.btn_climb_class 	            = " btn-outline-light ";
                     res.btn_manual_ctl_class            = " btn-outline-light ";
                     res.btn_acro_ctl_class              = " disabled hidden ";
                     res.btn_stabilize_class             = " btn-outline-light ";
@@ -345,7 +355,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                     <button id='btn_auto_vtol_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_auto_vtol_takeoff_class}  title='VTOL-Takeoff' onClick={ () => this.fn_doVtolTakeOff(this.props.v_andruavUnit)}>&nbsp;V-TkOff&nbsp;</button>
                     <button id='btn_pos_ctl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_ctl_class}  title='Position Control' onClick={ () => this.fn_doPosCtl(this.props.v_andruavUnit)}>&nbsp;Pos-Ctl&nbsp;</button>
                     <button id='btn_pos_orbit' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_orbit_class}  title='APosition Orbit' onClick={ () => this.fn_doPosOrbit(this.props.v_andruavUnit)}>&nbsp;Orbit&nbsp;</button>
-                   </div></div>);
+                    <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(this.props.v_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
+                    </div></div>);
                 break;
         }
         

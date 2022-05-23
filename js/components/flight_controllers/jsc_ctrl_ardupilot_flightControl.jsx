@@ -57,23 +57,23 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
             {
                 case VEHICLE_ROVER:
                     res.btn_arm_class 		    = " btn-danger";
-                    res.btn_climb_class 	    = " btn-outline-light disabled hidden ";
-                    res.btn_land_class 		    = " btn-outline-light disabled hidden ";
+                    res.btn_climb_class 	    = " disabled hidden ";
+                    res.btn_land_class 		    = " disabled hidden ";
                     res.btn_surface_class       = " disabled hidden ";
                     res.btn_auto_class 		    = " btn-primary  ";
-                    res.btn_takeoff_class       = " btn-outline-light disabled hidden ";
+                    res.btn_takeoff_class       = " disabled hidden ";
                     res.btn_guided_class 	    = " btn-primary  ";
                     res.btn_manual_class	    = " btn-primary  ";
                     res.btn_alt_hold_class      = " disabled hidden  ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
-                    res.btn_loiter_class	    = " btn-danger  disabled hidden "; // used in boat only
+                    res.btn_loiter_class	    = " disabled hidden "; // used in boat only
                     res.btn_rtl_class 		    = " btn-primary  rounded-1 ";
                     res.btn_srtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_cruise_class  	    = " btn-primary disabled hidden ";
                     res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
-                    res.btn_yaw_class 	 	    = " btn-outline-light disabled hidden ";
+                    res.btn_yaw_class 	 	    = " disabled hidden ";
                     res.btn_brake_class 	    = " btn-primary disabled hidden ";
                     res.btn_hold_class          = " btn-primary  ";
                     res.btn_speed_class	 	    = " btn-success  ";
@@ -81,7 +81,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     
                 case VEHICLE_TRI:
                 case VEHICLE_QUAD:
-                    res.btn_takeoff_class       = " btn-outline-light disabled hidden ";
+                    res.btn_takeoff_class       = " disabled hidden ";
                     res.btn_arm_class 		    = " btn-danger";
                     res.btn_climb_class 	    = " btn-warning  ";
                     res.btn_land_class 		    = " btn-warning  ";
@@ -89,8 +89,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_auto_class 		    = " btn-primary  ";
                     res.btn_guided_class 	    = " btn-primary  ";
                     res.btn_brake_class 	    = " btn-primary  ";
-                    res.btn_hold_class 	        = " btn-primary disabled hidden ";
-                    res.btn_manual_class	    = " btn-outline-light disabled hidden ";
+                    res.btn_hold_class 	        = " disabled hidden ";
+                    res.btn_manual_class	    = " disabled hidden ";
                     res.btn_manual_onclick      = " ";
                     res.btn_alt_hold_class      = " btn-danger  ";
                     res.btn_pos_hold_class      = " btn-danger  ";
@@ -99,16 +99,16 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_srtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
                     res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
-                    res.btn_cruise_class  	    = " btn-primary disabled hidden ";
-                    res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
+                    res.btn_cruise_class  	    = " disabled hidden ";
+                    res.btn_fbwa_class 	 	    = " disabled hidden ";
                     res.btn_yaw_class 	 	    = " btn-success  ";
                     res.btn_speed_class 	    = " btn-success  ";
                 break;
 
                 case VEHICLE_SUBMARINE:
-                    res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
+                    res.btn_takeoff_class      = " btn-outline-light ";
                     res.btn_arm_class 		    = " btn-danger ";
-                    res.btn_climb_class 	    = " btn-warning  ";
+                    res.btn_climb_class 	    = " btn-warning ";
                     res.btn_climb_text          = "dive";
 		            res.btn_land_class 		    = " disabled hidden ";
                     res.btn_surface_class       = " btn-warning ";
@@ -141,8 +141,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_guided_class 	    = " btn-primary  ";
                     res.btn_manual_class	    = " btn-danger   ";
                     res.btn_stabilize_class     = " btn-danger   ";
-                    res.btn_brake_class 	    = " btn-primary  disabled hidden ";
-                    res.btn_hold_class 	        = " btn-primary  disabled hidden ";
+                    res.btn_brake_class 	    = " disabled hidden ";
+                    res.btn_hold_class 	        = " disabled hidden ";
                     res.btn_alt_hold_class      = " disabled hidden ";
                     res.btn_pos_hold_class      = " disabled hidden ";
                     res.btn_loiter_class 	    = " btn-danger  ";
@@ -152,7 +152,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_releaseCTRL_class   = c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
                     res.btn_cruise_class  	    = " btn-primary  ";
                     res.btn_fbwa_class 	 	    = " btn-primary  ";
-                    res.btn_yaw_class 	 	    = " btn-primary  disabled hidden   ";
+                    res.btn_yaw_class 	 	    = " disabled hidden   ";
                     res.btn_speed_class 	    = " btn-success  ";
 
                     res.btn_q_stabilize         = " btn-primary ";
@@ -170,8 +170,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_auto_class 		    = " btn-primary  ";
                     res.btn_guided_class 	    = " btn-primary  ";
                     res.btn_manual_class	    = " btn-outline-light  ";
-                    res.btn_brake_class 	    = " btn-primary  disabled hidden ";
-                    res.btn_hold_class 	        = " btn-primary  disabled hidden ";
+                    res.btn_brake_class 	    = " disabled hidden ";
+                    res.btn_hold_class 	        = " disabled hidden ";
                     res.btn_alt_hold_class      = " disabled hidden ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
                     res.btn_loiter_class 	    = " btn-primary  ";
@@ -190,52 +190,126 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
             // NOT ARMED
 
 			res.btn_arm_class 			= " btn-outline-light ";
-			res.btn_climb_class 		= " btn-outline-light disabled hidden ";
-			res.btn_land_class 			= " btn-outline-light disabled hidden ";
-            res.btn_auto_class 			= " btn-outline-light disabled hidden ";
+			res.btn_climb_class 		= " disabled hidden ";
+			res.btn_land_class 			= " disabled hidden ";
+            res.btn_auto_class 			= " disabled hidden ";
 			res.btn_guided_class 		= " btn-outline-light  ";
-            res.btn_manual_class	    = " btn-outline-light  disabled hidden ";
-            res.btn_stabilize_class     = " btn-outline-light  disabled hidden ";
+            res.btn_manual_class	    = " disabled hidden ";
+            res.btn_stabilize_class     = " disabled hidden ";
             res.btn_pos_hold_class      = " disabled disabled hidden  ";
             res.btn_loiter_class 		= " disabled hidden ";
 			res.btn_rtl_class 			= " btn-outline-light rounded-1 ";
-			res.btn_srtl_class 		    = " btn-outline-light  ";
-            res.btn_cruise_class  	    = " btn-primary disabled hidden ";
-            res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
-		    res.btn_yaw_class 	 		= " btn-outline-light disabled hidden ";
-		    res.btn_speed_class 	    = " btn-outline-light disabled hidden ";
+			res.btn_srtl_class 		    = " btn-outline-light ";
+            res.btn_cruise_class  	    = " disabled hidden ";
+            res.btn_fbwa_class 	 	    = " bdisabled hidden ";
+		    res.btn_yaw_class 	 		= " disabled hidden ";
+		    res.btn_speed_class 	    = " disabled hidden ";
             
             switch (p_andruavUnit.m_VehicleType)
             {
                 case VEHICLE_SUBMARINE:
-                        res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                        res.btn_hold_class 		    = " btn-outline-light  ";
-                        break;
+                    res.btn_takeoff_class      = " btn-outline-light ";
+                    res.btn_arm_class 		    = " btn-danger ";
+                    res.btn_climb_class 	    = " btn-outline-light ";
+                    res.btn_climb_text          = "dive";
+		            res.btn_land_class 		    = " disabled hidden ";
+                    res.btn_surface_class       = " btn-outline-light ";
+                    res.btn_auto_class 		    = " btn-outline-light ";
+                    res.btn_guided_class 	    = " btn-outline-light ";
+                    res.btn_brake_class 	    = " disabled hidden ";
+                    res.btn_hold_class 	        = " disabled hidden ";
+                    res.btn_manual_class	    = " disabled hidden ";
+                    res.btn_manual_onclick      = " ";
+                    res.btn_cruise_class  	    = " disabled hidden ";
+                    res.btn_fbwa_class 	 	    = " disabled hidden ";
+                    res.btn_alt_hold_class      = " disabled hidden ";
+                    res.btn_pos_hold_class      = " disabled hidden ";
+                    res.btn_loiter_class 	    = " disabled hidden ";
+                    res.btn_rtl_class 		    = " disabled hidden ";
+                    res.btn_srtl_class 		    = " disabled hidden ";
+                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+                    res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
+                    res.btn_yaw_class 	 	    = " btn-outline-light ";
+                    res.btn_speed_class 	    = " btn-outline-light ";
+                    break;
                 case VEHICLE_ROVER:
-                        res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                        res.btn_brake_class         = " btn-outline-light disabled hidden ";
-                        res.btn_hold_class 		    = " btn-outline-light  ";
+                    res.btn_arm_class 		    = " btn-danger ";
+                    res.btn_climb_class 	    = " disabled hidden ";
+                    res.btn_land_class 		    = " disabled hidden ";
+                    res.btn_surface_class       = " disabled hidden ";
+                    res.btn_auto_class 		    = " btn-outline-light ";
+                    res.btn_takeoff_class       = " disabled hidden ";
+                    res.btn_guided_class 	    = " btn-outline-light ";
+                    res.btn_manual_class	    = " btn-outline-light ";
+                    res.btn_alt_hold_class      = " disabled hidden ";
+                    res.btn_pos_hold_class      = " disabled hidden ";
+                    res.btn_loiter_class	    = " disabled hidden "; // used in boat only
+                    res.btn_rtl_class 		    = " btn-outline-light rounded-1 ";
+                    res.btn_srtl_class 		    = " btn-outline-light ";
+                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+                    res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
+                    res.btn_cruise_class  	    = " btn-primary disabled hidden ";
+                    res.btn_fbwa_class 	 	    = " btn-primary disabled hidden ";
+                    res.btn_yaw_class 	 	    = " disabled hidden ";
+                    res.btn_brake_class 	    = " btn-primary disabled hidden ";
+                    res.btn_hold_class          = "  btn-outline-light ";
+                    res.btn_speed_class	 	    = "  btn-outline-light ";
                         break;
 
                 case VEHICLE_TRI:
                 case VEHICLE_QUAD:
-                        res.btn_takeoff_class      = " btn-outline-light disabled hidden ";
-                        res.btn_brake_class         = " btn-outline-light  ";
-                        res.btn_hold_class 		    = " btn-outline-light disabled hidden ";
+                        res.btn_takeoff_class       = " disabled hidden ";
+                        res.btn_arm_class 		    = " btn-danger ";
+                        res.btn_climb_class 	    = " btn-outline-light ";
+                        res.btn_land_class 		    = " btn-outline-light ";
+                        res.btn_surface_class       = " disabled hidden ";
+                        res.btn_auto_class 		    = " btn-outline-light ";
+                        res.btn_guided_class 	    = " btn-outline-light ";
+                        res.btn_brake_class 	    = " btn-outline-light ";
+                        res.btn_hold_class 	        = " disabled hidden ";
+                        res.btn_manual_class	    = " disabled hidden ";
+                        res.btn_alt_hold_class      = " btn-outline-light ";
+                        res.btn_pos_hold_class      = " btn-outline-light ";
+                        res.btn_loiter_class 	    = " btn-outline-light ";
+                        res.btn_rtl_class 		    = " btn-outline-light rounded-1 ";
+                        res.btn_srtl_class 		    = " btn-outline-light ";
+                        res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+                        res.btn_releaseCTRL_class 	= c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
+                        res.btn_cruise_class  	    = " disabled hidden ";
+                        res.btn_fbwa_class 	 	    = " disabled hidden ";
+                        res.btn_yaw_class 	 	    = " btn-outline-light ";
+                        res.btn_speed_class 	    = " btn-outline-light ";
                         break;
 
                 case  VEHICLE_PLANE:
-                        res.btn_takeoff_class       = " btn-outline-light ";
-                        res.btn_manual_class	    = " btn-outline-light ";
-                        res.btn_stabilize_class	    = " btn-outline-light ";
-                        res.btn_brake_class 	    = " btn-primary  disabled hidden ";
-                        res.btn_hold_class 	        = " btn-primary  disabled hidden ";
-                        res.btn_q_stabilize         = " btn-outline-light ";
-                        res.btn_q_loiter            = " btn-outline-light ";
-                        res.btn_q_hover             = " btn-outline-light ";
-                        res.btn_q_land              = " btn-outline-light ";
-                        res.btn_q_rtl               = " btn-outline-light ";
-                        break;
+                    res.btn_arm_class 		    = " btn-danger ";
+                    res.btn_climb_class 	    = " btn-outline-light ";
+                    res.btn_takeoff_class       = " btn-outline-light ";
+                    res.btn_land_class 		    = " disabled hidden ";
+                    res.btn_auto_class 		    = " btn-outline-light ";
+                    res.btn_guided_class 	    = " btn-outline-light ";
+                    res.btn_manual_class	    = " btn-outline-light ";
+                    res.btn_stabilize_class     = " btn-outline-light ";
+                    res.btn_brake_class 	    = " disabled hidden ";
+                    res.btn_hold_class 	        = " disabled hidden ";
+                    res.btn_alt_hold_class      = " disabled hidden ";
+                    res.btn_pos_hold_class      = " disabled hidden ";
+                    res.btn_loiter_class 	    = " btn-outline-light ";
+                    res.btn_rtl_class 		    = " btn-outline-light rounded-1 ";
+                    res.btn_srtl_class 		    = " btn-outline-light ";
+                    res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
+                    res.btn_releaseCTRL_class   = c_manualTXBlockedSubAction != CONST_RC_SUB_ACTION_RELEASED?" btn-danger   ":" btn-primary   ";
+                    res.btn_cruise_class  	    = " btn-outline-light ";
+                    res.btn_fbwa_class 	 	    = " btn-outline-light ";
+                    res.btn_yaw_class 	 	    = " disabled hidden   ";
+                    res.btn_speed_class 	    = " btn-outline-light ";
+
+                    res.btn_q_stabilize         = " btn-outline-light ";
+                    res.btn_q_loiter            = " btn-outline-light ";
+                    res.btn_q_hover             = " btn-outline-light ";
+                    res.btn_q_land              = " btn-outline-light ";
+                    res.btn_q_rtl               = " btn-outline-light ";
+                    break;
         
                 default: 
                     break;
