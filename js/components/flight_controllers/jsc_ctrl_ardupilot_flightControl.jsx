@@ -21,7 +21,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
         res.btn_hold_class              = "";
         res.btn_brake_text              = "";
 		res.btn_manual_class            = "";
-        res.btn_stabilize_class         = " disabled hidden";
+        res.btn_acro_class              = " disabled hidden ";
+        res.btn_stabilize_class         = " disabled hidden ";
         res.btn_alt_hold_class          = "";
         res.btn_pos_hold_class          = "";
         res.btn_loiter_class            = "";
@@ -64,6 +65,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_takeoff_class       = " disabled hidden ";
                     res.btn_guided_class 	    = " btn-primary  ";
                     res.btn_manual_class	    = " btn-primary  ";
+                    res.btn_acro_class	        = " btn-primary  ";
                     res.btn_alt_hold_class      = " disabled hidden  ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
                     res.btn_loiter_class	    = " disabled hidden "; // used in boat only
@@ -170,6 +172,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_auto_class 		    = " btn-primary  ";
                     res.btn_guided_class 	    = " btn-primary  ";
                     res.btn_manual_class	    = " btn-outline-light  ";
+                    res.btn_acro_class	        = " disabled hidden ";
                     res.btn_brake_class 	    = " disabled hidden ";
                     res.btn_hold_class 	        = " disabled hidden ";
                     res.btn_alt_hold_class      = " disabled hidden ";
@@ -195,6 +198,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
             res.btn_auto_class 			= " disabled hidden ";
 			res.btn_guided_class 		= " btn-outline-light  ";
             res.btn_manual_class	    = " disabled hidden ";
+            res.btn_acro_class	        = " disabled hidden ";
             res.btn_stabilize_class     = " disabled hidden ";
             res.btn_pos_hold_class      = " disabled disabled hidden  ";
             res.btn_loiter_class 		= " disabled hidden ";
@@ -241,6 +245,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_takeoff_class       = " disabled hidden ";
                     res.btn_guided_class 	    = " btn-outline-light ";
                     res.btn_manual_class	    = " btn-outline-light ";
+                    res.btn_acro_class	        = " btn-outline-light ";
                     res.btn_alt_hold_class      = " disabled hidden ";
                     res.btn_pos_hold_class      = " disabled hidden ";
                     res.btn_loiter_class	    = " disabled hidden "; // used in boat only
@@ -377,6 +382,10 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
 
     fn_doManual(v_andruavUnit) {
         v_andruavClient.API_do_FlightMode(v_andruavUnit.partyID, CONST_FLIGHT_CONTROL_MANUAL);
+    }
+
+    fn_doAcro(v_andruavUnit) {
+        v_andruavClient.API_do_FlightMode(v_andruavUnit.partyID, CONST_FLIGHT_CONTROL_ACRO);
     }
 
     fn_doStabilize(v_andruavUnit) {
@@ -516,6 +525,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(this.props.v_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(this.props.v_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(this.props.v_andruavUnit)}>&nbsp;Manual&nbsp;</button>
+                    <button id='btn_acro' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_acro_class } onClick={ (e) => this.fn_doAcro(this.props.v_andruavUnit)}>&nbsp;Acro&nbsp;</button>
                     <button id='btn_rtl' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_rtl_class } title="RTL mode"  onClick={ (e) => this.fn_doRTL(this.props.v_andruavUnit, false)}>&nbsp;RTL&nbsp;</button>
                     <button id='btn_rtl_s' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_srtl_class } title="Smart RTL"  onClick={ (e) => this.fn_doRTL(this.props.v_andruavUnit, true)}>&nbsp;S-RTL&nbsp;</button>
                     <button id='btn_cruse' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_cruise_class } onClick={ (e) => this.fn_doCruise(this.props.v_andruavUnit)}>&nbsp;Cruise&nbsp;</button>

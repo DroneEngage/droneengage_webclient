@@ -1123,6 +1123,9 @@ function fn_handleKeyBoard() {
 					case CONST_FLIGHT_CONTROL_MANUAL:
 						text = "Manual";
 						break;
+					case CONST_FLIGHT_CONTROL_ACRO:
+						text = "Acro";
+						break;
 					case CONST_FLIGHT_CONTROL_TAKEOFF:
 						text = "Takeoff";
 						break;
