@@ -141,8 +141,7 @@ class CLSS_Preferences extends React.Component {
   {
       $('#check_enable_speech')[0].checked = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()==='true';
       $('#volume_range')[0].value = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()
-      console.log (window.AndruavLibs.LocalStorage.fn_getSpeechEnabled());
-    }
+  }
 
 
     
