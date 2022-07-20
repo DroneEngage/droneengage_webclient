@@ -68,7 +68,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_acro_class	        = " btn-primary  ";
                     res.btn_alt_hold_class      = " disabled hidden  ";
                     res.btn_pos_hold_class      = " disabled hidden  ";
-                    res.btn_loiter_class	    = " disabled hidden "; // used in boat only
+                    res.btn_loiter_class	    = " btn-warning "; // used in boat only
                     res.btn_rtl_class 		    = " btn-primary  rounded-1 ";
                     res.btn_srtl_class 		    = " btn-primary  ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
@@ -248,7 +248,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_acro_class	        = " btn-outline-light ";
                     res.btn_alt_hold_class      = " disabled hidden ";
                     res.btn_pos_hold_class      = " disabled hidden ";
-                    res.btn_loiter_class	    = " disabled hidden "; // used in boat only
+                    res.btn_loiter_class	    = " btn-outline-light "; // used in boat only
                     res.btn_rtl_class 		    = " btn-outline-light rounded-1 ";
                     res.btn_srtl_class 		    = " btn-outline-light ";
                     res.btn_takeCTRL_class      = ((c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_CENTER_CHANNELS) || (c_manualTXBlockedSubAction == CONST_RC_SUB_ACTION_FREEZE_CHANNELS))?" btn-danger   ":" btn-primary   ";
