@@ -484,8 +484,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(this.props.v_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
                     <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(this.props.v_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
                     <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(this.props.v_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
-                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,this.props.v_andruavUnit,this.props.v_andruavUnit.m_Nav_Info.p_Location.speed!=null?this.props.v_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
-                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,this.props.v_andruavUnit)}>&nbsp;SRV&nbsp;</button>
+                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => fn_changeSpeed(this.props.v_andruavUnit,this.props.v_andruavUnit.m_Nav_Info.p_Location.speed!=null?this.props.v_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
+                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => fn_ServoControl(this.props.v_andruavUnit)}>&nbsp;SRV&nbsp;</button>
                     </div></div>);
             
             
@@ -522,8 +522,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     <button id='btn_fbwa' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWA(this.props.v_andruavUnit)}>&nbsp;FBWA&nbsp;</button>
                     <button id='btn_fbwb' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_fbwa_class } onClick={ (e) => this.fn_doFBWB(this.props.v_andruavUnit)}>&nbsp;FBWB&nbsp;</button>
                     <button id='btn_yaw' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_yaw_class } onClick={ (e) => gui_doYAW(this.props.v_andruavUnit.partyID)}>&nbsp;YAW&nbsp;</button>
-                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => this.fn_changeSpeed(e,this.props.v_andruavUnit,this.props.v_andruavUnit.m_Nav_Info.p_Location.speed!=null?this.props.v_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
-                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => this.fn_ServoControl(e,this.props.v_andruavUnit)}>&nbsp;SRV&nbsp;</button>
+                    <button id='btn_speed' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_speed_class } onClick={ (e) => fn_changeSpeed(this.props.v_andruavUnit,this.props.v_andruavUnit.m_Nav_Info.p_Location.speed!=null?this.props.v_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>&nbsp;GS&nbsp;</button>
+                    <button id='btn_servos' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_servo_class } onClick={ (e) => fn_ServoControl(this.props.v_andruavUnit)}>&nbsp;SRV&nbsp;</button>
                     </div></div>);
                 break;
         }
