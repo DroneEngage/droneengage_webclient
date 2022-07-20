@@ -26,7 +26,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
         res.btn_pos_ctl_class               = "";
         res.btn_pos_orbit_class             = "";
         res.btn_yaw_class                   = "";
-		
+
 		if (p_andruavUnit.m_isArmed==true) 
 		{
             switch (p_andruavUnit.m_VehicleType)
