@@ -97,6 +97,8 @@ const CONST_WayPoint_TYPE_ChangeAlt = 113; // same as amvlink
 const CONST_WayPoint_TYPE_YAW = 115; // same as mavlink
 const CONST_WayPoint_TYPE_FIRE_EVENT = 9;
 const CONST_WayPoint_TYPE_WAIT_EVENT = 10;
+const CONST_WayPoint_TYPE_CAMERA_TRIGGER = 203; // same as mavlink
+const CONST_WayPoint_TYPE_CAMERA_CONTROL = 206; // same as mavlink
 
 
 // AndruaveMessageID
@@ -2354,7 +2356,8 @@ class CAndruavClient {
                             wayPointStep.waypointType = p_jmsg[i].t;
 
                             switch (wayPointStep.waypointType) {
-                                case CONST_WayPoint_TYPE_WAYPOINTSTEP: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_WAYPOINTSTEP:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     wayPointStep.Longitude = p_jmsg[i].g;
                                     wayPointStep.Latitude = p_jmsg[i].a;
                                     wayPointStep.Altitude = p_jmsg[i].l;
@@ -2362,29 +2365,41 @@ class CAndruavClient {
                                     wayPointStep.TimeToStay = p_jmsg[i].y;
                                     break;
 
-                                case CONST_WayPoint_TYPE_SPLINE: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_SPLINE:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     wayPointStep.Longitude = p_jmsg[i].g;
                                     wayPointStep.Latitude = p_jmsg[i].a;
                                     wayPointStep.Altitude = p_jmsg[i].l;
                                     wayPointStep.TimeToStay = p_jmsg[i].y;
                                     break;
 
-                                case CONST_WayPoint_TYPE_EKLA3: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_EKLA3:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     wayPointStep.Altitude = p_jmsg[i].l;
                                     wayPointStep.Pitch = p_jmsg[i].p;
                                     break;
 
-                                case CONST_WayPoint_TYPE_HOBOOT: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_HOBOOT:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     break;
 
-                                case CONST_WayPoint_TYPE_RTL: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_RTL:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     break;
 
-                                case CONST_WayPoint_Guided_Enabled: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_CAMERA_TRIGGER:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
+                                    break;
+                                case CONST_WayPoint_TYPE_CAMERA_CONTROL:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
+                                    break;
+                                case CONST_WayPoint_Guided_Enabled:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     wayPointStep.Enable = p_jmsg[i].e;
                                     break;
 
-                                case CONST_WayPoint_TYPE_ChangeAlt: wayPointStep.m_Sequence = p_jmsg[i].s;
+                                case CONST_WayPoint_TYPE_ChangeAlt:
+                                    wayPointStep.m_Sequence = p_jmsg[i].s;
                                     wayPointStep.AscentDescentRate = p_jmsg[i].r;
                                     break;
 

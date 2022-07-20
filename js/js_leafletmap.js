@@ -164,21 +164,24 @@ class CLeafLetAndruavMap {
     /**
          * Create a marker with image and title
          */
-    fn_CreateMarker(p_image, p_title, p_draggable, p_isTop, p_htmlTitle) {
+    fn_CreateMarker(p_image, p_title, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
         var v_image;
-
+        var v_iconsize;
+        if (p_iconsize==null) {
+            v_iconsize = [32,32];
+        }
+        else
+        {
+            v_iconsize = p_iconsize;
+        }
+        var v_iconAnchor = [v_iconsize[0]/2,v_iconsize[1]/2];
+        var v_popupAnchor = [-v_iconsize[0]/2,-v_iconsize[0]/2];
         if (p_htmlTitle == null) {
             v_image = L.icon({
                 iconUrl: p_image,
-                iconSize: [
-                    32, 32
-                ],
-                iconAnchor: [
-                    16, 16
-                ],
-                popupAnchor: [
-                    -16, -16
-                ],
+                iconSize: v_iconsize,
+                iconAnchor: v_iconAnchor,
+                popupAnchor: v_popupAnchor,
                 // shadowUrl: 'my-icon-shadow.png',
                 // shadowSize: [68, 95],
                 // shadowAnchor: [22, 94]
@@ -187,15 +190,9 @@ class CLeafLetAndruavMap {
             var v_htmlIcon = p_htmlTitle + "<image src='" + p_image + "'/>";
             v_image = L.divIcon({
                 html: v_htmlIcon,
-                iconSize: [
-                    32, 32
-                ],
-                iconAnchor: [
-                    16, 16
-                ],
-                popupAnchor: [
-                    -16, -16
-                ],
+                iconSize: v_iconsize,
+                iconAnchor: v_iconAnchor,
+                popupAnchor: v_popupAnchor,
                 className: "css_leaflet_icon"
                 // shadowUrl: 'my-icon-shadow.png',
                 // shadowSize: [68, 95],

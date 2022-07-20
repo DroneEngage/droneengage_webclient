@@ -1585,28 +1585,44 @@ function fn_handleKeyBoard() {
 			}
 
 			if (p_andruavUnit.m_wayPoint.m_markers != null) {
-				var v_marker = p_andruavUnit.m_wayPoint.m_markers[missionIndexReached - 1];
+				const c_mission_index = missionIndexReached - 1;
+				var v_marker = p_andruavUnit.m_wayPoint.m_markers[c_mission_index];
 				if (v_marker != null) {
 					v_marker.waypoint_status = status;
-
-					switch (status) {
-						case CONST_Report_NAV_ItemReached:
-							AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_gy_32x32.png');
-							//marker.setIcon({ url: './images/location_gy_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
-							break;
-						case CONST_Report_NAV_ItemUnknown:
-							AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_bb_32x32.png');
-							//marker.setIcon({ url: './images/location_bb_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
-							break;
-						case CONST_Report_NAV_ItemExecuting:
-							AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_bg_32x32.png');
-							//marker.setIcon({ url: './images/location_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
-							break;
-
+					if ((p_andruavUnit.m_wayPoint.wayPointPath[c_mission_index]==CONST_WayPoint_TYPE_CAMERA_TRIGGER)
+					|| (p_andruavUnit.m_wayPoint.wayPointPath[c_mission_index]==CONST_WayPoint_TYPE_CAMERA_CONTROL)) {
+						switch (status) {
+							case CONST_Report_NAV_ItemReached:
+								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/camera_24x24.png', false, false, null, [16,16]);
+								//marker.setIcon({ url: './images/location_gy_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
+								break;
+							case CONST_Report_NAV_ItemUnknown:
+								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/camera_gy_32x32.png', false, false, null, [16,16]);
+								//marker.setIcon({ url: './images/location_bb_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
+								break;
+							case CONST_Report_NAV_ItemExecuting:
+								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/camera_bg_32x32.png', false, false, null, [16,16]);
+								//marker.setIcon({ url: './images/location_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
+								break;
+						}
 					}
-					//marker.setIcon('./images/location_bg_32x32.png');
+					else {
+						switch (status) {
+							case CONST_Report_NAV_ItemReached:
+								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_gy_32x32.png');
+								//marker.setIcon({ url: './images/location_gy_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
+								break;
+							case CONST_Report_NAV_ItemUnknown:
+								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_bb_32x32.png');
+								//marker.setIcon({ url: './images/location_bb_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
+								break;
+							case CONST_Report_NAV_ItemExecuting:
+								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_bg_32x32.png');
+								//marker.setIcon({ url: './images/location_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
+								break;
 
-
+						}
+					}
 				}
 			}
 		}
@@ -1623,10 +1639,10 @@ function fn_handleKeyBoard() {
 			p_andruavUnit.m_wayPoint.polygons = [];
 
 			if (wayPointArray.length == 0) return;
+			var latlng = null;
 			for (var i = 0; i < wayPointArray.length; ++i) {
-				
+				var subIcon = false;	
 				var wayPointStep = wayPointArray[i];
-				var latlng = null;
 				var icon_img = "";
 				switch (wayPointStep.waypointType) {
 					case CONST_WayPoint_TYPE_WAYPOINTSTEP:
@@ -1648,6 +1664,18 @@ function fn_handleKeyBoard() {
 					case CONST_WayPoint_TYPE_RTL:
 						wayPointStep.m_label = "RTL";
 						break;
+					case CONST_WayPoint_TYPE_CAMERA_TRIGGER:
+						latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(latlng.lat+0.00001, latlng.lng+0.00001);
+						icon_img = './images/camera_gy_32x32.png';
+						subIcon = true;
+						wayPointStep.m_label = "CAM";
+						break;
+					case CONST_WayPoint_TYPE_CAMERA_CONTROL:
+						latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(latlng.lat+0.00001, latlng.lng+0.00001);
+						icon_img = './images/camera_gy_32x32.png';
+						subIcon = true;
+						wayPointStep.m_label = "CAM";
+						break;
 					case CONST_WayPoint_TYPE_CIRCLE:
 						latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(wayPointStep.Latitude, wayPointStep.Longitude);
 						icon_img = './images/location_bb_32x32.png';
@@ -1665,12 +1693,17 @@ function fn_handleKeyBoard() {
 						// circleMission.setMap(map);
 						p_andruavUnit.m_wayPoint.polygons.push(v_circleMission);
 						break;
+					default:
+						continue;
 				}
 
 
 				if (latlng != null) {
-					
-					var v_mark = AndruavLibs.AndruavMap.fn_CreateMarker(icon_img, p_andruavUnit.m_unitName + "  step: " + wayPointStep.m_Sequence);
+					var v_iconsize = [32,32];
+					if (subIcon==true) {
+						v_iconsize = [16,16];
+					}
+					var v_mark = AndruavLibs.AndruavMap.fn_CreateMarker(icon_img, p_andruavUnit.m_unitName + "  step: " + wayPointStep.m_Sequence, false, false, null, v_iconsize);
 					AndruavLibs.AndruavMap.fn_setPosition(v_mark, latlng);
 					p_andruavUnit.m_wayPoint.m_markers.push(v_mark);
 					v_mark.wayPointStep = wayPointStep;
@@ -1685,7 +1718,9 @@ function fn_handleKeyBoard() {
 
 					fn_clickHandler(wayPointStep, p_andruavUnit);
 
-					LngLatPoints.push(latlng);
+					if (subIcon==false) {
+						LngLatPoints.push(latlng);
+					}
 				}
 
 
