@@ -23,14 +23,31 @@ class CLSS_CameraDevice extends React.Component {
     fn_oneShot ()
     {
         if (this.props.prop_session == null) return ;
+        var camera_index;
+        if (v_andruavClient.m_isDE === true) {
+            camera_index = this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id;
+        }
+        else {
+            camera_index = CONST_CAMERA_SOURCE_MOBILE;
+        }
+
+
         v_andruavClient.API_CONST_RemoteCommand_takeImage2(this.props.prop_session.m_unit.partyID, this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id, 1, 0, 0);
     }
 
     fn_shot()
     {
         if (this.props.prop_session == null) return ;
+        var camera_index;
+        if (v_andruavClient.m_isDE === true) {
+            camera_index = this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id;
+        }
+        else {
+            camera_index = CONST_CAMERA_SOURCE_MOBILE;
+        }
+
         v_andruavClient.API_CONST_RemoteCommand_takeImage2(this.props.prop_session.m_unit.partyID, 
-                this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id, 
+                camera_index, 
                 this.props.prop_parent.fn_getNumOfShots(),
                 this.props.prop_parent.fn_getInterval(), 0);
     }
@@ -120,12 +137,7 @@ class CLSS_CameraDialog extends React.Component
 
     }
 
-    // fn_oneShot ()
-    // {
-    //     if (this.state.p_session == null) return ;
-    //     v_andruavClient.API_CONST_RemoteCommand_takeImage2(this.state.p_session.m_unit.partyID, CONST_CAMERA_SOURCE_MOBILE, 1, 0, 0);
-    // }
-    fn_getInterval()
+   fn_getInterval()
     {
         return $('#txtShootingInterval').val();
     }
