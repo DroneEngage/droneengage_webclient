@@ -76,7 +76,7 @@ var AndruavLibs = AndruavLibs || {REVISION: 'BETA' };
             sdpSemantics: 'unified-plan',
             iceServers : [
                 //{ urls: 'turn:andruav.com:3478' , 'credential':'1234', 'username':'andruav' },
-                {urls: 'airgap.droneengage.com' , 'credential':'1234', 'username':'airgap' },
+                {urls: 'turn:airgap.droneengage.com' , 'credential':'1234', 'username':'airgap' },
                 {urls: 'turn:104.131.188.164:3478' , 'credential':'1234', 'username':'andruav_ap' },
                 {urls: "stun:stun1.l.google.com:19302"},
                 
