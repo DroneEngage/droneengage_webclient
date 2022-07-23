@@ -20,8 +20,8 @@ c_app.set('port',c_webport);
 c_app.use(express.static(__dirname + '/'));
 
 const v_fs = require('fs');
-const v_keyFile = v_fs.readFileSync(v_path.join(__dirname, "./ssl/privkey.pem"));
-const v_certFile = v_fs.readFileSync(v_path.join(__dirname, "./ssl/fullchain.pem"));
+const v_keyFile = v_fs.readFileSync(v_path.join(__dirname,  "./ssl/localssl.key"));
+const v_certFile = v_fs.readFileSync(v_path.join(__dirname,  "./ssl/localssl.crt"));
 
 const v_options = {
     key: v_keyFile,
