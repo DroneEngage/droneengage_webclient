@@ -122,35 +122,10 @@ var CONST_MAP_EDITOR  = false;
 var VAR_MAP_LEAFLET_URL;
 
 // IMPORTANT DO NOT COMMENT BELOW LINE.
-//VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaHNhYWQiLCJhIjoiY2tqZnIwNXRuMndvdTJ4cnV0ODQ4djZ3NiJ9.LKojA3YMrG34L93jRThEGQ"._fn_hexEncode();
+VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaHNhYWQiLCJhIjoiY2tqZnIwNXRuMndvdTJ4cnV0ODQ4djZ3NiJ9.LKojA3YMrG34L93jRThEGQ"._fn_hexEncode();
 //VAR_MAP_LEAFLET_URL = "http://maps.openweathermap.org/maps/2.0/weather/TA2/{z}/{x}/{y}?appid={apiKey}"._fn_hexEncode();
-VAR_MAP_LEAFLET_URL = "https://airgap.droneengage.com:88/{x}_{y}_{z}.jpeg"._fn_hexEncode();
+//VAR_MAP_LEAFLET_URL = "https://airgap.droneengage.com:88/{x}_{y}_{z}.jpeg"._fn_hexEncode();
 
-//CODEBLOCK_START
-//"http://192.168.1.139:88/tile/{z}/{x}/{y}.png"._fn_hexEncode()
-//const VAR_MAP_LEAFLET_URL = "2a403490349031000d2408a108a109610cb109c4084409610b640c4008440961084409610a290cb10d240c400c4008a134902b112d9027d908a13b193a243d0908a13b1938403d0908a13b1939313d09084431002f442971";
-//const VAR_MAP_LEAFLET_URL = "http://127.0.0.1:88/tile/{z}/{x}/{y}.png"._fn_hexEncode();
-//"http://192.168.1.139:88/tile/{z}/{x}/{y}.png"._fn_hexEncode()
-//const VAR_MAP_LEAFLET_URL = "2a403490349031000d2408a108a109610cb109c4084409610b640c4008440961084409610a290cb10d240c400c4008a134902b112d9027d908a13b193a243d0908a13b1938403d0908a13b1939313d09084431002f442971";
-/*
-https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}
-The available styles ({id}) are
-streets-v9
-satellite-streets-v9
-light-v9
-dark-v9
-outdoors-v9
-*/
-//https://api.mapbox.com/v4/mapbox.terrain-rgb
-//https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles
-// mapbox map Sat VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWhlZm55IiwiYSI6ImNrZW84Nm9rYTA2ZWgycm9mdmNscmFxYzcifQ.c-zxDjXCthXmRsErPzKhbQ"._fn_hexEncode();
-// mapbox CONTOUR HeatMap  const VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/v4/mapbox.terrain-rgb/{z}/{x}/{y}@2x.pngraw?access_token=pk.eyJ1IjoibWhlZm55IiwiYSI6ImNrZW84Nm9rYTA2ZWgycm9mdmNscmFxYzcifQ.c-zxDjXCthXmRsErPzKhbQ"._fn_hexEncode();
- //const VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWhlZm55IiwiYSI6ImNrZW84Nm9rYTA2ZWgycm9mdmNscmFxYzcifQ.c-zxDjXCthXmRsErPzKhbQ"._fn_hexEncode();
-// hoda 
-
-// local cached satellite
-// VAR_MAP_LEAFLET_URL = "http://127.0.0.1:9991/{x}_{y}_{z}.jpeg"._fn_hexEncode();
-//CODEBLOCK_END
 
 const CONST_PRO_VERSION = false;
 const CONST_DISABLE_ADSG = true;
