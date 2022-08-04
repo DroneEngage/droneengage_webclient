@@ -252,9 +252,9 @@ function prv_extractString(data,startIndex,endIndex)
 		var bytes = [];
 		var c;
 		//byteLength = data.byteLength;
-		for (var i=startIndex;i<endIndex;++i)
+		for (var i=startIndex; i<endIndex; ++i)
 		{
-			c = data.getInt8(i);
+			c = data[i];
             if (c!=0)
 			{
 				// end of string has been reached...after that it is the binary msg contents that could include string as well based on the internal command.
@@ -264,7 +264,7 @@ function prv_extractString(data,startIndex,endIndex)
 			{
 				var j = bytes.join("");
 				out.text = j;     // for backword compatibility only
-				out.nextIndex =i+1;
+				out.nextIndex = i+1;
 										
 				return out;
 			}
@@ -274,12 +274,13 @@ function prv_extractString(data,startIndex,endIndex)
 
 function prv_extractBinary(data,startIndex,endIndex)
 {
-		var intArr= []; 
-		for (var j=startIndex; j<endIndex ;++j)
-		{
-			intArr.push(String.fromCharCode(data.getInt8(j)));
-		}
-		return intArr.join("");
+	var intArr= []; 
+	for (var j=startIndex; j<endIndex ;++j)
+	{
+	    intArr.push(String.fromCharCode(data[j]));
+	}
+	
+    return intArr.join("");
 }	
 
 
