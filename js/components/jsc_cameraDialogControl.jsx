@@ -32,7 +32,11 @@ class CLSS_CameraDevice extends React.Component {
         }
 
 
-        v_andruavClient.API_CONST_RemoteCommand_takeImage2(this.props.prop_session.m_unit.partyID, this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id, 1, 0, 0);
+        v_andruavClient.API_CONST_RemoteCommand_takeImage2(this.props.prop_session.m_unit.partyID,
+            this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id,
+            1,
+            0, 
+            0);
     }
 
     fn_shot()
@@ -47,9 +51,10 @@ class CLSS_CameraDevice extends React.Component {
         }
 
         v_andruavClient.API_CONST_RemoteCommand_takeImage2(this.props.prop_session.m_unit.partyID, 
-                camera_index, 
-                this.props.prop_parent.fn_getNumOfShots(),
-                this.props.prop_parent.fn_getInterval(), 0);
+            this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number].id,
+            this.props.prop_parent.fn_getNumOfShots(),
+            this.props.prop_parent.fn_getInterval(), 
+            0);
     }
 
     
