@@ -2084,29 +2084,29 @@ function fn_handleKeyBoard() {
 
 
 			var bin = fn_Str2BinaryArray(img);
-
-			var blob = new Blob([bin], { type: 'image/jpeg' });
-
-
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				var contents = event.target.result;
-				$('#unitImg').data('binaryImage', contents);
-				//saveData (contents,'image.jpg');
+			if (bin.length>0)
+			{
+				var blob = new Blob([bin], { type: 'image/jpeg' });
 
 
-			};
-
-			reader.onerror = function (event) {
-				console.p_error("File could not be read! Code " + event.target.p_error.code);
-			};
-
-			reader.readAsDataURL(blob);
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					var contents = event.target.result;
+					$('#unitImg').data('binaryImage', contents);
+					//saveData (contents,'image.jpg');
 
 
+				};
 
-			$('#unitImg').attr('src', 'data:image/jpeg;base64,' + fn_arrayBufferToBase64(bin));
-			$('#modal_fpv').show();
+				reader.onerror = function (event) {
+					console.p_error("File could not be read! Code " + event.target.p_error.code);
+				};
+
+				reader.readAsDataURL(blob);
+
+				$('#unitImg').attr('src', 'data:image/jpeg;base64,' + fn_arrayBufferToBase64(bin));
+				$('#modal_fpv').show();
+			}
 
 			var latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(latitude, logitude);
 			$('#unitImg').data('imgLocation', latlng);
@@ -2772,64 +2772,6 @@ function fn_handleKeyBoard() {
 		}
 
 
-		function fn_gui_init_cameraCtrl() {
-			
-			// //http://www.bootply.com/XyZeggFcK7
-
-			// // Camera Shooting options
-			// $('#modal_ctrl_cam').hide();
-			// $('#modal_ctrl_cam').draggable();
-			// $('#modal_ctrl_cam').mouseover(function () {
-			// 	$('#modal_ctrl_cam').css('opacity', '1.0');
-			// });
-			// $('#modal_ctrl_cam').mouseout(function () {
-			// 	if ($('#modal_ctrl_cam').attr('opacity') == null) {
-			// 		$('#modal_ctrl_cam').css('opacity', '0.4');
-			// 	}
-			// });
-			// $('#modal_ctrl_cam').find('#opaque_btn').click(function () {
-			// 	if ($('#modal_ctrl_cam').attr('opacity') == null) {
-			// 		$('#modal_ctrl_cam').attr('opacity', '1.0');
-			// 		$('#modal_ctrl_cam').css('opacity', '1.0');
-			// 	}
-			// 	else {
-			// 		$('#modal_ctrl_cam').attr('opacity', null);
-			// 	}
-			// });
-			// $('#modal_ctrl_cam').find('#btnGoto').click(function () {
-			// 	// assume what there is attribute partyID in the control used to pass parameter
-			// 	fn_gotoUnit_byPartyID($('#modal_ctrl_cam').attr('partyID'));
-			// });
-			// $('#modal_ctrl_cam').find('#btnShot').click(function () {
-			// 	// assume what there is attribute partyID in the control used to pass parameter
-			// 	v_andruavClient.API_CONST_RemoteCommand_takeImage2($('#modal_ctrl_cam').attr('partyID'), CONST_CAMERA_SOURCE_MOBILE, 1, 0, 0);
-			// });
-			// $('#modal_ctrl_cam').find('#btnSwitchCam').click(function () {
-			// 	// assume what there is attribute partyID in the control used to pass parameter
-			// 	const c_partyID = $('#modal_ctrl_cam').attr('partyID');
-			// 	v_andruavClient.API_SwitchCamera(c_partyID,c_partyID);
-			// });
-			// $('#modal_ctrl_cam').find('#btnTakeImage').click(function () {
-			// 	// assume what there is attribute partyID in the control used to pass parameter
-			// 	v_andruavClient.API_CONST_RemoteCommand_takeImage2($('#modal_ctrl_cam').attr('partyID'), CONST_CAMERA_SOURCE_MOBILE, $('#modal_ctrl_cam').find('#txtTotalImages').val(), $('#modal_ctrl_cam').find('#txtShootingInterval').val(), 0);
-			// });
-			// $('#modal_ctrl_cam').find('#btnFCBTakeImage').click(function () {
-			// 	// assume what there is attribute partyID in the control used to pass parameter
-			// 	v_andruavClient.API_CONST_RemoteCommand_takeImage2($('#modal_ctrl_cam').attr('partyID'), CONST_CAMERA_SOURCE_FCB, $('#modal_ctrl_cam').find('#txtTotalImages').val(), $('#modal_ctrl_cam').find('#txtShootingInterval').val(), 0);
-			// });
-			// $('#modal_ctrl_cam').find('#btnclose').click(function () {
-			// 	$('#modal_ctrl_cam').attr('opacity', null);
-			// 	$('#modal_ctrl_cam').attr('partyID', null);
-			// 	$('#modal_ctrl_cam').hide();
-			// });
-			// //$('#modal_ctrl_cam').find('#ctrl_main').disableSelection();
-			// $('#modal_ctrl_cam').find('#txtTotalImages').bind("mousedown", function () {
-			// 	$(this).parents('tr').removeClass('draggable');
-			// });
-			// $('#modal_ctrl_cam').find('#txtShootingInterval').bind("mousedown", function () {
-			// 	$(this).parents('tr').removeClass('draggable');
-			// });
-		}
 
 		function fn_connect() {
 
@@ -3188,7 +3130,6 @@ function fn_handleKeyBoard() {
 			});
 
 			gui_init_yawCtrl();
-			fn_gui_init_cameraCtrl ();
 			fn_gui_init_fpvVtrl();
 			}
 			else

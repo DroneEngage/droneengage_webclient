@@ -897,10 +897,7 @@ class CAndruavClient {
         var reader = new FileReader();
         reader.onload = function (event) {
             const contents = event.target.result;
-            // this is an arrayBuffer http://blog.teamtreehouse.com/reading-files-using-the-html5-filereader-api
-            // /data = new DataView(contents);
-            // byteLength = data.byteLength;
-
+            
             if (me.prv_parseGCSMavlinkMessage (p_andruavUnit, contents) === true) return ;
             me.API_sendBinCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_LightTelemetry, contents);
             
@@ -2772,7 +2769,14 @@ class CAndruavClient {
         }
     };
 
-    // Parse message after extract it from the binary part
+    /**
+     * Parse message after extract it from the binary part
+     * @param {*} v_unit 
+     * @param {*} andruavCMD 
+     * @param {*} data 
+     * @param {*} v_internalCommandIndexByteBased 
+     * @param {*} byteLength 
+     */
     prv_parseBinaryAndruavMessage(v_unit, andruavCMD, data, v_internalCommandIndexByteBased, byteLength) {
 
 
@@ -2864,8 +2868,9 @@ class CAndruavClient {
             // byteLength = contents.byteLength;
             // extract the text part of the message
 
-            data = new DataView(contents);
-            byteLength = data.byteLength;
+            //data = new DataView(contents);
+            data = new Uint8Array(contents);
+            byteLength = contents.byteLength;
             var out = prv_extractString(data, 0, byteLength);
             // extract command:
             var bytes = [];
