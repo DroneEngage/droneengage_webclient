@@ -825,7 +825,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 	    var res = {};
         res.btn_takeCTRL_class          = "";
         res.btn_releaseCTRL_class       = "";
-        res.btn_sendParameters_class    = "";
+        res.btn_sendParameters_class    = " disabled hidden ";
         res.btn_tele_class              = "";
         res.btn_load_wp_class           = "";
         
@@ -854,7 +854,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 		}
 
 
-        res.btn_sendParameters_class = " btn-primary  ";
+        if (p_andruavUnit.m_isDE === true)
+        {
+            res.btn_sendParameters_class = " btn-primary  ";
+        }
         
         if (p_andruavUnit.m_Telemetry._isActive == true)
         {
@@ -1372,7 +1375,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var ctrl_flight_controller=[];
         var ctrl2=[];
         
-
         switch (p_andruavUnit.m_autoPilot)
         {
             case mavlink20.MAV_AUTOPILOT_PX4:
