@@ -186,6 +186,10 @@ class C_GoogleAndruavMap {
     * Create a marker with image and title
     */
     fn_CreateMarker(p_image, p_title, p_draggable, p_isTop) {
+        if ((p_image==null) || (p_image==""))
+        {
+            p_image = './images/destination_g_32x32.png';
+        }
         var v_image = {
             url: p_image,
             origin: new google.maps.Point(0, 0),

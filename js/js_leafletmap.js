@@ -165,6 +165,10 @@ class CLeafLetAndruavMap {
          * Create a marker with image and title
          */
     fn_CreateMarker(p_image, p_title, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
+        if ((p_image==null) || (p_image==""))
+        {
+            p_image = './images/destination_g_32x32.png';
+        }
         var v_image;
         var v_iconsize;
         if (p_iconsize==null) {
