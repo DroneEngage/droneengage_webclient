@@ -97,8 +97,9 @@ const CONST_WayPoint_TYPE_ChangeAlt = 113; // same as amvlink
 const CONST_WayPoint_TYPE_YAW = 115; // same as mavlink
 const CONST_WayPoint_TYPE_FIRE_EVENT = 9;
 const CONST_WayPoint_TYPE_WAIT_EVENT = 10;
-const CONST_WayPoint_TYPE_CAMERA_TRIGGER = 203; // same as mavlink
-const CONST_WayPoint_TYPE_CAMERA_CONTROL = 206; // same as mavlink
+const CONST_WayPoint_TYPE_CAMERA_CONTROL = 203; // same as mavlink
+const CONST_WayPoint_TYPE_CAMERA_TRIGGER = 206; // same as mavlink
+
 
 
 // AndruaveMessageID
