@@ -1646,7 +1646,7 @@ function fn_handleKeyBoard() {
 			for (var i = 0; i < wayPointArray.length; ++i) {
 				var subIcon = false;	
 				var wayPointStep = wayPointArray[i];
-				var icon_img = "";
+				var icon_img = './images/location_bb_32x32.png';
 				switch (wayPointStep.waypointType) {
 					case CONST_WayPoint_TYPE_WAYPOINTSTEP:
 						latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(wayPointStep.Latitude, wayPointStep.Longitude);
@@ -1659,6 +1659,7 @@ function fn_handleKeyBoard() {
 						wayPointStep.m_label = "Spline";
 						break;
 					case CONST_WayPoint_TYPE_EKLA3:
+						//icon_img = './images/plane_b_32x32.png';
 						wayPointStep.m_label = "Takeoff";
 						break;
 					case CONST_WayPoint_TYPE_HOBOOT:
