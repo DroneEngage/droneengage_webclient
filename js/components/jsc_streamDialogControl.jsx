@@ -13,13 +13,14 @@ class CLSS_StreamChannel extends React.Component {
     {
         const v_track = this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number];
         fn_VIDEO_login (this.props.prop_session, v_track.id);
-        window.AndruavLibs.EventEmitter.fn_dispatch (EE_hideStreamDlgForm);
+        window.AndruavLibs.EventEmitter.fn_dispatch (EE_hideStreamDlgForm); // if you do not hide then you need to request camera list status to update track video streaming
     }
 
     fn_videoRecord(p_startRecord)
     {
         const v_track = this.props.prop_session.m_unit.m_Video.m_videoTracks[this.props.prop_track_number];
         fn_VIDEO_Record (this.props.prop_session, v_track.id, p_startRecord);
+        window.AndruavLibs.EventEmitter.fn_dispatch (EE_hideStreamDlgForm); // if you do not hide then you need to request camera list status to update track recording status
     }
 
     componentDidMount () 
