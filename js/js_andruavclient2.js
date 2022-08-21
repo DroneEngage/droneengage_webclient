@@ -2784,7 +2784,6 @@ class CAndruavClient {
         switch (andruavCMD.mt) {
 
             case CONST_TYPE_AndruavMessage_LightTelemetry: {
-                    var out = prv_extractString(data, v_internalCommandIndexByteBased, byteLength);
 
                     var v_andruavMessage = {
                         'src': CONST_TelemetryProtocol_Source_REMOTE,
@@ -2796,7 +2795,6 @@ class CAndruavClient {
                 break;
 
             case CONST_TYPE_AndruavBinaryMessage_Mavlink: {
-                    var out = prv_extractString(data, v_internalCommandIndexByteBased, byteLength);
 
                     var v_andruavMessage = {
                         'src': CONST_TelemetryProtocol_Source_REMOTE,
@@ -2807,7 +2805,8 @@ class CAndruavClient {
                 }
                 break;
 
-            case CONST_TYPE_AndruavBinaryMessage_ServoOutput: var v_servoOutputs = {};
+            case CONST_TYPE_AndruavBinaryMessage_ServoOutput: 
+                var v_servoOutputs = {};
                 /*
 							 String message could be of any length and no padding applied.
 							 when reading getUint32 the system assumes that data is paded in 4 bytes 
