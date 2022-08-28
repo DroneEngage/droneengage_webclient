@@ -269,6 +269,8 @@ function prv_extractString(data,startIndex,endIndex)
 				return out;
 			}
 		}
+        // startIndex = endIndex 
+        return out;
 }
 
 

@@ -2830,16 +2830,29 @@ class CAndruavClient {
             case CONST_TYPE_AndruavMessage_IMG: {
                     var out = prv_extractString(data, v_internalCommandIndexByteBased, byteLength);
                     var v_andruavMessage;
-                    try {
-                        v_andruavMessage = fn_json_parse(out.text);
-                    } catch (err) {
-                        fn_console_log(err);
-                        v_andruavMessage = new Object();
+                    if (andruavCMD.hasOwnProperty('ms')===false)
+                    {   // backward compatibility with ANDRUAV   
+                        try {
+                            v_andruavMessage = fn_json_parse(out.text);
+                        } catch (err) {
+                            fn_console_log(err);
+                            v_andruavMessage = new Object();
+                        }
+                    }
+                    else
+                    {
+                        v_andruavMessage = andruavCMD.ms;
+                        v_andruavMessage.lat = v_andruavMessage.lat * 0.0000001;
+                        v_andruavMessage.lng = v_andruavMessage.lng * 0.0000001;
                     }
 
                     v_andruavMessage.img = prv_extractBinary(data, out.nextIndex, byteLength);
-
-                    this.EVT_msgFromUnit_IMG(v_unit, v_andruavMessage.img, v_andruavMessage.des, v_andruavMessage.lat, v_andruavMessage.lng, v_andruavMessage.prv, v_andruavMessage.tim, v_andruavMessage.alt, v_andruavMessage.spd, v_andruavMessage.ber, v_andruavMessage.acc);
+                    const des=v_andruavMessage.des!=null?v_andruavMessage.des:"no description";
+                    const prv=v_andruavMessage.des!=null?v_andruavMessage.prv:"not defined";
+                    const spd=v_andruavMessage.spd!=null?v_andruavMessage.spd:0;
+                    const ber=v_andruavMessage.des!=null?v_andruavMessage.ber:0;
+                    const acc=v_andruavMessage.des!=null?v_andruavMessage.acc:-1;
+                    this.EVT_msgFromUnit_IMG(v_unit, v_andruavMessage.img, des, v_andruavMessage.lat, v_andruavMessage.lng, prv, v_andruavMessage.tim, v_andruavMessage.alt, spd, ber, acc);
 
                 }
                 break;
