@@ -52,7 +52,7 @@ class CLeafLetAndruavMap {
         this.m_Map = L.map(p_mapelement).setView([
             51.505, -0.09
         ], 13);
-        L.tileLayer(VAR_MAP_LEAFLET_URL._fn_hexDecode(), {
+        L.tileLayer(VAR_MAP_LEAFLET_URL, {
             maxZoom: 22,
             attribution: v_site_copyright,
             id: 'mapbox.streets'
@@ -72,21 +72,21 @@ class CLeafLetAndruavMap {
             });
 
 
-            this.m_Map.on('31002e690d24264932c427d924c1349027d9'._fn_hexDecode() /*'pm:create'*/ , (x) => {
+            this.m_Map.on('pm:create' , (x) => {
                 window.AndruavLibs.EventEmitter.fn_dispatch(EE_onShapeCreated, x.layer)
                 // add to shapes list.
                 v_map_shapes.push(x.layer);
 
-                x.layer.on('26492d902b1126492cb9'._fn_hexDecode() /*'click'*/, function (p_event) {
+                x.layer.on('click', function (p_event) {
                     window.AndruavLibs.EventEmitter.fn_dispatch(EE_onShapeSelected, p_event);
                 });
 
-                x.layer.on('31002e690d2427d927102b113490'._fn_hexDecode() /*'pm:edit'*/, (x) => {
+                x.layer.on('pm:edit', (x) => {
 
                     window.AndruavLibs.EventEmitter.fn_dispatch(EE_onShapeEdited, x.layer);
                 });
 
-                x.layer.on('31002e690d2432c427d92e693021366427d9'._fn_hexDecode() /*'pm:remove'*/, (x) => {
+                x.layer.on('pm:remove', (x) => {
 
                     window.AndruavLibs.EventEmitter.fn_dispatch(EE_onShapeDeleted, x.layer);
                 });
@@ -110,16 +110,16 @@ class CLeafLetAndruavMap {
         // this.m_Map.fitBounds(bounds);
 
         var update_timeout = null;
-        this.m_Map.on('26492d902b1126492cb9'._fn_hexDecode() /*'click'*/, function (event) {
+        this.m_Map.on('click', function (event) {
             if (CONST_MAP_EDITOR!==true)
 			{
                 update_timeout = setTimeout(function () { // if (dontexecute) return ;
-                    $('0844264930212f44349027d9384034902e6927d92f443579'._fn_hexDecode() /*'.contextmenu'*/).remove();
+                    $('.contextmenu').remove();
                     }, 300);
             }
         });
 
-        this.m_Map.on('271025842d9026492d902b1126492cb9'._fn_hexDecode() /*'dblclick'*/, function (event) {
+        this.m_Map.on('dblclick', function (event) {
             if (CONST_MAP_EDITOR!==true)
 			{
                 clearTimeout(update_timeout);

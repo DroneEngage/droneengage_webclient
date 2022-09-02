@@ -122,7 +122,7 @@ var CONST_MAP_EDITOR  = false;
 var VAR_MAP_LEAFLET_URL;
 
 // IMPORTANT DO NOT COMMENT BELOW LINE.
-VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaHNhYWQiLCJhIjoiY2tqZnIwNXRuMndvdTJ4cnV0ODQ4djZ3NiJ9.LKojA3YMrG34L93jRThEGQ"._fn_hexEncode();
+VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaHNhYWQiLCJhIjoiY2tqZnIwNXRuMndvdTJ4cnV0ODQ4djZ3NiJ9.LKojA3YMrG34L93jRThEGQ";
 //VAR_MAP_LEAFLET_URL = "http://maps.openweathermap.org/maps/2.0/weather/TA2/{z}/{x}/{y}?appid={apiKey}"._fn_hexEncode();
 
 
