@@ -2877,18 +2877,11 @@ class CAndruavClient {
         var reader = new FileReader();
         reader.onload = function (event) {
             var contents = event.target.result;
-            // this is an arrayBuffer http://blog.teamtreehouse.com/reading-files-using-the-html5-filereader-api
-            // byteLength = contents.byteLength;
-            // extract the text part of the message
-
-            //data = new DataView(contents);
             data = new Uint8Array(contents);
             byteLength = contents.byteLength;
             var out = prv_extractString(data, 0, byteLength);
             // extract command:
-            var bytes = [];
-            var c;
-            andruavCMD = fn_json_parse(out.text); // for backword compatibility only
+            andruavCMD = fn_json_parse(out.text);
             p_jmsg = Me.fn_parseJSONMessage(out.text);
             v_unit = Me.m_andruavUnitList.fn_getUnit(fn_getFullName(p_jmsg.groupID, p_jmsg.senderName));
             if ((v_unit == null) && (p_jmsg.messageType != CONST_TYPE_AndruavMessage_ID)) {
