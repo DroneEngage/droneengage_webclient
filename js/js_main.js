@@ -1741,45 +1741,6 @@ function fn_handleKeyBoard() {
 		}
 
 		
-		//CODEBLOCK_START
-		function EVT_andruavUnitSwarmUpdated2 (p_andruavUnit)
-		{
-			if (p_andruavUnit.m_Swarm.m_following == null)
-			{
-				v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is not m_following any vehicle');
-			}
-			else
-			{
-				let unit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_andruavUnit.m_Swarm.m_following)
-				if (unit != null)
-				{
-
-				}
-				else
-				{
-					v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is m_following ' + unit.p_UnitName);
-				}
-			}
-		}
-		//CODEBLOCK_END
-
-		//CODEBLOCK_START
-		function EVT_andruavUnitSwarmUpdated (p_andruavUnit)
-		{
-			if (p_andruavUnit.m_Swarm.m_isLeader == true)
-			{
-				v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is a leader vehicle');
-			}
-			else
-			{
-				v_SpeakEngine.fn_speak (p_andruavUnit.m_unitName + ' is no longer a leader vehicle');
-			}
-		}
-		//CODEBLOCK_END
-
-
-						
-		
 		function EVT_andruavUnitFCBUpdated(p_andruavUnit) {
 			if (p_andruavUnit.m_useFCBIMU == true) {
 				v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' connected to flying board');
@@ -2842,10 +2803,6 @@ function fn_handleKeyBoard() {
 				v_andruavClient.EVT_msgFromUnit_WayPointsUpdated 	= EVT_msgFromUnit_WayPointsUpdated;
 				v_andruavClient.EVT_andruavUnitArmedUpdated 		= EVT_andruavUnitArmedUpdated;
 				v_andruavClient.EVT_andruavUnitGeoFenceBeforeDelete = EVT_andruavUnitGeoFenceBeforeDelete;
-				//CODEBLOCK_START
-				v_andruavClient.EVT_andruavUnitSwarmUpdated			= EVT_andruavUnitSwarmUpdated;
-				v_andruavClient.EVT_andruavUnitSwarmUpdated2		= EVT_andruavUnitSwarmUpdated2;
-				//CODEBLOCK_END
 				v_andruavClient.EVT_andruavUnitFCBUpdated 			= EVT_andruavUnitFCBUpdated;
 				v_andruavClient.EVT_msgFromUnit_NavInfo 			= EVT_msgFromUnit_NavInfo;
 				v_andruavClient.EVT_BadMavlink						= EVT_BadMavlink;

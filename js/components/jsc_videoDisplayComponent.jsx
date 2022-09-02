@@ -355,18 +355,6 @@ class CLSS_CVideoScreen extends React.Component {
         this.state.m_flash = v_flashValue;
     }
 
-    //CODEBLOCK_START
-    fnl_TrackingOnOff (e, p_obj)
-    {
-        const c_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.obj.v_unit);
-        if (c_andruavUnit == null)
-        {
-            return ;
-        }
-
-        v_andruavClient.API_StopTracking (c_andruavUnit);
-    }
-    //CODEBLOCK_END
 
 
     fnl_div_clicked (e)
