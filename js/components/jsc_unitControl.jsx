@@ -578,7 +578,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 		super ();
         this.localvars={};
         this.localvars.speed_link = false;	
-		
+		this.telemetry_level=["OFF","1","2","3"];
     }
 
     
@@ -669,7 +669,15 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     }
    
 
-    
+    fn_changeTelemetryOptimizationLevel(p_andruavUnit, step)
+    {
+        if (p_andruavUnit==null) return;
+        var next_step = (p_andruavUnit.m_Telemetry.m_telemetry_level + step);
+        if (next_step<0) next_step = 0;
+        if (next_step>3) next_step = 3;
+        v_andruavClient.API_adjustTelemetryDataRate(p_andruavUnit, next_step)
+        p_andruavUnit.m_Telemetry.m_telemetry_level = next_step;
+    }
 
 
     fn_connectToFCB (p_andruavUnit)
@@ -965,12 +973,23 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_flight_status_text;
         var v_flight_status_class;
         var distanceToWP_class;
-        
+        var v_udpproxy_text_ip = '';
+        var v_udpproxy_text_port = '';
+        var v_udpproxy_class = ' hidden ';
+        var v_telemetry_lvl_class = ' ';
         var wpdst_text;
         var v_leader_class,v_leader_text;
         var v_flyingTime = " ";
         var v_totalFlyingTime = " ";
         var v_now = (new Date()).valueOf() ;
+        
+        if (v_andruavUnit.m_Telemetry.m_udpProxy_active === true)
+        {
+            v_udpproxy_text_ip = 'ip:' + v_andruavUnit.m_Telemetry.m_udpProxy_ip ;
+            v_udpproxy_text_port = 'port:' + v_andruavUnit.m_Telemetry.m_udpProxy_port;
+            v_udpproxy_class = ' text-info ';
+        }
+
         if (v_andruavUnit.m_isFlying == true) 
         {
             if ((v_andruavUnit.m_FlyingLastStartTime != undefined) || (v_andruavUnit.m_FlyingLastStartTime === 0))
@@ -1332,11 +1351,36 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 <div id='bearingtargetknob' >{v_bearingTarget_knob}</div>
                                 </div>
                         </div>
-                        <div className= 'col-2  margin_2px padding_zero'>
-                        {/* <CLSS_SearchableTargets m_unit = {v_andruavUnit}/> */}
-
+                        <div className= 'col-3  margin_2px padding_zero css_user_select_text'>
+                            <div className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
+                                <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
+                                <p className=' rounded-3 text-warning cursor_hand textunit' title ='Telemetry Bandwidth'>
+                                <span title="dec_tel" onClick={ (e) => this.fn_changeTelemetryOptimizationLevel(v_andruavUnit,-1)}>
+                                    <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                    </svg>
+                                </span>
+                                <span id='telemetry_rate'  className='user-select-none'>
+                                <small><b>&nbsp;
+                                 {'LVL: ' + this.telemetry_level[v_andruavUnit.m_Telemetry.m_telemetry_level]}
+                                 &nbsp;</b></small>
+                                </span>
+                                <span title="inc_tel" onClick={ (e) => this.fn_changeTelemetryOptimizationLevel(v_andruavUnit,+1)}>
+                                    <svg className="bi bi-caret-up-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+                                    </svg>
+                                </span>
+                                </p>
+                                </div>
+                            </div>
+                            <div className = 'row al_l css_margin_zero'>
+                                <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
+                                <p id='udpproxy' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_ip}</p>
+                                <p id='udpproxy' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_port}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className= 'col-2  margin_2px padding_zero'>
+                        <div className= 'col-1  margin_2px padding_zero'>
                         {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
                         </div>
                         <div className= 'col-1  margin_2px padding_zero'>

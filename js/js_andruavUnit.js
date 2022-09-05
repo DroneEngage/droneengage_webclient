@@ -334,6 +334,10 @@ class C_Telemetry
 		this.m_isGCSBlocked = false;
 		this.manualTXBlockedSubAction =0;
 		this.m_rxEngaged = false; // defined locally
+		this.m_telemetry_level = 0;
+		this.m_udpProxy_ip = null;
+		this.m_udpProxy_port = 0;
+		this.m_udpProxy_active = false;
 	};
 
 

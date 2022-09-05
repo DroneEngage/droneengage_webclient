@@ -165,6 +165,7 @@ const CONST_TYPE_AndruavMessage_Sync_EventFire    =1061;
 const CONST_TYPE_AndruavMessage_SearchTargetList = 1062;
 // CODEBLOCK_END
 
+const CONST_TYPE_AndruavMessage_UdpProxy_Info = 1071
 
 // Binary Messages
 const CONST_TYPE_AndruavMessage_LightTelemetry = 2022;
@@ -264,6 +265,7 @@ const CONST_INFOTYPE_GEOFENCE = 88;
 const CONST_TELEMETRY_REQUEST_START = 1;
 const CONST_TELEMETRY_REQUEST_END = 2;
 const CONST_TELEMETRY_REQUEST_RESUME = 3;
+const CONST_TELEMETRY_ADJUST_RATE = 4;
 
 const CONST_TELEMETRY_SOURCE_UNKNOWN = 0;
 const CONST_TELEMETRY_SOURCE_FCB = 1;
@@ -876,6 +878,22 @@ class CAndruavClient {
         this.API_sendCMD(this.currentTelemetryUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
     };
 
+    API_adjustTelemetryDataRate(p_andruavUnit, lvl) {
+        if (p_andruavUnit == null) 
+            return;
+        
+        var msg = {
+            C: CONST_RemoteCommand_TELEMETRYCTRL,
+            Act: CONST_TELEMETRY_ADJUST_RATE
+        };
+        if ((lvl != null) && (lvl != -1)) {
+            msg.LVL = lvl;
+        }
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
+    };
+
+    
     API_stopTelemetry(p_andruavUnit) {
 
         var msg = {
@@ -1345,6 +1363,15 @@ class CAndruavClient {
     }
     // CODEBLOCK_END
 
+    API_requestUdpProxyStatus (p_andruavUnit)
+    {
+        var msg = {
+            C: CONST_TYPE_AndruavMessage_UdpProxy_Info
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
+       
+    }
     API_requestWayPoints(p_andruavUnit, p_enableFCB) {
 
         var msg = {};
@@ -1595,6 +1622,7 @@ class CAndruavClient {
     _fn_onNewUnitAdded(target) { // this.API_requestGeoFences (p_andruavUnit);
         this.API_requestGeoFencesAttachStatus(target);
         this.API_requestWayPoints(target);
+        this.API_requestUdpProxyStatus(target);
 
         // CODEBLOCK_START
 
@@ -1637,14 +1665,34 @@ class CAndruavClient {
         }
 
         switch (msg.messageType) {
-            case CONST_TYPE_AndruavMessage_GPS: p_jmsg = msg.msgPayload;
+
+            case CONST_TYPE_AndruavMessage_UdpProxy_Info: {
+                p_jmsg = msg.msgPayload;
+                if (p_unit == null) {
+                    Me.API_requestID(msg.senderName);
+                    return;
+                }
+
+                p_unit.m_Telemetry.m_udpProxy_ip        = p_jmsg.a;
+                p_unit.m_Telemetry.m_udpProxy_port      = p_jmsg.p;
+                p_unit.m_Telemetry.m_telemetry_level    = p_jmsg.o;
+                p_unit.m_Telemetry.m_udpProxy_active    = p_jmsg.en;
+                
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, p_unit);
+                
+                }
+                break;
+
+            case CONST_TYPE_AndruavMessage_GPS: 
+                p_jmsg = msg.msgPayload;
                 if (p_unit == null) {
                     Me.API_requestID(msg.senderName);
                     return;
                 }
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                     p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
-                }p_unit.m_GPS_Info.m_isValid = true;
+                }
+                p_unit.m_GPS_Info.m_isValid = true;
                 p_unit.m_GPS_Info.GPS3DFix = p_jmsg['3D'];
                 p_unit.m_GPS_Info.satCount = p_jmsg.SC;
                 if (p_jmsg.hasOwnProperty('c')) {
@@ -1657,7 +1705,8 @@ class CAndruavClient {
                     p_unit.m_GPS_Info.m_isValid = false;
                 } else {
                     p_unit.m_GPS_Info.m_isValid = true;
-                } p_unit.m_Nav_Info.p_Location.lat = p_jmsg.la;
+                } 
+                p_unit.m_Nav_Info.p_Location.lat = p_jmsg.la;
                 p_unit.m_Nav_Info.p_Location.lng = p_jmsg.ln
                 p_unit.m_Nav_Info.p_Location.alt = parseFloat(p_jmsg.a);
                 p_unit.m_Nav_Info.p_Location.time = p_jmsg.t;
@@ -1667,7 +1716,8 @@ class CAndruavClient {
 
                 if (p_jmsg.hasOwnProperty('b')) {
                     p_unit.m_Nav_Info.p_Location.bearing = parseFloat(p_jmsg.b); // can be null
-                }Me.EVT_msgFromUnit_GPS(p_unit);
+                }
+                Me.EVT_msgFromUnit_GPS(p_unit);
                 break;
 
             case CONST_TYPE_AndruavMessage_CameraFlash: {
