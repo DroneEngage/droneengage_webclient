@@ -867,15 +867,23 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             res.btn_sendParameters_class = " btn-primary  ";
         }
         
-        if (p_andruavUnit.m_Telemetry._isActive == true)
+        if (p_andruavUnit.m_Telemetry.m_udpProxy_active === true)
         {
-            res.btn_tele_class          = " btn-danger ";
+            res.btn_tele_class          = " btn-dark disabled ";
             res.btn_tele_text           = "Tele On";
         }
         else
         {
-            res.btn_tele_class          = " btn-primary ";
-            res.btn_tele_text           = "Tele Off";
+            if (p_andruavUnit.m_Telemetry._isActive == true)
+            {
+                res.btn_tele_class          = " btn-danger ";
+                res.btn_tele_text           = "Tele On";
+            }
+            else
+            {
+                res.btn_tele_class          = " btn-primary ";
+                res.btn_tele_text           = "Tele Off";
+            }
         }
 
         if ((p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != CONST_RC_SUB_ACTION_JOYSTICK_CHANNELS)
@@ -983,13 +991,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_totalFlyingTime = " ";
         var v_now = (new Date()).valueOf() ;
         
-        if (v_andruavUnit.m_Telemetry.m_udpProxy_active === true)
-        {
-            v_udpproxy_text_ip = 'ip:' + v_andruavUnit.m_Telemetry.m_udpProxy_ip ;
-            v_udpproxy_text_port = 'port:' + v_andruavUnit.m_Telemetry.m_udpProxy_port;
-            v_udpproxy_class = ' text-info ';
-        }
-
+        
         if (v_andruavUnit.m_isFlying == true) 
         {
             if ((v_andruavUnit.m_FlyingLastStartTime != undefined) || (v_andruavUnit.m_FlyingLastStartTime === 0))
@@ -1064,6 +1066,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 v_flight_mode_text = "mode - " + hlp_getFlightMode(v_andruavUnit);
                 v_flight_mode_class = ' bg-info text-white ';
                 v_fcb_mode_title = 'Flight Mode';
+
+                if (v_andruavUnit.m_Telemetry.m_udpProxy_active === true)
+                {
+                    v_udpproxy_text_ip = 'ip:' + v_andruavUnit.m_Telemetry.m_udpProxy_ip ;
+                    v_udpproxy_text_port = 'port:' + v_andruavUnit.m_Telemetry.m_udpProxy_port;
+                    v_udpproxy_class = ' si-07x text-warning ';
+                }
+
             break;
         }
 
@@ -1354,7 +1364,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <div className= 'col-3  margin_2px padding_zero css_user_select_text'>
                             <div className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
                                 <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
-                                <p className=' rounded-3 text-warning cursor_hand textunit' title ='Telemetry Bandwidth'>
+                                <p className=' rounded-3 text-warning cursor_hand textunit' title ='Smart Telemetry'>
                                 <span title="dec_tel" onClick={ (e) => this.fn_changeTelemetryOptimizationLevel(v_andruavUnit,-1)}>
                                     <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
@@ -1373,10 +1383,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </p>
                                 </div>
                             </div>
-                            <div className = 'row al_l css_margin_zero'>
+                            <div className = 'row al_l css_margin_zero css_user_select_text'>
                                 <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
-                                <p id='udpproxy' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_ip}</p>
-                                <p id='udpproxy' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_port}</p>
+                                    <p id='udpproxy_t' className={ v_udpproxy_class + ' css_margin_zero css_user_select_text'}>Smart Telemetry</p>
+                                    <p id='udpproxy_a' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_ip}</p>
+                                    <p id='udpproxy_p' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_port}</p>
                                 </div>
                             </div>
                         </div>
