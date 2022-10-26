@@ -1607,13 +1607,22 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var rows=[];
         if ((v_andruavUnit.m_IsShutdown == false) && (v_andruavUnit.m_Power._FCB.p_hasPowerInfo == true))
         {
+            if (v_andruavUnit.m_isDE !== true) 
+            {
+                rows.push (<div key={id +"__5"} className= 'col-1  padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>);
+            }
             // add FCB battery
             rows.push (<div  key={id +"fc1"}className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
             rows.push (<div  key={id +"fc2"} className= "col-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={"version:" + v_andruavUnit.m_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={"version:" + v_andruavUnit.m_version}  ><strong>{v_andruavUnit.m_unitName + " " + v_andruavUnit.m_FCBParameters.m_systemID}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
         else
         {
+            if (v_andruavUnit.m_isDE !== true) 
+            {
+                rows.push (<div key={id +"__5"} className= 'col-1  padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>);
+            }
+            // add FCB battery
             rows.push (<div key={id +"fc4"} className= "col-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
             rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={"version:" + v_andruavUnit.m_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
@@ -1629,9 +1638,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 <div key={id +"__2"} className= 'col-1  padding_zero'><img className={'cursor_hand ' + camera_class  } src={camera_src} title='take image from mobile' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__3"} className= 'col-1  padding_zero'><img className={'cursor_hand ' + video_class   } src={video_src} title='stream video from mobile' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__4"} className= 'col-1  padding_zero'><img className={'cursor_hand ' + recvideo_class} src={recvideo_src} title='record video on drone mobile' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
-                <div key={id +"__5"} className= 'col-1  padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>
-                
-                 {rows}
+                {rows}
             </div>
              
                 <ul className="nav nav-tabs">
