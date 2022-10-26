@@ -2393,7 +2393,14 @@ function fn_handleKeyBoard() {
 			}
 
 			var vAlt = p_andruavUnit.m_Nav_Info.p_Location.alt;
-			
+			if (vAlt == undefined)
+			{
+				vAlt='?';
+			}
+			else
+			{
+				vAlt = vAlt.toFixed(3);
+			}
 
 
 			AndruavLibs.AndruavMap.fn_getElevationForLocation(p_lat, p_lng
@@ -2408,7 +2415,7 @@ function fn_handleKeyBoard() {
 					{
 						p_elevation = p_elevation.toFixed(1);
 					}
-					markerContent += '<p text-white bg-primary>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt.toFixed(3) + ' meters.</p>';
+					markerContent += '<p text-white bg-primary>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt + ' meters.</p>';
 					if (CONST_MAP_GOOLE === true)
 					{
 						markerContent += '<br> sea-lvl alt:' + p_elevation + ' meters.</p>';

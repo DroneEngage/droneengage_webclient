@@ -2810,6 +2810,41 @@ class CAndruavClient {
                 case mavlink20.MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL:
                     fn_console_log ("PARAM: FTP " + c_mavlinkMessage.payload);
                     break;
+
+                case mavlink20.MAVLINK_MSG_ID_HIGH_LATENCY:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
+                    p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
+                    p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
+                    p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.amsl * 0.001);
+                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll;
+                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch;
+                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.wp_distance;
+                    p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.gps_fix_type;
+                    p_unit.m_GPS_Info.satCount = c_mavlinkMessage.gps_nsat;
+                    p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery_remaining;
+                    
+                    p_unit.m_GPS_Info.m_isValid = true;
+                    this.EVT_msgFromUnit_NavInfo(p_unit);
+                    this.EVT_msgFromUnit_GPS(p_unit);
+                    break;
+
+                case mavlink20.MAVLINK_MSG_ID_HIGH_LATENCY2:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
+                    p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
+                    p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
+                    p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.altitude * 0.001);
+                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.target_distance;
+                    p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery;
+                    
+                    p_unit.m_GPS_Info.m_isValid = true;
+                    this.EVT_msgFromUnit_NavInfo(p_unit);
+                    this.EVT_msgFromUnit_GPS(p_unit);
+                    break;
+                
                 
             }
             // c_mavlinkMessage.srcSystem=1;
