@@ -1256,7 +1256,7 @@ function fn_handleKeyBoard() {
 			var v_contextHTML = "<div class='test-justified'>";
 			var v_contextMenu = "";
 			var v_menuitems = 0;
-			v_contextHTML += "<p class='bg-success text-white'><span class='text-success margin_zero text-white'>lat: " + p_lat.toFixed(5) + "  lng:" + p_lng.toFixed(5) + "</span></p>";
+			v_contextHTML += "<p class='bg-success text-white'><span class='text-success margin_zero text-white'>lat: " + p_lat.toFixed(6) + "  lng:" + p_lng.toFixed(6) + "</span></p>";
 			v_contextMenu += "<div class='row'><div class= 'col-sm-12'><p class='cursor_hand text-primary margin_zero si-07x' onclick=\"window.open('./mapeditor.html?zoom=" + AndruavLibs.AndruavMap.fn_getZoom() + "&lat=" + p_lat + "&lng=" + p_lng + "', '_blank')\"," + CONST_DEFAULT_ALTITUDE + "," + CONST_DEFAULT_RADIUS + "," + 10 + " )\">Open Geo Fence Here</p></div></div>";
 			if (size == 0) {
 				v_menuitems = 0;
@@ -2337,33 +2337,56 @@ function fn_handleKeyBoard() {
 
 
 		function fn_showAndruavUnitInfo(p_lat, p_lng, p_andruavUnit) {
+			var sys_id = "";
+			if (p_andruavUnit.m_FCBParameters.m_systemID!=0)
+			{
+				sys_id='sysid:' + p_andruavUnit.m_FCBParameters.m_systemID + ' ';
+			}
 			var armedBadge = "";
-			if (p_andruavUnit.m_isArmed) armedBadge = '<span class="text-danger">&nbsp;armed&nbsp;</span>';
+			if (p_andruavUnit.m_isArmed) armedBadge = '<span class="text-danger">&nbsp;<strong>ARMED</strong>&nbsp;</span>';
 			else armedBadge = '<span class="text-success">&nbsp;disarmed&nbsp;</span>';
 			if (p_andruavUnit.m_isFlying) armedBadge += '<span class="text-danger">&nbsp;flying&nbsp;</span>';
 			else armedBadge += '<span class="text-success">&nbsp;on-ground&nbsp;</span>';
 
-			var markerContent = "<p class='img-rounded bg-primary text-white'><strong class='css_padding_5'>" + p_andruavUnit.m_unitName + "</strong></p>\
-			  	<p class='img-rounded help-block'>" + p_andruavUnit.Description + "</p>";
+			var markerContent = "<p class='img-rounded bg-primary text-white'><strong class='css_padding_5'>" + p_andruavUnit.m_unitName + "</strong> <span>" + sys_id + "</span></p>\
+			  	<style class='img-rounded help-block'>" + p_andruavUnit.Description + "</style>";
 
 			if (p_andruavUnit.m_IsGCS == false) {
-				markerContent += "<p>" + armedBadge + " <span class='text-success'>" + hlp_getFlightMode(p_andruavUnit) + "</span> </p>";
+				markerContent += "<span>" + armedBadge + " <span class='text-success'>" + hlp_getFlightMode(p_andruavUnit) + "</span> </span>";
 			}
 			else {
 				markerContent += "<p> <span class='text-success'>Ground Control Station</span> </p>";
 			}
 
 			var vAlt = p_andruavUnit.m_Nav_Info.p_Location.alt;
+			var vAlt_abs = p_andruavUnit.m_Nav_Info.p_Location.abs_alt;
 			if (vAlt == undefined)
 			{
 				vAlt='?';
 			}
 			else
 			{
-				vAlt = vAlt.toFixed(3);
+				vAlt = vAlt.toFixed(0);
 			}
-
-
+			if (vAlt_abs == undefined)
+			{
+				vAlt_abs='';
+			}
+			else
+			{
+				vAlt_abs = ' <span class="text-primary">abs:</span>' + vAlt_abs.toFixed(0);
+			}
+			vAlt = vAlt + vAlt_abs;
+			
+			var vSpeed = p_andruavUnit.m_Nav_Info.p_Location.speed;
+			if (vSpeed == undefined)
+			{
+				vSpeed='?';
+			}
+			else
+			{
+				vSpeed = vSpeed.toFixed(1);
+			}
 			AndruavLibs.AndruavMap.fn_getElevationForLocation(p_lat, p_lng
 				, function (p_elevation, p_lat, p_lng) {
 				if (p_elevation!= null) {
@@ -2376,10 +2399,14 @@ function fn_handleKeyBoard() {
 					{
 						p_elevation = p_elevation.toFixed(1);
 					}
-					markerContent += '<p text-white bg-primary>lat:' + (p_lat).toFixed(6) + ',lng:' + (p_lng).toFixed(6) + '<br>  alt:' + vAlt + ' meters.</p>';
+					markerContent = markerContent + '<br><span class="text-primary">lat:' 
+								+ '<span class="text-success">'+ (p_lat).toFixed(6) 
+								+ '</span><span class="text-primary">,lng:' + '</span><span class="text-success">' + (p_lng).toFixed(6) 
+								+ '</span><br>  <span class="text-primary ">alt:' + '</span><span class="text-success">' + vAlt + '</span><span class="text-primary"> m</span>'
+								+ '</span><br>  <span class="text-primary ">GS:' + '</span><span class="text-success">' + vSpeed + ' </span><span class="text-primary"> m/s</span>';
 					if (CONST_MAP_GOOLE === true)
 					{
-						markerContent += '<br> sea-lvl alt:' + p_elevation + ' meters.</p>';
+						markerContent += '<br> sea-lvl alt:' + p_elevation + ' m.</p>';
 					} 
 				}
 
