@@ -2729,6 +2729,7 @@ class CAndruavClient {
                     break;
                 
                 case mavlink20.MAVLINK_MSG_ID_ATTITUDE:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll; // in radiuas
                     p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch; // in radiuas
                     p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.yaw;
@@ -2736,6 +2737,7 @@ class CAndruavClient {
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Desired.nav_roll = c_mavlinkMessage.nav_roll;
                     p_unit.m_Nav_Info.p_Desired.nav_pitch = c_mavlinkMessage.nav_pitch;
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.nav_bearing;
@@ -2763,6 +2765,7 @@ class CAndruavClient {
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_GPS_RAW_INT:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.fix_type;
                     p_unit.m_GPS_Info.satCount = c_mavlinkMessage.satellites_visible;
                     p_unit.m_GPS_Info.accuracy = c_mavlinkMessage.h_acc;
@@ -2772,6 +2775,7 @@ class CAndruavClient {
 
                 case mavlink20.MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
                     p_unit.m_GPS_Info.m_isValid = true;
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.lat * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.lon * 0.0000001);
                     p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.alt * 0.001;
@@ -2816,10 +2820,14 @@ class CAndruavClient {
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
-                    p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.amsl * 0.001);
-                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll;
-                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch;
-                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.altitude_amsl;
+                    p_unit.m_Nav_Info.p_Location.alt_sp = c_mavlinkMessage.altitude_sp;
+                    p_unit.m_Nav_Info.p_Location.speed = c_mavlinkMessage.groundspeed;
+                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll * 0.1 * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch  * 0.1  * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading  * 0.01   * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.01 ; // deg
+                    p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.heading_sp * 0.01 ; //deg
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.wp_distance;
                     p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.gps_fix_type;
                     p_unit.m_GPS_Info.satCount = c_mavlinkMessage.gps_nsat;
@@ -2835,8 +2843,10 @@ class CAndruavClient {
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
-                    p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.altitude * 0.001);
-                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.altitude );
+                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.target_heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.target_distance;
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery;
                     
