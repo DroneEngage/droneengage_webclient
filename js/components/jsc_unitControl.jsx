@@ -1619,7 +1619,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var sys_id = "";
         if (v_andruavUnit.m_FCBParameters.m_systemID!=0)
         {
-            sys_id='sysid:' + v_andruavUnit.m_FCBParameters.m_systemID + ' ';
+            sys_id=':' + v_andruavUnit.m_FCBParameters.m_systemID + ' ';
         }
         if ((v_andruavUnit.m_IsShutdown == false) && (v_andruavUnit.m_Power._FCB.p_hasPowerInfo == true))
         {
@@ -1782,6 +1782,10 @@ class CLSS_AndruavUnitList extends React.Component {
     {
         var classes = "";
         var text = v_andruavUnit.m_unitName;
+        if (v_andruavUnit.m_FCBParameters.m_systemID!=0)
+        {
+            text += ":" + v_andruavUnit.m_FCBParameters.m_systemID;
+        }
         if ( v_andruavUnit.m_IsShutdown === true)
         {
             classes = " text-muted ";
@@ -1794,7 +1798,7 @@ class CLSS_AndruavUnitList extends React.Component {
             }
             else
             {
-                classes = " text-info ";
+                classes = " text-success ";
             }
         }
         return {
@@ -1857,8 +1861,7 @@ class CLSS_AndruavUnitList extends React.Component {
             });
         }
        
-        unit.push (
-            <ul className="nav nav-tabs"> {units_header} </ul>    );
+        unit.push (<ul className="nav nav-tabs"> {units_header} </ul>    );
         unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
         unit.push (units_gcs);
         
