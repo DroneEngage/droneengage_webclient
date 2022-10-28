@@ -1220,11 +1220,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
             if (v_useMetricSystem==true)
             {
-                wpdst_text =   Number(v_andruavUnit.m_Nav_Info._Target.wp_dist.toFixed(1)).toLocaleString()  + ' m';
+                wpdst_text =   Number(v_andruavUnit.m_Nav_Info._Target.wp_dist.toFixed(1)).toLocaleString()  + ' m'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
             }
             else
             {
-                wpdst_text =  Number(v_andruavUnit.m_Nav_Info._Target.wp_dist * CONST_METER_TO_FEET).toFixed(1).toLocaleString() + ' ft';
+                wpdst_text =  Number(v_andruavUnit.m_Nav_Info._Target.wp_dist * CONST_METER_TO_FEET).toFixed(1).toLocaleString() + ' ft'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
             }
 
             
@@ -1498,10 +1498,18 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         }
         else
         {
-            online_class2 =" text-info ";
-            online_class = " bg-success text-white ";
-            online_text  = "online";
-
+            if (v_andruavUnit.m_isArmed==true) 
+            {
+                online_class2 =" text-info ";
+                online_class = " bg-none text-danger ";
+                online_text  = "Armed";
+            }
+            else
+            {
+                online_class2 =" text-info ";
+                online_class = " bg-success text-white ";
+                online_text  = "online";
+            }
             if (v_andruavUnit.fn_canCamera()==true)
             {
                 camera_class = "cursor_hand camera_active";
@@ -1692,8 +1700,14 @@ class CLSS_AndruavUnitList extends React.Component {
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onPreferenceChanged, this, this.fn_onPreferenceChanged);
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onSocketStatus, this, this.fn_onSocketStatus);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitAdded,this,this.fn_unitAdded);
-    
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
+        
 	}
+
+    fn_unitUpdated(me,p_andruavUnit)
+    {
+        me.fn_forceRefresh(me);
+    }
 
     fn_unitAdded (me,p_andruavUnit)
     {
@@ -1756,12 +1770,46 @@ class CLSS_AndruavUnitList extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onSocketStatus,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitAdded,this);
+        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
     }
 
+    /**
+     * determine text and style of tabs of each drone.
+     * @param {*} v_andruavUnit 
+     * @returns classes, text
+     */
+    getHeaderInfo(v_andruavUnit)
+    {
+        var classes = "";
+        var text = v_andruavUnit.m_unitName;
+        if ( v_andruavUnit.m_IsShutdown === true)
+        {
+            classes = " text-muted ";
+        }
+        else
+        {
+            if (v_andruavUnit.m_isArmed==true) 
+            {
+                classes = " text-danger ";
+            }
+            else
+            {
+                classes = " text-info ";
+            }
+        }
+        return {
+            'classes': classes,
+            'text': text
+        };
+    }
     
     render() {
         var unit = [];
         
+        var units_header = [];
+        var units_details = [];
+        var units_gcs = [];
+
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
@@ -1778,40 +1826,23 @@ class CLSS_AndruavUnitList extends React.Component {
 
                 if (v_andruavUnit.m_IsGCS===true)
                 {
-                    // unit.push (<div className="accordion-item" key={"accordion-item" + partyID}>
-                    //             <h2 className="accordion-header" id={"headingTwo"+partyID}>
-                    //                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    //                     {partyID}
-                    //                 </button>
-                    //                 </h2>
-                    //                 <div id={"collapse"+partyID} className="accordion-collapse collapse" aria-labelledby={"headingTwo"+partyID}data-bs-parent="#accordionExample" style="">
-                    //                 <div className="accordion-body">
-                    //                     <CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {v_en_GCS} m_unit = {v_andruavUnit}/>
-                    //                 </div>
-                    //                 </div>
-                    //             </div>
-                    //         );
-                    unit.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {v_en_GCS} m_unit = {v_andruavUnit}/>
-                        );
+                    units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {v_en_GCS} m_unit = {v_andruavUnit}/>);
                 }
                 else 
                 if (v_andruavUnit.m_IsGCS===false)
                 {
-                    // unit.push (<div className="accordion-item" key={"accordion-item" + partyID}>
-                    //                 <h2 className="accordion-header" id={"headingTwo"+partyID}>
-                    //                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    //                     {partyID}
-                    //                 </button>
-                    //                 </h2>
-                    //                 <div id={"collapse"+partyID} className="accordion-collapse collapse" aria-labelledby={"headingTwo"+partyID} data-bs-parent="#accordionExample" style="">
-                    //                 <div className="accordion-body">
-                    //                     <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
-                    //                 </div>
-                    //                 </div>
-                    //             </div>
-                    //         );
-                    unit.push (<CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
-                        );
+                    var header_info = me.getHeaderInfo(v_andruavUnit);
+                    units_header.push(
+                        <li className="nav-item">
+                            <a className={"nav-link user-select-none " + header_info.classes} data-bs-toggle="tab" href={"#" + v_andruavUnit.partyID}>{header_info.text}</a>
+                        </li>
+                    );
+
+                    units_details.push(
+                        <div className="tab-pane fade" id={v_andruavUnit.partyID}>
+                            <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
+                        </div>
+                    );
                 }
 
                 me.fn_updateMapStatus(v_andruavUnit);
@@ -1819,15 +1850,14 @@ class CLSS_AndruavUnitList extends React.Component {
             });
         }
        
-
+        unit.push (
+            <ul className="nav nav-tabs"> {units_header} </ul>    );
+        unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
+        unit.push (units_gcs);
+        
     return (
 
                 <div key='main' className='margin_zero row'>{unit}</div>
-                // <div key='main'>
-                //         <div className="accordion" id="accordionExample">
-                //             {unit}
-                //         </div>
-                //  </div>
             );
     }
 };
