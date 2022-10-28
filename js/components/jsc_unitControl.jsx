@@ -1826,23 +1826,30 @@ class CLSS_AndruavUnitList extends React.Component {
 
                 if (v_andruavUnit.m_IsGCS===true)
                 {
-                    units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {v_en_GCS} m_unit = {v_andruavUnit}/>);
+                    units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);
                 }
                 else 
                 if (v_andruavUnit.m_IsGCS===false)
                 {
-                    var header_info = me.getHeaderInfo(v_andruavUnit);
-                    units_header.push(
-                        <li className="nav-item">
-                            <a className={"nav-link user-select-none " + header_info.classes} data-bs-toggle="tab" href={"#" + v_andruavUnit.partyID}>{header_info.text}</a>
-                        </li>
-                    );
+                    if (window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled() === true)
+                    {
+                        var header_info = me.getHeaderInfo(v_andruavUnit);
+                        units_header.push(
+                            <li className="nav-item nav-units">
+                                <a className={"nav-link user-select-none " + header_info.classes} data-bs-toggle="tab" href={"#" + v_andruavUnit.partyID}>{header_info.text}</a>
+                            </li>
+                        );
 
-                    units_details.push(
-                        <div className="tab-pane fade" id={v_andruavUnit.partyID}>
-                            <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
-                        </div>
-                    );
+                        units_details.push(
+                            <div className="tab-pane fade" id={v_andruavUnit.partyID}>
+                                <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
+                            </div>
+                        );
+                    }
+                    else
+                    {
+                        units_details.push(<CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>);
+                    }
                 }
 
                 me.fn_updateMapStatus(v_andruavUnit);

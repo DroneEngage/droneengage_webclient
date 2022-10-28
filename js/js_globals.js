@@ -24,9 +24,10 @@ var CONST_DEFAULT_VOLUME            = 50;
 const CONST_DEFAULT_FLIGHTPATH_STEPS_COUNT = 40;
 
 
-var v_EnableADSB  = false;
-var v_en_Drone = true;
-var v_en_GCS   = true;
+var v_EnableADSB     = false;
+var v_en_Drone       = true;
+var v_en_GCS         = true;
+var v_enable_tabs_display = false;
 
 var v_gamePadMode = 2;
 

@@ -16,7 +16,7 @@ body.no-zoom {
     zoom: 1;
 }
 
-.nav-tabs .nav-item .nav-link.active {
+.nav-tabs .nav-units .nav-link.active {
 	border-color: #3498db !important;
 }
 

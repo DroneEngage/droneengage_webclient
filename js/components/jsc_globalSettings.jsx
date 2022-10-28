@@ -62,14 +62,24 @@ class CLSS_DisplayItems extends React.Component {
   
   componentDidMount()
   {
-    $('#toggle_GCS').prop("checked", v_en_GCS);      
+    $('#toggle_GCS').prop("checked", window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled());      
     $('#toggle_DRONE').prop("checked", v_en_Drone);      
     $('#toggle_ADSB').prop("checked", v_EnableADSB);      
+    $('#check_tabs_display').prop("checked", v_enable_tabs_display);      
+    $('#check_tabs_display').change(function (e)
+        {
+          var state = $(this).prop('checked');
+          v_enable_tabs_display = state;
+          window.AndruavLibs.LocalStorage.fn_setTabsDisplayEnabled(state);
+          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
+        });
+          
     
     $('#toggle_GCS').change(function (e)
         {
           var state = $(this).prop('checked');
           v_en_GCS = state;
+          window.AndruavLibs.LocalStorage.fn_setGCSDisplayEnabled(state);
           window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
         });
           
@@ -135,12 +145,15 @@ class CLSS_Preferences extends React.Component {
       this.state = {
         isChecked : window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()
       };
+
+      v_enable_tabs_display = window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled();
   }
 
   componentDidMount()
   {
-      $('#check_enable_speech')[0].checked = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()==='true';
-      $('#volume_range')[0].value = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()
+      $('#check_enable_speech')[0].checked = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled();
+      $('#volume_range')[0].value = window.AndruavLibs.LocalStorage.fn_getVolume();
+      $('#check_tabs_display')[0].checked = window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled();
   }
 
 
@@ -179,6 +192,14 @@ class CLSS_Preferences extends React.Component {
     window.AndruavLibs.EventEmitter.fn_dispatch (EE_onAdvancedMode);
   }
 
+  fn_enableTabsDisplay ()
+  {
+    const enabled = $('#check_tabs_display')[0].checked;
+    v_enable_tabs_display = enabled;
+    window.AndruavLibs.LocalStorage.fn_setTabsDisplayEnabled(enabled);
+    window.AndruavLibs.EventEmitter.fn_dispatch (EE_onPreferenceChanged);
+  }
+
   render () {
       return (
           <fieldset>
@@ -186,6 +207,10 @@ class CLSS_Preferences extends React.Component {
               <label className="col-sm-4 col-form-label al_l" >Enable Speech</label>
               <input className="form-check-input col-sm-4 " type="checkbox" id="check_enable_speech" onClick={ () => this.fn_enableSpeech()} />
               <input type="range" className="form-range col-sm-4 width_fit ps-5" id="volume_range" onChange={ () => this.fn_changeVolume()}/>
+            </div>
+            <div className="row mb-12">
+              <label className="col-sm-4 col-form-label al_l " >Tabs Display</label>
+              <input className="form-check-input col-sm-8 " type="checkbox" id="check_tabs_display" onClick={ () => this.fn_enableTabsDisplay()} />
             </div>
             <div className="row mb-12">
               <label className="col-sm-4 col-form-label al_l " >Advanced Options</label>
