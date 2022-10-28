@@ -1322,7 +1322,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var sys_id = "";
         if (v_andruavUnit.m_FCBParameters.m_systemID!=0)
         {
-            sys_id='sysid:' + v_andruavUnit.m_FCBParameters.m_systemID + ' ';
+            sys_id=':' + v_andruavUnit.m_FCBParameters.m_systemID + ' ';
         }
         if ((v_andruavUnit.m_IsShutdown == false) && (v_andruavUnit.m_Power._FCB.p_hasPowerInfo == true))
         {
@@ -1469,6 +1469,39 @@ class CLSS_AndruavUnitList extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitAdded,this);
     }
 
+    /**
+     * determine text and style of tabs of each drone.
+     * @param {*} v_andruavUnit 
+     * @returns classes, text
+     */
+    getHeaderInfo(v_andruavUnit)
+    {
+        var classes = "";
+        var text = v_andruavUnit.m_unitName;
+        if (v_andruavUnit.m_FCBParameters.m_systemID!=0)
+        {
+            text += ":" + v_andruavUnit.m_FCBParameters.m_systemID;
+        }
+        if ( v_andruavUnit.m_IsShutdown === true)
+        {
+            classes = " text-muted ";
+        }
+        else
+        {
+            if (v_andruavUnit.m_isArmed==true) 
+            {
+                classes = " text-danger ";
+            }
+            else
+            {
+                classes = " text-success ";
+            }
+        }
+        return {
+            'classes': classes,
+            'text': text
+        };
+    }
     
     render() {
         var unit = [];
@@ -1489,46 +1522,11 @@ class CLSS_AndruavUnitList extends React.Component {
 
                 if (v_andruavUnit.m_IsGCS===true)
                 {
-<<<<<<< HEAD
-                    // unit.push (<div className="accordion-item" key={"accordion-item" + partyID}>
-                    //             <h2 className="accordion-header" id={"headingTwo"+partyID}>
-                    //                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    //                     {partyID}
-                    //                 </button>
-                    //                 </h2>
-                    //                 <div id={"collapse"+partyID} className="accordion-collapse collapse" aria-labelledby={"headingTwo"+partyID}data-bs-parent="#accordionExample" style="">
-                    //                 <div className="accordion-body">
-                    //                     <CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {v_en_GCS} m_unit = {v_andruavUnit}/>
-                    //                 </div>
-                    //                 </div>
-                    //             </div>
-                    //         );
-                    unit.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {v_en_GCS} m_unit = {v_andruavUnit}/>
-                        );
-=======
                     units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);
->>>>>>> 13e97fc (feature: drone tabs is optional, fix: local storage boolean return)
                 }
                 else 
                 if (v_andruavUnit.m_IsGCS===false)
                 {
-<<<<<<< HEAD
-                    // unit.push (<div className="accordion-item" key={"accordion-item" + partyID}>
-                    //                 <h2 className="accordion-header" id={"headingTwo"+partyID}>
-                    //                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    //                     {partyID}
-                    //                 </button>
-                    //                 </h2>
-                    //                 <div id={"collapse"+partyID} className="accordion-collapse collapse" aria-labelledby={"headingTwo"+partyID} data-bs-parent="#accordionExample" style="">
-                    //                 <div className="accordion-body">
-                    //                     <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
-                    //                 </div>
-                    //                 </div>
-                    //             </div>
-                    //         );
-                    unit.push (<CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
-                        );
-=======
                     if (window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled() === true)
                     {
                         var header_info = me.getHeaderInfo(v_andruavUnit);
@@ -1548,7 +1546,6 @@ class CLSS_AndruavUnitList extends React.Component {
                     {
                         units_details.push(<CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>);
                     }
->>>>>>> 13e97fc (feature: drone tabs is optional, fix: local storage boolean return)
                 }
 
                 me.fn_updateMapStatus(v_andruavUnit);
@@ -1556,7 +1553,10 @@ class CLSS_AndruavUnitList extends React.Component {
             });
         }
        
-
+        unit.push (<ul className="nav nav-tabs"> {units_header} </ul>    );
+        unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
+        unit.push (units_gcs);
+        
     return (
 
                 <div key='main' className='margin_zero row'>{unit}</div>
