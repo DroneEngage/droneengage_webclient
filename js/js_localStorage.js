@@ -114,7 +114,7 @@ class C_LocalStorage {
     }
 
     fn_getSpeechEnabled = function () {
-        return  this.getDefaultAttribute('_vv_speechEnabled', true);
+        return  this.getDefaultAttribute('_vv_speechEnabled', true) === 'true';
     }
 
     fn_setVolume = function (value) {
@@ -125,6 +125,14 @@ class C_LocalStorage {
         return parseInt(this.getDefaultAttribute('_vDefaultVolume', CONST_DEFAULT_VOLUME));
     }
 
+    fn_setTabsDisplayEnabled = function (value) {
+        localStorage._vTabsDisplayEnabled = value;
+    }
+
+    fn_getTabsDisplayEnabled = function () {
+        return this.getDefaultAttribute('_vTabsDisplayEnabled', true) === 'true';
+    }
+    
     fn_setAdvancedOptionsEnabled = function (value) {
         localStorage._vAdvancedOptionsEnabled = value;
     }
@@ -132,6 +140,15 @@ class C_LocalStorage {
     fn_getAdvancedOptionsEnabled = function () {
         return this.getDefaultAttribute('_vAdvancedOptionsEnabled', true);
     }
+
+    fn_setGCSDisplayEnabled = function (value) {
+    localStorage._vGCSDisplay = value;
+    }
+
+    fn_getGCSDisplayEnabled = function () {
+        return this.getDefaultAttribute('_vGCSDisplay', true) === 'true';
+    }
+          
     
 }
 

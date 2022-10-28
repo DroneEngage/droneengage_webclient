@@ -16,6 +16,9 @@ body.no-zoom {
     zoom: 1;
 }
 
+.nav-tabs .nav-units .nav-link.active {
+	border-color: #3498db !important;
+}
 
 css_cur_alias {cursor: alias;}
 css_cur_all-scroll {cursor: all-scroll;}
