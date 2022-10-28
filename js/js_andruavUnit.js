@@ -235,7 +235,9 @@ class C_NavInfo
 		
 		this._Target= {
 			target_bearing:0.0,
-			m_NavSpeed: 0.0
+			m_NavSpeed: 0.0,
+			wp_dist: 0,
+			wp_num: 0,
 		};
 		
 		this.m_FlightPath=[];
