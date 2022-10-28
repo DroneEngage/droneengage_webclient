@@ -1580,6 +1580,7 @@ function fn_handleKeyBoard() {
 
 
 		var EVT_msgFromUnit_WayPointsUpdated = function (p_andruavUnit, missionIndexReached, status) {
+			p_andruavUnit.m_Nav_Info._Target.wp_num = missionIndexReached;
 			if (p_andruavUnit.m_wayPoint == null) {
 				//no waypoint attached ... send asking for update
 				v_andruavClient.API_requestWayPoints(p_andruavUnit);

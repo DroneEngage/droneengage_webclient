@@ -2829,6 +2829,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.01 ; // deg
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.heading_sp * 0.01 ; //deg
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.wp_distance;
+                    p_unit.m_Nav_Info._Target.wp_num = c_mavlinkMessage.wp_num;
                     p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.gps_fix_type;
                     p_unit.m_GPS_Info.satCount = c_mavlinkMessage.gps_nsat;
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery_remaining;
@@ -2848,6 +2849,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.target_heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.target_distance;
+                    p_unit.m_Nav_Info._Target.wp_num = c_mavlinkMessage.wp_num;
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery;
                     
                     p_unit.m_GPS_Info.m_isValid = true;
