@@ -931,11 +931,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
             if (v_useMetricSystem==true)
             {
-                wpdst_text =   Number(v_andruavUnit.m_Nav_Info._Target.wp_dist.toFixed(1)).toLocaleString()  + ' m';
+                wpdst_text =   Number(v_andruavUnit.m_Nav_Info._Target.wp_dist.toFixed(1)).toLocaleString()  + ' m'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
             }
             else
             {
-                wpdst_text =  Number(v_andruavUnit.m_Nav_Info._Target.wp_dist * CONST_METER_TO_FEET).toFixed(1).toLocaleString() + ' ft';
+                wpdst_text =  Number(v_andruavUnit.m_Nav_Info._Target.wp_dist * CONST_METER_TO_FEET).toFixed(1).toLocaleString() + ' ft'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
             }
 
             
@@ -1209,10 +1209,18 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         }
         else
         {
-            online_class2 =" text-info ";
-            online_class = " bg-success text-white ";
-            online_text  = "online";
-
+            if (v_andruavUnit.m_isArmed==true) 
+            {
+                online_class2 =" text-info ";
+                online_class = " bg-none text-danger ";
+                online_text  = "Armed";
+            }
+            else
+            {
+                online_class2 =" text-info ";
+                online_class = " bg-success text-white ";
+                online_text  = "online";
+            }
             if (v_andruavUnit.fn_canCamera()==true)
             {
                 camera_class = "cursor_hand camera_active";
@@ -1403,8 +1411,14 @@ class CLSS_AndruavUnitList extends React.Component {
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onPreferenceChanged, this, this.fn_onPreferenceChanged);
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onSocketStatus, this, this.fn_onSocketStatus);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitAdded,this,this.fn_unitAdded);
-    
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
+        
 	}
+
+    fn_unitUpdated(me,p_andruavUnit)
+    {
+        me.fn_forceRefresh(me);
+    }
 
     fn_unitAdded (me,p_andruavUnit)
     {
@@ -1467,6 +1481,7 @@ class CLSS_AndruavUnitList extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onSocketStatus,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitAdded,this);
+        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
     }
 
     /**
@@ -1506,6 +1521,10 @@ class CLSS_AndruavUnitList extends React.Component {
     render() {
         var unit = [];
         
+        var units_header = [];
+        var units_details = [];
+        var units_gcs = [];
+
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
@@ -1560,11 +1579,6 @@ class CLSS_AndruavUnitList extends React.Component {
     return (
 
                 <div key='main' className='margin_zero row'>{unit}</div>
-                // <div key='main'>
-                //         <div className="accordion" id="accordionExample">
-                //             {unit}
-                //         </div>
-                //  </div>
             );
     }
 };
