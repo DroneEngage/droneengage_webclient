@@ -1156,7 +1156,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             return (
                 <div id='ctrl_k'>
-                    <p className="text-danger bg-black user-select-none">Flight Control Board is not Connected</p> 
+                    <p className="text-danger bg-black user-select-none bi bi-exclamation-diamond"> Flight Control Board is not Connected</p> 
                 </div>
             );
         }
@@ -1543,7 +1543,9 @@ class CLSS_AndruavUnitList extends React.Component {
         {
             if (bad_fcb === true) 
             {
-                    classes = " bg-danger text-white ";
+                    classes = " text-danger bi bi-exclamation-diamond";
+                    text = " " + text;
+                    
             }
             else 
             if (v_andruavUnit.m_isArmed==true) 
