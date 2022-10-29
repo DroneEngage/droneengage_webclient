@@ -152,3 +152,6 @@ function fn_date_now()
 
 
 var fn_ajax = $.ajax;
+
+var v_andruavClient = null;
+		

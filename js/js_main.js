@@ -116,7 +116,6 @@ function fn_handleKeyBoard() {
         
 
         //var video_out = v_G_getElementById("vid-box");
-		var v_andruavClient = null;
 		var recordRTC;
 
 
