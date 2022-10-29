@@ -2379,14 +2379,23 @@ function fn_handleKeyBoard() {
 			}
 			vAlt = vAlt + vAlt_abs;
 			
-			var vSpeed = p_andruavUnit.m_Nav_Info.p_Location.speed;
-			if (vSpeed == undefined)
+			var vSpeed = p_andruavUnit.m_Nav_Info.p_Location.ground_speed;
+			if (vSpeed == null)
 			{
 				vSpeed='?';
 			}
 			else
 			{
 				vSpeed = vSpeed.toFixed(1);
+			}
+			var vAirSpeed = p_andruavUnit.m_Nav_Info.p_Location.airspeed;
+			if (vAirSpeed == null)
+			{
+				vAirSpeed='?';
+			}
+			else
+			{
+				vAirSpeed = vAirSpeed.toFixed(1);
 			}
 			AndruavLibs.AndruavMap.fn_getElevationForLocation(p_lat, p_lng
 				, function (p_elevation, p_lat, p_lng) {
@@ -2404,7 +2413,8 @@ function fn_handleKeyBoard() {
 								+ '<span class="text-success">'+ (p_lat).toFixed(6) 
 								+ '</span><span class="text-primary">,lng:' + '</span><span class="text-success">' + (p_lng).toFixed(6) 
 								+ '</span><br>  <span class="text-primary ">alt:' + '</span><span class="text-success">' + vAlt + '</span><span class="text-primary"> m</span>'
-								+ '</span><br>  <span class="text-primary ">GS:' + '</span><span class="text-success">' + vSpeed + ' </span><span class="text-primary"> m/s</span>';
+								+ '</span><br>  <span class="text-primary ">GS:' + '</span><span class="text-success">' + vSpeed + ' </span><span class="text-primary"> m/s</span>'
+								+ '<span class="text-primary "> AS:' + '</span><span class="text-success">' + vAirSpeed + ' </span><span class="text-primary"> m/s</span>';
 					if (CONST_MAP_GOOLE === true)
 					{
 						markerContent += '<br> sea-lvl alt:' + p_elevation + ' m.</p>';
