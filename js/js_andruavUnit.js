@@ -218,7 +218,9 @@ class C_NavInfo
 		this.m_parent = p_parent;
 		this.p_Location={
 			alt: null,
-			abs_alt: null
+			abs_alt: null,
+			airspeed:null,
+			ground_speed:null
 		};
 		this.p_Orientation={
 			nav_roll:0.0, // ATTITUDE NOT NAV

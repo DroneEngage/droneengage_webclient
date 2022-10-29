@@ -18,6 +18,7 @@ body.no-zoom {
 
 .nav-tabs .nav-units .nav-link.active {
 	border-color: #3498db !important;
+	border-width: 2px;
 }
 
 css_cur_alias {cursor: alias;}

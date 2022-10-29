@@ -1030,12 +1030,12 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         v_leader_text  = (v_andruavUnit.m_Swarm.m_isLeader==true)?"Press to leave swarm":"press to become a leader";
         
 
-        if (v_andruavUnit.m_Nav_Info.p_Location.speed==null) 
+        if (v_andruavUnit.m_Nav_Info.p_Location.ground_speed==null) 
         {
             v_speed_text = 'NA'; 
         }else
         { 
-            v_speed_text = v_andruavUnit.m_Nav_Info.p_Location.speed;
+            v_speed_text = v_andruavUnit.m_Nav_Info.p_Location.ground_speed;
 		    this.localvars.speed_link = true;
             if (v_useMetricSystem==true)
             {
@@ -1142,38 +1142,68 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             v_alt_remark += " feet";
         }
 
-		v_altitude_text = v_andruavUnit.m_Nav_Info.p_Location.alt;
-		if (v_altitude_text==null) 
+        
+		var v_altitude = v_andruavUnit.m_Nav_Info.p_Location.alt;
+		if (v_altitude==null) 
         {
-             v_altitude_text = 'NA';
+            v_altitude = 'NA';
         } 
         else 
         {
             if (v_useMetricSystem==true)
             {
-                v_altitude_text = v_altitude_text.toFixed(0).toString();
-                
-                if (v_andruavUnit.m_Nav_Info.p_Location.abs_alt!= null) 
-                {
-                    v_altitude_text += '/' + v_andruavUnit.m_Nav_Info.p_Location.abs_alt.toFixed(0).toString();
-                }
-                
-                v_altitude_text += " m";
-
+                v_altitude = v_altitude.toFixed(0).toString() + "m";
             }
             else
             {
-                v_altitude_text = (v_altitude_text * CONST_METER_TO_FEET).toFixed(0);
-                
-                if (v_andruavUnit.m_Nav_Info.p_Location.abs_alt!= null) 
-                {
-                    v_altitude_text += '/' + (v_andruavUnit.m_Nav_Info.p_Location.abs_alt * CONST_METER_TO_FEET).toFixed(0).toString();
-                }
-                
-                v_altitude_text += " ft";
-
+                v_altitude = (v_altitude * CONST_METER_TO_FEET).toFixed(0) + "ft";
             }
         }
+
+        var v_altitude_abs = v_andruavUnit.m_Nav_Info.p_Location.abs_alt;
+		if (v_altitude_abs==null) 
+        {
+            v_altitude_abs = 'NA';
+        } 
+        else 
+        {
+            if (v_useMetricSystem==true)
+            {
+                v_altitude_abs = v_altitude_abs.toFixed(0).toString() + "m";
+            }
+            else
+            {
+                v_altitude_abs = (v_altitude_abs * CONST_METER_TO_FEET).toFixed(0) + "ft";
+            }
+        }
+
+        v_altitude_text = v_altitude + '/' + v_altitude_abs;    
+
+        // if (v_useMetricSystem==true)
+        //     {
+        //         v_altitude_text = v_altitude_text.toFixed(0).toString();
+                
+        //         if (v_andruavUnit.m_Nav_Info.p_Location.abs_alt!= null) 
+        //         {
+        //             v_altitude_text += '/' + v_andruavUnit.m_Nav_Info.p_Location.abs_alt.toFixed(0).toString();
+        //         }
+                
+        //         v_altitude_text += " m";
+
+        //     }
+        //     else
+        //     {
+        //         v_altitude_text = (v_altitude_text * CONST_METER_TO_FEET).toFixed(0);
+                
+        //         if (v_andruavUnit.m_Nav_Info.p_Location.abs_alt!= null) 
+        //         {
+        //             v_altitude_text += '/' + (v_andruavUnit.m_Nav_Info.p_Location.abs_alt * CONST_METER_TO_FEET).toFixed(0).toString();
+        //         }
+                
+        //         v_altitude_text += " ft";
+
+        //     }
+        //}
 						
 		if (v_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw==null)
         {
@@ -1291,7 +1321,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                     </svg>
                                 </span>
-                                <span id='speed'  title={"target: "+v_targetspeed}onClick={ (e) => this.fn_changeSpeed(e,v_andruavUnit,v_andruavUnit.m_Nav_Info.p_Location.speed!=null?v_andruavUnit.m_Nav_Info.p_Location.speed:this.localvars.speed_link)}>
+                                <span id='speed'  title={"target: "+v_targetspeed}onClick={ (e) => this.fn_changeSpeed(e,v_andruavUnit,v_andruavUnit.m_Nav_Info.p_Location.ground_speed!=null?v_andruavUnit.m_Nav_Info.p_Location.ground_speed:this.localvars.speed_link)}>
                                 <small><b>&nbsp;
                                  {'GS: ' + v_speed_text}
                                  &nbsp;</b></small>
@@ -1413,7 +1443,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         ||((p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_DroneKit_Telemetry)
             && (p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_Mavlink_Telemetry)))
         {
-            return ;
+            return (
+                <div id='ctrl_k'>
+                    <p className="text-danger bg-black user-select-none">Flight Control Board is not Connected</p> 
+                </div>
+            );
         }
 
         if (p_andruavUnit.m_Telemetry.m_isGCSBlocked === true)
@@ -1421,7 +1455,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
             return (
                 <div id='ctrl_k'>
-                    <p className="text-danger user-select-none">BLOCKED By RC in the Field</p> 
+                    <p className="text-danger bg-black user-select-none">BLOCKED By RC in the Field</p> 
                 </div>
             );
         }
@@ -1628,7 +1662,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 rows.push (<div key={id +"__5"} className= 'col-1  padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>);
             }
             // add FCB battery
-            rows.push (<div  key={id +"fc1"}className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
+            rows.push (<div  key={id +"fc1"}className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(2).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
             rows.push (<div  key={id +"fc2"} className= "col-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
             rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={"version:" + v_andruavUnit.m_version}  ><strong>{v_andruavUnit.m_unitName } </strong> {sys_id}<span className={' ' + online_class}>{online_text}</span></p></div>);
         }
@@ -1780,6 +1814,10 @@ class CLSS_AndruavUnitList extends React.Component {
      */
     getHeaderInfo(v_andruavUnit)
     {
+        var bad_fcb = ((v_andruavUnit.m_useFCBIMU === false) 
+        ||((v_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_DroneKit_Telemetry)
+            && (v_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_Mavlink_Telemetry)));
+
         var classes = "";
         var text = v_andruavUnit.m_unitName;
         if (v_andruavUnit.m_FCBParameters.m_systemID!=0)
@@ -1792,14 +1830,21 @@ class CLSS_AndruavUnitList extends React.Component {
         }
         else
         {
+            if (bad_fcb === true) 
+            {
+                    classes = " bg-danger text-white ";
+            }
+            else 
             if (v_andruavUnit.m_isArmed==true) 
             {
                 classes = " text-danger ";
             }
             else
             {
-                classes = " text-success ";
+                classes += " text-success ";
             }
+
+            
         }
         return {
             'classes': classes,

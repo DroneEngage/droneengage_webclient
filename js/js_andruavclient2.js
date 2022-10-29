@@ -272,9 +272,9 @@ const CONST_TELEMETRY_SOURCE_FCB = 1;
 const CONST_TELEMETRY_SOURCE_GCS = 2;
 
 
-const CONST_checkStatus_Interverl0 = 20000;
-const CONST_checkStatus_Interverl1 = 30000;
-const CONST_sendID_Interverl = 15000;
+const CONST_checkStatus_Interverl0 = 15000;
+const CONST_checkStatus_Interverl1 = 20000;
+const CONST_sendID_Interverl = 13000;
 const CONST_sendRXChannels_Interval = 250;
 const CONST_GAMEPAD_LONG_PRESS = 1250;
 const CONST_GAMEPAD_REPEATED = 3000;
@@ -1711,7 +1711,7 @@ class CAndruavClient {
                 p_unit.m_Nav_Info.p_Location.alt = parseFloat(p_jmsg.a);
                 p_unit.m_Nav_Info.p_Location.time = p_jmsg.t;
                 if (p_jmsg.hasOwnProperty('s')) {
-                    p_unit.m_Nav_Info.p_Location.speed = parseFloat(p_jmsg.s); // can be null
+                    p_unit.m_Nav_Info.p_Location.ground_speed = parseFloat(p_jmsg.s); // can be null
                 }
 
                 if (p_jmsg.hasOwnProperty('b')) {
@@ -2719,7 +2719,8 @@ class CAndruavClient {
             if (c_mavlinkMessage.id == -1)
             {
                 // bad mavlink ... make sure you are using MAVLINK V2
-                this.EVT_BadMavlink();
+                //this.EVT_BadMavlink();
+                console.log("BAD MAVLINK");
                 continue;
             }
             switch (c_mavlinkMessage.header.msgId) {
@@ -2752,7 +2753,7 @@ class CAndruavClient {
                     var v_voltage = 0;
                     for (var i = 0; i < 10; ++ i) {
                         const cel_voltage = c_mavlinkMessage.voltages[i];
-                        if (cel_voltage < 0) 
+                        if ((cel_voltage < 0) || (cel_voltage == 65535))
                             break;
                         
                         v_voltage += cel_voltage;
@@ -2769,9 +2770,16 @@ class CAndruavClient {
                     p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.fix_type;
                     p_unit.m_GPS_Info.satCount = c_mavlinkMessage.satellites_visible;
                     p_unit.m_GPS_Info.accuracy = c_mavlinkMessage.h_acc;
-                    p_unit.m_Nav_Info.p_Location.speed = c_mavlinkMessage.vel / 100.0;
+                    p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0;
                     p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
                     break;
+
+                case mavlink20.MAVLINK_MSG_ID_VFR_HUD:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed ;
+                    p_unit.m_Nav_Info.p_Location.airspeed = c_mavlinkMessage.airspeed ;
+                    break;
+                    
 
                 case mavlink20.MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
                     p_unit.m_GPS_Info.m_isValid = true;
@@ -2822,7 +2830,8 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
                     p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.altitude_amsl;
                     p_unit.m_Nav_Info.p_Location.alt_sp = c_mavlinkMessage.altitude_sp;
-                    p_unit.m_Nav_Info.p_Location.speed = c_mavlinkMessage.groundspeed;
+                    p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed;
+                    p_unit.m_Nav_Info.p_Location.airspeed = c_mavlinkMessage.airspeed;
                     p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll * 0.01 * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch  * 0.01  * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading  * 0.01   * CONST_DEGREE_TO_RADIUS;
