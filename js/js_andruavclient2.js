@@ -2823,8 +2823,8 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.altitude_amsl;
                     p_unit.m_Nav_Info.p_Location.alt_sp = c_mavlinkMessage.altitude_sp;
                     p_unit.m_Nav_Info.p_Location.speed = c_mavlinkMessage.groundspeed;
-                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll * 0.1 * CONST_DEGREE_TO_RADIUS;
-                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch  * 0.1  * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll * 0.01 * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch  * 0.01  * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading  * 0.01   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.01 ; // deg
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.heading_sp * 0.01 ; //deg
