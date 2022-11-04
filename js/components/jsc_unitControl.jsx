@@ -1593,23 +1593,25 @@ class CLSS_AndruavUnitList extends React.Component {
                 else 
                 if (v_andruavUnit.m_IsGCS===false)
                 {
+                    // Display Units (Vehicles)
                     if (window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled() === true)
-                    {
+                    { 
+                        // Display in Tabs
                         var header_info = me.getHeaderInfo(v_andruavUnit);
                         units_header.push(
                             <li className="nav-item nav-units">
-                                <a className={"nav-link user-select-none " + header_info.classes} data-bs-toggle="tab" href={"#" + v_andruavUnit.partyID}>{header_info.text}</a>
+                                <a className={"nav-link user-select-none " + header_info.classes} data-bs-toggle="tab" href={"#tab_" + v_andruavUnit.partyID}>{header_info.text}</a>
                             </li>
                         );
 
                         units_details.push(
-                            <div className="tab-pane fade" id={v_andruavUnit.partyID}>
+                            <div className="tab-pane fade" id={"tab_"+v_andruavUnit.partyID}>
                                 <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
                             </div>
                         );
                     }
                     else
-                    {
+                    {   // Display as List
                         units_details.push(<CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>);
                     }
                 }
