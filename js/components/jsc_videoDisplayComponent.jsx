@@ -415,7 +415,7 @@ class CLSS_CVideoScreen extends React.Component {
         //fn_console_log (JSON.stringify(this.props));
         var andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.obj.v_unit);
         var talk = andruavUnit.m_Video.m_videoactiveTracks[this.props.obj.v_track];
-        var divID = andruavUnit.partyID +  this.props.obj.v_track;
+        var divID = "cam_" + andruavUnit.partyID +  this.props.obj.v_track;  //party ids can start with numbers you need to adda prefix
         if (talk.VideoStreaming == CONST_VIDEOSTREAMING_OFF)
         {
             return (
@@ -667,7 +667,7 @@ render() {
             }
 
             out_h.push (<li key ={'h'+v_key} className="nav-item">
-                    <a className={"nav-link user-select-none  " + _first} data-bs-toggle="tab"  href={'#' + andruavUnit.partyID + v_obj.v_track}>{andruavUnit.m_unitName + ' #' + v_obj.v_index}</a>
+                    <a className={"nav-link user-select-none  " + _first} data-bs-toggle="tab"  href={'#cam_' + andruavUnit.partyID + v_obj.v_track}>{andruavUnit.m_unitName + ' #' + v_obj.v_index}</a>
                 </li>);
             out_b.push (<CLSS_CVideoScreen key ={v_key}  first={_first}  obj={v_obj}/>);
         }
