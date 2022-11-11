@@ -225,6 +225,9 @@ function fn_handleKeyBoard() {
 			$('#div_video_control').show();
 		}
 
+		function fn_showControl() {
+			$('#row_2').toggle();
+		}
 
 		function fn_showMap() {
 			$('#div_video_control').hide();
@@ -322,15 +325,6 @@ function fn_handleKeyBoard() {
 		}
 
 
-		function fn_endCall(roomNo) {
-			window.AndruavLibs.AndruavStream.hangup(roomNo);
-			$('#modal_fpv_video').attr('opacity', null);
-			$('#modal_ctrl_yaw').attr('partyID', null);
-			$('#modal_fpv_video').hide();
-			toggleVideo(); // you may close all videos
-
-        }
-        
         function fn_doYAW(p_partyID, targetAngle, turnRate, isClockwise, isRelative) {
         	v_andruavClient.API_do_YAW(p_partyID, targetAngle, turnRate, isClockwise, isRelative);
 		}
@@ -2797,6 +2791,17 @@ function fn_handleKeyBoard() {
 			});
 		}
 
+		function fn_gui_init_unitList ()
+		{
+			$('#andruav_unit_list_array').draggable();
+			$('#andruav_unit_list_array').mouseover(function () {
+				$('#andruav_unit_list_array').css('opacity', '1.0');
+			});
+			$('#andruav_unit_list_array').mouseout(function () {
+				$('#andruav_unit_list_array').css('opacity', '0.8');
+			});
+		}
+
 		function fn_gui_init_fpvVtrl ()
 		{
 			$('#modal_fpv').hide();
@@ -3133,12 +3138,10 @@ function fn_handleKeyBoard() {
 				fn_showVideoMainTab
 			);
 
-			$('#modal_fpv_video').find('#btnpitchp').click(function () {
+			$('#btn_showControl').click(
+				fn_showControl
+			);
 
-				var p = $('#div_video_view').attr('partyID');
-				var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p);
-				fn_doGimbalCtrlStep(p_andruavUnit, +2, 0, 0);
-			});
 
 			$('#gimbaldiv').find('#btnpitchm').click(function () {
 				var p = $('#div_video_view').attr('partyID');
@@ -3176,6 +3179,7 @@ function fn_handleKeyBoard() {
 
 			gui_init_yawCtrl();
 			fn_gui_init_fpvVtrl();
+			fn_gui_init_unitList();
 			}
 			else
 			{

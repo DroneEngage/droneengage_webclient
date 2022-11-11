@@ -152,7 +152,7 @@ render() {
 
 		return (
 			<div className="card text-white border-light mb-3" >
-			<div className="card-header "> <strong>{login}</strong></div>
+			<div className="card-header  text-center"> <strong>{login}</strong></div>
 			<div id='login_form' className="card-body">
 				<div className={this.state.is_connected==true?"hidden":" "} >
 				<div className="form-group al_l"><label  htmlFor="txtEmail" id="email"  className="text-white">Email</label><input type="email" id="txtEmail" name="txtEmail" className="form-control" defaultValue={QueryString.email!=null?QueryString.email:window.AndruavLibs.LocalStorage.fn_getEmail()}/></div>
@@ -161,7 +161,7 @@ render() {
         		<div className="form-group al_l"><label  id="unitID" className="text-muted">Unit ID</label><input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName!=null?QueryString.unitName:window.AndruavLibs.LocalStorage.fn_getUnitID()+ "_" + fn_generateRandomString(2)} /></div>
 				<br/>
 				</div>
-				<div id='login_btn mb-2'>
+				<div id='login_btn mb-2 ' class='text-center'>
 				<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false? 'btn-success' : 'btn-danger')} id="btnConnect" onClick={ (e) => this.clickConnect(e) }>{this.state.btnConnectText}</button>
         		
 				</div>

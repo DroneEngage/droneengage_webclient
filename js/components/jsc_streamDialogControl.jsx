@@ -161,7 +161,7 @@ class CLSS_StreamDialog extends React.Component
             return (
                 <div id="modal_ctrl_stream_dlg" title="Streaming Dialog" className="card width_fit_max css_ontop border-light p-2" >
                             
-                    <div className="card-header">
+                    <div className="card-header text-center">
 						<div className="row">
 						  <div className="col-10">
 							<h4 className="text-success text-start">Streams of' {v_unitName} </h4>
@@ -206,7 +206,7 @@ class CLSS_StreamDialog extends React.Component
             return (
                 <div id="modal_ctrl_stream_dlg" title="Streaming Dialog" className="card width_fit_max css_ontop border-light p-2" >
                             
-                <div className="card-header">
+                <div className="card-header text-center">
                     <div className="row">
                       <div className="col-10">
                         <h4 className="text-success text-start">Streams of' {v_unitName} </h4>
@@ -216,7 +216,7 @@ class CLSS_StreamDialog extends React.Component
                        </div>
                     </div>
                 </div>    
-                <div id="card-body"  id="modal_ctrl_stream_footer" className="card-body ">
+                <div id="modal_ctrl_stream_footer" className="card-body ">
                             <div className='row'>
                                 {v_streanms}
                             </div>

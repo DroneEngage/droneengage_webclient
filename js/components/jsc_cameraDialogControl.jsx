@@ -251,7 +251,7 @@ class CLSS_CameraDialog extends React.Component
 
         return (
             <div id="modal_ctrl_cam" data-toggle="tooltip" title="Camera Control" className="card width_fit_max css_ontop border-light p-2 ">
-                <div className="card-header">
+                <div className="card-header text-center">
 						<div className="row">
 						  <div className="col-10">
 							<h4 className="text-success text-start">Streams of' {v_unitName} </h4>

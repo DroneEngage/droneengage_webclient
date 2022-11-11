@@ -208,6 +208,23 @@ h1.font-thin
    
 }
 
+.fss-5
+{
+	font-size: 0.9rem !important;
+}
+.fss-4
+{
+	font-size: 0.8rem !important;
+}
+.fss-3
+{
+	font-size: 0.7rem !important;
+}
+.fss-2
+{
+	font-size: 0.6rem !important;
+}
+
 .rounded_10px
 {
 	border-radius: 10px !important;
@@ -492,7 +509,7 @@ div.log_tx_msg
 }
 
 
-div #video_btn_group
+div #main_btn_group
 {
 	margin: 5px;
 }
@@ -501,8 +518,6 @@ div #video_btn_group
 
 
 /***************ANDUAV STYLES******************/
-
-
 .fence_good
 {
 	color: forestgreen;

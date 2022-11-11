@@ -1,6 +1,6 @@
 import {CLSS_AndruavMessageLog} from './jsc_messagesControl.jsx' // add extension to allow encryptor to see it as same as file name.
-import {CLSS_CTRL_HUD} from './jsc_ctrl_hudControl.jsx'
-import {CLSS_CTRL_DIRECTIONS} from './jsc_ctrl_directionsControl.jsx'
+import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
+import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
 
@@ -294,6 +294,7 @@ class CLSS_SearchableTargets extends React.Component {
 }
 
 
+
 class CLSS_AndruavUnit extends React.Component {
     constructor()
 	{
@@ -541,7 +542,6 @@ class CLSS_AndruavUnit extends React.Component {
 
 }
 
-
 class CLSS_AndruavUnit_GCS extends CLSS_AndruavUnit {
     constructor()
 	{
@@ -714,6 +714,26 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 case 3:
                     res.m_gps_class = "bg-info text-white text-center";
                     res.m_gps_text  ="3D Fix";
+                break;
+                case 4:
+                    res.m_gps_class = ' bg-primary ';
+                    res.m_gps_text  =' DGPS ';
+                break;
+                case 5:
+                    res.m_gps_class = ' bg-primary ';
+                    res.m_gps_text  =' RTK-Fl ';
+                break;
+                case 6:
+                    res.m_gps_class = ' bg-primary ';
+                    res.m_gps_text  =' RTK-Fx ';
+                break;
+                case 7:
+                    res.m_gps_class = ' bg-primary ';
+                    res.m_gps_text  =' static ';
+                break;
+                case 8:
+                    res.m_gps_class = ' bg-primary ';
+                    res.m_gps_text  =' ppp ';
                 break;
             }
 
@@ -1444,7 +1464,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             && (p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_Mavlink_Telemetry)))
         {
             return (
-                <div id='ctrl_k'>
+                <div id='ctrl_k' className='text-center'>
                     <p className="text-danger bg-black user-select-none bi bi-exclamation-diamond"> Flight Control Board is not Connected</p> 
                 </div>
             );
@@ -1454,7 +1474,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
 
             return (
-                <div id='ctrl_k'>
+                <div id='ctrl_k' className='text-center'>
                     <p className="text-danger bg-black user-select-none">BLOCKED By RC in the Field</p> 
                 </div>
             );
@@ -1490,7 +1510,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         
 
         return (
-            <div id='ctrl_k'>
+            <div id='ctrl_k' className='ps-2'>
             <div className= 'row'>
             {ctrl_flight_controller}
             </div>
@@ -1740,7 +1760,7 @@ class CLSS_AndruavUnitList extends React.Component {
 
     fn_unitUpdated(me,p_andruavUnit)
     {
-        me.fn_forceRefresh(me);
+        me.forceUpdate();
     }
 
     fn_unitAdded (me,p_andruavUnit)
@@ -1761,16 +1781,11 @@ class CLSS_AndruavUnitList extends React.Component {
         else
         {				
                 me.state.andruavUnitPartyIDs = [];
-                me.fn_forceRefresh(me);
+                me.forceUpdate();
         }
     }
 
     fn_onPreferenceChanged(me)
-    {
-        me.fn_forceRefresh(me);
-    }
-
-    fn_forceRefresh (me)
     {
         me.forceUpdate();
     }
@@ -1795,8 +1810,6 @@ class CLSS_AndruavUnitList extends React.Component {
         }
 
         return ;
-
-        
     }
 
 
@@ -1832,7 +1845,7 @@ class CLSS_AndruavUnitList extends React.Component {
         {
             if (bad_fcb === true) 
             {
-                    classes = " text-danger bi bi-exclamation-diamond";
+                    classes = "  text-warning bi bi-exclamation-diamond";
                     text = " " + text;
                     
             }
@@ -1864,7 +1877,7 @@ class CLSS_AndruavUnitList extends React.Component {
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
-            unit.push (<div key={unit.length} >NO ONLINE UNITS</div>);
+            unit.push (<div key={unit.length} className='text-center' >NO ONLINE UNITS</div>);
         }
         else 
         {
@@ -1922,7 +1935,7 @@ class CLSS_AndruavUnitList extends React.Component {
 };
 
 ReactDOM.render(
-			<CLSS_AndruavUnitList key={new Date()} />,
+			<CLSS_AndruavUnitList key={'AUL'} />,
 			v_G_getElementById('andruavUnitList')
         );
         

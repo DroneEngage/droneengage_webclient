@@ -402,7 +402,7 @@ class CLSS_GlobalSettings extends React.Component {
   
   v_telemetryModes.push (
             <div  key="v_telemetryModes"  className="row mt-2  ">
-                <div className={"col-xs-12 col-sm-12 col-lg-12 " + tele}>
+                <div className={"col-xs-12 col-sm-12 col-lg-12 text-center" + tele}>
                   <p className = 'user-select-none text-white mt-2 mb-1'>Smart Telemetry</p>
                   <div className="btn-group" role="group" aria-label="Basic example">
                     <button type="button" className="btn btn-danger btn-sm ctrlbtn "   title='No Traffics Optimization [ALL DATA]' onClick={ (e) => this.updateSmartTelemetry(e,0) }>OFF</button>
@@ -417,7 +417,7 @@ class CLSS_GlobalSettings extends React.Component {
   return (
      <div key='g1' className="row margin_zero">
             <div className="card text-white  border-light mb-3 padding_zero" >
-    <div className="card-header user-select-none"> <strong>Settings</strong></div>
+    <div className="card-header  text-center user-select-none"> <strong>Settings</strong></div>
     <div className="card-body">
                 <ul className="nav nav-tabs">
                     <li className="nav-item">
@@ -458,6 +458,7 @@ class CLSS_GlobalSettings extends React.Component {
 };
 
 ReactDOM.render(
-			<CLSS_GlobalSettings key="global_settings" date={new Date()} myname={' '} />,
+  
+  <React.StrictMode><CLSS_GlobalSettings key="global_settings" date={'GLK'} myname={' '} /></React.StrictMode>,
 			v_G_getElementById('andruavUnits_in')
 		);
