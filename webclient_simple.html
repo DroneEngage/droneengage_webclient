@@ -93,6 +93,7 @@
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_login.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_messagesControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_unitControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_unitControlArrayView.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_globalSettings.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_gui_message.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_videoDisplayComponent.jsx"></script>
@@ -112,103 +113,108 @@
 	</div>
 
 	
-	<div class='container-fluid text-center' id='mainBody'>
-		<div id="row1" class="row margin_zero">
-			<div id='CTRL_streamCtrl' >
-					
-			</div>
-			<div id="row12" class="col-sm-6 col-md-6 col-lg-8">
-				<div id="displays" class="container-fluid localcontainer">
-					<!--  Maps & Displays -->
-					<div class="monitorview " id="message_notification" style='display:none;'>&nbsp;</div>
-					<div id="div_cmp_hud">
-
-					</div>
-					<div id="main_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
-							type="button" id="btn_showMap" class="btn btn-danger btn-sm ctrlbtn"><strong>MAP</strong></button><button
-							type="button" id="btn_showVideo" class="btn btn-warning btn-sm ctrlbtn"><strong>CAMERA</strong></button>
-					</div>
-					<div class="monitorview " id="div_map_view">
-						<div id='mapid' class="org_border fullscreen"></div>
-					</div>
-					<div class="cameraview" id="div_video_control">
-
-
-					</div>
-					
-				</div>
-				<!-- displays-->
-				<div id="modal_fpv"  title="image" class="localcontainer css_ontop">
-					<div class="card-header">
-						<div class="row">
-						  <div class="col-10">
-							<h3 class="text-success text-start">Image</h3>
-						  </div>
-						  <div class="col-2 float-right">
-						  <button id="btnclose" type="button" class="btn-close"></button>
-						   </div>
+	<div class='flex' id='mainBody'>
+		<div id="row_1" class="float-left me-4 w-100">
+				<div id="row_1_1" class="row margin_zero">
+					<div id="displays" class="container-fluid text-center">
+						<!--  Maps & Displays -->
+						<div class="monitorview " id="message_notification" style='display:none;'>&nbsp;
 						</div>
-					  </div>
-					<div id="modal_fpv_img" class="form-group text-center">
-						<img id='unitImg' class="img-rounded" src='images/camera_img.png' />
-					</div>
-					
-					<div id="modal_fpv_footer" class="form-group text-center localcontainer">
-						<button id="unitImg_save" type="button" class="btn btn-danger">Save</button>
-						<button id="btnGoto" type="button" class="btn btn-success">Goto</button>
-					</div>
-				</div>
+						<div id="div_cmp_hud">
 
-
-				<div id="modal_ctrl_yaw" title="YAW Control" class="card css_ontop border-light p-2">
-					<div class="card-header">
-						<div class="row">
-						  <div class="col-10">
-							<h3 class="text-success text-start">YAW</h3>
-						  </div>
-						  <div class="col-2 float-right">
-						  <button id="btnclose" type="button" class="btn-close"></button>
-						   </div>
 						</div>
-					  </div>
-					<div class="card-body">
-					<div id="yaw_knob_out" class="form-group text-centermodal_dialog_style">
-						<input id="yaw_knob" class=" input-sm dial" data-width="180" data-height="180" data-min=0
-							data-max=360 value="0" />
+						<div id="main_btn_group" class="btn-group" role="group" aria-label="Basic example">
+								<button type="button" id="btn_showMap" class="btn btn-danger btn-sm ctrlbtn"><strong>MAP</strong></button>
+								<button type="button" id="btn_showVideo" class="btn btn-warning btn-sm ctrlbtn"><strong>CAMERA</strong></button>
+								<button type="button" id="btn_showControl" class="btn btn-primary btn-sm ctrlbtn"><strong>CONTROL</strong></button>
+						</div>
+						<div class="monitorview " id="div_map_view">
+							<div id='mapid' class="org_border fullscreen"></div>
+						</div>
+						<div class="cameraview" id="div_video_control">
+
+
+						</div>
+						
 					</div>
-				</div>
-				<div id="modal_yaw_knob_footer" class="form-group text-center ">
-						<div class = "row">
-							<div class="btn-group">
-								<button id="opaque_btn" type="button" class="btn btn-sm btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">opaque</button>
-								<button id="btnGoto" type="button" class="btn btn-sm btn-success">Goto</button>
-								<button id="btnYaw" type="button" class="btn btn-sm btn-danger">YAW</button>
-								<button id="btnResetYaw" type="button" class="btn btn-sm btn-warning">reset YAW</button>
+					<!-- displays-->
+					<div id="andruav_unit_list_array" class="css_ontop  andruav_unit_list_array"></div>
+					<div id="modal_fpv"  title="image" class="localcontainer css_ontop">
+						<div class="card-header text-center">
+							<div class="row">
+							<div class="col-10">
+								<h3 class="text-success text-start">Image</h3>
+							</div>
+							<div class="col-2 float-right">
+							<button id="btnclose" type="button" class="btn-close"></button>
+							</div>
+							</div>
+						</div>
+						<div id="modal_fpv_img" class="form-group text-center">
+							<img id='unitImg' class="img-rounded" src='images/camera_img.png' />
+						</div>
+						
+						<div id="modal_fpv_footer" class="form-group text-center localcontainer">
+							<button id="unitImg_save" type="button" class="btn btn-danger">Save</button>
+							<button id="btnGoto" type="button" class="btn btn-success">Goto</button>
+						</div>
+					</div>
+
+
+					<div id="modal_ctrl_yaw" title="YAW Control" class="card css_ontop border-light p-2">
+						<div class="card-header text-center">
+							<div class="row">
+							<div class="col-10">
+								<h3 class="text-success text-start">YAW</h3>
+							</div>
+							<div class="col-2 float-right">
+							<button id="btnclose" type="button" class="btn-close"></button>
+							</div>
+							</div>
+						</div>
+						<div class="card-body">
+						<div id="yaw_knob_out" class="form-group text-centermodal_dialog_style">
+							<input id="yaw_knob" class=" input-sm dial" data-width="180" data-height="180" data-min=0
+								data-max=360 value="0" />
+						</div>
+					</div>
+					<div id="modal_yaw_knob_footer" class="form-group text-center ">
+							<div class = "row">
+								<div class="btn-group">
+									<button id="opaque_btn" type="button" class="btn btn-sm btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">opaque</button>
+									<button id="btnGoto" type="button" class="btn btn-sm btn-success">Goto</button>
+									<button id="btnYaw" type="button" class="btn btn-sm btn-danger">YAW</button>
+									<button id="btnResetYaw" type="button" class="btn btn-sm btn-warning">reset YAW</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div id='CTRL_cameraCtrl'>
-					
-				</div>
+					<div id='CTRL_cameraCtrl'>
+						
+					</div>
 
-				
-				<div id='sercoCtrl'>
 					
-				</div>
-				
-				<div id='modal_uplCtrl'>
+					<div id='sercoCtrl'>
+						
+					</div>
 					
-				</div>
-				<div id='gamepadCtrl'>
+					<div id='modal_uplCtrl'>
+						
+					</div>
+					<div id='gamepadCtrl'>
+						
+					</div>
+					<div id='CTRL_streamCtrl' > 
+
+					</div>
+				
 					
+					</div>
 				</div>
-				
-				
-			</div>
+			
 			<!--  EOF row12 -->
-			<div id="row11" class="col-sm-6 col-md-6 col-lg-4">
+			<div id="row_2" class="me-4 mw-4 ">
 				
 				
 				<div class="row">

@@ -176,7 +176,7 @@ class CLSS_PolygonControl extends CLSS_ShapeControl {
         return (
 
             <div key={this.props.shape.id} id="geo" className="card text-white bg-primary mb-3">
-                <h4 className="card-header">Circle Fence</h4>
+                <h4 className="card-header text-center">Circle Fence</h4>
                 <div className="card-body">
                 <div className="form-group">
                     <label>Name</label>
@@ -242,7 +242,7 @@ class CLSS_PolylineControl extends CLSS_ShapeControl {
         return (
 
             <div key={this.props.shape.id} id="geo" className="card text-white bg-primary mb-3">
-                <h4 className="card-header">Polyline Fence</h4>
+                <h4 className="card-header  text-center">Polyline Fence</h4>
                 <div className="card-body">
                 <div className="form-group">
                     <label>Name</label>
@@ -306,7 +306,7 @@ class CLSS_CircleControl extends CLSS_ShapeControl {
         return (
 
             <div key={this.props.shape.id} id="geo" className="card text-white bg-primary mb-3">
-		        <h4 className="card-header">Circle Fence</h4>
+		        <h4 className="card-header  text-center">Circle Fence</h4>
                 <div className="card-body">
                 <div className="form-group">
                     <label>Name</label>
@@ -358,7 +358,7 @@ class CLSS_RectangleControl extends CLSS_ShapeControl {
 
         return (
             <div key={this.props.shape.id} id="geo" className="card text-white bg-primary mb-3">
-                <h4 className="card-header">Rectangle Fence</h4>
+                <h4 className="card-header  text-center">Rectangle Fence</h4>
                 <div className="card-body">
                 <div className="form-group">
                     <label>Name</label>

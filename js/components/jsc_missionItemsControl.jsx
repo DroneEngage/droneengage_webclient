@@ -393,7 +393,7 @@ class CMissionStep extends React.Component {
 
         return (
             <div key={"ms_o" + this.props.p_shape.id + "_" + this.props.p_shape.m_mission.m_id} id="m_hdr" className="card text-white bg-primary mb-3">
-            <div className="card-header"> 
+            <div className="card-header text-center"> 
             <h4 ><strong>{"Mission Item #" + this.props.p_shape.order}</strong></h4>
             </div>    
             <div className="card-body">
@@ -621,7 +621,7 @@ class MissionControlPanel extends React.Component {
         return (
             <div key={"plan" + this.props.p_mission.m_id} id="m_hdr" className="col  col-sm-12 margin_zero" >
             <div className="form-inline  margin_zero padding_zero">
-                <div className="card-header d-flex">
+                <div className="card-header text-center d-flex">
                     <label onClick={ (e) => this.fn_collabseMe(e) } className={v_class}><strong>{'Mission #' + this.props.p_mission.m_id + ' Panel (' + (this.props.p_mission.fn_getMissionDistance() / 1000.0).toFixed(1) + ' km)'}</strong></label>
                     <input type='color' className = "border hidden" id={'cp_' + this.props.p_mission.m_id} onChange={(e)=> this.fn_changeColor()}/>
                     <p id={'pc_' + this.props.p_mission.m_id}  onClick={ (e) => this.fn_simClick(e) } className="btn  btn-sm css_margin_left_5 text-light border border-primary rounded text-center cursor_hand" title="Change Plan color path"  >C</p>

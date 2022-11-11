@@ -363,17 +363,14 @@ div#modal_ctrl_parameters #parameters_sublist
 	margin: 20px 5px  15px 5px !important;
 }
 
-div#modal_fpv_video
-{
-	position: relative;
-	top: -500px;
-	left:100px;
-	background-color:white;
-	opacity:0.85;
-	float:left;
-	z-index: 2147483647 !important;
-}
 
+div#andruav_unit_list_array
+{
+	position:fixed !important;
+	bottom:22% !important;
+	height: 40px !important;
+	/* width: inherit !important; */
+}
 
 
 div#modal_fpv
@@ -840,4 +837,16 @@ table.css_table_log
 	max-height: 350px;
 	overflow: auto;
 	display:inline-block;
+}
+
+div#row_2
+{
+    max-width: 30% !important;
+	min-width: 30% !important;
+}
+
+div#displays
+{
+	margin: 1px 5px 5px 5px !important;
+	padding: 1px 5px 5px 5px !important;
 }
