@@ -72,6 +72,14 @@ class C_LocalStorage {
         return this.getDefaultAttribute('_vGroupName', "1");
     }
 
+    fn_setDisplayMode = function (value) {
+        localStorage._vDisplayMode = value;
+    }
+
+    fn_getDisplayMode = function () {
+        return this.getDefaultAttribute('_vDisplayMode', 1);
+    }
+
 
     fn_setMetricSystem = function (p_bool) {
         localStorage._vv_useMetricSystem = p_bool;

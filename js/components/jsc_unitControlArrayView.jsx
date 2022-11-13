@@ -267,6 +267,9 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             'AS': new C_GUI_READING_VALUE()
         };
 
+        res.AS.value = 'na';
+        res.GS.value = 'na';
+
         if (p_andruavUnit.m_Nav_Info.p_Location.ground_speed != null)
         {
             if (v_useMetricSystem==true)
@@ -432,56 +435,60 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             <div className = 'col-3  css_margin_zero'>
                 <div className = 'row  css_margin_zero fss-4 '>
                     <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}><span className="text-warning">Batt1</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
                 </div>
                 <div className = 'row  css_margin_zero  fss-4 '>
                     <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}><span className="text-warning">Batt2</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
                 
                 </div>
             </div>
             <div className = 'col-1  css_margin_zero css_padding_zero fss-4'>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                    <div className = {'col-12  css_margin_zero '+ v_gps1.css}>{v_gps1.value}</div>
+                    <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}>{v_gps1.value}</div>
                 </div>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                <div className = {'col-12  css_margin_zero '+ v_gps2.css}>{v_gps2.value}</div>
+                <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}>{v_gps2.value}</div>
                 </div>
              </div>
             <div className = 'col-1  css_margin_zero fss-4'>
-                <div className = 'row  css_margin_zero'>
-                    <div className = {'col-12  css_margin_zero ' + v_speed.AS.css}><span className='text-warning'>AS:</span>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
+                <div className = {'row  css_margin_zero' + v_speed.GS.css}>
+                    <div className = {'col-4  css_margin_zero text-warning' + v_speed.AS.css}>AS:</div>
+                    <div className = {'col-8  css_margin_zero text-white' + v_speed.AS.css}>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
                 </div>
-                <div className = 'row  css_margin_zero'>
-                    <div className = { + 'col-12  css_margin_zero ' + v_speed.GS.css}><span className='text-warning'>GS:</span>{v_speed.GS.value}<span className='text-warning'>{v_speed.GS.unit}</span></div>
+                <div className = {'row  css_margin_zero' + v_speed.GS.css}>
+                    <div className = 'col-4  css_margin_zero text-warning '>GS:</div>
+                    <div className = 'col-8  css_margin_zero text-white '>{v_speed.GS.value}<span className='text-warning'>{v_speed.GS.unit}</span></div>
                 </div>
             </div>
             
             <div className = 'col-1  css_margin_zero fss-4'>
-                <div className = 'row  css_margin_zero'>
-                    <div className = {'col-3  css_margin_zero text-warning al_l '+ v_alt.rel_css}>rel:</div>
-                    <div className = {'col-8  css_margin_zero al_r '+ v_alt.rel_css}>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
+                <div className = {'row  css_margin_zero ' + v_alt.rel_css}>
+                    <div className = 'col-4  css_margin_zero text-warning al_l'>rel:</div>
+                    <div className = 'col-8  css_margin_zero al_r '>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
                 </div>
-                <div className = 'row  css_margin_zero'>
-                    <div className = {'col-3  css_margin_zero text-warning al_l'+ v_alt.abs_css}>abs:</div>
-                    <div className = {'col-8  css_margin_zero al_r '+ v_alt.rel_css}>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
+                <div className = {'row  css_margin_zero'+ v_alt.abs_css}>
+                    <div className = 'col-4  css_margin_zero text-warning al_l'>abs:</div>
+                    <div className = 'col-8  css_margin_zero al_r '>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
                 </div>
             </div>
            
-            <div className = 'col-1  css_margin_zero fss-4'>
+            <div className = {'col-1  css_margin_zero fss-4' + v_wind.WD.css}>
                 <div className = 'row  css_margin_zero'>
-                    <div className = {'col-12  css_margin_zero ' + v_wind.WS.css}> <span className='text-warning'>WS:</span> {v_wind.WS.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
+                    <div className = 'col-4  css_margin_zero text-warning al_l'>WS:</div>
+                    <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
                 </div>
-                <div className = 'row  css_margin_zero  fss-4'>
-                    <div  className = {'col-12  css_margin_zero ' + v_wind.WS.css}> <span className='text-warning'>WD:</span> {v_wind.WZ.value}<span className='text-warning'>{v_wind.WZ.unit}</span></div>
+                <div className = {'row  css_margin_zero  fss-4' + v_wind.WD.css}>
+                    <div  className = 'col-4  css_margin_zero text-warning al_l'>WD:</div>
+                    <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WZ.value}<span className='text-warning'>{v_wind.WZ.unit}</span></div>
                 </div>
             </div>
             <div className = 'col-1  css_margin_zero'>ID</div>
@@ -599,15 +606,12 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
                     if (v_andruavUnit.m_IsGCS===true)
                     {
-                        units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);
+                        //units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);
                     }
                     else 
                     if (v_andruavUnit.m_IsGCS===false)
                     {
-                        
-                            units_details.push(<CLSS_AndruavUnit_Drone_Row key={partyID}  m_unit = {v_andruavUnit}/>);
-                        
-                        
+                        units_details.push(<CLSS_AndruavUnit_Drone_Row key={partyID}  m_unit = {v_andruavUnit}/>);
                     }
 
                     me.fn_updateMapStatus(v_andruavUnit);
@@ -632,15 +636,26 @@ class CLSS_AndruavUnitListArray extends React.Component {
 						</div>);
 
         return (
-            <div key='main' className='margin_zero row'>{unit}</div>
+            <div key={new Date()} className='margin_zero row'>{unit}</div>
         );
     }
 };
 
 
 
+if ($('#andruav_unit_list_array_float').length != 0) {
 
-ReactDOM.render(
-    <CLSS_AndruavUnitListArray key={'AULS'} />,
-    v_G_getElementById('andruav_unit_list_array')
-);
+	ReactDOM.render(
+		<CLSS_AndruavUnitListArray />,
+		v_G_getElementById('andruav_unit_list_array_float')
+	);
+}
+
+if ($('#andruav_unit_list_array_fixed').length != 0) {
+
+	ReactDOM.render(
+		<CLSS_AndruavUnitListArray />,
+		v_G_getElementById('andruav_unit_list_array_fixed')
+	);
+}
+

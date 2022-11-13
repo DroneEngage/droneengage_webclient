@@ -86,6 +86,7 @@
 		});
 	</script>
 
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/gadgets/jsc_ctrl_layoutControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/gadgets/jsc_ctrl_hudControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/gadgets/jsc_ctrl_directionsControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx"></script>
@@ -103,6 +104,9 @@
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_servoControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_gamepadControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_unitParametersList.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_header.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_footer.jsx"></script>
+
 	
 	<script language="JavaScript" type="text/javascript" src="js/js_main.js"></script>
 
@@ -110,12 +114,12 @@
 
 <body>
 	<div id="rowheader" class="row margin_zero">
-		<div id="header"></div>
+		<div id="header_div"></div>
 	</div>
 
 	
-	<div class='flex' id='mainBody'>
-		<div id="row_1" class="float-left me-4 w-100">
+	<div id='mainBody' class='row' >
+		<div id="row_1" class="col-8">
 				<div id="row_1_1" class="row margin_zero">
 					<div id="displays" class="container-fluid text-center">
 						<!--  Maps & Displays -->
@@ -124,11 +128,6 @@
 						<div id="div_cmp_hud">
 
 						</div>
-						<div id="main_btn_group" class="btn-group" role="group" aria-label="Basic example">
-								<button type="button" id="btn_showMap" class="btn btn-danger btn-sm ctrlbtn"><strong>MAP</strong></button>
-								<button type="button" id="btn_showVideo" class="btn btn-warning btn-sm ctrlbtn"><strong>CAMERA</strong></button>
-								<button type="button" id="btn_showControl" class="btn btn-primary btn-sm ctrlbtn"><strong>DISPLAY</strong></button>
-						</div>
 						<div class="monitorview " id="div_map_view">
 							<div id='mapid' class="org_border fullscreen"></div>
 						</div>
@@ -136,10 +135,15 @@
 
 
 						</div>
+						<div id="andruav_unit_list_array_fixed" class="css_ontop  andruav_unit_list_array"></div>
+					
 						
 					</div>
 					<!-- displays-->
-					<div id="andruav_unit_list_array" class="css_ontop  andruav_unit_list_array"></div>
+					<div id="andruav_unit_list_array_float" class="css_ontop  andruav_unit_list_array"></div>
+						
+					</div>
+
 					<div id="modal_fpv"  title="image" class="localcontainer css_ontop">
 						<div class="card-header text-center">
 							<div class="row">
@@ -191,40 +195,22 @@
 						</div>
 					</div>
 
-					<div id='CTRL_cameraCtrl'>
-						
-					</div>
-
+					<div id='CTRL_cameraCtrl'></div>
 					
-					<div id='sercoCtrl'>
-						
-					</div>
+					<div id='servoCtrl'></div>
 					
-					<div id='modal_uplCtrl'>
-						
-					</div>
-					<div id='gamepadCtrl'>
-						
-					</div>
-					<div id='CTRL_streamCtrl' > 
-
-					</div>
+					<div id='modal_uplCtrl'></div>
+					<div id='gamepadCtrl'></div>
+					<div id='CTRL_streamCtrl' > </div>
 				
 					
-					</div>
+					
 				</div>
 			
 			<!--  EOF row12 -->
-			<div id="row_2" class="me-4 mw-4 ">
+			<div id="row_2" class="col-4 ">
 				
 				
-				<div class="row">
-					<div id="login_div" class=' col-sm-12 padding_zero'>
-					</div>
-					<!-- EOF login -->
-				</div>
-
-				<div class="row">
 					<div id='andruavUnits' class='col-sm-12 padding_zero'>
 						<div id="andruavUnits_in" class=''>
 							<p class="bg-warning  text-center">
@@ -244,7 +230,6 @@
 						<div id='andruavUnitList' class='row'></div>
 						<!-- EOF andruavUnits -->
 					</div>
-				</div>
 				<!-- EOF row11 -->
 			</div>
 			<!-- EOF row1 -->
@@ -318,7 +303,7 @@
 			</div>
 		</div>
 		
-		<div id="footer"></div>
+		<div id="footer_div"></div>
 </body>
 
 <script src="./js/js_main_last.js"></script>
