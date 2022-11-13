@@ -226,7 +226,32 @@ function fn_handleKeyBoard() {
 		}
 
 		function fn_showControl() {
-			$('#row_2').toggle();
+			v_displayMode++;
+			
+			switch (v_displayMode%3)
+			{
+				case 0:
+					$('#row_2').show();
+					$('#andruav_unit_list_array').hide();
+					$('#btn_showControl').html("<strong>DISPLAY-0</strong>")
+				break;
+					
+				case 1:
+					$('#row_2').hide();
+					$('#andruav_unit_list_array').show();
+					$('#btn_showControl').html("<strong>DISPLAY-1</strong>")
+				break;
+
+				
+				case 2:
+					$('#row_2').show();
+					$('#andruav_unit_list_array').show();
+					$('#btn_showControl').html("<strong>DISPLAY-2</strong>")
+				break;
+			}
+
+			
+			
 		}
 
 		function fn_showMap() {
@@ -710,7 +735,7 @@ function fn_handleKeyBoard() {
 			}
 
 
-			v_andruavClient.API_setGPSSource(p_partyID, (p_andruavUnit.m_GPS_Info.gpsMode + 1) % 3)
+			v_andruavClient.API_setGPSSource(p_partyID, (p_andruavUnit.m_GPS_Info1.gpsMode + 1) % 3)
 
 		}
 

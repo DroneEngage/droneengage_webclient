@@ -241,6 +241,7 @@ class C_NavInfo
 			wp_dist: 0,
 			wp_num: 0,
 		};
+
 		
 		this.m_FlightPath=[];
 	};
@@ -361,6 +362,15 @@ class C_Telemetry
 	}											
 };
 
+class C_GPS
+{
+	constructor (p_parent)
+	{
+		this.m_parent 	= p_parent;
+		this.m_isValid	= false;
+		this.m_satCount	= 0;
+	}
+}
 class CAndruavUnitObject 
 {
 	
@@ -424,10 +434,15 @@ class CAndruavUnitObject
 		var me = this;
 		this.m_Permissions           	= 'X0X0X0X0X0X0';
 		this.m_IsShutdown				= false;	
+		this.m_WindSpeed				= null;
+		this.m_WindSpeed_z				= null;
+		this.m_WindDiection				= null;
 		this.m_Power = new C_Power (this);
-		this.m_GPS_Info	= {m_isValid:false};
+		this.m_GPS_Info1		= new C_GPS (this);
+		this.m_GPS_Info2		= new C_GPS (this);
+		this.m_GPS_Info3		= new C_GPS (this);
 		this.m_Nav_Info = new C_NavInfo(this);
-
+		
 		Object.seal(this.m_Nav_Info);
 		this.m_Geo_Tags 				= new C_GeoTags(this);
 		this.m_Telemetry				= new C_Telemetry(this);

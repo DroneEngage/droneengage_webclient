@@ -698,9 +698,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         }
 
         res.m_gps_class = "bg-danger text-white text-center";
-        if (p_andruavUnit.m_GPS_Info.m_isValid == true)
+        if (p_andruavUnit.m_GPS_Info1.m_isValid == true)
         {
-            switch (p_andruavUnit.m_GPS_Info.GPS3DFix)
+            switch (p_andruavUnit.m_GPS_Info1.GPS3DFix)
             {
                 case 1:
                     res.m_gps_text = "No Fix";
@@ -737,7 +737,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 break;
             }
 
-            switch (p_andruavUnit.m_GPS_Info.gpsMode)
+            switch (p_andruavUnit.m_GPS_Info1.gpsMode)
             {
                 case 0:
                     res.m_gps_status = 'GPS Auto';
@@ -753,7 +753,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     break;
         }
 
-            res.m_gps_text2 = " [" + p_andruavUnit.m_GPS_Info.satCount + " sats]";
+            res.m_gps_text2 = " [" + p_andruavUnit.m_GPS_Info1.m_satCount + " sats]";
 
            
         }
