@@ -11,16 +11,16 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
     render()
     {
         return (
-            <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero'>
+            <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero fss-4'>
             <div className = 'col-1  css_margin_zero text-center cursor_hand '>ID</div>
             <div className = {'col-1  css_margin_zero text-center '}>MODE</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>EKF</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>HUD</div>
             <div className = 'col-3  css_margin_zero css_padding_zero '>BAT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>GPS</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>Speed</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero'>SPEED</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>ALT</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>ID</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero'>WIND</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>ID</div>
             </div>
             
@@ -82,76 +82,68 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         fn_gotoUnit_byPartyID(p_partyID);
     }
 
-    hlp_getGPS (p_andruavUnit)
+    hlp_getGPS (gps_Info)
     {
-        var gps1 = {
-            m_gps_class: "",
-            m_gps_text: "",
-            m_gps_text2: "",
-            m_gps_status: "",
-            m_gps_source: ""
-        }
-
-        gps1.m_gps_class = "bg-danger text-white text-center";
-        if (p_andruavUnit.m_GPS_Info.m_isValid == true)
+        var gps = new C_GUI_READING_VALUE();
+        
+        gps.css = "bg-danger text-white text-center";
+        if (gps_Info.m_isValid == true)
         {
-            switch (p_andruavUnit.m_GPS_Info.GPS3DFix)
+            switch (gps_Info.GPS3DFix)
             {
                 case 0:
-                    gps1.m_gps_text  =" No GPS";
-                    gps1.m_gps_class = ' bg-danger ';
-                    gps1.m_gps_sat_count = ''; 
+                    gps.value  =" No GPS";
+                    gps.css = ' bg-danger ';
                 break;
 
                 case 1:
-                    gps1.m_gps_class = ' bg-danger text-white text-center ';
+                    gps.css = ' bg-danger text-white text-center ';
                 break;
 
                 case 2:
-                    gps1.m_gps_class = ' bg-warning ';
+                    gps.css = ' bg-warning ';
                 break;
 
                 case 3:
-                    gps1.m_gps_class = ' bg-primary ';
-                    gps1.m_gps_text  =' 3D Fix ';
+                    gps.css = ' bg-primary ';
+                    gps.value  =' 3D Fix ';
                 
                 break;
                 case 4:
-                    gps1.m_gps_class = ' bg-primary ';
-                    gps1.m_gps_text  =' DGPS ';
+                    gps.css = ' bg-primary ';
+                    gps.value  =' DGPS ';
                 break;
                 case 5:
-                    gps1.m_gps_class = ' bg-primary ';
-                    gps1.m_gps_text  =' RTK-Fl ';
+                    gps.css = ' bg-primary ';
+                    gps.value  =' RTK-Fl ';
                 break;
                 case 6:
-                    gps1.m_gps_class = ' bg-primary ';
-                    gps1.m_gps_text  =' RTK-Fx ';
+                    gps.css = ' bg-primary ';
+                    gps.value  =' RTK-Fx ';
                 break;
                 case 7:
-                    gps1.m_gps_class = ' bg-primary ';
-                    gps1.m_gps_text  =' static ';
+                    gps.css = ' bg-primary ';
+                    gps.value  =' static ';
                 break;
                 case 8:
-                    gps1.m_gps_class = ' bg-primary ';
-                    gps1.m_gps_text  =' ppp ';
+                    gps.css = ' bg-primary ';
+                    gps.value  =' ppp ';
                 break;
             }
-            p_andruavUnit.m_GPS_Info.satCount;
             
-            gps1.m_gps_sat_count = gps1.m_gps_text + "[" + p_andruavUnit.m_GPS_Info.satCount + " sats]";
+            
+            gps.value = gps.value + "[" + gps_Info.m_satCount + " sats]";
 
            
         }
         else
         {
-            gps1.m_gps_text  =" No GPS";
-            gps1.m_gps_class = ' bg-danger ';
-            gps1.m_gps_sat_count = '';      
+            gps.value  =" No GPS";
+            gps.css = ' bg-danger ';
         }
 
        
-        return {'gps1': gps1};
+        return gps;
     }
 
 
@@ -209,6 +201,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         {
             res.abs_alt = 'NA';
             res.abs_css = ' text-muted ';
+            res.abs_alt_unit = '';
         }
         else
         {
@@ -238,6 +231,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         {
             res.rel_alt = 'NA';
             res.rel_css = ' text-muted ';
+            res.rel_alt_unit = '';
         }
         else
         {
@@ -266,6 +260,97 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         return res;
     }
 
+    getSpeed(p_andruavUnit)
+    {
+        var res= {
+            'GS': new C_GUI_READING_VALUE(),
+            'AS': new C_GUI_READING_VALUE()
+        };
+
+        if (p_andruavUnit.m_Nav_Info.p_Location.ground_speed != null)
+        {
+            if (v_useMetricSystem==true)
+            {
+                res.GS.value = p_andruavUnit.m_Nav_Info.p_Location.ground_speed.toFixed(0);
+                res.GS.unit = ' m/s';
+            }
+            else
+            {
+                res.GS.value = (p_andruavUnit.m_Nav_Info.p_Location.ground_speed * CONST_METER_TO_FEET).toFixed(0);
+                res.GS.unit = ' ft/s';
+            }
+        }
+
+        if (p_andruavUnit.m_Nav_Info.p_Location.airspeed != null)
+        {
+            if (v_useMetricSystem==true)
+            {
+                res.AS.value = p_andruavUnit.m_Nav_Info.p_Location.airspeed.toFixed(0);
+                res.AS.unit = ' m/s';
+            }
+            else
+            {
+                res.AS.value = (p_andruavUnit.m_Nav_Info.p_Location.airspeed * CONST_METER_TO_FEET).toFixed(0);
+                res.AS.unit = ' ft/s';
+            }
+        }
+
+        return res;
+    }
+
+
+    getWind (p_andruavUnit)
+    {
+        var res= {
+            'WS': new C_GUI_READING_VALUE(),
+            'WZ': new C_GUI_READING_VALUE(),
+            'WD': new C_GUI_READING_VALUE()
+        };
+
+
+        if (p_andruavUnit.m_WindSpeed != null)
+        {
+            if (v_useMetricSystem==true)
+            {
+                res.WS.value = p_andruavUnit.m_WindSpeed.toFixed(0);
+                res.WS.unit = ' m/s';
+            }
+            else
+            {
+                res.WS.value = (p_andruavUnit.m_WindSpeed * CONST_METER_TO_FEET).toFixed(0);
+                res.WS.unit = ' ft/s';
+            }
+        }
+        else
+        {
+            res.WS.value = 'na';
+            res.WS.unit = '';
+            res.WS.css = ' text-muted ';
+        }
+
+        if (p_andruavUnit.m_WindSpeed_z != null)
+        {
+            if (v_useMetricSystem==true)
+            {
+                res.WZ.value = p_andruavUnit.m_WindSpeed_z.toFixed(0);
+                res.WZ.unit = ' m/s';
+            }
+            else
+            {
+                res.WZ.value = (p_andruavUnit.m_WindSpeed_z * CONST_METER_TO_FEET).toFixed(0);
+                res.WZ.unit = ' ft/s';
+            }
+        }
+        else
+        {
+            res.WZ.value = 'na';
+            res.WZ.unit = '';
+            res.WZ.css = ' text-muted ';
+        }
+
+        return res;
+    }
+
     render()
     {
         const v_andruavUnit = this.props.m_unit;
@@ -281,8 +366,11 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         const v_flight_mode = this.fn_getFlightMode(v_andruavUnit);
         const v_HUD = this.fn_getHUD(v_andruavUnit);
         const v_battery_display_fcb = this.hlp_getFCBBatteryCSSClass(v_andruavUnit);
-        const v_gps = this.hlp_getGPS(v_andruavUnit);
+        const v_gps1 = this.hlp_getGPS(v_andruavUnit.m_GPS_Info1);
+        const v_gps2 = this.hlp_getGPS(v_andruavUnit.m_GPS_Info2);
         const v_alt = this.getAlt(v_andruavUnit);
+        const v_speed = this.getSpeed(v_andruavUnit);
+        const v_wind = this.getWind(v_andruavUnit);
 
         if ( v_andruavUnit.m_IsShutdown === true)
         {
@@ -336,9 +424,9 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             </div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>EKF</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>
-                    <ul class="css_hud_bullets">
-                        <li><span className="text-white al_l">R:</span><span className="text-warning">{v_HUD.r}º</span></li>
-                        <li><span className="text-white al_l">P:</span><span className="text-warning">{v_HUD.p}º</span></li>
+                    <ul className="css_hud_bullets">
+                        <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>
+                        <li><span className="text-warning">P:</span><span className="text-white">{v_HUD.p}</span><span className="text-warning">º</span></li>
                     </ul>
             </div>
             <div className = 'col-3  css_margin_zero'>
@@ -360,31 +448,42 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>
+            <div className = 'col-1  css_margin_zero css_padding_zero fss-4'>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                    <div className = {'col-12  css_margin_zero '+ v_gps.gps1.m_gps_class}>{v_gps.gps1.m_gps_sat_count}</div>
+                    <div className = {'col-12  css_margin_zero '+ v_gps1.css}>{v_gps1.value}</div>
                 </div>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                    <div className = 'col-12  css_margin_zero '>GPS2</div>
+                <div className = {'col-12  css_margin_zero '+ v_gps2.css}>{v_gps2.value}</div>
                 </div>
              </div>
-            <div className = 'col-1  css_margin_zero'>
+            <div className = 'col-1  css_margin_zero fss-4'>
                 <div className = 'row  css_margin_zero'>
-                    <div className = 'col-6  css_margin_zero '>AS</div>
-                    <div className = 'col-6  css_margin_zero '>GS</div>
+                    <div className = {'col-12  css_margin_zero ' + v_speed.AS.css}><span className='text-warning'>AS:</span>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
+                </div>
+                <div className = 'row  css_margin_zero'>
+                    <div className = { + 'col-12  css_margin_zero ' + v_speed.GS.css}><span className='text-warning'>GS:</span>{v_speed.GS.value}<span className='text-warning'>{v_speed.GS.unit}</span></div>
                 </div>
             </div>
             
             <div className = 'col-1  css_margin_zero fss-4'>
                 <div className = 'row  css_margin_zero'>
-                    <div className = {'col-6  css_margin_zero al_r '+ v_alt.rel_css}>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
+                    <div className = {'col-3  css_margin_zero text-warning al_l '+ v_alt.rel_css}>rel:</div>
+                    <div className = {'col-8  css_margin_zero al_r '+ v_alt.rel_css}>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
                 </div>
                 <div className = 'row  css_margin_zero'>
-                    <div className = {'col-6  css_margin_zero al_r '+ v_alt.abs_css}>{v_alt.abs_alt}<span className='text-warning'>{v_alt.abs_alt_unit}</span></div>
+                    <div className = {'col-3  css_margin_zero text-warning al_l'+ v_alt.abs_css}>abs:</div>
+                    <div className = {'col-8  css_margin_zero al_r '+ v_alt.rel_css}>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
                 </div>
             </div>
            
-            <div className = 'col-1  css_margin_zero'>ID</div>
+            <div className = 'col-1  css_margin_zero fss-4'>
+                <div className = 'row  css_margin_zero'>
+                    <div className = {'col-12  css_margin_zero ' + v_wind.WS.css}> <span className='text-warning'>WS:</span> {v_wind.WS.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
+                </div>
+                <div className = 'row  css_margin_zero  fss-4'>
+                    <div  className = {'col-12  css_margin_zero ' + v_wind.WS.css}> <span className='text-warning'>WD:</span> {v_wind.WZ.value}<span className='text-warning'>{v_wind.WZ.unit}</span></div>
+                </div>
+            </div>
             <div className = 'col-1  css_margin_zero'>ID</div>
             </div>
             
@@ -470,6 +569,10 @@ class CLSS_AndruavUnitListArray extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
     }
 
+    fn_OnClick()
+    {
+        alert("clicked");
+    }
 
     render() {
         var unit = [];
@@ -516,13 +619,13 @@ class CLSS_AndruavUnitListArray extends React.Component {
             //unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
             //unit.push (units_gcs);
         
-            unit.push (<div class="card-header text-center">
-							<div class="row">
-							<div class="col-10">
-								<h3 class="text-success text-start">Units</h3>
+            unit.push (<div className="card-header text-center">
+							<div className="row">
+							<div className="col-10">
+								<h3 className="text-success text-start">Units</h3>
 							</div>
-							<div class="col-2 float-right">
-							<button id="btnclose" type="button" class="btn-close"></button>
+							<div className="col-2 float-right">
+							<button id="btnclose" type="button" className="btn-close" onClick={ (e) => this.fn_OnClick()}></button>
 							</div>
 							</div>
                             {units_details} 

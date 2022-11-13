@@ -1692,19 +1692,19 @@ class CAndruavClient {
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                     p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
                 }
-                p_unit.m_GPS_Info.m_isValid = true;
-                p_unit.m_GPS_Info.GPS3DFix = p_jmsg['3D'];
-                p_unit.m_GPS_Info.satCount = p_jmsg.SC;
+                p_unit.m_GPS_Info1.m_isValid = true;
+                p_unit.m_GPS_Info1.GPS3DFix = p_jmsg['3D'];
+                p_unit.m_GPS_Info1.m_satCount = p_jmsg.SC;
                 if (p_jmsg.hasOwnProperty('c')) {
-                    p_unit.m_GPS_Info.accuracy = p_jmsg.c;
+                    p_unit.m_GPS_Info1.accuracy = p_jmsg.c;
                 } else {
-                    p_unit.m_GPS_Info.accuracy = 0;
-                } p_unit.m_GPS_Info.provider = p_jmsg.p;
+                    p_unit.m_GPS_Info1.accuracy = 0;
+                } p_unit.m_GPS_Info1.provider = p_jmsg.p;
 
                 if (p_jmsg.la == null) {
-                    p_unit.m_GPS_Info.m_isValid = false;
+                    p_unit.m_GPS_Info1.m_isValid = false;
                 } else {
-                    p_unit.m_GPS_Info.m_isValid = true;
+                    p_unit.m_GPS_Info1.m_isValid = true;
                 } 
                 p_unit.m_Nav_Info.p_Location.lat = p_jmsg.la;
                 p_unit.m_Nav_Info.p_Location.lng = p_jmsg.ln
@@ -1829,7 +1829,7 @@ class CAndruavClient {
                         v_trigger_on_vehiclechanged = (p_unit.m_VehicleType != p_jmsg.VT);
                         p_unit.m_VehicleType = p_jmsg.VT;
                         p_unit.m_Video.VideoRecording = p_jmsg.VR; // ON DRONE RECORDING
-                        p_unit.m_GPS_Info.gpsMode = p_jmsg.GM;
+                        p_unit.m_GPS_Info1.gpsMode = p_jmsg.GM;
                         p_unit.m_Permissions = p_jmsg.p;
 
                         
@@ -1928,7 +1928,7 @@ class CAndruavClient {
                         p_unit.m_Video.VideoRecording = p_jmsg.VR;
                         p_unit.m_Permissions = p_jmsg.p;
                         p_unit.m_IsShutdown = p_jmsg.SD;
-                        p_unit.m_GPS_Info.gpsMode = p_jmsg.GM;
+                        p_unit.m_GPS_Info1.gpsMode = p_jmsg.GM;
                         v_trigger_on_FCB = (p_unit.m_useFCBIMU != p_jmsg.FI);
                         p_unit.m_useFCBIMU = p_jmsg.FI;
 
@@ -2767,13 +2767,34 @@ class CAndruavClient {
 
                 case mavlink20.MAVLINK_MSG_ID_GPS_RAW_INT:
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
-                    p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.fix_type;
-                    p_unit.m_GPS_Info.satCount = c_mavlinkMessage.satellites_visible;
-                    p_unit.m_GPS_Info.accuracy = c_mavlinkMessage.h_acc;
-                    p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0;
+                    p_unit.m_GPS_Info1.GPS3DFix = c_mavlinkMessage.fix_type;
+                    p_unit.m_GPS_Info1.m_satCount = c_mavlinkMessage.satellites_visible;
+                    p_unit.m_GPS_Info1.accuracy = c_mavlinkMessage.h_acc;
+                    p_unit.m_GPS_Info1.lat = c_mavlinkMessage.lat * 0.0000001;
+                    p_unit.m_GPS_Info1.lng = c_mavlinkMessage.lng * 0.0000001;
+                    p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0; // we should depend on VFR
                     p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
+                    p_unit.m_GPS_Info1.m_isValid = true;
                     break;
 
+                case mavlink20.MAVLINK_MSG_ID_GPS2_RAW:
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_GPS_Info2.GPS3DFix = c_mavlinkMessage.fix_type;
+                    p_unit.m_GPS_Info2.m_satCount = c_mavlinkMessage.satellites_visible;
+                    p_unit.m_GPS_Info2.accuracy = c_mavlinkMessage.h_acc;
+                    p_unit.m_GPS_Info2.lat = c_mavlinkMessage.lat * 0.0000001;
+                    p_unit.m_GPS_Info2.lng = c_mavlinkMessage.lng * 0.0000001;
+                    p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0; // we should depend on VFR
+                    p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
+                    p_unit.m_GPS_Info2.m_isValid = true;
+                    break;
+
+                case mavlink20.MAVLINK_MSG_ID_WIND:
+                    p_unit.m_WindSpeed = c_mavlinkMessage.speed;
+                    p_unit.m_WindSpeed_z = c_mavlinkMessage.speed_z;
+                    p_unit.m_WindDiection = c_mavlinkMessage.direction;
+                    break;
+    
                 case mavlink20.MAVLINK_MSG_ID_VFR_HUD:
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed ;
@@ -2782,7 +2803,6 @@ class CAndruavClient {
                     
 
                 case mavlink20.MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
-                    p_unit.m_GPS_Info.m_isValid = true;
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.lat * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.lon * 0.0000001);
@@ -2839,11 +2859,11 @@ class CAndruavClient {
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.heading_sp * 0.01 ; //deg
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.wp_distance;
                     p_unit.m_Nav_Info._Target.wp_num = c_mavlinkMessage.wp_num;
-                    p_unit.m_GPS_Info.GPS3DFix = c_mavlinkMessage.gps_fix_type;
-                    p_unit.m_GPS_Info.satCount = c_mavlinkMessage.gps_nsat;
+                    p_unit.m_GPS_Info1.GPS3DFix = c_mavlinkMessage.gps_fix_type;
+                    p_unit.m_GPS_Info1.m_satCount = c_mavlinkMessage.gps_nsat;
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery_remaining;
                     
-                    p_unit.m_GPS_Info.m_isValid = true;
+                    p_unit.m_GPS_Info1.m_isValid = true;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
                     this.EVT_msgFromUnit_GPS(p_unit);
                     break;
@@ -2861,7 +2881,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info._Target.wp_num = c_mavlinkMessage.wp_num;
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery;
                     
-                    p_unit.m_GPS_Info.m_isValid = true;
+                    p_unit.m_GPS_Info1.m_isValid = true;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
                     this.EVT_msgFromUnit_GPS(p_unit);
                     break;

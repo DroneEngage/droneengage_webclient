@@ -161,7 +161,7 @@ render() {
         		<div className="form-group al_l"><label  id="unitID" className="text-muted">Unit ID</label><input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName!=null?QueryString.unitName:window.AndruavLibs.LocalStorage.fn_getUnitID()+ "_" + fn_generateRandomString(2)} /></div>
 				<br/>
 				</div>
-				<div id='login_btn mb-2 ' class='text-center'>
+				<div id='login_btn mb-2 ' className='text-center'>
 				<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false? 'btn-success' : 'btn-danger')} id="btnConnect" onClick={ (e) => this.clickConnect(e) }>{this.state.btnConnectText}</button>
         		
 				</div>
