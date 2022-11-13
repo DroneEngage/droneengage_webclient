@@ -225,34 +225,73 @@ function fn_handleKeyBoard() {
 			$('#div_video_control').show();
 		}
 
-		function fn_showControl() {
-			v_displayMode++;
-			
-			switch (v_displayMode%3)
+		
+		function fn_applyControl(layout)
+		{
+			if (layout==null) layout = 0;
+			switch (layout%4)
 			{
 				case 0:
+					// Classic View
 					$('#row_2').show();
-					$('#andruav_unit_list_array').hide();
-					$('#btn_showControl').html("<strong>DISPLAY-0</strong>")
+					$('#row_1').removeClass('col-12');
+					$('#row_1').removeClass('col-8');
+					$('#row_1').addClass('col-8');
+					
+					$('#div_map_view').show();
+					$('#andruav_unit_list_array_fixed').hide();
+					$('#andruav_unit_list_array_float').hide();
+					$('#btn_showControl').html("<strong>DISPLAY-1</strong>")
 				break;
 					
 				case 1:
+					// Map or Camera Only
 					$('#row_2').hide();
-					$('#andruav_unit_list_array').show();
-					$('#btn_showControl').html("<strong>DISPLAY-1</strong>")
+					$('#row_1').removeClass('col-12');
+					$('#row_1').removeClass('col-8');
+					$('#row_1').addClass('col-12');
+					
+					$('#div_map_view').show();
+					$('#andruav_unit_list_array_fixed').hide();
+					$('#andruav_unit_list_array_float').hide();
+					$('#btn_showControl').html("<strong>DISPLAY-2</strong>")
 				break;
 
 				
 				case 2:
-					$('#row_2').show();
-					$('#andruav_unit_list_array').show();
-					$('#btn_showControl').html("<strong>DISPLAY-2</strong>")
+					// Vehicle List
+					$('#row_2').hide();
+					$('#row_1').removeClass('col-12');
+					$('#row_1').removeClass('col-8');
+					$('#row_1').addClass('col-12');
+					
+					$('#div_map_view').hide();
+					$('#andruav_unit_list_array_fixed').show();
+					$('#andruav_unit_list_array_float').hide();
+					$('#btn_showControl').html("<strong>DISPLAY-3</strong>")
+				break;
+
+				case 3:
+					// Map/Camera + Vehicle List
+					$('#row_2').hide();
+					$('#row_1').removeClass('col-12');
+					$('#row_1').removeClass('col-8');
+					$('#row_1').addClass('col-12');
+					
+					$('#div_map_view').show();
+					$('#andruav_unit_list_array_fixed').hide();
+					$('#andruav_unit_list_array_float').show();
+					$('#andruav_unit_list_array_float').css({top: 200, left: 10, position:'absolute'});
+					$('#btn_showControl').html("<strong>DISPLAY-4</strong>")
 				break;
 			}
-
-			
-			
 		}
+
+		function fn_showControl() {
+			v_displayMode++;
+			fn_applyControl(v_displayMode);
+		}
+
 
 		function fn_showMap() {
 			$('#div_video_control').hide();
@@ -635,6 +674,17 @@ function fn_handleKeyBoard() {
 
 		};
 
+		function fn_setLapout () 
+		{
+			if ((QueryString.displaymode != null) || (isNumber(parseInt(QueryString.displaymode))))
+			{
+				fn_applyControl(QueryString.displaymode);
+			}
+			else
+			{
+				fn_applyControl(0);
+			}
+		}
 
 		function fn_gps_getLocation() {
 
@@ -1384,7 +1434,7 @@ function fn_handleKeyBoard() {
 		function initMap() {
 			
 			AndruavLibs.AndruavMap.fn_initMap('mapid');
-
+			this.fn_setLapout();
 			this.fn_gps_getLocation();
 
 			// elevator = new google.maps.ElevationService;
@@ -2818,12 +2868,12 @@ function fn_handleKeyBoard() {
 
 		function fn_gui_init_unitList ()
 		{
-			$('#andruav_unit_list_array').draggable();
-			$('#andruav_unit_list_array').mouseover(function () {
-				$('#andruav_unit_list_array').css('opacity', '1.0');
+			$('#andruav_unit_list_array_float').draggable();
+			$('#andruav_unit_list_array_float').mouseover(function () {
+				$('#andruav_unit_list_array_float').css('opacity', '1.0');
 			});
-			$('#andruav_unit_list_array').mouseout(function () {
-				$('#andruav_unit_list_array').css('opacity', '0.8');
+			$('#andruav_unit_list_array_float').mouseout(function () {
+				$('#andruav_unit_list_array_float').css('opacity', '0.8');
 			});
 		}
 

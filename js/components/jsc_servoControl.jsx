@@ -204,7 +204,7 @@ class CLSS_ServoControl extends React.Component {
        
 ReactDOM.render(
     <CLSS_ServoControl />,
-    v_G_getElementById('sercoCtrl')
+    v_G_getElementById('servoCtrl')
 );
 
 //CODEBLOCK_END
