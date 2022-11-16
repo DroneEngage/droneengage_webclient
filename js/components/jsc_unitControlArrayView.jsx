@@ -365,7 +365,8 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         }
 
         // wind direction
-        res.WD.value = p_andruavUnit.m_WindDirection.toFixed(0);
+        res.WD.value = p_andruavUnit.m_WindDirection;
+        if (res.WD.value!= null) res.WD.value = res.WD.value.toFixed(0);
         res.WD.css == res.WS.css;
         res.WD.unit = ' º';
         
