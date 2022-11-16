@@ -2732,14 +2732,17 @@ class CAndruavClient {
                 break;
                 
                 case mavlink20.MAVLINK_MSG_ID_ATTITUDE:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll; // in radiuas
                     p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch; // in radiuas
                     p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.yaw;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
+                }
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Desired.nav_roll = c_mavlinkMessage.nav_roll;
                     p_unit.m_Nav_Info.p_Desired.nav_pitch = c_mavlinkMessage.nav_pitch;
@@ -2748,6 +2751,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.wp_dist;
                     p_unit.m_Nav_Info._Target.alt_error = c_mavlinkMessage.alt_error;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
+                }
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_BATTERY_STATUS:
@@ -2789,7 +2793,16 @@ class CAndruavClient {
                 }
                 break;
 
+                case mavlink20.MAVLINK_MSG_ID_TERRAIN_REPORT:
+                {
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_Terrain_Info.add (new C_TerrainEntry(c_mavlinkMessage.lat * 0.0000001, c_mavlinkMessage.lon * 0.0000001,
+                             c_mavlinkMessage.spacing, c_mavlinkMessage.terrain_height, 
+                             c_mavlinkMessage.current_height));
+                }
+
                 case mavlink20.MAVLINK_MSG_ID_GPS2_RAW:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_GPS_Info2.GPS3DFix = c_mavlinkMessage.fix_type;
                     p_unit.m_GPS_Info2.m_satCount = c_mavlinkMessage.satellites_visible;
@@ -2799,32 +2812,38 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0; // we should depend on VFR
                     p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
                     p_unit.m_GPS_Info2.m_isValid = true;
+                }
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_WIND:
+                {
                     p_unit.m_WindSpeed = c_mavlinkMessage.speed;
                     p_unit.m_WindSpeed_z = c_mavlinkMessage.speed_z;
                     p_unit.m_WindDirection = c_mavlinkMessage.direction;
+                }
                     break;
     
                 case mavlink20.MAVLINK_MSG_ID_VFR_HUD:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed ;
                     p_unit.m_Nav_Info.p_Location.airspeed = c_mavlinkMessage.airspeed ;
+                }
                     break;
-                    
 
                 case mavlink20.MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.lat * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.lon * 0.0000001);
                     p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.alt * 0.001;
                     p_unit.m_Nav_Info.p_Location.alt = c_mavlinkMessage.relative_alt * 0.001;
                     this.EVT_msgFromUnit_GPS(p_unit);
-
+                }
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_PARAM_VALUE:
+                {
                     const p_old_param = p_unit.m_FCBParameters.m_list[c_mavlinkMessage.param_id];
                     
                     if (p_old_param != null)
@@ -2849,6 +2868,7 @@ class CAndruavClient {
                         }
                         
                     }
+                }
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL:
@@ -2856,6 +2876,7 @@ class CAndruavClient {
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_HIGH_LATENCY:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
@@ -2878,9 +2899,11 @@ class CAndruavClient {
                     p_unit.m_GPS_Info1.m_isValid = true;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
                     this.EVT_msgFromUnit_GPS(p_unit);
+                }
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_HIGH_LATENCY2:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
@@ -2896,6 +2919,7 @@ class CAndruavClient {
                     p_unit.m_GPS_Info1.m_isValid = true;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
                     this.EVT_msgFromUnit_GPS(p_unit);
+                }
                     break;
                 
                 
