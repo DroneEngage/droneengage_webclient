@@ -251,7 +251,7 @@ function fn_handleKeyBoard() {
 					$('#row_2').hide();
 					$('#row_1').removeClass('col-12');
 					$('#row_1').removeClass('col-8');
-					$('#row_1').addClass('col-8');
+					$('#row_1').addClass('col-12');
 					
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();
