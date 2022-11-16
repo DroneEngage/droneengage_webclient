@@ -77,7 +77,7 @@ class C_LocalStorage {
     }
 
     fn_getDisplayMode = function () {
-        return this.getDefaultAttribute('_vDisplayMode', 1);
+        return this.getDefaultAttribute('_vDisplayMode', 0);
     }
 
 

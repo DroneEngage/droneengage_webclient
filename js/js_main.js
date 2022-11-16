@@ -226,10 +226,12 @@ function fn_handleKeyBoard() {
 		}
 
 		
-		function fn_applyControl(layout)
+		function fn_applyControl()
 		{
-			if (layout==null) layout = 0;
-			switch (layout%5)
+			var v_display_mode = window.AndruavLibs.LocalStorage.fn_getDisplayMode();
+		
+			if (v_display_mode==null) v_display_mode = 0;
+			switch (v_display_mode%5)
 			{
 				case 0:
 					// Classic View
@@ -296,14 +298,16 @@ function fn_handleKeyBoard() {
 					$('#andruav_unit_list_array_fixed').hide();
 					$('#andruav_unit_list_array_float').show();
 					$('#andruav_unit_list_array_float').css({top: 200, left: 10, position:'absolute'});
-					$('#btn_showControl').html("<strong>DISPLAY-4</strong>")
+					$('#btn_showControl').html("<strong>DISPLAY-5</strong>")
 				break;
 			}
+
+			window.AndruavLibs.LocalStorage.fn_setDisplayMode(v_display_mode);
 		}
 
 		function fn_showControl() {
-			v_displayMode++;
-			fn_applyControl(v_displayMode);
+			window.AndruavLibs.LocalStorage.fn_setDisplayMode(parseInt(window.AndruavLibs.LocalStorage.fn_getDisplayMode())+1);
+			fn_applyControl();
 		}
 
 
