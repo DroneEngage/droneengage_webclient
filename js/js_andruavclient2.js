@@ -2725,9 +2725,11 @@ class CAndruavClient {
             }
             switch (c_mavlinkMessage.header.msgId) {
                 case mavlink20.MAVLINK_MSG_ID_HEARTBEAT:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
-                    break;
+                }
+                break;
                 
                 case mavlink20.MAVLINK_MSG_ID_ATTITUDE:
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
@@ -2749,9 +2751,10 @@ class CAndruavClient {
                     break;
 
                 case mavlink20.MAVLINK_MSG_ID_BATTERY_STATUS:
+                {
                     p_unit.m_Power._FCB.p_Battery.p_hasPowerInfo = true;
-                    var v_voltage = 0;
-                    for (var i = 0; i < 10; ++ i) {
+                    let v_voltage = 0;
+                    for (let i = 0; i < 10; ++ i) {
                         const cel_voltage = c_mavlinkMessage.voltages[i];
                         if ((cel_voltage < 0) || (cel_voltage == 65535))
                             break;
@@ -2763,13 +2766,17 @@ class CAndruavClient {
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryRemaining = c_mavlinkMessage.battery_remaining;
                     p_unit.m_Power._FCB.p_Battery.FCB_BatteryTemprature = c_mavlinkMessage.temperature;
                     p_unit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed = c_mavlinkMessage.current_consumed;
-                    break;
+                }
+                break;
                 case mavlink20.MAVLINK_MSG_ID_BATTERY2:
+                {
                     p_unit.m_Power._FCB.p_Battery2.p_hasPowerInfo = true;
-                    p_unit.m_Power._FCB.p_Battery.FCB_BatteryVoltage = v_voltage;
-                    p_unit.m_Power._FCB.p_Battery.FCB_BatteryCurrent = c_mavlinkMessage.current_battery * 10;
-                    break;
+                    p_unit.m_Power._FCB.p_Battery2.FCB_BatteryVoltage = c_mavlinkMessage.voltage;
+                    p_unit.m_Power._FCB.p_Battery2.FCB_BatteryCurrent = c_mavlinkMessage.current_battery * 10;
+                }
+                break;
                 case mavlink20.MAVLINK_MSG_ID_GPS_RAW_INT:
+                {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_GPS_Info1.GPS3DFix = c_mavlinkMessage.fix_type;
                     p_unit.m_GPS_Info1.m_satCount = c_mavlinkMessage.satellites_visible;
@@ -2779,7 +2786,8 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0; // we should depend on VFR
                     p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
                     p_unit.m_GPS_Info1.m_isValid = true;
-                    break;
+                }
+                break;
 
                 case mavlink20.MAVLINK_MSG_ID_GPS2_RAW:
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
