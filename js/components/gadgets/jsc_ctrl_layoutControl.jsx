@@ -8,7 +8,7 @@ export class CLSS_CTRL_Layout extends React.Component {
     }
 
     render() {
-        const v_display_mode = window.AndruavLibs.LocalStorage.fn_getDisplayMode()%5;
+        const v_display_mode = window.AndruavLibs.LocalStorage.fn_getDisplayMode()%5+1;
         return (
             <div id="main_btn_group" className="btn-group" role="group" aria-label="Basic example">
                 <button type="button" id="btn_showMap" className="btn btn-danger btn-sm ctrlbtn" onClick={(e) => fn_showMap()}><strong>MAP</strong></button>
