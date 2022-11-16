@@ -5182,7 +5182,7 @@ mavlink20.messages.water_depth = function(time_boot_ms, id, healthy, lat, lng, a
     this.crc_extra = 47;
     this.name = 'WATER_DEPTH';
 
-    this.fieldnames = ['time_boot_ms', 'id', 'healthy', 'lat', 'lng', 'alt', 'roll', 'pitch', 'yaw', 'distance', 'temperature'];
+    this.fieldnames = ['time_boot_ms', '_id', 'healthy', 'lat', 'lng', 'alt', 'roll', 'pitch', 'yaw', 'distance', 'temperature'];
 
 
     this.set(arguments);
@@ -5212,7 +5212,7 @@ mavlink20.messages.mcu_status = function(id, MCU_temperature, MCU_voltage, MCU_v
     this.crc_extra = 142;
     this.name = 'MCU_STATUS';
 
-    this.fieldnames = ['id', 'MCU_temperature', 'MCU_voltage', 'MCU_voltage_min', 'MCU_voltage_max'];
+    this.fieldnames = ['_id', 'MCU_temperature', 'MCU_voltage', 'MCU_voltage_min', 'MCU_voltage_max'];
 
 
     this.set(arguments);
@@ -6307,7 +6307,7 @@ mavlink20.messages.raw_imu = function(time_usec, xacc, yacc, zacc, xgyro, ygyro,
     this.crc_extra = 144;
     this.name = 'RAW_IMU';
 
-    this.fieldnames = ['time_usec', 'xacc', 'yacc', 'zacc', 'xgyro', 'ygyro', 'zgyro', 'xmag', 'ymag', 'zmag', 'id', 'temperature'];
+    this.fieldnames = ['time_usec', 'xacc', 'yacc', 'zacc', 'xgyro', 'ygyro', 'zgyro', 'xmag', 'ymag', 'zmag', '_id', 'temperature'];
 
 
     this.set(arguments);
@@ -8316,7 +8316,7 @@ mavlink20.messages.highres_imu = function(time_usec, xacc, yacc, zacc, xgyro, yg
     this.crc_extra = 93;
     this.name = 'HIGHRES_IMU';
 
-    this.fieldnames = ['time_usec', 'xacc', 'yacc', 'zacc', 'xgyro', 'ygyro', 'zgyro', 'xmag', 'ymag', 'zmag', 'abs_pressure', 'diff_pressure', 'pressure_alt', 'temperature', 'fields_updated', 'id'];
+    this.fieldnames = ['time_usec', 'xacc', 'yacc', 'zacc', 'xgyro', 'ygyro', 'zgyro', 'xmag', 'ymag', 'zmag', 'abs_pressure', 'diff_pressure', 'pressure_alt', 'temperature', 'fields_updated', '_id'];
 
 
     this.set(arguments);
@@ -8393,7 +8393,7 @@ mavlink20.messages.hil_sensor = function(time_usec, xacc, yacc, zacc, xgyro, ygy
     this.crc_extra = 108;
     this.name = 'HIL_SENSOR';
 
-    this.fieldnames = ['time_usec', 'xacc', 'yacc', 'zacc', 'xgyro', 'ygyro', 'zgyro', 'xmag', 'ymag', 'zmag', 'abs_pressure', 'diff_pressure', 'pressure_alt', 'temperature', 'fields_updated', 'id'];
+    this.fieldnames = ['time_usec', 'xacc', 'yacc', 'zacc', 'xgyro', 'ygyro', 'zgyro', 'xmag', 'ymag', 'zmag', 'abs_pressure', 'diff_pressure', 'pressure_alt', 'temperature', 'fields_updated', '_id'];
 
 
     this.set(arguments);
@@ -8591,7 +8591,7 @@ mavlink20.messages.hil_gps = function(time_usec, fix_type, lat, lon, alt, eph, e
     this.crc_extra = 124;
     this.name = 'HIL_GPS';
 
-    this.fieldnames = ['time_usec', 'fix_type', 'lat', 'lon', 'alt', 'eph', 'epv', 'vel', 'vn', 've', 'vd', 'cog', 'satellites_visible', 'id', 'yaw'];
+    this.fieldnames = ['time_usec', 'fix_type', 'lat', 'lon', 'alt', 'eph', 'epv', 'vel', 'vn', 've', 'vd', 'cog', 'satellites_visible', '_id', 'yaw'];
 
 
     this.set(arguments);
@@ -8766,7 +8766,7 @@ mavlink20.messages.log_entry = function(id, num_logs, last_log_num, time_utc, si
     this.crc_extra = 56;
     this.name = 'LOG_ENTRY';
 
-    this.fieldnames = ['id', 'num_logs', 'last_log_num', 'time_utc', 'size'];
+    this.fieldnames = ['_id', 'num_logs', 'last_log_num', 'time_utc', 'size'];
 
 
     this.set(arguments);
@@ -8795,7 +8795,7 @@ mavlink20.messages.log_request_data = function(target_system, target_component, 
     this.crc_extra = 116;
     this.name = 'LOG_REQUEST_DATA';
 
-    this.fieldnames = ['target_system', 'target_component', 'id', 'ofs', 'count'];
+    this.fieldnames = ['target_system', 'target_component', '_id', 'ofs', 'count'];
 
 
     this.set(arguments);
@@ -8823,7 +8823,7 @@ mavlink20.messages.log_data = function(id, ofs, count, data) {
     this.crc_extra = 134;
     this.name = 'LOG_DATA';
 
-    this.fieldnames = ['id', 'ofs', 'count', 'data'];
+    this.fieldnames = ['_id', 'ofs', 'count', 'data'];
 
 
     this.set(arguments);
@@ -9214,7 +9214,7 @@ mavlink20.messages.distance_sensor = function(time_boot_ms, min_distance, max_di
     this.crc_extra = 85;
     this.name = 'DISTANCE_SENSOR';
 
-    this.fieldnames = ['time_boot_ms', 'min_distance', 'max_distance', 'current_distance', 'type', 'id', 'orientation', 'covariance', 'horizontal_fov', 'vertical_fov', 'quaternion', 'signal_quality'];
+    this.fieldnames = ['time_boot_ms', 'min_distance', 'max_distance', 'current_distance', 'type', '_id', 'orientation', 'covariance', 'horizontal_fov', 'vertical_fov', 'quaternion', 'signal_quality'];
 
 
     this.set(arguments);
@@ -9656,7 +9656,7 @@ mavlink20.messages.battery_status = function(id, battery_function, type, tempera
     this.crc_extra = 154;
     this.name = 'BATTERY_STATUS';
 
-    this.fieldnames = ['id', 'battery_function', 'type', 'temperature', 'voltages', 'current_battery', 'current_consumed', 'energy_consumed', 'battery_remaining', 'time_remaining', 'charge_state', 'voltages_ext', 'mode', 'fault_bitmask'];
+    this.fieldnames = ['_id', 'battery_function', 'type', 'temperature', 'voltages', 'current_battery', 'current_consumed', 'energy_consumed', 'battery_remaining', 'time_remaining', 'charge_state', 'voltages_ext', 'mode', 'fault_bitmask'];
 
 
     this.set(arguments);
@@ -10336,7 +10336,7 @@ mavlink20.messages.collision = function(src, id, action, threat_level, time_to_m
     this.crc_extra = 81;
     this.name = 'COLLISION';
 
-    this.fieldnames = ['src', 'id', 'action', 'threat_level', 'time_to_minimum_delta', 'altitude_minimum_delta', 'horizontal_minimum_delta'];
+    this.fieldnames = ['src', '_id', 'action', 'threat_level', 'time_to_minimum_delta', 'altitude_minimum_delta', 'horizontal_minimum_delta'];
 
 
     this.set(arguments);
@@ -10515,7 +10515,7 @@ mavlink20.messages.statustext = function(severity, text, id, chunk_seq) {
     this.crc_extra = 83;
     this.name = 'STATUSTEXT';
 
-    this.fieldnames = ['severity', 'text', 'id', 'chunk_seq'];
+    this.fieldnames = ['severity', 'text', '_id', 'chunk_seq'];
 
 
     this.set(arguments);
@@ -11647,7 +11647,7 @@ mavlink20.messages.smart_battery_info = function(id, battery_function, type, cap
     this.crc_extra = 75;
     this.name = 'SMART_BATTERY_INFO';
 
-    this.fieldnames = ['id', 'battery_function', 'type', 'capacity_full_specification', 'capacity_full', 'cycle_count', 'serial_number', 'device_name', 'weight', 'discharge_minimum_voltage', 'charging_minimum_voltage', 'resting_minimum_voltage', 'charging_maximum_voltage', 'cells_in_series', 'discharge_maximum_current', 'discharge_maximum_burst_current', 'manufacture_date'];
+    this.fieldnames = ['_id', 'battery_function', 'type', 'capacity_full_specification', 'capacity_full', 'cycle_count', 'serial_number', 'device_name', 'weight', 'discharge_minimum_voltage', 'charging_minimum_voltage', 'resting_minimum_voltage', 'charging_maximum_voltage', 'cells_in_series', 'discharge_maximum_current', 'discharge_maximum_burst_current', 'manufacture_date'];
 
 
     this.set(arguments);
@@ -11774,7 +11774,7 @@ mavlink20.messages.can_frame = function(target_system, target_component, bus, le
     this.crc_extra = 132;
     this.name = 'CAN_FRAME';
 
-    this.fieldnames = ['target_system', 'target_component', 'bus', 'len', 'id', 'data'];
+    this.fieldnames = ['target_system', 'target_component', 'bus', 'len', '_id', 'data'];
 
 
     this.set(arguments);
@@ -11806,7 +11806,7 @@ mavlink20.messages.canfd_frame = function(target_system, target_component, bus, 
     this.crc_extra = 4;
     this.name = 'CANFD_FRAME';
 
-    this.fieldnames = ['target_system', 'target_component', 'bus', 'len', 'id', 'data'];
+    this.fieldnames = ['target_system', 'target_component', 'bus', 'len', '_id', 'data'];
 
 
     this.set(arguments);
@@ -11927,7 +11927,7 @@ mavlink20.messages.hygrometer_sensor = function(id, temperature, humidity) {
     this.crc_extra = 20;
     this.name = 'HYGROMETER_SENSOR';
 
-    this.fieldnames = ['id', 'temperature', 'humidity'];
+    this.fieldnames = ['_id', 'temperature', 'humidity'];
 
 
     this.set(arguments);
