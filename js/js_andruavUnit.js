@@ -382,6 +382,39 @@ class C_GPS
 		this.m_satCount	= 0;
 	}
 }
+
+class C_TerrainEntry
+{
+	constructor (lat, lon, spacing, terrain_height, current_height)
+	{
+		this.m_lat = lat;
+		this.m_lon = lon;
+		this.m_spacing = spacing;
+		this.m_terrain_height = terrain_height; // m - Terrain height MSL
+		this.m_current_height = current_height; // m - Current vehicle height above lat/lon terrain height
+	}
+}
+class C_Terrain
+{
+	constructor (p_parent)
+	{
+		this.m_parent 	= p_parent;
+		this.m_isValid	= false;
+		this._index = 0;
+		this.__terrain_entry  = [];
+		this.last_terrain_entry = null;
+	}
+
+	add (terrain_entry)
+	{
+		if (terrain_entry == null) return ;
+		
+		this.last_terrain_entry = terrain_entry;
+		// if (this._index ==100 ) this._index = 0;
+		// this.__terrain_entry.push(terrain_entry);
+		// this._index+=1;
+	}
+}
 class CAndruavUnitObject 
 {
 	
@@ -453,6 +486,7 @@ class CAndruavUnitObject
 		this.m_GPS_Info2		= new C_GPS (this);
 		this.m_GPS_Info3		= new C_GPS (this);
 		this.m_Nav_Info = new C_NavInfo(this);
+		this.m_Terrain_Info = new C_Terrain (this);
 		
 		Object.seal(this.m_Nav_Info);
 		this.m_Geo_Tags 				= new C_GeoTags(this);

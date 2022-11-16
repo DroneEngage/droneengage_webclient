@@ -16,11 +16,12 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
             <div className = {'col-1  css_margin_zero text-center '}>MODE</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>EKF</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>HUD</div>
-            <div className = 'col-3  css_margin_zero css_padding_zero '>BAT</div>
+            <div className = 'col-2  css_margin_zero css_padding_zero '>BAT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>GPS</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>SPEED</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>ALT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>WIND</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero'>ID</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>ID</div>
             </div>
             
@@ -35,18 +36,24 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         this.localvars={};
         this.localvars.speed_link = false;	
 		this.telemetry_level=["OFF","1","2","3"];
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_requestGamePad,this,this.fn_requestGamePad);
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
     }
 
-    childcomponentWillMount () {
-        window.AndruavLibs.EventEmitter.fn_subscribe(EE_requestGamePad,this,this.fn_requestGamePad);
-    }
 
     childcomponentWillUnmount () {
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_requestGamePad,this);
+        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this,);
     }
 
 
+    fn_unitUpdated(me,p_andruavUnit)
+    {
+        if (p_andruavUnit.partyID != me.props.m_unit.partyID) return ;
+        me.forceUpdate();
+    }
 
+    
     fn_getFlightMode(v_andruavUnit)
     {
         var v_flight_mode_text = "NC";
@@ -206,68 +213,134 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
 
     getAlt(p_andruavUnit)
     {
-        var res= {};
+        var res= {
+            'abs': new C_GUI_READING_VALUE(),
+            'rel': new C_GUI_READING_VALUE(),
+            'terC': new C_GUI_READING_VALUE(),
+            'terH': new C_GUI_READING_VALUE(),
+        };
         
         if (p_andruavUnit.m_Nav_Info.p_Location.abs_alt==null)
         {
-            res.abs_alt = 'NA';
-            res.abs_css = ' text-muted ';
-            res.abs_alt_unit = '';
+            res.abs.value = 'NA';
+            res.abs.css = ' text-muted ';
+            res.abs.unit = ' ';
         }
         else
         {
             if (v_useMetricSystem==true)
             {
-                res.abs_alt = p_andruavUnit.m_Nav_Info.p_Location.abs_alt;
-                res.abs_alt_unit = ' m';
+                res.abs.value = p_andruavUnit.m_Nav_Info.p_Location.abs_alt;
+                res.abs.unit = ' m';
             }
             else
             {
-                res.abs_alt = p_andruavUnit.m_Nav_Info.p_Location.abs_alt * CONST_METER_TO_FEET;
-                res.abs_alt_unit = ' ft';
+                res.abs.value = p_andruavUnit.m_Nav_Info.p_Location.abs_alt * CONST_METER_TO_FEET;
+                res.abs.unit = ' ft';
             }
 
-            if (res.abs_alt<10) 
+            if (res.abs.value<10) 
             {
-                res.abs_alt = res.abs_alt.toFixed(2);
+                res.abs.value = res.abs.value.toFixed(2);
             }
             else
             {
-                res.abs_alt = res.abs_alt.toFixed(0);
+                res.abs.value = res.abs.value.toFixed(0);
             }
-            res.abs_css = ' text-white ';
+            res.abs.css = ' text-white ';
         }
 
         if (p_andruavUnit.m_Nav_Info.p_Location.alt==null)
         {
-            res.rel_alt = 'NA';
-            res.rel_css = ' text-muted ';
-            res.rel_alt_unit = '';
+            res.rel.value = 'NA';
+            res.rel.css = ' text-muted ';
+            res.rel.unit = '';
         }
         else
         {
             if (v_useMetricSystem==true)
             {
-                res.rel_alt = p_andruavUnit.m_Nav_Info.p_Location.alt;
-                res.rel_alt_unit = ' m';
+                res.rel.value = p_andruavUnit.m_Nav_Info.p_Location.alt;
+                res.rel.unit = ' m';
             }
             else
             {
-                res.rel_alt = p_andruavUnit.m_Nav_Info.p_Location.alt * CONST_METER_TO_FEET;
-                res.rel_alt_unit = ' ft';
+                res.rel.value = p_andruavUnit.m_Nav_Info.p_Location.alt * CONST_METER_TO_FEET;
+                res.rel.unit = ' ft';
             }
-            res.rel_alt = p_andruavUnit.m_Nav_Info.p_Location.alt;
-            if (res.rel_alt<10) 
+            res.rel.value = p_andruavUnit.m_Nav_Info.p_Location.alt;
+            if (res.rel.value<10) 
             {
-                res.rel_alt = res.rel_alt.toFixed(2);
+                res.rel.value = res.rel.value.toFixed(2);
             }
             else
             {
-                res.rel_alt = res.rel_alt.toFixed(0);
+                res.rel.value = res.rel.value.toFixed(0);
             }
-            res.rel_css = ' text-white ';
+            res.rel.css = ' text-white ';
         }
 
+
+        if (p_andruavUnit.m_Terrain_Info.last_terrain_entry == null)
+        {
+            res.terC.value = 'NA';
+            res.terC.css = ' text-muted ';
+            res.terC.unit = '';
+        }
+        else
+        {
+            if (v_useMetricSystem==true)
+            {
+                res.terC.value = p_andruavUnit.m_Terrain_Info.last_terrain_entry.m_current_height;
+                res.terC.unit = ' m';
+            }
+            else
+            {
+                res.terC.value = p_andruavUnit.m_Terrain_Info.last_terrain_entry.m_current_height * CONST_METER_TO_FEET;
+                res.terC.unit = ' ft';
+            }
+
+            if (res.terC.value<10) 
+            {
+                res.terC.value = res.terC.value.toFixed(2);
+            }
+            else
+            {
+                res.terC.value = res.terC.value.toFixed(0);
+            }
+            res.terC.css = ' text-white ';
+        }
+
+        if (p_andruavUnit.m_Terrain_Info.last_terrain_entry == null)
+        {
+            res.terH.value = 'NA';
+            res.terH.css = ' text-muted ';
+            res.terH.unit = '';
+        }
+        else
+        {
+            if (v_useMetricSystem==true)
+            {
+                res.terH.value = p_andruavUnit.m_Terrain_Info.last_terrain_entry.m_terrain_height;
+                res.terH.unit = ' m';
+            }
+            else
+            {
+                res.terH.value = p_andruavUnit.m_Terrain_Info.last_terrain_entry.m_terrain_height * CONST_METER_TO_FEET;
+                res.terH.unit = ' ft';
+            }
+
+            if (res.terH.value<10) 
+            {
+                res.terH.value = res.terH.value.toFixed(2);
+            }
+            else
+            {
+                res.terH.value = res.terH.value.toFixed(0);
+            }
+            res.terH.css = ' text-white ';
+        }
+        
         return res;
     }
 
@@ -433,7 +506,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
                 </div>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                        <div className = 'col-12  css_margin_zero '><span className="text-white">mavid: </span>{v_mav_id_text}</div>
+                        <div className = 'col-12  css_margin_zero '>{'mavid: ' + v_mav_id_text}</div>
                 </div>
             </div>
             <div className = {'col-1  css_margin_zero text-center css_padding_zero '}>
@@ -451,7 +524,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                         <li><span className="text-warning">P:</span><span className="text-white">{v_HUD.p}</span><span className="text-warning">º</span></li>
                     </ul>
             </div>
-            <div className = 'col-3  css_margin_zero'>
+            <div className = 'col-2  css_margin_zero'>
                 <div className = 'row  css_margin_zero fss-4 '>
                     <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}><span className="text-warning">Batt1</span></div>
                     <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
@@ -472,10 +545,10 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             </div>
             <div className = 'col-1  css_margin_zero css_padding_zero fss-4'>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                    <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}>{v_gps1.value}</div>
+                    <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}><span className='fss-4'>{v_gps1.value}</span></div>
                 </div>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}>{v_gps2.value}</div>
+                <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}><span className='fss-4'>{v_gps2.value}</span></div>
                 </div>
              </div>
             <div className = 'col-1  css_margin_zero fss-4'>
@@ -490,13 +563,13 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             </div>
             
             <div className = 'col-1  css_margin_zero fss-4'>
-                <div className = {'row  css_margin_zero ' + v_alt.rel_css}>
-                    <div className = 'col-4  css_margin_zero text-warning al_l'>rel:</div>
-                    <div className = 'col-8  css_margin_zero al_r '>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
+                <div className = {'row  css_margin_zero ' + v_alt.rel.css}>
+                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
+                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
                 </div>
-                <div className = {'row  css_margin_zero'+ v_alt.abs_css}>
-                    <div className = 'col-4  css_margin_zero text-warning al_l'>abs:</div>
-                    <div className = 'col-8  css_margin_zero al_r '>{v_alt.rel_alt}<span className='text-warning'>{v_alt.rel_alt_unit}</span></div>
+                <div className = 'row  css_margin_zero '>
+                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.terC.css}><span className='text-warning'>TC:</span>{v_alt.terC.value}<span className='text-warning'>{v_alt.terC.unit}</span></div>
+                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.terH.css}><span className='text-warning'>L:</span>{}<span className='text-warning'>{v_alt.terH.unit}</span></div>
                 </div>
             </div>
            
@@ -510,6 +583,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                 </div>
             </div>
+            <div className = 'col-1  css_margin_zero'>ID</div>
             <div className = 'col-1  css_margin_zero'>ID</div>
             </div>
             
@@ -536,7 +610,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
     fn_unitUpdated(me,p_andruavUnit)
     {
-        me.forceUpdate();
+        //me.forceUpdate();
     }
 
     fn_unitAdded (me,p_andruavUnit)
