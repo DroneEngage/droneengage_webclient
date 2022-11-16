@@ -151,30 +151,41 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
 	{
         var v_battery_display_fcb_div = "";
         var v_battery_src = "./images/battery_gy_32x32.png";
+        var v_battery2_display_fcb_div = "";
+        var v_battery2_src = "./images/battery_gy_32x32.png";
+        
         const p_Power = p_andruavUnit.m_Power;
 
-	    var v_remainingBat = p_Power._FCB.p_Battery.FCB_BatteryRemaining;
+	    var v_remainingBat1 = p_Power._FCB.p_Battery.FCB_BatteryRemaining;
 		var v_bat1 = " ";
+        var v_bat2 = " "; // no level info
 			 
-		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_hasPowerInfo === false))
+		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_Battery.p_hasPowerInfo === false))
         {
             v_battery_display_fcb_div = " hidden ";
             v_battery_src = "./images/battery_gy_32x32.png";
             
         }
 
+		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_Battery2.p_hasPowerInfo === false))
+        {
+            v_battery2_display_fcb_div = " hidden ";
+            v_battery2_src = "./images/battery_gy_32x32.png";
+            
+        }
+
 		
-        if (parseInt(v_remainingBat,0) > 80)
+        if (parseInt(v_remainingBat1,0) > 80)
 		{
 		    v_bat1 += ' battery_4 ';
             v_battery_src = "./images/battery_g_32x32.png";
 		}
-		else if (parseInt(v_remainingBat,0) > 50)
+		else if (parseInt(v_remainingBat1,0) > 50)
 		{
 		    v_bat1 += ' battery_3 ';
             v_battery_src = "./images/battery_rg_32x32.png";
 		}
-		else if (parseInt(v_remainingBat,0) > 25)
+		else if (parseInt(v_remainingBat1,0) > 25)
 		{
 		    v_bat1 += ' battery_2 ';
             v_battery_src = "./images/battery_rg_3_32x32.png";
@@ -185,8 +196,8 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             v_battery_src = "./images/battery_r_32x32.png";
 		}
 			 
-	    var bat1 = { m_battery_src:v_battery_src, css:v_bat1, level:v_remainingBat, charging: 'unknown', v_battery_display_fcb_div: v_battery_display_fcb_div}; 
-        var bat2 = { m_battery_src:'', css:'', level:'', charging: '', v_battery_display_fcb_div: ''}; 
+	    var bat1 = { m_battery_src: v_battery_src, css:v_bat1, level:v_remainingBat1, charging: 'unknown', v_battery_display_fcb_div: v_battery_display_fcb_div}; 
+        var bat2 = { m_battery_src:v_battery2_src, css:v_bat2, level:'na', charging: 'na', v_battery_display_fcb_div: v_battery2_display_fcb_div}; 
 
 
         return {'bat1': bat1, 'bat2':bat2};
@@ -323,6 +334,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 res.WS.value = (p_andruavUnit.m_WindSpeed * CONST_METER_TO_FEET).toFixed(0);
                 res.WS.unit = ' ft/s';
             }
+            res.WS.css = '';
         }
         else
         {
@@ -343,6 +355,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 res.WZ.value = (p_andruavUnit.m_WindSpeed_z * CONST_METER_TO_FEET).toFixed(0);
                 res.WZ.unit = ' ft/s';
             }
+            res.WZ.css = '';
         }
         else
         {
@@ -351,6 +364,11 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             res.WZ.css = ' text-muted ';
         }
 
+        // wind direction
+        res.WD.value = p_andruavUnit.m_WindDirection;
+        res.WD.css == res.WS.css;
+        res.WD.unit = ' º';
+        
         return res;
     }
 
@@ -414,7 +432,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
                 </div>
                 <div className = 'row  css_margin_zero css_padding_zero'>
-                        <div className = 'col-12  css_margin_zero '>{v_mav_id_text}</div>
+                        <div className = 'col-12  css_margin_zero '><span className="text-white">mavid: </span>{v_mav_id_text}</div>
                 </div>
             </div>
             <div className = {'col-1  css_margin_zero text-center css_padding_zero '}>
@@ -443,11 +461,11 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 </div>
                 <div className = 'row  css_margin_zero  fss-4 '>
                     <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}><span className="text-warning">Batt2</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
+                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
                 
                 </div>
             </div>
@@ -481,14 +499,14 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 </div>
             </div>
            
-            <div className = {'col-1  css_margin_zero fss-4' + v_wind.WD.css}>
+            <div className = {'col-1  css_margin_zero fss-4' + v_wind.WS.css}>
                 <div className = 'row  css_margin_zero'>
-                    <div className = 'col-4  css_margin_zero text-warning al_l'>WS:</div>
-                    <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
+                    <div className = 'col-4  css_margin_zero text-warning al_l'>WS/Z:</div>
+                    <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
                 </div>
                 <div className = {'row  css_margin_zero  fss-4' + v_wind.WD.css}>
                     <div  className = 'col-4  css_margin_zero text-warning al_l'>WD:</div>
-                    <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WZ.value}<span className='text-warning'>{v_wind.WZ.unit}</span></div>
+                    <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                 </div>
             </div>
             <div className = 'col-1  css_margin_zero'>ID</div>

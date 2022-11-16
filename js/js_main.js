@@ -229,7 +229,7 @@ function fn_handleKeyBoard() {
 		function fn_applyControl(layout)
 		{
 			if (layout==null) layout = 0;
-			switch (layout%4)
+			switch (layout%5)
 			{
 				case 0:
 					// Classic View
@@ -249,7 +249,7 @@ function fn_handleKeyBoard() {
 					$('#row_2').hide();
 					$('#row_1').removeClass('col-12');
 					$('#row_1').removeClass('col-8');
-					$('#row_1').addClass('col-12');
+					$('#row_1').addClass('col-8');
 					
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();
@@ -277,6 +277,20 @@ function fn_handleKeyBoard() {
 					$('#row_1').removeClass('col-12');
 					$('#row_1').removeClass('col-8');
 					$('#row_1').addClass('col-12');
+					
+					$('#div_map_view').show();
+					$('#andruav_unit_list_array_fixed').hide();
+					$('#andruav_unit_list_array_float').show();
+					$('#andruav_unit_list_array_float').css({top: 200, left: 10, position:'absolute'});
+					$('#btn_showControl').html("<strong>DISPLAY-4</strong>")
+				break;
+
+				case 4:
+					// Map/Camera + Control + Vehicle List
+					$('#row_2').show();
+					$('#row_1').removeClass('col-12');
+					$('#row_1').removeClass('col-8');
+					$('#row_1').addClass('col-8');
 					
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();
