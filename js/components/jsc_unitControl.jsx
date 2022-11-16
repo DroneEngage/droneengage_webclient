@@ -773,7 +773,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 	{
         const p_Power = p_andruavUnit.m_Power;
 
-        if ((p_andruavUnit.m_IsShutdown === true) || (p_Power._Mobile.p_hasPowerInfo == false)) 
+        if ((p_andruavUnit.m_IsShutdown === true) || (p_Power._Mobile.p_Battery.p_hasPowerInfo == false)) 
             return { v_battery_src:"./images/battery_gy_32x32.png", css:"battery_inactive",level:0, charging:"unknown"};
         
         var v_bat = p_Power._Mobile.p_Battery.PlugStatus + " ";
@@ -816,13 +816,13 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 	    var v_remainingBat = p_Power._FCB.p_Battery.FCB_BatteryRemaining;
 		var v_bat = " ";
 			 
-		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_hasPowerInfo === false))
+		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_Battery.p_hasPowerInfo === false))
         {
             v_battery_display_fcb_div = " hidden ";
             return { v_battery_src:"./images/battery_gy_32x32.png", css:v_bat,level:v_remainingBat, charging: 'unknown', v_battery_display_fcb_div: v_battery_display_fcb_div};
         }
 
-		if (p_Power._FCB.p_hasPowerInfo == false) return null;
+		if (p_Power._FCB.p_Battery.p_hasPowerInfo == false) return null;
 
         if (parseInt(v_remainingBat,0) > 80)
 		{
@@ -1465,7 +1465,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             return (
                 <div id='ctrl_k' className='text-center'>
-                    <p className="text-danger bg-black user-select-none bi bi-exclamation-diamond"> Flight Control Board is not Connected</p> 
+                    <p className="text-warning bg-black user-select-none bi bi-exclamation-diamond"> Flight Control Board is not Connected</p> 
                 </div>
             );
         }
@@ -1675,7 +1675,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             sys_id=':' + v_andruavUnit.m_FCBParameters.m_systemID + ' ';
         }
-        if ((v_andruavUnit.m_IsShutdown == false) && (v_andruavUnit.m_Power._FCB.p_hasPowerInfo == true))
+        if ((v_andruavUnit.m_IsShutdown == false) && (v_andruavUnit.m_Power._FCB.p_Battery.p_hasPowerInfo == true))
         {
             if (v_andruavUnit.m_isDE !== true) 
             {

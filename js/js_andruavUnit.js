@@ -311,15 +311,26 @@ class C_Power
 		this.m_parent = p_parent;
 		this._Mobile = 
 					{
-						p_hasPowerInfo:false, 
-						p_Battery:{}
+						p_Battery:{
+							p_hasPowerInfo:false,
+						}
 					};
 
 		this._FCB = 
 					{
-						p_hasPowerInfo:false,
+						
 						p_Battery:
 						{
+							p_hasPowerInfo:false,
+							FCB_BatteryVoltage: 0.0,
+							FCB_BatteryCurrent: 0.0,
+							FCB_BatteryRemaining: 0.0,
+							FCB_BatteryTemprature: 0.0,
+							FCB_TotalCurrentConsumed: 0.0
+						},
+						p_Battery2:
+						{
+							p_hasPowerInfo:false,
 							FCB_BatteryVoltage: 0.0,
 							FCB_BatteryCurrent: 0.0,
 							FCB_BatteryRemaining: 0.0,
@@ -436,7 +447,7 @@ class CAndruavUnitObject
 		this.m_IsShutdown				= false;	
 		this.m_WindSpeed				= null;
 		this.m_WindSpeed_z				= null;
-		this.m_WindDiection				= null;
+		this.m_WindDirection				= null;
 		this.m_Power = new C_Power (this);
 		this.m_GPS_Info1		= new C_GPS (this);
 		this.m_GPS_Info2		= new C_GPS (this);
