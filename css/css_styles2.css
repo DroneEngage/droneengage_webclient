@@ -817,7 +817,10 @@ div.msgerror {
 	
 }
 
-
+.small_icon
+{
+	max-width: 35px !important;
+}
 .fence_tooltip:before {
 	right: 0;
 	margin-right: -12px;

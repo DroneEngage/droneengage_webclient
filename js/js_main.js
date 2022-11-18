@@ -1,6 +1,26 @@
 var oldAppend = $.fn.append;
 var v_map_shapes = [];
 
+
+var planes_icon = [ './images/planetracker_r_0d_.png',
+					'./images/planetracker_y_0d_.png',
+					'./images/planetracker_g_0d_.png',
+					'./images/planetracker_b_0d_.png'];
+					
+
+var quad_icon   = [ './images/drone_qq_1_0d.png',
+					'./images/drone_qq_2_0d.png',
+					'./images/drone_qq_3_0d.png',
+					'./images/drone_qq_4_0d.png'];
+
+
+
+
+
+
+
+
+
 $.fn.append = function($el){
     var dom = ($el instanceof $) ? $el[0] : $el
     if(dom && dom.tagName=='SCRIPT'){
@@ -1895,42 +1915,43 @@ function fn_handleKeyBoard() {
 
 
 
-		function getPlanIcon(bearingIndex) {
+		function getPlanIcon(bearingIndex, vehicle_index) {
+			return planes_icon[vehicle_index];
 			switch (bearingIndex) {
 				case 0:
 				case 1:
-					return './images/drone_1_32x32.png';
+					return './images/planetracker_r_0d_.png';
 					break;
 				case 2:
 				case 3:
-					return './images/drone_1_32x32x45d.png';
+					return './images/planetracker_r_45d_.png';
 					break;
 				case 4:
 				case 5:
-					return './images/drone_1_32x32x90d.png';
+					return './images/planetracker_r_90_.png';
 					break;
 				case 6:
 				case 7:
-					return './images/drone_1_32x32x135d.png';
+					return './images/planetracker_r_135d_.png';
 					break;
 				case -8:
 				case -7:
-					return './images/drone_1_32x32x180d.png';
+					return './images/planetracker_r_180d_.png';
 					break;
 				case -6:
 				case -5:
-					return './images/drone_1_32x32x225d.png';
+					return './images/planetracker_r_225d_.png';
 					break;
 				case -4:
 				case -3:
-					return './images/drone_1_32x32x270d.png';
+					return './images/planetracker_r_270d_.png';
 					break;
 				case -2:
 				case -1:
-					return './images/drone_1_32x32x315d.png';
+					return './images/planetracker_r_315d_.png';
 					break;
 				default:
-					return './images/drone_1_32x32.png';
+					return './images/planetracker_r_0d_.png';
 					break;
 
 
@@ -1948,10 +1969,10 @@ function fn_handleKeyBoard() {
 				switch (p_andruavUnit.m_VehicleType) {
 					case VEHICLE_TRI:
 						p_andruavUnit.m_VehicleType_TXT = "Tricopter";
-						return './images/drone_q1_d_32x32.png';
+						return quad_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_QUAD:
 						p_andruavUnit.m_VehicleType_TXT = "Quadcopter";
-						return './images/drone_q1_d_32x32.png';
+						return quad_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_PLANE:
 						{
 							p_andruavUnit.m_VehicleType_TXT = "Fixed Wings";
@@ -1960,7 +1981,7 @@ function fn_handleKeyBoard() {
 							if (applyBearing == true) {
 								bearingIndex = parseInt(p_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw * CONST_RADIUS_TO_DEGREE / 23);
 							}
-							return getPlanIcon(bearingIndex);
+							return getPlanIcon(bearingIndex, p_andruavUnit.m_index%4);
 						}
 						break;
 					case VEHICLE_HELI:
