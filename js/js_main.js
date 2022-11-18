@@ -303,7 +303,7 @@ function fn_handleKeyBoard() {
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();
 					$('#andruav_unit_list_array_float').show();
-					$('#andruav_unit_list_array_float').css({top: 200, left: 10, position:'absolute'});
+					$('#andruav_unit_list_array_float').css({top: 400, left: 10, position:'absolute'});
 					$('#btn_showControl').html("<strong>DISPLAY-4</strong>")
 				break;
 
@@ -317,7 +317,7 @@ function fn_handleKeyBoard() {
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();
 					$('#andruav_unit_list_array_float').show();
-					$('#andruav_unit_list_array_float').css({top: 200, left: 10, position:'absolute'});
+					$('#andruav_unit_list_array_float').css({top: 400, left: 10, position:'absolute'});
 					$('#btn_showControl').html("<strong>DISPLAY-5</strong>")
 				break;
 			}
@@ -2875,6 +2875,7 @@ function fn_handleKeyBoard() {
 			$('#andruav_unit_list_array_float').mouseout(function () {
 				$('#andruav_unit_list_array_float').css('opacity', '0.8');
 			});
+			
 		}
 
 		function fn_gui_init_fpvVtrl ()
