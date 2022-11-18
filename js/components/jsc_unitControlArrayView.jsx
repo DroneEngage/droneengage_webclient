@@ -512,7 +512,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 ctrl_ekf.push(<div>EKF-PX4</div>);
             break;
             default:
-                ctrl_ekf.push(<CLSS_CTRL_ARDUPILOT_EKF_CONTROL key={v_andruavUnit.partyID + "_ctrl_ekf"} id={v_andruavUnit.partyID + "_ctrl_ekf"} v_andruavUnit={v_andruavUnit}/>);
+                ctrl_ekf.push(<CLSS_CTRL_ARDUPILOT_EKF_CONTROL key={v_andruavUnit.partyID + "_ctrl_ekf"} id={v_andruavUnit.partyID + "_ctrl_ekf"} m_unit={v_andruavUnit}/>);
             break;
         }
 
@@ -688,7 +688,23 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
     fn_OnClick()
     {
-        alert("clicked");
+            if ($('#andruav_unit_list_array_float').attr('opacity') == null) {
+                $('#andruav_unit_list_array_float').attr('opacity', '1.0');
+                $('#andruav_unit_list_array_float').css('opacity', '1.0');
+                $('#andruav_unit_list_array_float').unbind('mouseout');
+                $('#andruav_unit_list_array_float #obaq').removeClass('bi-x-diamond');
+                $('#andruav_unit_list_array_float #obaq').addClass('bi-x-diamond-fill');
+            }
+            else {
+                $('#andruav_unit_list_array_float').attr('opacity', null);
+                $('#andruav_unit_list_array_float').mouseout(function () {
+                    $('#andruav_unit_list_array_float').css('opacity', '0.8');
+                });
+                $('#andruav_unit_list_array_float #obaq').removeClass('bi-x-diamond-fill');
+                $('#andruav_unit_list_array_float #obaq').addClass('bi-x-diamond');
+                
+            }
+        
     }
 
     render() {
@@ -735,11 +751,11 @@ class CLSS_AndruavUnitListArray extends React.Component {
         
             unit.push (<div className="card-header text-center">
 							<div className="row">
-							<div className="col-10">
+							<div className="col-11">
 								<h3 className="text-success text-start">Units</h3>
 							</div>
-							<div className="col-2 float-right">
-							<button id="btnclose" type="button" className="btn-close" onClick={ (e) => this.fn_OnClick()}></button>
+							<div className="col-1 float-right">
+							<span id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
 							</div>
 							</div>
                             {units_details} 

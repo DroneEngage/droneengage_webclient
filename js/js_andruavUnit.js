@@ -422,12 +422,13 @@ class C_EKF
 	{
 		this.m_parent 	= p_parent;
 		this.m_isValid	= false;
-		this.velocity_variance = 0;
-		this.pos_horiz_variance = 0;
-		this.pos_vert_variance = 0;
-		this.compass_variance = 0;
-		this.velocity_variance = 0;
-
+		this.m_velocity_variance = 0;
+		this.m_pos_horiz_variance = 0;
+		this.m_pos_vert_variance = 0;
+		this.m_compass_variance = 0;
+		this.m_terrain_alt_variance = 0;
+		this.m_airspeed_variance =0;
+		this.m_flags = 0;
 	}
 
 	
@@ -519,6 +520,7 @@ class CAndruavUnitObject
 		this.m_SignalStatus				= {m_wifi:false, m_mobile:false, m_mobileSignalLevel:0, m_mobileNetworkType:0, m_mobileNetworkTypeRank:0};
 		
 		this.m_FCBParameters 			= new C_FCBParameters(this);
+		this.m_EKF 						= new C_EKF(this);
 	};
 	
 

@@ -2845,6 +2845,13 @@ class CAndruavClient {
                 case mavlink20.MAVLINK_MSG_ID_EKF_STATUS_REPORT:
                 {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_EKF.m_flags = c_mavlinkMessage.flags;
+                    p_unit.m_EKF.m_velocity_variance = c_mavlinkMessage.velocity_variance;
+                    p_unit.m_EKF.m_pos_horiz_variance = c_mavlinkMessage.pos_horiz_variance;
+                    p_unit.m_EKF.m_pos_vert_variance = c_mavlinkMessage.pos_vert_variance;
+                    p_unit.m_EKF.m_compass_variance = c_mavlinkMessage.compass_variance;
+                    p_unit.m_EKF.m_terrain_alt_variance = c_mavlinkMessage.terrain_alt_variance;
+                    p_unit.m_EKF.m_airspeed_variance = c_mavlinkMessage.airspeed_variance;
                 }
                 break;
 
