@@ -4,6 +4,7 @@ import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
+import {CLSS_CTRL_ARDUPILOT_EKF_CONTROL} from './flight_controllers/jsc_ctl_ardupilot_ekf.jsx'
 
 
 class CLSS_AndruavUnit_Drone_Header extends React.Component{
@@ -11,8 +12,8 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
     render()
     {
         return (
-            <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero fss-4'>
-            <div className = 'col-1  css_margin_zero text-center cursor_hand '>ID</div>
+            <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
+            <div className = 'col-1  css_margin_zero text-center '>ID</div>
             <div className = {'col-1  css_margin_zero text-center '}>MODE</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>EKF</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>HUD</div>
@@ -36,14 +37,19 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         this.localvars={};
         this.localvars.speed_link = false;	
 		this.telemetry_level=["OFF","1","2","3"];
-        window.AndruavLibs.EventEmitter.fn_subscribe(EE_requestGamePad,this,this.fn_requestGamePad);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitNavUpdated,this,this.fn_unitUpdated);
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitTelemetryOn,this,this.fn_unitTelemetryOn);
+        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitTelemetryOff,this,this.fn_unitTelemetryOFF);
+        
     }
 
 
     childcomponentWillUnmount () {
-        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_requestGamePad,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this,);
+        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitNavUpdated,this,);
+        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitTelemetryOn,this,);
+        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitTelemetryOff,this,);
     }
 
 
@@ -498,6 +504,17 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
 
             }
         }
+        
+        var ctrl_ekf = [];
+        switch (v_andruavUnit.m_autoPilot)
+        {
+            case mavlink20.MAV_AUTOPILOT_PX4:
+                ctrl_ekf.push(<div>EKF-PX4</div>);
+            break;
+            default:
+                ctrl_ekf.push(<CLSS_CTRL_ARDUPILOT_EKF_CONTROL key={v_andruavUnit.partyID + "_ctrl_ekf"} id={v_andruavUnit.partyID + "_ctrl_ekf"} v_andruavUnit={v_andruavUnit}/>);
+            break;
+        }
 
         return (
             <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap border-bottom bg-gradient'>
@@ -517,7 +534,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>EKF</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero'>{ctrl_ekf}</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>
                     <ul className="css_hud_bullets">
                         <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>

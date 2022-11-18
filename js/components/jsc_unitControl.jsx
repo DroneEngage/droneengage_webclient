@@ -1704,7 +1704,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
              <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none'>        	
-                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false' src={getVehicleIcon(v_andruavUnit)}  title={"version:" + v_andruavUnit.m_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
+                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={"version:" + v_andruavUnit.m_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
                 <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='take image from mobile' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='stream video from mobile' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='record video on drone mobile' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>

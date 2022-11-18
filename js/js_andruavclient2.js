@@ -1987,7 +1987,7 @@ class CAndruavClient {
                             p_unit.m_Swarm.m_following = null;
                         }
                         // CODEBLOCK_END
-
+                        p_unit.m_index = this.m_andruavUnitList.count;
                         this.m_andruavUnitList.Add(p_unit.partyID, p_unit);
                         this._fn_onNewUnitAdded(p_unit);
 
@@ -2800,7 +2800,7 @@ class CAndruavClient {
                              c_mavlinkMessage.spacing, c_mavlinkMessage.terrain_height, 
                              c_mavlinkMessage.current_height));
                 }
-
+                break; 
                 case mavlink20.MAVLINK_MSG_ID_GPS2_RAW:
                 {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
@@ -2813,7 +2813,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
                     p_unit.m_GPS_Info2.m_isValid = true;
                 }
-                    break;
+                break;
 
                 case mavlink20.MAVLINK_MSG_ID_WIND:
                 {
@@ -2821,7 +2821,7 @@ class CAndruavClient {
                     p_unit.m_WindSpeed_z = c_mavlinkMessage.speed_z;
                     p_unit.m_WindDirection = c_mavlinkMessage.direction;
                 }
-                    break;
+                break;
     
                 case mavlink20.MAVLINK_MSG_ID_VFR_HUD:
                 {
@@ -2829,7 +2829,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed ;
                     p_unit.m_Nav_Info.p_Location.airspeed = c_mavlinkMessage.airspeed ;
                 }
-                    break;
+                break;
 
                 case mavlink20.MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
                 {
@@ -2840,7 +2840,14 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.alt = c_mavlinkMessage.relative_alt * 0.001;
                     this.EVT_msgFromUnit_GPS(p_unit);
                 }
-                    break;
+                break;
+
+                case mavlink20.MAVLINK_MSG_ID_EKF_STATUS_REPORT:
+                {
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                }
+                break;
+
 
                 case mavlink20.MAVLINK_MSG_ID_PARAM_VALUE:
                 {

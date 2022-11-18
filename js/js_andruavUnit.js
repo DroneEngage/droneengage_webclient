@@ -415,11 +415,30 @@ class C_Terrain
 		// this._index+=1;
 	}
 }
+
+class C_EKF
+{
+	constructor (p_parent)
+	{
+		this.m_parent 	= p_parent;
+		this.m_isValid	= false;
+		this.velocity_variance = 0;
+		this.pos_horiz_variance = 0;
+		this.pos_vert_variance = 0;
+		this.compass_variance = 0;
+		this.velocity_variance = 0;
+
+	}
+
+	
+}
+
 class CAndruavUnitObject 
 {
 	
 	constructor()
 	{
+		this.m_index					= 0;
 		this.m_IsMe 					= false;
 		this.m_IsGCS 					= true;
 		this.m_isDE						= false; // is Drone Engage
