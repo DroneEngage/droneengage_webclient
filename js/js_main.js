@@ -14,6 +14,11 @@ var quad_icon   = [ './images/drone_qq_1_0d.png',
 					'./images/drone_qq_4_0d.png'];
 
 
+var rover_icon  = [ './images/car1.png',
+					'./images/car2.png',
+					'./images/car3.png',
+					'./images/car4.png'];
+
 
 
 
@@ -2028,7 +2033,7 @@ function fn_handleKeyBoard() {
 						return './images/heli_1_32x32.png';
 					case VEHICLE_ROVER:
 						p_andruavUnit.m_VehicleType_TXT = "Rover";
-						return './images/car_4_32x32.png';
+						return rover_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_SUBMARINE:
 						p_andruavUnit.m_VehicleType_TXT = "Submarine";
 						return './images/submarine_gb_32x32.png';
