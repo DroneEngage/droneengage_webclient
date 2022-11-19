@@ -2845,6 +2845,7 @@ class CAndruavClient {
                 case mavlink20.MAVLINK_MSG_ID_EKF_STATUS_REPORT:
                 {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_EKF.m_isValid = true;
                     p_unit.m_EKF.m_flags = c_mavlinkMessage.flags;
                     p_unit.m_EKF.m_velocity_variance = c_mavlinkMessage.velocity_variance;
                     p_unit.m_EKF.m_pos_horiz_variance = c_mavlinkMessage.pos_horiz_variance;
@@ -2855,6 +2856,17 @@ class CAndruavClient {
                 }
                 break;
 
+                case mavlink20.MAVLINK_MSG_ID_VIBRATION:
+                {
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    p_unit.m_Vibration.m_vibration_x = c_mavlinkMessage.vibration_x;
+                    p_unit.m_Vibration.m_vibration_y = c_mavlinkMessage.vibration_y;
+                    p_unit.m_Vibration.m_vibration_z = c_mavlinkMessage.vibration_z;
+                    p_unit.m_Vibration.m_clipping_0 = c_mavlinkMessage.clipping_0;
+                    p_unit.m_Vibration.m_clipping_1 = c_mavlinkMessage.clipping_1;
+                    p_unit.m_Vibration.m_clipping_2 = c_mavlinkMessage.clipping_2;
+                }
+                break;
 
                 case mavlink20.MAVLINK_MSG_ID_PARAM_VALUE:
                 {
