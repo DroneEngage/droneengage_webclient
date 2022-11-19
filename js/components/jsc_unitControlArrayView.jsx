@@ -6,9 +6,37 @@ import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_EKF} from './flight_controllers/jsc_ctl_ardupilot_ekf.jsx'
 import {CLSS_CTRL_VIBRATION} from './flight_controllers/jsc_ctrl_vibration.jsx'
-
+import {CLSS_CTRL_BATTERY} from './flight_controllers/jsc_ctl_battery.jsx'
 
 class CLSS_AndruavUnit_Drone_Header extends React.Component{
+
+    constructor()
+	{
+		super ();
+		    this.state = {
+                is_compact_batt : false,
+                is_compact_ekf : false
+		};
+
+    }
+
+    fn_toggleBattery()
+    {
+        if (this.state.is_compact === false) this.state.is_compact = true;
+        else
+        this.state.is_compact = false;
+
+        window.AndruavLibs.EventEmitter.fn_dispatch(EE_BattViewToggle, this.state.is_compact);
+    }
+
+    fn_toggleEKF()
+    {
+        if (this.state.is_compact_ekf === false) this.state.is_compact_ekf = true;
+        else
+        this.state.is_compact_ekf = false;
+
+        window.AndruavLibs.EventEmitter.fn_dispatch(EE_EKFViewToggle, this.state.is_compact_ekf);
+    }
 
     render()
     {
@@ -16,9 +44,9 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
             <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
             <div className = 'col-1  css_margin_zero text-center '>ID</div>
             <div className = {'col-1  css_margin_zero text-center '}>MODE</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>EKF/VIB</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero cursor_hand' onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>HUD</div>
-            <div className = 'col-2  css_margin_zero css_padding_zero '>BAT</div>
+            <div className = 'col-2  css_margin_zero css_padding_zero cursor_hand' onClick={ (e) => this.fn_toggleBattery()}>BATT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>GPS</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>SPEED</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>ALT</div>
@@ -164,61 +192,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     }
 
 
-    hlp_getFCBBatteryCSSClass (p_andruavUnit)
-	{
-        var v_battery_display_fcb_div = "";
-        var v_battery_src = "./images/battery_gy_32x32.png";
-        var v_battery2_display_fcb_div = "";
-        var v_battery2_src = "./images/battery_gy_32x32.png";
-        
-        const p_Power = p_andruavUnit.m_Power;
-
-	    var v_remainingBat1 = p_Power._FCB.p_Battery.FCB_BatteryRemaining;
-		var v_bat1 = " ";
-        var v_bat2 = " "; // no level info
-			 
-		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_Battery.p_hasPowerInfo === false))
-        {
-            v_battery_display_fcb_div = " hidden ";
-            v_battery_src = "./images/battery_gy_32x32.png";
-            
-        }
-
-		if ((p_andruavUnit.m_IsShutdown === true) || (p_andruavUnit.m_Power._FCB.p_Battery2.p_hasPowerInfo === false))
-        {
-            v_battery2_display_fcb_div = " hidden ";
-            v_battery2_src = "./images/battery_gy_32x32.png";
-            
-        }
-
-		
-        if (parseInt(v_remainingBat1,0) > 80)
-		{
-		    v_bat1 += ' battery_4 ';
-            v_battery_src = "./images/battery_g_32x32.png";
-		}
-		else if (parseInt(v_remainingBat1,0) > 50)
-		{
-		    v_bat1 += ' battery_3 ';
-            v_battery_src = "./images/battery_rg_32x32.png";
-		}
-		else if (parseInt(v_remainingBat1,0) > 25)
-		{
-		    v_bat1 += ' battery_2 ';
-            v_battery_src = "./images/battery_rg_3_32x32.png";
-		}
-		else 
-		{
-		    v_bat1 += ' battery_1 ';
-            v_battery_src = "./images/battery_r_32x32.png";
-		}
-			 
-	    var bat1 = { m_battery_src: v_battery_src, css:v_bat1, level:v_remainingBat1, charging: 'unknown', v_battery_display_fcb_div: v_battery_display_fcb_div}; 
-        var bat2 = { m_battery_src:v_battery2_src, css:v_bat2, level:'na', charging: 'na', v_battery_display_fcb_div: v_battery2_display_fcb_div}; 
-
-
-        return {'bat1': bat1, 'bat2':bat2};
-	}
+    
 
 
     getAlt(p_andruavUnit)
@@ -470,7 +444,6 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         var v_mav_id_text = v_andruavUnit.m_FCBParameters.m_systemID;
         const v_flight_mode = this.fn_getFlightMode(v_andruavUnit);
         const v_HUD = this.fn_getHUD(v_andruavUnit);
-        const v_battery_display_fcb = this.hlp_getFCBBatteryCSSClass(v_andruavUnit);
         const v_gps1 = this.hlp_getGPS(v_andruavUnit.m_GPS_Info1);
         const v_gps2 = this.hlp_getGPS(v_andruavUnit.m_GPS_Info2);
         const v_alt = this.getAlt(v_andruavUnit);
@@ -556,23 +529,8 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     </ul>
             </div>
             <div className = 'col-2  css_margin_zero'>
-                <div className = 'row  css_margin_zero fss-4 '>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat1.css}><span className="text-warning">Batt1</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat1.css}>{(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
-                </div>
-                <div className = 'row  css_margin_zero  fss-4 '>
-                    <div className = {'col-2  css_margin_zero ' + v_battery_display_fcb.bat2.css}><span className="text-warning">Batt2</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{parseFloat(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
-                    <div className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.bat2.css}>{(v_andruavUnit.m_Power._FCB.p_Battery2.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
-                
-                </div>
+                    <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat1"} id={v_andruavUnit.partyID + "_ctrl_bat1"} m_title='Batt1' m_battery={v_andruavUnit.m_Power._FCB.p_Battery}/>
+                    <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat2"} id={v_andruavUnit.partyID + "_ctrl_bat2"} m_title='Batt2' m_battery={v_andruavUnit.m_Power._FCB.p_Battery2}/>
             </div>
             <div className = 'col-1  css_margin_zero css_padding_zero fss-4'>
                 <div className = 'row  css_margin_zero css_padding_zero'>
