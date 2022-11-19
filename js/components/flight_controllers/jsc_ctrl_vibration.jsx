@@ -47,7 +47,11 @@ export class CLSS_CTRL_VIBRATION extends React.Component {
         var ret = new C_GUI_READING_VALUE();
         if (value == undefined) value = 'na';
         ret.value = value;
-        if ((value == null) || (value==0)) 
+        if (value == null)
+        {
+           ret.css = 'bg-none';
+        }else
+        if (value==0)
         {
             ret.css = 'bg-success';
         }else
