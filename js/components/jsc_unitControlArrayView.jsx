@@ -4,7 +4,8 @@ import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
-import {CLSS_CTRL_ARDUPILOT_EKF_CONTROL} from './flight_controllers/jsc_ctl_ardupilot_ekf.jsx'
+import {CLSS_CTRL_ARDUPILOT_EKF} from './flight_controllers/jsc_ctl_ardupilot_ekf.jsx'
+import {CLSS_CTRL_VIBRATION} from './flight_controllers/jsc_ctrl_vibration.jsx'
 
 
 class CLSS_AndruavUnit_Drone_Header extends React.Component{
@@ -15,7 +16,7 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
             <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
             <div className = 'col-1  css_margin_zero text-center '>ID</div>
             <div className = {'col-1  css_margin_zero text-center '}>MODE</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>EKF</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero'>EKF/VIB</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>HUD</div>
             <div className = 'col-2  css_margin_zero css_padding_zero '>BAT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>GPS</div>
@@ -64,15 +65,18 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     {
         var v_flight_mode_text = "NC";
         var v_flight_mode_class= " text-warning";
+        var v_flight_mode_title= 'flight board is NOT CONNECTED';
         if (v_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_No_Telemetry)
         {
             v_flight_mode_text = hlp_getFlightMode(v_andruavUnit);
-            var v_flight_mode_class= " text-white";
+            v_flight_mode_class= " text-white";
+            v_flight_mode_title= 'flight mode'
         }
         
         return {
             'css':v_flight_mode_class,
-            'txt':v_flight_mode_text
+            'txt':v_flight_mode_text,
+            'title': v_flight_mode_title
         }
     }
 
@@ -512,9 +516,11 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 ctrl_ekf.push(<div>EKF-PX4</div>);
             break;
             default:
-                ctrl_ekf.push(<CLSS_CTRL_ARDUPILOT_EKF_CONTROL key={v_andruavUnit.partyID + "_ctrl_ekf"} id={v_andruavUnit.partyID + "_ctrl_ekf"} m_unit={v_andruavUnit}/>);
+                ctrl_ekf.push(<CLSS_CTRL_ARDUPILOT_EKF key={v_andruavUnit.partyID + "_ctrl_ekf"} id={v_andruavUnit.partyID + "_ctrl_ekf"} m_unit={v_andruavUnit}/>);
             break;
         }
+
+        
 
         return (
             <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap border-bottom bg-gradient'>
@@ -528,13 +534,21 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             </div>
             <div className = {'col-1  css_margin_zero text-center css_padding_zero '}>
                 <div className = 'row  css_margin_zero css_padding_zero '>
-                    <div className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css}>{v_flight_mode.txt}</div>
+                    <div className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css} title ={v_flight_mode.title}>{v_flight_mode.txt}</div>
                 </div>
                 <div className = 'row  css_margin_zero css_padding_zero'>
                     <div className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>{ctrl_ekf}</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero'>
+                    <div className = 'row  css_margin_zero fss-4 '>
+                        {ctrl_ekf}
+                    </div>
+                    <div className = 'row  css_margin_zero fss-4 '>
+                        <CLSS_CTRL_VIBRATION key={v_andruavUnit.partyID + "_ctrl_vib"} id={v_andruavUnit.partyID + "_ctrl_vib"} m_unit={v_andruavUnit}/>
+                    </div>
+                
+            </div>
             <div className = 'col-1  css_margin_zero css_padding_zero'>
                     <ul className="css_hud_bullets">
                         <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>

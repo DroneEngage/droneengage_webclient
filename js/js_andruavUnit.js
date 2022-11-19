@@ -430,8 +430,21 @@ class C_EKF
 		this.m_airspeed_variance =0;
 		this.m_flags = 0;
 	}
+}
 
-	
+class C_Vibration
+{
+	constructor (p_parent)
+	{
+		this.m_parent 	= p_parent;
+		this.m_isValid	= false;
+		this.m_vibration_x = 0;
+		this.m_vibration_y = 0;
+		this.m_vibration_z = 0;
+		this.m_clipping_0 = 0;
+		this.m_clipping_1 = 0;
+		this.m_clipping_2 = 0;
+	}
 }
 
 class CAndruavUnitObject 
@@ -521,6 +534,7 @@ class CAndruavUnitObject
 		
 		this.m_FCBParameters 			= new C_FCBParameters(this);
 		this.m_EKF 						= new C_EKF(this);
+		this.m_Vibration				= new C_Vibration(this);
 	};
 	
 
