@@ -70,7 +70,7 @@ var AndruavLibs = AndruavLibs || {
 (function(lib) {
 	"use strict";
 	if (typeof module === "undefined" || typeof module.exports === "undefined") {
-	  window.AndruavLibs.AndruavMap = lib; // in ordinary browser attach library to window
+	  window.AndruavLibs.AndruavCompression = lib; // in ordinary browser attach library to window
 	} else {
 	  module.exports = lib; // in nodejs
 	}
