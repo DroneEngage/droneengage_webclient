@@ -5,8 +5,8 @@ import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_EKF} from './flight_controllers/jsc_ctl_ardupilot_ekf.jsx'
-import {CLSS_CTRL_VIBRATION} from './flight_controllers/jsc_ctrl_vibration.jsx'
-import {CLSS_CTRL_BATTERY} from './flight_controllers/jsc_ctl_battery.jsx'
+import {CLSS_CTRL_VIBRATION} from './gadgets/jsc_ctrl_vibration.jsx'
+import {CLSS_CTRL_BATTERY} from './gadgets/jsc_ctrl_battery.jsx'
 
 class CLSS_AndruavUnit_Drone_Header extends React.Component{
 
@@ -42,17 +42,17 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
     {
         return (
             <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
-            <div className = 'col-1  css_margin_zero text-center '>ID</div>
-            <div className = {'col-1  css_margin_zero text-center '}>MODE</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero cursor_hand' onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>HUD</div>
-            <div className = 'col-2  css_margin_zero css_padding_zero cursor_hand' onClick={ (e) => this.fn_toggleBattery()}>BATT</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>GPS</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>SPEED</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>ALT</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>WIND</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>ID</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>ID</div>
+            <div className = 'col-1  css_margin_zero text-center fw-bold '>ID</div>
+            <div className = {'col-1  css_margin_zero text-center fw-bold '}>MODE</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>HUD</div>
+            <div className = 'col-2  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleBattery()}>BATT</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>GPS</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>SPEED</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ALT</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>WIND</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ID</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ID</div>
             </div>
             
         );
@@ -439,7 +439,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         var v_id_text = v_andruavUnit.m_unitName;
         var v_id_icon = '';
         var v_armed = {};
-        v_armed.text = 'disarmed';
+        v_armed.text = 'Disarmed';
         v_armed.css = 'text-white';
         var v_mav_id_text = v_andruavUnit.m_FCBParameters.m_systemID;
         const v_flight_mode = this.fn_getFlightMode(v_andruavUnit);
@@ -460,7 +460,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             {
                 v_id_class = " bg-danger text-white ";
                 v_armed.text ='ARMED';
-                v_armed.css = 'bg-danger text-white';
+                v_armed.css = 'bg-danger text-white fw-bold';
                 
             }
             else

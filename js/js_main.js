@@ -579,6 +579,52 @@ function fn_handleKeyBoard() {
 			// });
 		}
 
+		function fn_adsbExpiredUpdate(me)
+		{
+			const ADSB_OBJECT_TIMEOUT = 13000;
+			const count = window.AndruavLibs.ADSBObjectList.count;
+			const now = new Date();
+			const p_keys = Object.keys(window.AndruavLibs.ADSBObjectList.List);
+		
+			for (var i=0; i< count; ++i)
+			{
+				var adsb_obj  = window.AndruavLibs.ADSBObjectList.List[p_keys[i]];
+
+				if ((now - adsb_obj.m_last_access) > ADSB_OBJECT_TIMEOUT)
+				{
+					if (adsb_obj.p_marker != null)
+					{
+						AndruavLibs.AndruavMap.fn_hideItem(adsb_obj.p_marker);
+					}
+				}
+			}
+		}
+
+		function fn_adsbObjectUpdate(me, p_adsbObject)
+		{
+			var v_marker = p_adsbObject.p_marker;
+			if (v_marker== null)
+			{
+				var icon;
+				switch (parseInt(p_adsbObject.m_emitter_type))
+				{
+					case mavlink20.ADSB_EMITTER_TYPE_ROTOCRAFT:
+						icon = './images/Quad_Track.png';
+						break;
+					default:
+						icon = './images/Plane_Track.png';
+						break;
+				}
+				var v_htmladsb = "<p class='text-warning margin_zero'>" + p_adsbObject.m_icao_address + "</p>";
+					
+				v_marker = AndruavLibs.AndruavMap.fn_CreateMarker(icon, p_adsbObject.m_icao_address, false, false, v_htmladsb,[64,64]) ;
+				p_adsbObject.p_marker = v_marker;
+			}
+
+			AndruavLibs.AndruavMap.fn_setPosition_bylatlng(p_adsbObject.p_marker, p_adsbObject.m_lat, p_adsbObject.m_lon, p_adsbObject.m_heading);
+			AndruavLibs.AndruavMap.fn_showItem(p_adsbObject.p_marker);
+		}
+
 		function fn_adsbUpdated(p_caller, p_data) {
 			// if (CONST_DISABLE_ADSG == true) return;
 
@@ -2033,7 +2079,7 @@ function fn_handleKeyBoard() {
 					/*
 						v_htmlTitle: Valid only for Leaflet
 					*/
-					v_htmlTitle = "<p class='text-primary si-07x margin_zero'>" + p_andruavUnit.m_unitName + "</p>";
+					v_htmlTitle = "<p class='text-white margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
 					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),false,false, v_htmlTitle,[64,64]) ;
 
 					
@@ -3190,7 +3236,9 @@ function fn_handleKeyBoard() {
 				initMap();
 			}
 
-			window.AndruavLibs.EventEmitter.fn_subscribe(EE_adsbExchangeReady, this, fn_adsbUpdated);
+			window.AndruavLibs.EventEmitter.fn_subscribe(EE_adsbExchangeReady, this, fn_adsbObjectUpdate);
+			window.AndruavLibs.EventEmitter.fn_subscribe(EE_adsbExpiredUpdate, this, fn_adsbExpiredUpdate);
+			
 
 
 			enableDragging();
