@@ -90,7 +90,7 @@ const EE_onMissionItemToggle         = "_MS_96A4ED6B1E4_";
 
 const EE_onAdvancedMode              = "_MS_96A4ED6B1E5_";
 const EE_ErrorMessage                = "_E_A642XYZB4E4_";
-
+const EE_adsbExpiredUpdate           = "_E_XXAZQD6B3E4_";
 
 
 

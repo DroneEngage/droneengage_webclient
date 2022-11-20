@@ -426,6 +426,7 @@ class CAndruavClient {
 
 
         this.m_andruavUnitList = new CAndruavUnitList();
+        this.m_adsbObjectList = new CADSBObjectList();
         var Me = this;
         if (this.fn_timerID_checkStatus == null) {
 
@@ -2539,7 +2540,7 @@ class CAndruavClient {
             var Me = this;
             this.timerID = setInterval(function () {
                 Me.API_sendID();
-
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_adsbExpiredUpdate, null);
             }, CONST_sendID_Interverl);
 
             // request IDfrom all units
@@ -2865,6 +2866,33 @@ class CAndruavClient {
                     p_unit.m_Vibration.m_clipping_0 = c_mavlinkMessage.clipping_0;
                     p_unit.m_Vibration.m_clipping_1 = c_mavlinkMessage.clipping_1;
                     p_unit.m_Vibration.m_clipping_2 = c_mavlinkMessage.clipping_2;
+                }
+                break;
+
+                case mavlink20.MAVLINK_MSG_ID_ADSB_VEHICLE:
+                {
+                    p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
+                    
+                    var adsb_object = window.AndruavLibs.ADSBObjectList.fn_getADSBObject(c_mavlinkMessage.ICAO_address);
+                    if (adsb_object==null)
+                    {
+                        adsb_object = new CADSBObject(c_mavlinkMessage.ICAO_address);
+                        window.AndruavLibs.ADSBObjectList.Add(c_mavlinkMessage.ICAO_address,adsb_object);
+                    }
+                    
+                    adsb_object.m_lat           = c_mavlinkMessage.lat * 0.0000001;
+                    adsb_object.m_lon           = c_mavlinkMessage.lon * 0.0000001;
+                    adsb_object.m_altitude_type = c_mavlinkMessage.altitude_type;
+                    adsb_object.m_altitude      = c_mavlinkMessage.altitude;
+                    adsb_object.m_heading       = c_mavlinkMessage.heading * 0.01   * CONST_DEGREE_TO_RADIUS;
+                    adsb_object.m_hor_velocity  = c_mavlinkMessage.hor_velocity;
+                    adsb_object.m_ver_velocity  = c_mavlinkMessage.ver_velocity;
+                    adsb_object.m_emitter_type  = c_mavlinkMessage.emitter_type;
+                    adsb_object.m_squawk        = c_mavlinkMessage.squawk;
+                    
+                    adsb_object.m_last_access   = new Date();
+
+                    window.AndruavLibs.EventEmitter.fn_dispatch(EE_adsbExchangeReady, adsb_object);
                 }
                 break;
 
