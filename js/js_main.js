@@ -2034,7 +2034,7 @@ function fn_handleKeyBoard() {
 						v_htmlTitle: Valid only for Leaflet
 					*/
 					v_htmlTitle = "<p class='text-primary si-07x margin_zero'>" + p_andruavUnit.m_unitName + "</p>";
-					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),false,false, v_htmlTitle) ;
+					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),false,false, v_htmlTitle,[64,64]) ;
 
 					
 					/* http://stackoverflow.com/questions/5329136/handling-click-events-in-google-maps-js-api-v3-while-ignoring-double-clicks 
