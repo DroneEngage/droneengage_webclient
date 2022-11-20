@@ -2823,6 +2823,17 @@ class CAndruavClient {
                     p_unit.m_WindDirection = c_mavlinkMessage.direction;
                 }
                 break;
+
+                case mavlink20.MAVLINK_MSG_ID_DISTANCE_SENSOR:
+                {
+                    var distance_Sensor = p_unit.m_DistanceSensors[c_mavlinkMessage.orientation];
+                    distance_Sensor.m_min_distance = c_mavlinkMessage.min_distance * 0.01; // convert to m
+                    distance_Sensor.m_max_distance = c_mavlinkMessage.max_distance * 0.01; // convert to m
+                    distance_Sensor.m_current_distance = c_mavlinkMessage.current_distance * 0.01; // convert to m
+                    distance_Sensor.m_last_access = new Date();
+                    distance_Sensor.m_isValid = true;
+                }
+                break;
     
                 case mavlink20.MAVLINK_MSG_ID_VFR_HUD:
                 {

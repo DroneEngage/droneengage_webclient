@@ -447,6 +447,21 @@ class C_Vibration
 	}
 }
 
+
+class C_DistanceSensor
+{
+	constructor (p_parent, v_orientation)
+	{
+		this.m_parent 	= p_parent;
+		this.m_orientation = v_orientation; //MAV_SENSOR_ORIENTATION_ENUM_END
+		this.m_isValid = false;
+		this.m_last_access = null;
+		this.m_min_distance = 0;
+		this.m_max_distance = 0;
+		this.m_current_distance = 0;
+	}	
+}
+
 class CAndruavUnitObject 
 {
 	
@@ -535,6 +550,13 @@ class CAndruavUnitObject
 		this.m_FCBParameters 			= new C_FCBParameters(this);
 		this.m_EKF 						= new C_EKF(this);
 		this.m_Vibration				= new C_Vibration(this);
+
+		this.m_DistanceSensors = [];
+
+		for (var i=0;i<=40;++i)
+		{
+			this.m_DistanceSensors.push(new C_DistanceSensor(this,i));
+		}
 	};
 	
 

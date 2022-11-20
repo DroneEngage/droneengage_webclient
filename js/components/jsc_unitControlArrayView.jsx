@@ -198,6 +198,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     getAlt(p_andruavUnit)
     {
         var res= {
+            'lidar': new C_GUI_READING_VALUE(),
             'abs': new C_GUI_READING_VALUE(),
             'rel': new C_GUI_READING_VALUE(),
             'terC': new C_GUI_READING_VALUE(),
@@ -325,6 +326,47 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             res.terH.css = ' text-white ';
         }
         
+        if (p_andruavUnit.m_DistanceSensors[mavlink20.MAV_SENSOR_ROTATION_PITCH_270].m_isValid!=true)
+        {
+            res.lidar.value = 'NA';
+            res.lidar.css = ' text-muted ';
+            res.lidar.unit = ' ';
+        }
+        else
+        {
+            var lidar = p_andruavUnit.m_DistanceSensors[mavlink20.MAV_SENSOR_ROTATION_PITCH_270];
+            if ((lidar.m_min_distance >= lidar.m_current_distance) || (lidar.m_max_distance <= lidar.m_current_distance))
+            {
+                res.lidar.value = 'OOR';
+                res.lidar.css = ' text-danger fw-strong ';
+                res.lidar.unit = ' ';
+            }
+            else
+            {
+            
+                if (v_useMetricSystem==true)
+                {
+                    res.lidar.value = lidar.m_current_distance;
+                    res.lidar.unit = ' m';
+                }
+                else
+                {
+                    res.lidar.value = lidar.m_current_distance * CONST_METER_TO_FEET;
+                    res.lidar.unit = ' ft';
+                }
+
+                if (res.lidar.value<10) 
+                {
+                    res.lidar.value = res.lidar.value.toFixed(2);
+                }
+                else
+                {
+                    res.lidar.value = res.lidar.value.toFixed(0);
+                }
+                res.lidar.css = ' text-white ';
+            }
+        }
+
         return res;
     }
 
@@ -558,7 +600,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 </div>
                 <div className = 'row  css_margin_zero '>
                     <div className = {'col-6  css_margin_zero al_l '+ v_alt.terC.css}><span className='text-warning'>TC:</span>{v_alt.terC.value}<span className='text-warning'>{v_alt.terC.unit}</span></div>
-                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.terH.css}><span className='text-warning'>L:</span>{}<span className='text-warning'>{v_alt.terH.unit}</span></div>
+                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.lidar.css}><span className='text-warning'>L:</span>{v_alt.lidar.value}<span className='text-warning'>{v_alt.lidar.unit}</span></div>
                 </div>
             </div>
            
