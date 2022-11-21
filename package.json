@@ -1,6 +1,6 @@
 {
   "name": "andruav_local_website",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Client Web for Andruav",
   "main": "server.js",
   "scripts": {
