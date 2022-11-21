@@ -341,6 +341,9 @@ function fn_handleKeyBoard() {
 			$('#div_map_view').show();
 		}
 
+		function fn_showSettings() {
+			$('#andruavUnits_in').toggle();
+		}
 
 		function onWEBRTCSessionStarted(c_talk) {
 			var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(c_talk.number);
@@ -3220,7 +3223,10 @@ function fn_handleKeyBoard() {
 			$('#btn_geofences').addClass ('btn-success');
 		}
 
+		
+
 		function fn_on_ready() {
+			//fn_loadMaps();
 
 			if ((typeof(CONST_MAP_GOOLE) == "undefined") || (CONST_MAP_GOOLE === true))
 			{
