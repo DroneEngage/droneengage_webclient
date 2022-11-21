@@ -154,6 +154,8 @@ class CLSS_Preferences extends React.Component {
       $('#check_enable_speech')[0].checked = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled();
       $('#volume_range')[0].value = window.AndruavLibs.LocalStorage.fn_getVolume();
       $('#check_tabs_display')[0].checked = window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled();
+      //$('#chk_google_key')[0].checked = window.AndruavLibs.LocalStorage.fn_getGoogleMapEnabled();
+      //$('#txt_google_key').val(window.AndruavLibs.LocalStorage.fn_getGoogleMapKey());
   }
 
 
@@ -200,7 +202,35 @@ class CLSS_Preferences extends React.Component {
     window.AndruavLibs.EventEmitter.fn_dispatch (EE_onPreferenceChanged);
   }
 
+  fn_enableGoogleMaps()
+  {
+    const enabled = $('#chk_google_key')[0].checked;
+    window.AndruavLibs.LocalStorage.fn_setGoogleMapEnabled(enabled);
+    if (enabled === true)
+    {
+      $('#txt_google_key').show();
+    }
+    else
+    {
+      $('#txt_google_key').hide();
+    }
+  }
+
+  fn_keydown()
+  {
+    window.AndruavLibs.LocalStorage.fn_setGoogleMapKey($('#txt_google_key').val());
+  }
+
   render () {
+    var google_preference=[];
+
+    google_preference.push(<div className="row mb-12">
+                            <label className="col-sm-4 col-form-label al_l " >Google Maps</label>
+                            <input className="form-check-input col-sm-2 " type="checkbox" id="chk_google_key" onClick={ () => this.fn_enableGoogleMaps()} />
+                            <div className="col-sm-4 col-form-label al_l " >
+                            <input id='txt_google_key' type="text" className="form-control" aria-describedby="emailHelp" placeholder="enter valid API Key" onPaste={() => this.fn_keydown()} onKeyDown={() => this.fn_keydown()}/>
+                            </div>
+                          </div>);
       return (
           <fieldset>
             <div className="row mb-12">
