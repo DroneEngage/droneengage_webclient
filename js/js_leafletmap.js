@@ -52,12 +52,24 @@ class CLeafLetAndruavMap {
         this.m_Map = L.map(p_mapelement).setView([
             51.505, -0.09
         ], 13);
-        L.tileLayer(VAR_MAP_LEAFLET_URL, {
-            maxZoom: 22,
-            attribution: v_site_copyright,
-            id: 'mapbox.streets'
-        }).addTo(this.m_Map);
+        
+        if (CONST_MAP_GOOLE_PLUGIN === true)
+        {
+            var ggl = new L.Google('SATELLITE'); // Possible types: SATELLITE, ROADMAP, HYBRID, TERRAIN
 
+            this.m_Map.addLayer(ggl);
+            var zoomControl = new L.Control.Zoom({ position: 'topright' });
+            zoomControl.addTo(this.m_Map);
+        }
+        else
+        {
+            L.tileLayer(VAR_MAP_LEAFLET_URL, {
+                maxZoom: 22,
+                attribution: v_site_copyright,
+                id: 'mapbox.streets'
+            }).addTo(this.m_Map);
+        }
+        
         if (CONST_MAP_EDITOR === true) {
             this.m_Map.pm.addControls({
                 position: 'topleft',

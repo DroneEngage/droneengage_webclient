@@ -119,7 +119,7 @@ const CONST_TEST_MODE_ENABLE_LOG = false;
 
 
 
-
+var CONST_MAP_GOOLE_PLUGIN   = false; 
 var CONST_MAP_GOOLE   = false; 
 var CONST_MAP_EDITOR  = false;
 
