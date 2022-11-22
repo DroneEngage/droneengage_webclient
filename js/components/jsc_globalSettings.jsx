@@ -434,7 +434,7 @@ class CLSS_GlobalSettings extends React.Component {
             <div  key="v_telemetryModes"  className="row mt-2  ">
                 <div className={"col-xs-12 col-sm-12 col-lg-12 text-center" + tele}>
                   <p className = 'user-select-none text-white mt-2 mb-1'>Smart Telemetry</p>
-                  <div className="btn-group" role="group" aria-label="Basic example">
+                  <div  role="group" aria-label="Basic example">
                     <button type="button" className="btn btn-danger btn-sm ctrlbtn "   title='No Traffics Optimization [ALL DATA]' onClick={ (e) => this.updateSmartTelemetry(e,0) }>OFF</button>
                     <button type="button" className="btn btn-warning btn-sm ctrlbtn"  title='Low traffic optimization' onClick={ (e) => this.updateSmartTelemetry(e,1) }>LVL 1</button>
                     <button type="button" className="btn btn-success btn-sm ctrlbtn"  title='Mid traffic optimization [recommended]' onClick={ (e) => this.updateSmartTelemetry(e,2) }>LVL 2</button>
