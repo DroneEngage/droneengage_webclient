@@ -51,8 +51,8 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>SPEED</div>
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ALT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>WIND</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ID</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ID</div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '></div>
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '></div>
             </div>
             
         );
