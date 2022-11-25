@@ -614,8 +614,8 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero'>ID</div>
-            <div className = 'col-1  css_margin_zero'>ID</div>
+            <div className = 'col-1  css_margin_zero'></div>
+            <div className = 'col-1  css_margin_zero'></div>
             </div>
             
         );
