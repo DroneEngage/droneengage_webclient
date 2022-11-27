@@ -916,7 +916,7 @@ function fn_handleKeyBoard() {
 			});
 
 
-			$('#yaw_knob').val((CONST_RADIUS_TO_DEGREE * ((p_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1));
+			$('#yaw_knob').val((CONST_RADIUS_TO_DEGREE * ((p_andruavUnit.m_Nav_Info.p_Orientation.yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1));
 			$('#yaw_knob').trigger('change');
 			$('#modal_ctrl_yaw').attr('data-original-title', 'YAW Control - ' + p_andruavUnit.m_unitName);
 			$('#modal_ctrl_yaw').attr('partyID', p_partyID);
@@ -1054,7 +1054,17 @@ function fn_handleKeyBoard() {
 			if (p_andruavUnit == null) return;
 
 			var v_speed_val = p_initSpeed;
-			if (v_speed_val == null) v_speed_val = parseFloat(p_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed);
+			if (v_speed_val == null) 
+			{
+				if (p_andruavUnit.m_Nav_Info.p_Location.ground_speed!= null)
+				{
+					v_speed_val = parseFloat(p_andruavUnit.m_Nav_Info.p_Location.ground_speed);
+				}
+				else
+				{
+					v_speed_val = 0;
+				}
+			}
 			
 			var v_speed_unit;
 			if (v_speed_val == null) {
@@ -1085,7 +1095,7 @@ function fn_handleKeyBoard() {
 					v_speed = parseFloat(v_speed) * CONST_MILE_TO_METER;
 				}
 				// save target speed as indication.
-				p_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed = v_speed;
+				p_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed = v_speed;
 				v_andruavClient.API_do_ChangeSpeed1(p_andruavUnit.partyID, parseFloat(v_speed));
 			});
 			$('#changespeed_modal').modal('show');
@@ -1740,7 +1750,6 @@ function fn_handleKeyBoard() {
 
 
 		var EVT_msgFromUnit_WayPointsUpdated = function (p_andruavUnit, missionIndexReached, status) {
-			p_andruavUnit.m_Nav_Info._Target.wp_num = missionIndexReached;
 			if (p_andruavUnit.m_wayPoint == null) {
 				//no waypoint attached ... send asking for update
 				v_andruavClient.API_requestWayPoints(p_andruavUnit);
@@ -1749,7 +1758,7 @@ function fn_handleKeyBoard() {
 			}
 
 			if (p_andruavUnit.m_wayPoint.m_markers != null) {
-				const c_mission_index = missionIndexReached - 1;
+				const c_mission_index = missionIndexReached;
 				var v_marker = p_andruavUnit.m_wayPoint.m_markers[c_mission_index];
 				if (v_marker != null) {
 					v_marker.waypoint_status = status;
@@ -1773,6 +1782,7 @@ function fn_handleKeyBoard() {
 					else {
 						switch (status) {
 							case CONST_Report_NAV_ItemReached:
+								p_andruavUnit.m_Nav_Info._Target.wp_num = c_mission_index + 1;
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_gy_32x32.png');
 								//marker.setIcon({ url: './images/location_gy_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
@@ -2072,7 +2082,7 @@ function fn_handleKeyBoard() {
 							var bearingIndex = 0;
 							
 							if (applyBearing == true) {
-								bearingIndex = parseInt(p_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw * CONST_RADIUS_TO_DEGREE / 23);
+								bearingIndex = parseInt(p_andruavUnit.m_Nav_Info.p_Orientation.yaw * CONST_RADIUS_TO_DEGREE / 23);
 							}
 							return getPlanIcon(bearingIndex, p_andruavUnit.m_index%4);
 						}
@@ -2224,7 +2234,7 @@ function fn_handleKeyBoard() {
 
 				}
 				AndruavLibs.AndruavMap.fn_setIcon(p_andruavUnit.p_marker, v_image);
-				AndruavLibs.AndruavMap.fn_setPosition_bylatlng(p_andruavUnit.p_marker, p_andruavUnit.m_Nav_Info.p_Location.lat, p_andruavUnit.m_Nav_Info.p_Location.lng, p_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw);
+				AndruavLibs.AndruavMap.fn_setPosition_bylatlng(p_andruavUnit.p_marker, p_andruavUnit.m_Nav_Info.p_Location.lat, p_andruavUnit.m_Nav_Info.p_Location.lng, p_andruavUnit.m_Nav_Info.p_Orientation.yaw);
 				window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, p_andruavUnit);
 			}
 			else {
@@ -2588,7 +2598,7 @@ function fn_handleKeyBoard() {
 			{
 				vSpeed = vSpeed.toFixed(1);
 			}
-			var vAirSpeed = p_andruavUnit.m_Nav_Info.p_Location.airspeed;
+			var vAirSpeed = p_andruavUnit.m_Nav_Info.p_Location.air_speed;
 			if (vAirSpeed == null)
 			{
 				vAirSpeed='?';

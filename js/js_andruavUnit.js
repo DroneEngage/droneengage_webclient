@@ -217,32 +217,37 @@ class C_NavInfo
 	{
 		this.m_parent = p_parent;
 		this.p_Location={
-			alt: null,
-			abs_alt: null,
-			airspeed:null,
-			ground_speed:null
+			alt: null, 			// MAVLINK_MSG_ID_GLOBAL_POSITION_INT.relative_alt ... Altitude above ground - or baro alt if GPS is not available
+			abs_alt: null,		// MAVLINK_MSG_ID_GLOBAL_POSITION_INT.alt  ... Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.
+			air_speed:null,		// MAVLINK_MSG_ID_VFR_HUD.airspeed ... Vehicle speed in form appropriate for vehicle type. For standard aircraft this is typically calibrated airspeed (CAS) or indicated airspeed (IAS) - either of which can be used by a pilot to estimate stall speed.
+			ground_speed:null   // MAVLINK_MSG_ID_VFR_HUD.ground_speed ... float (m/s) ... Note HIGH_LATENCY uses unit8 m/s*5
 		};
 		this.p_Orientation={
-			nav_roll:0.0, // ATTITUDE NOT NAV
-			nav_pitch:0.0,
-			nav_yaw:0.0
+			roll:0.0, 			// MAVLINK_MSG_ID_ATTITUDE.nav_roll ... rad ... Roll angle (-pi..+pi)
+			pitch:0.0,			// MAVLINK_MSG_ID_ATTITUDE.nav_pitch ... rad ... Pitch angle (-pi..+pi)
+			yaw:0.0,			// MAVLINK_MSG_ID_ATTITUDE.nav_yaw ... rad ... Yaw angle (-pi..+pi)
+			roll_speed:0.0, 	// MAVLINK_MSG_ID_ATTITUDE.rollspeed ... float	rad/s	Roll angular speed
+			pitch_speed:0.0,	// MAVLINK_MSG_ID_ATTITUDE.pitchspeed ... float	rad/s	Pitch angular speed
+			yaw_speed:0.0,		// MAVLINK_MSG_ID_ATTITUDE.yawspeed ... float	rad/s	Yaw angular speed
 		};
 		
 		this.p_Desired={
-			nav_roll:0.0, // Desired
-			nav_pitch:0.0,
-			nav_yaw:0.0,
-			nav_bearing:0.0
+			nav_roll:0.0, 		// MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT.nav_roll 		float	 deg	Current desired roll
+			nav_pitch:0.0,		// MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT.nav_pitch 		float	 deg	Current desired pitch
+			nav_bearing:0.0,	// MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT.nav_bearing 	int16_t	 deg	Current desired heading
 		};
 		
 		this._Target= {
-			target_bearing:0.0,
-			m_NavSpeed: 0.0,
-			wp_dist: 0,
-			wp_num: 0,
+			target_bearing:0.0, // MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT.target_bearing  int16_t	 deg	Current desired waypoint/target
+			wp_count: 0,		// MAVLINK_MSG_ID_MISSION_COUNT.count
+			wp_dist: 0, 		// MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT.wp_dist  		uint16_t  m		Distance to active waypoint			
+			wp_num: 0,			// MAVLINK_MSG_ID_MISSION_CURRENT.seq
+			alt_error:0.0,      // MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT.alt_error 		float	  m		Current altitude error
 		};
 
-		
+		this.p_UserDesired= {
+			m_NavSpeed: 0.0,	// user desired speed..requested from web
+		};
 		this.m_FlightPath=[];
 	};
 }
@@ -385,11 +390,11 @@ class C_GPS
 
 class C_TerrainEntry
 {
-	constructor (lat, lon, spacing, terrain_height, current_height)
-	{
-		this.m_lat = lat;
-		this.m_lon = lon;
-		this.m_spacing = spacing;
+	constructor (lat =null, lon =null, spacing=null, terrain_height, current_height)
+	{	
+		this.m_lat = lat;  						// optional 	invalud = null					
+		this.m_lon = lon;  						// optional 	invalud = null	   			
+		this.m_spacing = spacing;		 		//optional 	invalud = null	
 		this.m_terrain_height = terrain_height; // m - Terrain height MSL
 		this.m_current_height = current_height; // m - Current vehicle height above lat/lon terrain height
 	}
@@ -410,6 +415,7 @@ class C_Terrain
 		if (terrain_entry == null) return ;
 		
 		this.last_terrain_entry = terrain_entry;
+		this.m_isValid = true;
 		// if (this._index ==100 ) this._index = 0;
 		// this.__terrain_entry.push(terrain_entry);
 		// this._index+=1;
@@ -528,12 +534,12 @@ class CAndruavUnitObject
 		this.m_IsShutdown				= false;	
 		this.m_WindSpeed				= null;
 		this.m_WindSpeed_z				= null;
-		this.m_WindDirection				= null;
-		this.m_Power = new C_Power (this);
-		this.m_GPS_Info1		= new C_GPS (this);
-		this.m_GPS_Info2		= new C_GPS (this);
-		this.m_GPS_Info3		= new C_GPS (this);
-		this.m_Nav_Info = new C_NavInfo(this);
+		this.m_WindDirection			= null;
+		this.m_Power 					= new C_Power (this);
+		this.m_GPS_Info1				= new C_GPS (this);
+		this.m_GPS_Info2				= new C_GPS (this);
+		this.m_GPS_Info3				= new C_GPS (this);
+		this.m_Nav_Info 				= new C_NavInfo(this);
 		this.m_Terrain_Info = new C_Terrain (this);
 		
 		Object.seal(this.m_Nav_Info);
@@ -552,6 +558,7 @@ class CAndruavUnitObject
 		this.m_Vibration				= new C_Vibration(this);
 
 		this.m_DistanceSensors = [];
+		this.m_Throttle					= 0; //MAVLINK_MSG_ID_VFR_HUD.throttle uint16_t % Current throttle setting (0 to 100).
 
 		for (var i=0;i<=40;++i)
 		{

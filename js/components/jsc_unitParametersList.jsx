@@ -305,7 +305,7 @@ class CLSS_UnitParametersList extends React.Component {
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content width_fit">
                             <div className="modal-header bg-primary ">
-                            <h4 id="modal_ctrl_parameters_lbl" className="modal-title text-white">Parameters of:&nbsp;&nbsp; <strong>{v_Name} </strong></h4>
+                            <h3 id="modal_ctrl_parameters_lbl" className="modal-title text-white">Parameters of:&nbsp;&nbsp; <strong>{v_Name} </strong></h3>
                             <button type="button" className="btn-close"  data-bs-dismiss="modal" aria-hidden="true" aria-label="Close"></button>
                             </div>
                             <div id="ctrl_main" className="modal-body" >
@@ -313,7 +313,7 @@ class CLSS_UnitParametersList extends React.Component {
                             </div>
                             <div id="modal_ctrl_parameters_footer" className="modal-footer ">
                             
-                                        <div className = "row flex-fill ">
+                                        <div className = "row flex-fill al_c">
                                             <div className = "col-6">
                                                 <button id="btnGoto" type="button" className="btn  btn-sm btn-success" onClick={(e) => fn_gotoUnit(p_andruavUnit)}>Goto</button>
                                             </div>
