@@ -2512,9 +2512,9 @@ class CAndruavClient {
 						*/
                     p_unit.m_Nav_Info._Target.target_bearing = parseFloat(p_jmsg.d);
                     p_unit.m_Nav_Info._Target.wp_dist = parseFloat(p_jmsg.e);
-                    p_unit.m_Nav_Info.p_Orientation.nav_roll = parseFloat(p_jmsg.a); // in radiuas
-                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = parseFloat(p_jmsg.b); // in radiuas
-                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = parseFloat(p_jmsg.y);
+                    p_unit.m_Nav_Info.p_Orientation.roll = parseFloat(p_jmsg.a); // in radiuas
+                    p_unit.m_Nav_Info.p_Orientation.pitch = parseFloat(p_jmsg.b); // in radiuas
+                    p_unit.m_Nav_Info.p_Orientation.yaw = parseFloat(p_jmsg.y);
                     p_unit.m_Nav_Info._Target.alt_error = parseFloat(p_jmsg.f);
 
                     this.EVT_msgFromUnit_NavInfo(p_unit);
@@ -2735,12 +2735,15 @@ class CAndruavClient {
                 case mavlink20.MAVLINK_MSG_ID_ATTITUDE:
                 {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
-                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll; // in radiuas
-                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch; // in radiuas
-                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.yaw;
+                    p_unit.m_Nav_Info.p_Orientation.roll = c_mavlinkMessage.roll; // in radiuas
+                    p_unit.m_Nav_Info.p_Orientation.pitch = c_mavlinkMessage.pitch; // in radiuas
+                    p_unit.m_Nav_Info.p_Orientation.yaw = c_mavlinkMessage.yaw;
+                    p_unit.m_Nav_Info.p_Orientation.roll_speed = c_mavlinkMessage.rollspeed; // in radiuas
+                    p_unit.m_Nav_Info.p_Orientation.pitch_speed = c_mavlinkMessage.pitchspeed; // in radiuas
+                    p_unit.m_Nav_Info.p_Orientation.yaw_speed = c_mavlinkMessage.yawspeed;
                     this.EVT_msgFromUnit_NavInfo(p_unit);
                 }
-                    break;
+                break;
 
                 case mavlink20.MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT:
                 {
@@ -2794,6 +2797,21 @@ class CAndruavClient {
                 }
                 break;
 
+                case mavlink20.MAVLINK_MSG_ID_MISSION_COUNT:
+                {
+                    p_unit.m_Nav_Info._Target.wp_count= c_mavlinkMessage.count;
+                }
+                break;
+
+                case mavlink20.MAVLINK_MSG_ID_MISSION_CURRENT:
+                {
+                    if ((c_mavlinkMessage.mission_type==null) || (c_mavlinkMessage.mission_type==mavlink20.MAV_MISSION_TYPE_MISSION))
+                    {
+                        p_unit.m_Nav_Info._Target.wp_num = c_mavlinkMessage.seq;
+                    }
+                }
+                break;
+
                 case mavlink20.MAVLINK_MSG_ID_TERRAIN_REPORT:
                 {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
@@ -2839,7 +2857,8 @@ class CAndruavClient {
                 {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed ;
-                    p_unit.m_Nav_Info.p_Location.airspeed = c_mavlinkMessage.airspeed ;
+                    p_unit.m_Nav_Info.p_Location.air_speed = c_mavlinkMessage.airspeed ;
+                    p_unit.m_Throttle = c_mavlinkMessage.throttle; //Current throttle setting (0 to 100).
                 }
                 break;
 
@@ -2949,10 +2968,10 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.altitude_amsl;
                     p_unit.m_Nav_Info.p_Location.alt_sp = c_mavlinkMessage.altitude_sp;
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed;
-                    p_unit.m_Nav_Info.p_Location.airspeed = c_mavlinkMessage.airspeed;
-                    p_unit.m_Nav_Info.p_Orientation.nav_roll = c_mavlinkMessage.roll * 0.01 * CONST_DEGREE_TO_RADIUS;
-                    p_unit.m_Nav_Info.p_Orientation.nav_pitch = c_mavlinkMessage.pitch  * 0.01  * CONST_DEGREE_TO_RADIUS;
-                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading  * 0.01   * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Location.air_speed = c_mavlinkMessage.airspeed;
+                    p_unit.m_Nav_Info.p_Orientation.roll = c_mavlinkMessage.roll * 0.01 * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.pitch = c_mavlinkMessage.pitch  * 0.01  * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.yaw = c_mavlinkMessage.heading  * 0.01   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.01 ; // deg
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.heading_sp * 0.01 ; //deg
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.wp_distance;
@@ -2974,7 +2993,7 @@ class CAndruavClient {
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
                     p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.altitude );
-                    p_unit.m_Nav_Info.p_Orientation.nav_yaw = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
+                    p_unit.m_Nav_Info.p_Orientation.yaw = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.target_heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info._Target.wp_dist = c_mavlinkMessage.target_distance;

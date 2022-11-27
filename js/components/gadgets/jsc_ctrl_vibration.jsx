@@ -123,7 +123,7 @@ export class CLSS_CTRL_VIBRATION extends React.Component {
         if (this.state.is_compact === true)
         {
             return (
-                <div className = {'css_margin_zero css_padding_zero fss-4 al_c text-white cursor_hand ' + this.getSingleCSS()} onClick={ (e) => this.fn_toggle()}>
+                <div className = {'css_margin_zero css_padding_zero  al_c text-white cursor_hand ' + this.getSingleCSS()} onClick={ (e) => this.fn_toggle()}>
                     VIB
                 </div>
             );
@@ -131,7 +131,7 @@ export class CLSS_CTRL_VIBRATION extends React.Component {
         else
         {
             return (
-            <div className = 'row  css_margin_zero css_padding_zero fss-4' onClick={ (e) => this.fn_toggle()}>
+            <div className = 'row  css_margin_zero css_padding_zero ' onClick={ (e) => this.fn_toggle()}>
             <div className = {'col-2  css_margin_zero css_padding_zero '+ css_VX.css} title ={'vibration X: ' + css_VX.value}>VX</div>
             <div className = {'col-2  css_margin_zero css_padding_zero '+ css_VY.css} title ={'vibration Y: ' + css_VY.value}>VY</div>
             <div className = {'col-2  css_margin_zero css_padding_zero '+ css_VZ.css} title ={'vibration Z: ' + css_VZ.value}>VZ</div>
