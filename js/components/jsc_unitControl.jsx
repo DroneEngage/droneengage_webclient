@@ -135,7 +135,7 @@ class CLSS_AndruavUnit extends React.Component {
         
         var v_speak = "change speed to ";
         // save target speed as indication.
-		p_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed = parseFloat(p_speed);
+		p_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed = parseFloat(p_speed);
         
         
         if (v_useMetricSystem == true) {
@@ -839,11 +839,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             }
             else if (distance > CONST_DFM_SAFE)
             {
-                v_distanceToMe_class = 'bg-warning';
+                v_distanceToMe_class = 'bg-info  text-white';
             }
             else
             {
-                v_distanceToMe_class = 'bg-info text-white';
+                v_distanceToMe_class = 'bg-success text-white';
             }
            
         }
@@ -935,16 +935,16 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         //     }
         //}
 						
-		if (v_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw==null)
+		if (v_andruavUnit.m_Nav_Info.p_Orientation.yaw==null)
         {
              v_yaw_text = 'hud - unknown';
              v_yaw_knob = '';
         }
         else 
         {
-            const c_yaw = (CONST_RADIUS_TO_DEGREE * ((v_andruavUnit.m_Nav_Info.p_Orientation.nav_yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1);
-            const c_pitch = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.nav_pitch) ).toFixed(1);
-            const c_roll = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.nav_roll) ).toFixed(1);
+            const c_yaw = (CONST_RADIUS_TO_DEGREE * ((v_andruavUnit.m_Nav_Info.p_Orientation.yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1);
+            const c_pitch = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.pitch) ).toFixed(1);
+            const c_roll = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.roll) ).toFixed(1);
             v_yaw_text = 'hud';
             v_yaw_knob.push(<CLSS_CTRL_HUD key={v_andruavUnit.partyID + "_hud"} id={v_andruavUnit.partyID + "_hud"} v_pitch={c_pitch} v_roll={c_roll} v_yaw={c_yaw}  title ='Pitch: {v_pitch}'/>);
           }
@@ -967,8 +967,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
         }
 
-		if ((v_andruavUnit.m_Nav_Info._Target.wp_dist == null) 
-        || (v_andruavUnit.m_Nav_Info._Target.wp_dist < 0 ))
+        const target = v_andruavUnit.m_Nav_Info._Target;
+
+		if ((target.wp_dist == null) 
+        || (target.wp_dist < 0 ))
         {
             wpdst_text = "na";
             distanceToWP_class = ' text-light ';
@@ -980,19 +982,20 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
             if (v_useMetricSystem==true)
             {
-                wpdst_text =   Number(v_andruavUnit.m_Nav_Info._Target.wp_dist.toFixed(1)).toLocaleString()  + ' m'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
+                wpdst_text =   Number(target.wp_dist.toFixed(1)).toLocaleString()  + ' m'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
             }
             else
             {
-                wpdst_text =  Number(v_andruavUnit.m_Nav_Info._Target.wp_dist * CONST_METER_TO_FEET).toFixed(1).toLocaleString() + ' ft'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
+                wpdst_text =  Number(target.wp_dist * CONST_METER_TO_FEET).toFixed(1).toLocaleString() + ' ft'; // >' + v_andruavUnit.m_Nav_Info._Target.wp_num;
             }
 
-            
-            if (v_andruavUnit.m_Nav_Info._Target.wp_dist > CONST_DFM_FAR)
+            wpdst_text += " >> " + target.wp_num + "/" + target.wp_count;
+
+            if (target.wp_dist > CONST_DFM_FAR)
             {
                 distanceToWP_class = ' bg-danger text-white cursor_hand ';
             }
-            else if (v_andruavUnit.m_Nav_Info._Target.wp_dist > CONST_DFM_SAFE)
+            else if (target.wp_dist > CONST_DFM_SAFE)
             {
                 distanceToWP_class = ' bg-warning cursor_hand ';
             }
@@ -1033,10 +1036,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
        
         var gps = this.hlp_getGPS (v_andruavUnit);
 
-        var v_targetspeed = parseFloat(v_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed).toFixed(2) + " m/s";
+        var v_targetspeed = parseFloat(v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed).toFixed(2) + " m/s";
         if (v_useMetricSystem == false) {
             // value stored in meters per seconds so convert it to miles per hour
-            v_targetspeed = (parseFloat(v_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed) * CONST_METER_TO_MILE).toFixed(2) + " mph";
+            v_targetspeed = (parseFloat(v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed) * CONST_METER_TO_MILE).toFixed(2) + " mph";
         }
 
         var imu=[];
@@ -1046,7 +1049,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <div className = 'row al_l css_margin_zero'>
                         <div className= 'col-3 user-select-none '>
                                 <p className=' rounded-3 text-warning cursor_hand textunit' title ='Ground Speed'>
-                                <span title={"decrease speed"} onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed - CONST_DEFAULT_SPEED_STEP )}>
+                                <span title={"decrease speed"} onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed - CONST_DEFAULT_SPEED_STEP )}>
                                     <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                     </svg>
@@ -1056,7 +1059,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                  {'GS: ' + v_speed_text}
                                  &nbsp;</b></small>
                                 </span>
-                                <span title="increase speed" onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_Orientation.m_NavSpeed + CONST_DEFAULT_SPEED_STEP )}>
+                                <span title="increase speed" onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed + CONST_DEFAULT_SPEED_STEP )}>
                                     <svg className="bi bi-caret-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
                                     </svg>
@@ -1102,7 +1105,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </p>
                         </div>
                         <div className= 'col-3 css_margin_zero user-select-none '>
-                            <p id='wpd' className={' rounded-3 textunit text-center ' + distanceToWP_class} title ='distance to next destination' >{'wp dist: '+ wpdst_text}</p>
+                            <p id='wpd' className={' rounded-3 textunit text-center ' + distanceToWP_class} title ='distance to next destination' >{'wp: '+ wpdst_text}</p>
                             
                         </div>
                         <div className= 'col-3 css_margin_zero user-select-none '>

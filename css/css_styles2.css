@@ -361,6 +361,7 @@ div#modal_ctrl_parameters #parameters_sublist
 	overflow-y: scroll !important;
 	height: 400px !important;
 	margin: 20px 5px  15px 5px !important;
+	text-align:center;
 }
 
 
