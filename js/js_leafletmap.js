@@ -40,6 +40,10 @@ class CLeafLetAndruavMap {
     };
 
 
+    fn_invalidateSize()
+    {
+        this.m_Map.invalidateSize();
+    }
 
     /**
     * Handle map initialization onLoad.
