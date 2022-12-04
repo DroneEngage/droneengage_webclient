@@ -328,6 +328,7 @@ function fn_handleKeyBoard() {
 			}
 
 			window.AndruavLibs.LocalStorage.fn_setDisplayMode(v_display_mode);
+			window.AndruavLibs.AndruavMap.fn_invalidateSize();
 		}
 
 		function fn_showControl() {
