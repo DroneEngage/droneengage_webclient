@@ -668,9 +668,9 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 </div>
             </div>
             <div className = 'col-1  css_margin_zero'>
-                <div className = {'row  css_margin_zero' + v_wp.wp_dist.css}>
-                    <div className = 'col-6  css_margin_zero text-white '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
-                    <div className = {'col-6  css_margin_zero text-white' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
+                <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
+                    <div className = 'col-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
+                    <div className = {'col-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
                 </div>
             </div>
             <div className = 'col-1  css_margin_zero'></div>
