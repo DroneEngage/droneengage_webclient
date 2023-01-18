@@ -2966,7 +2966,7 @@ function fn_handleKeyBoard() {
 
 		function fn_connect() {
 
-			if ((window.AndruavLibs.AndruavAuth.logined === true) && (v_connectState !== true)) {
+			if ((window.AndruavLibs.AndruavAuth.fn_logined() === true) && (v_connectState !== true)) {
 				window.AndruavLibs.AndruavAuth.fn_do_logoutAccount($('#txtEmail').val(), $('#txtAccessCode').val());
 				if (v_andruavClient != null) {
 					v_andruavClient.API_delMe();
@@ -2997,7 +2997,7 @@ function fn_handleKeyBoard() {
 			// create a group object
 			if (v_andruavClient == null) {
 
-				if (window.AndruavLibs.AndruavAuth.logined == false) return;
+				if (window.AndruavLibs.AndruavAuth.fn_logined() == false) return;
 				v_andruavClient = window.AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
 
 				v_andruavClient.partyID = $('#txtUnitID').val().replace('#','_');

@@ -50,6 +50,10 @@ class CAndruavAuth {
 
     }
 
+    fn_logined()
+    {
+        return this._m_logined;
+    }
 
     fn_getPermission() {
         return this._m_permissions_;
@@ -128,14 +132,14 @@ class CAndruavAuth {
 
     var v_res = null;
 	var Me = this;
-    fn_ajax({
+    $.ajax({
         url: _url,
         type: 'POST',
         data: p_keyValues,
         dataType: 'text',
 
         success: function (v__res) {
-            v_res = fn_json_parse(v__res);
+            v_res = JSON.parse(v__res);
 
             if (v_res.e == 0) {
                 Me._m_logined = true;
@@ -195,7 +199,7 @@ class CAndruavAuth {
 			dataType: "text",
 
 			success: function (v__res) {
-				v_res = fn_json_parse(v__res);
+				v_res = JSON.parse(v__res);
 
 				if (v_res.e == 0) {
 					window.AndruavLibs.EventEmitter.fn_dispatch(EE_Auth_Account_Created, v_res);
@@ -244,7 +248,7 @@ class CAndruavAuth {
         dataType: "text",
 
         success: function (v__res) {
-            v_res = fn_json_parse(v__res);
+            v_res = JSON.parse(v__res);
 
             if (v_res.e == 0) {
                 window.AndruavLibs.EventEmitter.fn_dispatch(EE_Auth_Account_Regenerated, v_res);
