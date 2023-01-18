@@ -771,7 +771,7 @@ var QueryString = function () {
 
 	function fn_connect () {	
 						
-						if ((window.AndruavLibs.AndruavAuth.logined===true) && (v_connectState !== true))
+						if ((window.AndruavLibs.AndruavAuth.fn_logined()===true) && (v_connectState !== true))
 						{
 							window.AndruavLibs.AndruavAuth.fn_do_logoutAccount( $('#txtEmail').val(), $('#txtAccessCode').val());
 							if (v_andruavClient != null)
