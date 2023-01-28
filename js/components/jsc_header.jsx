@@ -14,7 +14,7 @@ class CLSS_HeaderControl extends React.Component {
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                         <a className="navbar-brand" href="#">
                             <img src="./images/de/DE_logo_w_title.png" width="30" height="30" className="d-inline-block align-top" alt="" />
-                            Webclient
+                            DroneEngage
                         </a>
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav">
@@ -25,19 +25,16 @@ class CLSS_HeaderControl extends React.Component {
                                     <a className="nav-link" id='mapeditor' href="./mapeditor.html" target='_blank'>Geo Fence</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" id="andruavweb" href="https://cloud.ardupilot.org/webclient-web-plugin.html" target='_blank'>Drone-Engage WEB Plugin</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="https://cloud.ardupilot.org/" target='_blank' >MANUAL</a>
+                                    <a className="nav-link" href="https://cloud.ardupilot.org/" target='_blank' >Manual</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="https://cloud.ardupilot.org/de-faq.html" target='_blank' >FAQ</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="https://droneengage.com/contact.html" target='_blank' >CONTACT</a>
+                                    <a className="nav-link" href="https://droneengage.com/contact.html" target='_blank' >Contact</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="accounts.html" target='_blank' >ACCOUNT</a>
+                                    <a className="nav-link" href="accounts.html" target='_blank' >Account</a>
                                 </li>
                             </ul>
                         </div>
