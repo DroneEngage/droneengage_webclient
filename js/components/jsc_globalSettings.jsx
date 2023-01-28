@@ -142,10 +142,6 @@ class CLSS_Preferences extends React.Component {
 	{
       super ();
 
-      this.state = {
-        isChecked : window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()
-      };
-
       v_enable_tabs_display = window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled();
   }
 
@@ -190,7 +186,6 @@ class CLSS_Preferences extends React.Component {
   {
     const enabled = $('#check_advanced')[0].checked;
     window.AndruavLibs.LocalStorage.fn_setAdvancedOptionsEnabled(enabled);
-
     window.AndruavLibs.EventEmitter.fn_dispatch (EE_onAdvancedMode);
   }
 
@@ -199,6 +194,14 @@ class CLSS_Preferences extends React.Component {
     const enabled = $('#check_tabs_display')[0].checked;
     v_enable_tabs_display = enabled;
     window.AndruavLibs.LocalStorage.fn_setTabsDisplayEnabled(enabled);
+    window.AndruavLibs.EventEmitter.fn_dispatch (EE_onPreferenceChanged);
+  }
+
+  fn_enableGCS ()
+  {
+    const enabled = $('#check_gcs_display')[0].checked;
+    v_enable_gcs_display = enabled;
+    window.AndruavLibs.LocalStorage.fn_setGCSDisplayEnabled(enabled);
     window.AndruavLibs.EventEmitter.fn_dispatch (EE_onPreferenceChanged);
   }
 
@@ -223,6 +226,11 @@ class CLSS_Preferences extends React.Component {
 
   render () {
     var google_preference=[];
+    var v_speech_disabled = 'false';
+    if (window.AndruavLibs.LocalStorage.fn_getSpeechEnabled()===false)
+    {
+      v_speech_disabled = 'true';
+    }
 
     google_preference.push(<div className="row mb-12">
                             <label className="col-sm-4 col-form-label al_l " >Google Maps</label>
@@ -233,18 +241,23 @@ class CLSS_Preferences extends React.Component {
                           </div>);
       return (
           <fieldset>
-            <div className="row mb-12">
+            <div className="row mb-12 align-items-center">
               <label className="col-sm-4 col-form-label al_l" >Enable Speech</label>
               <input className="form-check-input col-sm-4 " type="checkbox" id="check_enable_speech" onClick={ () => this.fn_enableSpeech()} />
-              <input type="range" className="form-range col-sm-4 width_fit ps-5" id="volume_range" onChange={ () => this.fn_changeVolume()}/>
+              <label className="col-sm-4 col-form-label al_r" >Volume</label>
+              <input type="range" className="form-range col-sm-4 width_fit ps-5 " id="volume_range" disabled={v_speech_disabled}  onChange={ () => this.fn_changeVolume()}/>
             </div>
-            <div className="row mb-12">
-              <label className="col-sm-4 col-form-label al_l " >Tabs Display</label>
+            <div className="row mb-12 align-items-center">
+              <label className="col-sm-4 col-form-label al_l " >Toggle Tabs</label>
               <input className="form-check-input col-sm-8 " type="checkbox" id="check_tabs_display" onClick={ () => this.fn_enableTabsDisplay()} />
             </div>
-            <div className="row mb-12">
+            <div className="row mb-12 align-items-center">
               <label className="col-sm-4 col-form-label al_l " >Advanced Options</label>
               <input className="form-check-input col-sm-8 " type="checkbox" id="check_advanced" onClick={ () => this.fn_enableAdvanced()} />
+            </div>
+            <div className="row mb-12 align-items-center">
+              <label className="col-sm-4 col-form-label al_l " >Show Connected GCS</label>
+              <input className="form-check-input col-sm-8 " type="checkbox" id="check_advanced" onClick={ () => this.fn_enableGCS()} />
             </div>
           </fieldset>
           
@@ -457,7 +470,7 @@ class CLSS_GlobalSettings extends React.Component {
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#settings_profile"}>Mission</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#settings_preference"}>Preference</a>
+                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#settings_preference"}>Preferences</a>
                     </li>
                 </ul>
                 <div id="main_settings_tab" className="tab-content">
@@ -472,7 +485,6 @@ class CLSS_GlobalSettings extends React.Component {
                     </div>
                     <div className="tab-pane fade" id={"settings_preference"}>
                       <CLSS_Preferences/>
-                      <CLSS_DisplayItems/>
                     </div>
                 </div>
             
