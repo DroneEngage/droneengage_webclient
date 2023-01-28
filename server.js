@@ -11,8 +11,9 @@ const c_app   = http2Express(express);
 
 
 c_app.use(function(req, res, next) {
-    //res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
-    return next();
+    // //res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
+    // return next();
+    req.secure ? next() : res.redirect('https://' + req.headers.host + req.url)
 });
 
 const c_webport = 8001;

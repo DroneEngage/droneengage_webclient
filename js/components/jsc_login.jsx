@@ -6,7 +6,7 @@ const res_CLSS_LoginControl =
 		'1': 'Connect',
 		'2': 'Disconnect',
 		'3': 'Login',
-		'4': 'Access Code:',
+		'4': 'Password:',
 		'5': 'Connection URL'
 	},
 	'ar':
@@ -174,9 +174,9 @@ export class CLSS_LoginControl extends React.Component {
 						<div id='login_form' className="card-body">
 							<div className={this.state.is_connected == true ? "hidden" : " "} >
 								<div className="form-group al_l"><label htmlFor="txtEmail" id="email" className="text-white">Email</label><input type="email" id="txtEmail" name="txtEmail" className="form-control" defaultValue={QueryString.email != null ? QueryString.email : window.AndruavLibs.LocalStorage.fn_getEmail()} /></div>
-								<div className="form-group al_l"><label htmlFor="txtAccessCode" id="account" className="text-white">Access Code</label><input type="password" id="txtAccessCode" name="txtAccessCode" className="form-control" defaultValue={QueryString.accesscode != null ? QueryString.accesscode : window.AndruavLibs.LocalStorage.fn_getAccessCode()} /></div>
+								<div className="form-group al_l"><label htmlFor="txtAccessCode" id="account" className="text-white" title="Access Code" >Password</label><input type="password" id="txtAccessCode" title="Access Code" name="txtAccessCode" className="form-control" defaultValue={QueryString.accesscode != null ? QueryString.accesscode : window.AndruavLibs.LocalStorage.fn_getAccessCode()} /></div>
 								<div className="form-group al_l hidden"><label id="group" className="text-white">Group Name</label> <input type="text" id="txtGroupName" name="txtGroupName" className="form-control" defaultValue={QueryString.groupName != null ? QueryString.groupName : window.AndruavLibs.LocalStorage.fn_getGroupName()} /></div>
-								<div className="form-group al_l"><label id="unitID" className="text-muted">Unit ID</label><input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName != null ? QueryString.unitName : window.AndruavLibs.LocalStorage.fn_getUnitID() + "_" + fn_generateRandomString(2)} /></div>
+								<div className="form-group al_l"><label id="unitID" className="text-muted">GCS ID</label><input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName != null ? QueryString.unitName : window.AndruavLibs.LocalStorage.fn_getUnitID() + "_" + fn_generateRandomString(2)} /></div>
 								<br />
 							</div>
 							<div id='login_btn mb-2 ' className='text-center'>

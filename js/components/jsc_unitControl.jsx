@@ -889,7 +889,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         
         if (p_andruavUnit.m_Telemetry.m_udpProxy_active === true)
         {
-            res.btn_tele_class          = " btn-dark disabled ";
+            res.btn_tele_class          = " btn-dark hidden disabled ";
             res.btn_tele_text           = "Tele On";
         }
         else
@@ -910,7 +910,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         && (p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != CONST_RC_SUB_ACTION_JOYSTICK_CHANNELS_GUIDED))
         {   
             res.btn_rx_class          = " btn-primary ";
-            res.btn_rx_text           = "RX Off";
+            res.btn_rx_text           = "R/C Off";
             res.btn_rx_title          = "Press to take control using Web - TX";
         }
 
@@ -921,14 +921,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             if (p_andruavUnit.m_Telemetry.m_rxEngaged == true)
             {
                 res.btn_rx_class          = " btn-danger ";
-                res.btn_rx_text           = " RX On";
+                res.btn_rx_text           = " R/C On";
                 res.btn_rx_title          = " You control this drone using Web - TX";
 
             }
             else   
             {
                 res.btn_rx_class          = " btn-outline-warning ";
-                res.btn_rx_text           = " RX Off";
+                res.btn_rx_text           = " R/C Off";
                 res.btn_rx_title          = "Drone is being controller by another GCS";
             }
         }
@@ -938,14 +938,14 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             if (p_andruavUnit.m_Telemetry.m_rxEngaged == true)
             {
                 res.btn_rx_class          = " btn-danger ";
-                res.btn_rx_text           = " RX On";
+                res.btn_rx_text           = " R/C On";
                 res.btn_rx_title          = " You control this drone using Web - TX";
 
             }
             else   
             {
                 res.btn_rx_class          = " btn-outline-warning hidden";
-                res.btn_rx_text           = " RX Off";
+                res.btn_rx_text           = " R/C Off";
                 res.btn_rx_title          = "Drone is being controller by another GCS";
             }
         }
@@ -1227,7 +1227,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 						
 		if (v_andruavUnit.m_Nav_Info.p_Orientation.yaw==null)
         {
-             v_yaw_text = 'hud - unknown';
+             v_yaw_text = 'HUD - unknown';
              v_yaw_knob = '';
         }
         else 
@@ -1235,7 +1235,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             const c_yaw = (CONST_RADIUS_TO_DEGREE * ((v_andruavUnit.m_Nav_Info.p_Orientation.yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1);
             const c_pitch = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.pitch) ).toFixed(1);
             const c_roll = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.roll) ).toFixed(1);
-            v_yaw_text = 'hud';
+            v_yaw_text = 'HUD';
             v_yaw_knob.push(<CLSS_CTRL_HUD key={v_andruavUnit.partyID + "_hud"} id={v_andruavUnit.partyID + "_hud"} v_pitch={c_pitch} v_roll={c_roll} v_yaw={c_yaw}  title ='Pitch: {v_pitch}'/>);
           }
 
@@ -1361,7 +1361,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 <p id='gps' className={' rounded-3 textunit text-center cursor_hand  ' + gps.m_gps_class} title ={gps.m_gps_status} onClick={ (e) => fn_switchGPS(v_andruavUnit.partyID)} >{gps.m_gps_source + gps.m_gps_text + ' ' + gps.m_gps_text2}</p>
                         </div>
                         <div className= 'col-3 user-select-none '>
-                                  <p id='dfm' className={' rounded-3 text-center textunit ' + v_distanceToMe_class} title ='Unit distance from Me' >{"dfm: " + v_distanceToMe_text}</p>
+                                  <p id='DFM' className={' rounded-3 text-center textunit ' + v_distanceToMe_class} title ="Unit's distance from Me (Browser Location)" >{"DFM: " + v_distanceToMe_text}</p>
                          </div>
                         <div className= 'col-3 user-select-none '>
                         <p id='fence' className={'rounded-3 textunit text-center cursor_hand ' + v_fence_class} title ='Fence Violation Status' onClick={ (e) => fn_openFenceManager(v_andruavUnit.partyID)} >{v_fence_text}</p>
@@ -1395,7 +1395,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </p>
                         </div>
                         <div className= 'col-3 css_margin_zero user-select-none '>
-                            <p id='wpd' className={' rounded-3 textunit text-center ' + distanceToWP_class} title ='distance to next destination' >{'wp: '+ wpdst_text}</p>
+                            <p id='wpd' className={' rounded-3 textunit text-center ' + distanceToWP_class} title ='Distance to next waypoint' >{'wp: '+ wpdst_text}</p>
                             
                         </div>
                         <div className= 'col-3 css_margin_zero user-select-none '>
@@ -1404,17 +1404,17 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     </div>
 
                     <div className = 'row al_l bg-gradient css_margin_zero user-select-none '>
-                        <div className= 'col-4  margin_2px padding_zero'>
+                        <div className= 'col-4   padding_zero'>
                                 <p id='yaw' className=' rounded-3 text-white css_margin_zero '><small>{v_yaw_text}</small></p><div id ='imu_v_yaw_knob'>{v_yaw_knob}</div>
                         </div>
-                        <div className= 'col-3 margin_2px padding_zero'>
+                        <div className= 'col-2  padding_zero'>
                                 <p id='bearing' className=' rounded-3 text-white css_margin_zero '><small>{v_bearing_text}</small></p>
                                 <div id='bearing_main' className='css_margin_zero'>
                                 <div id='bearingknob' >{v_bearing_knob}</div>
                                 <div id='bearingtargetknob' >{v_bearingTarget_knob}</div>
                                 </div>
                         </div>
-                        <div className= 'col-3  margin_2px padding_zero css_user_select_text'>
+                        <div className= 'col-4   padding_zero css_user_select_text'>
                             <div className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
                                 <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
                                 <p className=' rounded-3 text-warning cursor_hand textunit' title ='Smart Telemetry'>
@@ -1437,17 +1437,17 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </div>
                             </div>
                             <div className = 'row al_l css_margin_zero css_user_select_text'>
-                                <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
+                                <div className= 'col-12   padding_zero css_user_select_text'>
                                     <p id='udpproxy_t' className={ v_udpproxy_class + ' css_margin_zero css_user_select_text'}>Smart Telemetry</p>
                                     <p id='udpproxy_a' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_ip}</p>
                                     <p id='udpproxy_p' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_port}</p>
                                 </div>
                             </div>
                         </div>
-                        <div className= 'col-1  margin_2px padding_zero'>
+                        <div className= 'col-1   padding_zero'>
                         {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
                         </div>
-                        <div className= 'col-1  margin_2px padding_zero'>
+                        <div className= 'col-1   padding_zero'>
                         </div>
                     </div>
 
@@ -1477,7 +1477,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
 
             return (
-                <div id='ctrl_k' className='text-center'>
+                <div id='ctrl_k' className='text-center '>
                     <p className="text-danger bg-black user-select-none">BLOCKED By RC in the Field</p> 
                 </div>
             );
@@ -1499,7 +1499,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
         ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
                     <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
-                    <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Load Waypoints from Drone">L-WP</button>
+                    <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Read Waypoints from Drone">R-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
                     <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
                     <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
@@ -1513,7 +1513,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         
 
         return (
-            <div id='ctrl_k' className='ps-2'>
+            <div id='ctrl_k' className='ps-2 pb-2'>
             <div className= 'row'>
             {ctrl_flight_controller}
             </div>
@@ -1708,9 +1708,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
              <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none'>        	
                 <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={"version:" + v_andruavUnit.m_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
-                <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='take image from mobile' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
-                <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='stream video from mobile' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
-                <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='record video on drone mobile' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='Start Recording on Drone' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
                 {rows}
             </div>
              
