@@ -1638,7 +1638,7 @@ class CAndruavClient {
 
     fn_parseJSONMessage(JsonMessage) {
 
-        var p_jmsg = fn_json_parse(JsonMessage); // PHP sends Json data
+        var p_jmsg = JSON.parse(JsonMessage); // PHP sends Json data
 
         var message = {
             _ty: p_jmsg.ty,
@@ -1691,7 +1691,7 @@ class CAndruavClient {
                     return;
                 }
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                    p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                    p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                 }
                 p_unit.m_GPS_Info1.m_isValid = true;
                 p_unit.m_GPS_Info1.GPS3DFix = p_jmsg['3D'];
@@ -1724,7 +1724,7 @@ class CAndruavClient {
             case CONST_TYPE_AndruavMessage_CameraFlash: {
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     if (p_unit == null) {
                         Me.API_requestID(msg.senderName);
@@ -1740,7 +1740,7 @@ class CAndruavClient {
             case CONST_TYPE_AndruavMessage_CameraZoom: {
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     if (p_unit == null) {
                         Me.API_requestID(msg.senderName);
@@ -1756,7 +1756,7 @@ class CAndruavClient {
             case CONST_TYPE_AndruavMessage_CameraList: {
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     if (p_unit == null) {
                         Me.API_requestID(msg.senderName);
@@ -1818,7 +1818,7 @@ class CAndruavClient {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
 
                     if (p_unit != null) {
@@ -2028,7 +2028,7 @@ class CAndruavClient {
 
                 p_jmsg = msg.msgPayload;
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                    p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                    p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                 }
                 switch (p_jmsg.C) {
                     case CONST_TYPE_AndruavMessage_ID:
@@ -2038,7 +2038,7 @@ class CAndruavClient {
 
 
                     case CONST_RemoteCommand_CLEAR_FENCE_DATA:
-                        // ////var jmsg = fn_json_parse(msg.msgPayload);
+                        // ////var jmsg = JSON.parse(msg.msgPayload);
                         if (p_jmsg.hasOwnProperty('fn')) { // fence name
                             var fenceName = p_jmsg.n;
                             Me.andruavGeoFences[fenceName];
@@ -2073,7 +2073,7 @@ class CAndruavClient {
 
                 p_jmsg = msg.msgPayload;
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                    p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                    p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                 }p_unit.m_Power._Mobile.p_Battery.BatteryLevel = p_jmsg.BL;
                 p_unit.m_Power._Mobile.p_Battery.Voltage = p_jmsg.V;
                 p_unit.m_Power._Mobile.p_Battery.BatteryTemperature = p_jmsg.BT;
@@ -2108,7 +2108,7 @@ class CAndruavClient {
                     var m_shouldKeepOutside = false;
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     this.prv_parseFenceInfo(null, p_jmsg);
 
@@ -2123,7 +2123,7 @@ class CAndruavClient {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }p_unit.m_Geo_Tags.p_HomePoint.m_isValid = true;
                     p_unit.m_Geo_Tags.p_HomePoint.lat = p_jmsg.T;
                     p_unit.m_Geo_Tags.p_HomePoint.lng = p_jmsg.O;
@@ -2141,7 +2141,7 @@ class CAndruavClient {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }p_unit.m_Geo_Tags.p_DestinationPoint.m_isValid = true;
                     p_unit.m_Geo_Tags.p_DestinationPoint.lat = p_jmsg.T;
                     p_unit.m_Geo_Tags.p_DestinationPoint.lng = p_jmsg.O;
@@ -2159,7 +2159,7 @@ class CAndruavClient {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     this.prv_parseFenceInfo(p_unit, p_jmsg); //msg.msgPayload);
                 }
@@ -2173,7 +2173,7 @@ class CAndruavClient {
                     }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     var geoFenceAttachStatus = {};
                     geoFenceAttachStatus.fenceName = p_jmsg.n;
@@ -2226,7 +2226,7 @@ class CAndruavClient {
                     }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     var geoFenceHitInfo = {
                         hasValue: true,
@@ -2324,7 +2324,7 @@ class CAndruavClient {
                     }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }Me.EVT_msgFromUnit_WayPointsUpdated(p_unit, p_jmsg.P, p_jmsg.R);
 
 
@@ -2340,7 +2340,7 @@ class CAndruavClient {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     var signal = p_jmsg.w || p_jmsg;
                     Me.EVT_andruavSignalling(p_unit, signal);
@@ -2356,7 +2356,7 @@ class CAndruavClient {
                     var v_error = {};
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
                     v_error.errorNo = p_jmsg.EN;
                     v_error.infoType = p_jmsg.IT;
@@ -2377,7 +2377,7 @@ class CAndruavClient {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
 
                     var v_isChunck = WAYPOINT_NO_CHUNK;
@@ -2500,7 +2500,7 @@ class CAndruavClient {
                     }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
-                        p_jmsg = fn_json_parse(msg.msgPayload); // Internal message JSON
+                        p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
 
                     /*var navInfo = { nav_roll: jmsg.a,
@@ -3079,7 +3079,7 @@ class CAndruavClient {
                     if (andruavCMD.hasOwnProperty('ms')===false)
                     {   // backward compatibility with ANDRUAV   
                         try {
-                            v_andruavMessage = fn_json_parse(out.text);
+                            v_andruavMessage = JSON.parse(out.text);
                         } catch (err) {
                             fn_console_log(err);
                             v_andruavMessage = new Object();
@@ -3127,7 +3127,7 @@ class CAndruavClient {
             byteLength = contents.byteLength;
             var out = prv_extractString(data, 0, byteLength);
             // extract command:
-            andruavCMD = fn_json_parse(out.text);
+            andruavCMD = JSON.parse(out.text);
             p_jmsg = Me.fn_parseJSONMessage(out.text);
             v_unit = Me.m_andruavUnitList.fn_getUnit(fn_getFullName(p_jmsg.groupID, p_jmsg.senderName));
             if ((v_unit == null) && (p_jmsg.messageType != CONST_TYPE_AndruavMessage_ID)) {
