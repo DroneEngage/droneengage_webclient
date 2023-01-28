@@ -337,10 +337,6 @@ String.prototype._fn_hexDecode = function(){
     return back;
 }
 
-function fn_json_parse (p_parameters)
-{
-    return JSON.parse (p_parameters);
-}
 
 function  fn_loadCss (path) {
         var style = doc.createElement('link');
