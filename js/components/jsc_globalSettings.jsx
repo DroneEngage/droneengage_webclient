@@ -257,7 +257,7 @@ class CLSS_Preferences extends React.Component {
             </div>
             <div className="row mb-12 align-items-center">
               <label className="col-sm-4 col-form-label al_l " >Show Connected GCS</label>
-              <input className="form-check-input col-sm-8 " type="checkbox" id="check_advanced" onClick={ () => this.fn_enableGCS()} />
+              <input className="form-check-input col-sm-8 " type="checkbox" id="check_gcs_display" onClick={ () => this.fn_enableGCS()} />
             </div>
           </fieldset>
           
