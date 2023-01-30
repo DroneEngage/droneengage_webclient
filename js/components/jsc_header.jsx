@@ -10,7 +10,7 @@ class CLSS_HeaderControl extends React.Component {
     render() {
         return (
             <div className = 'row  css_padding_zero bg-dark'>
-                <div className = 'col-lg-7  col-sm-3 css_margin_zero css_padding_zero'>
+                <div className = 'col-lg-7  col-sm-2 css_margin_zero css_padding_zero'>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                         <a className="navbar-brand" href="#">
                             <img src="./images/de/DE_logo_w_title.png" width="30" height="30" className="d-inline-block align-top" alt="" />
@@ -40,7 +40,7 @@ class CLSS_HeaderControl extends React.Component {
                         </div>
                     </nav>
                 </div>
-                <div className='col-lg-4  col-sm-5   css_margin_zero css_padding_zero al_r'>
+                <div className='col-lg-4  col-sm-6   css_margin_zero css_padding_zero al_r'>
                     <CLSS_CTRL_Layout/>     
                 </div>
                 <div className='col-lg-1  col-sm-4   css_margin_zero  al_r'>
