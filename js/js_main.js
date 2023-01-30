@@ -261,9 +261,10 @@ function fn_handleKeyBoard() {
 				case 0:
 					// Classic View
 					$('#row_2').show();
-					$('#row_1').removeClass('col-12');
-					$('#row_1').removeClass('col-8');
-					$('#row_1').addClass('col-8');
+					$('#row_1').removeClass();
+					$('#row_2').removeClass();
+					$('#row_1').addClass('col-lg-8 col-xl-8 col-xxl-8 col-12');
+					$('#row_2').addClass('col-lg-4 col-xl-4 col-xxl-4 col-12');
 					
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();
@@ -274,8 +275,7 @@ function fn_handleKeyBoard() {
 				case 1:
 					// Map or Camera Only
 					$('#row_2').hide();
-					$('#row_1').removeClass('col-12');
-					$('#row_1').removeClass('col-8');
+					$('#row_1').removeClass();
 					$('#row_1').addClass('col-12');
 					
 					$('#div_map_view').show();
@@ -288,8 +288,7 @@ function fn_handleKeyBoard() {
 				case 2:
 					// Vehicle List
 					$('#row_2').hide();
-					$('#row_1').removeClass('col-12');
-					$('#row_1').removeClass('col-8');
+					$('#row_1').removeClass();
 					$('#row_1').addClass('col-12');
 					
 					$('#div_map_view').hide();
@@ -301,8 +300,7 @@ function fn_handleKeyBoard() {
 				case 3:
 					// Map/Camera + Vehicle List
 					$('#row_2').hide();
-					$('#row_1').removeClass('col-12');
-					$('#row_1').removeClass('col-8');
+					$('#row_1').removeClass();
 					$('#row_1').addClass('col-12');
 					
 					$('#div_map_view').show();
@@ -315,9 +313,11 @@ function fn_handleKeyBoard() {
 				case 4:
 					// Map/Camera + Control + Vehicle List
 					$('#row_2').show();
-					$('#row_1').removeClass('col-12');
-					$('#row_1').removeClass('col-8');
-					$('#row_1').addClass('col-8');
+					$('#row_1').removeClass();
+					$('#row_2').removeClass();
+					$('#row_1').addClass('col-lg-8 col-xl-8 col-xxl-8 col-12');
+					$('#row_2').addClass('col-lg-4 col-xl-4 col-xxl-4 col-12');
+					
 					
 					$('#div_map_view').show();
 					$('#andruav_unit_list_array_fixed').hide();

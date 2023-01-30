@@ -105,7 +105,7 @@ export class CLSS_CTRL_HUD extends React.Component {
         return (
             <div id={this.props.id} className='css_hud_div'>
                 <div className = 'row al_l css_margin_zero'>
-                    <div className= 'col-6   css_margin_zero'>
+                    <div className= 'col-6  css_margin_zero d-flex '>
                         <ul className ='css_hud_bullets'>
                             <li><span className='text-white'>R:</span><span className='text-warning'>{this.props.v_roll}º</span></li>
                             <li><span className='text-white'>P:</span><span className='text-warning'>{this.props.v_pitch}º</span></li>

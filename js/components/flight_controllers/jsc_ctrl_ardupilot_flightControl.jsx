@@ -470,7 +470,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
         switch (this.props.v_andruavUnit.m_VehicleType)
         {
             case  VEHICLE_PLANE:
-                ctrl.push(<div key={this.props.id+"rc1"} id={this.props.id+"rc1"}  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key={this.props.id+"rc1"} id={this.props.id+"rc1"}  className= 'col-12  al_l ctrldiv'><div className='btn-group ddd flex-wrap '>
                     <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(this.props.v_andruavUnit)}>&nbsp;ARM&nbsp;</button>
                     <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(this.props.v_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
                     <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(this.props.v_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
@@ -483,7 +483,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(this.props.v_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     </div></div>);
         
-                ctrl.push(<div key={this.props.id+"rc2"}  id={this.props.id+"rc2"}  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key={this.props.id+"rc2"}  id={this.props.id+"rc2"}  className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
                     <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(this.props.v_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(this.props.v_andruavUnit)}>&nbsp;Manual&nbsp;</button>
                     <button id='btn_stabilize' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_stabilize_class } onClick={ (e) => this.fn_doStabilize(this.props.v_andruavUnit)}>&nbsp;Stabilize&nbsp;</button>
@@ -498,7 +498,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     </div></div>);
             
             
-                ctrl.push(<div key={this.props.id+"rc22"} id={this.props.id+"rc22"}   className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key={this.props.id+"rc22"} id={this.props.id+"rc22"}   className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
                     <button id='btn_q_sblt' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_q_stabilize } onClick={ (e) => this.fn_doQStabilize(this.props.v_andruavUnit)}>&nbsp;QStab&nbsp;</button>
                     <button id='btn_q_loiter' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_loiter } onClick={ (e) => this.fn_doQLoiter(this.props.v_andruavUnit)}>&nbsp;QLoiter&nbsp;</button>
                     <button id='btn_q_hover' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_q_hover } onClick={ (e) => this.fn_doQHover(this.props.v_andruavUnit)}>&nbsp;QHover&nbsp;</button>
@@ -510,7 +510,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                 break;
                 
             default:
-                ctrl.push(<div key={this.props.id+"rc1"}  id={this.props.id+"rc1"}  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key={this.props.id+"rc1"}  id={this.props.id+"rc1"}  className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
                     <button id='btn_arm' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_arm_class}  title='ARM / DISARM' onClick={ () => this.fn_ToggleArm(this.props.v_andruavUnit)}>&nbsp;ARM&nbsp;</button>
                     <button id='btn_climb' type='button' className={'btn btn-sm  flgtctrlbtn '  + btn.btn_climb_class } onClick={ (e) => fn_changeAltitude(this.props.v_andruavUnit)}>&nbsp;{btn.btn_climb_text}&nbsp;</button>
                     <button id='btn_takeoff' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_takeoff_class } onClick={ (e) => this.fn_doTakeOffPlane(this.props.v_andruavUnit)}>&nbsp;TakeOff&nbsp;</button>
@@ -522,7 +522,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     <button id='btn_hold' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_hold_class } onClick={ (e) => this.fn_doHold(this.props.v_andruavUnit)}>&nbsp;Hold&nbsp;</button>
                     </div></div>);
         
-                ctrl.push(<div key={this.props.id+"rc2"}   id={this.props.id+"rc2"}  className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+                ctrl.push(<div key={this.props.id+"rc2"}   id={this.props.id+"rc2"}  className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
                     <button id='btn_posh' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_pos_hold_class } onClick={ (e) => this.fn_doPosHold(this.props.v_andruavUnit)}>&nbsp;Pos-H&nbsp;</button>
                     <button id='btn_loiter' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_loiter_class } onClick={ (e) => this.fn_doLoiter(this.props.v_andruavUnit)}>&nbsp;Loiter&nbsp;</button>
                     <button id='btn_manual' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_manual_class } onClick={ (e) => this.fn_doManual(this.props.v_andruavUnit)}>&nbsp;Manual&nbsp;</button>

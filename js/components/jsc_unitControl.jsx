@@ -1336,7 +1336,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         // https://icons.getbootstrap.com/icons/caret-down-fill/
         imu.push (
                 <div key='imu_1' id='imu_1' className= 'row al_l  css_margin_zero '>
-                    <div className = 'row al_l css_margin_zero'>
+                    <div className = 'row al_l css_margin_zero d-flex '>
                         <div className= 'col-3 user-select-none '>
                                 <p className=' rounded-3 text-warning cursor_hand textunit' title ='Ground Speed'>
                                 <span title={"decrease speed"} onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed - CONST_DEFAULT_SPEED_STEP )}>
@@ -1368,7 +1368,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         </div>
                     </div>
 
-                    <div className = 'row al_l css_margin_zero'>
+                    <div className = 'row al_l css_margin_zero d-flex '>
                         <div className= 'col-3 user-select-none user-select-none '>
                                   <p id='alt'   className=' rounded-3 cursor_hand textunit text-warning' >
                                         <span title={"decrease altitude"} onClick={ (e) => this.fn_doChangeAltitudeByStep(v_andruavUnit, v_andruavUnit.m_Nav_Info.p_Location.alt - fn_convertToMeter(window.AndruavLibs.LocalStorage.fn_getDefaultAltitude()) )}>
@@ -1407,7 +1407,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <div className= 'col-4   padding_zero'>
                                 <p id='yaw' className=' rounded-3 text-white css_margin_zero '><small>{v_yaw_text}</small></p><div id ='imu_v_yaw_knob'>{v_yaw_knob}</div>
                         </div>
-                        <div className= 'col-2  padding_zero'>
+                        <div className= 'col-3  padding_zero'>
                                 <p id='bearing' className=' rounded-3 text-white css_margin_zero '><small>{v_bearing_text}</small></p>
                                 <div id='bearing_main' className='css_margin_zero'>
                                 <div id='bearingknob' >{v_bearing_knob}</div>
@@ -1447,8 +1447,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <div className= 'col-1   padding_zero'>
                         {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
                         </div>
-                        <div className= 'col-1   padding_zero'>
-                        </div>
+                        
                     </div>
 
                 </div>);
@@ -1497,7 +1496,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             break;
         }
 
-        ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group '>
+        ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
                     <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Read Waypoints from Drone">R-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
@@ -1706,7 +1705,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
      return (
             
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
-             <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none'>        	
+             <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none d-none d-md-flex'>        	
                 <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={"version:" + v_andruavUnit.m_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
                 <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
@@ -1752,6 +1751,7 @@ class CLSS_AndruavUnitList extends React.Component {
 		super ();
 		this.state = {
 			andruavUnitPartyIDs : [],
+            rnd:Math.random()
 		};
 
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onPreferenceChanged, this, this.fn_onPreferenceChanged);
@@ -1880,7 +1880,7 @@ class CLSS_AndruavUnitList extends React.Component {
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
-            unit.push (<div key={unit.length} className='text-center' >NO ONLINE UNITS</div>);
+            unit.push (<div key={unit.length + this.state.rnd} className='text-center' >NO ONLINE UNITS</div>);
         }
         else 
         {
@@ -1942,3 +1942,7 @@ ReactDOM.render(
 			v_G_getElementById('andruavUnitList')
         );
         
+        // ReactDOM.render(
+		// 	<CLSS_AndruavUnitList key={'AUL'} />,
+		// 	v_G_getElementById('andruavUnitList2')
+        // );
