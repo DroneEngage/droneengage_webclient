@@ -245,7 +245,7 @@ class CLSS_Preferences extends React.Component {
               <label className="col-sm-4 col-form-label al_l" >Enable Speech</label>
               <input className="form-check-input col-sm-4 " type="checkbox" id="check_enable_speech" onClick={ () => this.fn_enableSpeech()} />
               <label className="col-sm-4 col-form-label al_r" >Volume</label>
-              <input type="range" className="form-range col-sm-4 width_fit ps-5 " id="volume_range" disabled={v_speech_disabled}  onChange={ () => this.fn_changeVolume()}/>
+              <input type="range" className="form-range col-sm-4 width_fit ps-5 " id="volume_range" disabled={v_speech_disabled=='true'}  onChange={ () => this.fn_changeVolume()}/>
             </div>
             <div className="row mb-12 align-items-center">
               <label className="col-sm-4 col-form-label al_l " >Toggle Tabs</label>
