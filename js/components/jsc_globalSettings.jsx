@@ -399,7 +399,7 @@ class CLSS_GlobalSettings extends React.Component {
                   <div className="form-inline">
                     <div className="form-group">
                       <div>
-                        <label htmlFor="txt_defaultAltitude" className="user-select-none text-white"><small>Alt&nbsp;Step</small></label>
+                        <label htmlFor="txt_defaultAltitude" className="user-select-none text-white txt_label_width"><small>Alt&nbsp;Step</small></label>
                         <input id="txt_defaultAltitude" type="number" min={parseInt(CONST_DEFAULT_ALTITUDE_min)} className="form-control input-xs input-sm"  onChange={(e) => this.onChange(e)}  value={this.state.CONST_DEFAULT_ALTITUDE} />
                         <button id="btn_defaultAltitude" className="btn btn-secondary btn-sm" type="button" onClick={ (e) => this.clickToggleUnit(e) }>{this.state.m_unitText}</button>
                       </div>
@@ -410,7 +410,7 @@ class CLSS_GlobalSettings extends React.Component {
                   <div className="form-inline">
                     <div className="form-group">
                         <div>
-                          <label htmlFor="txt_defaultCircle" className="user-select-none text-white"><small>Radius</small></label>
+                          <label htmlFor="txt_defaultCircle" className="user-select-none text-white txt_label_width"><small>Radius</small></label>
                           <input id="txt_defaultCircle" type="number" min={parseInt(CONST_DEFAULT_RADIUS_min)} className="form-control input-xs input-sm"  onChange={(e) => this.onChange(e)}  value={this.state.CONST_DEFAULT_RADIUS}/>
                           <button id="btn_defaultCircle" className="btn btn-secondary btn-sm" type="button"  onClick={ (e) => this.clickToggleUnit(e) }>{this.state.m_unitText}</button>
                         </div>
@@ -443,20 +443,6 @@ class CLSS_GlobalSettings extends React.Component {
     v_uploadFile.push ();
     
   
-  v_telemetryModes.push (
-            <div  key="v_telemetryModes"  className="row mt-2  ">
-                <div className={"col-xs-12 col-sm-12 col-lg-12 text-center" + tele}>
-                  <p className = 'user-select-none text-white mt-2 mb-1'>Smart Telemetry</p>
-                  <div  role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-danger btn-sm ctrlbtn "   title='No Traffics Optimization [ALL DATA]' onClick={ (e) => this.updateSmartTelemetry(e,0) }>OFF</button>
-                    <button type="button" className="btn btn-warning btn-sm ctrlbtn"  title='Low traffic optimization' onClick={ (e) => this.updateSmartTelemetry(e,1) }>LVL 1</button>
-                    <button type="button" className="btn btn-success btn-sm ctrlbtn"  title='Mid traffic optimization [recommended]' onClick={ (e) => this.updateSmartTelemetry(e,2) }>LVL 2</button>
-                    <button type="button" className="btn btn-success btn-sm ctrlbtn"  title='High traffic optimization' onClick={ (e) => this.updateSmartTelemetry(e,3) }>LVL 3</button>
-                    <button type="button" className="btn btn-primary btn-sm ctrlbtn"  title='use settings defined in drone mobile' onClick={ (e) => this.updateSmartTelemetry(e,-1) }>Drone</button>
-                  </div>
-                </div>
-            </div>
-    );
   return (
      <div key='g1' className="row margin_zero">
             <div className="card text-white  border-light mb-3 padding_zero" >
