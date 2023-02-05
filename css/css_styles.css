@@ -138,13 +138,10 @@ h1.font-thin
 	margin-right: 10px;
 }
 
-/* .modal-title 
+.txt_label_width
 {
-	padding-left: 5px !important;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	
-} */
+	min-width: 45px;
+}
 
 .width_fit
 {
