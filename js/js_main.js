@@ -3084,7 +3084,7 @@ function fn_handleKeyBoard() {
 				v_andruavClient.EVT_OnTelemetryIn 					= EVT_OnTelemetryIn;
 				fn_console_log(c_SOCKET_STATUS);
 
-				v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.sid);
+				v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.fn_getSessionID());
 			}
 			else {
 				v_andruavClient.API_delMe();
