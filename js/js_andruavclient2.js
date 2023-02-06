@@ -942,9 +942,7 @@ class CAndruavClient {
             DS: this.m_andruavUnit.Description,
             p: this._permissions_
         };
-        if (window._localserver == true) {
-            msg.p = "D1G0T3R4V5C6";
-        }
+        
         this.API_sendCMD(p_target, CONST_TYPE_AndruavMessage_ID, msg);
     };
 
