@@ -495,6 +495,7 @@ class CAndruavUnitObject
 		this.m_telemetry_protocol 		= CONST_No_Telemetry;
 		this.m_enum_userStatus 			= 0;	
 		this.m_version 					= "null";
+		this.m_modules					= [];
 		this.init();
 	}
 

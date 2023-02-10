@@ -2001,9 +2001,11 @@ function fn_handleKeyBoard() {
 		}
 
 		function EVT_andruavUnitVehicleTypeUpdated(p_andruavUnit) {
-
 			AndruavLibs.AndruavMap.fn_setVehicleIcon(p_andruavUnit.p_marker, getVehicleIcon(p_andruavUnit, (CONST_MAP_GOOLE === true)));
-			
+		}
+
+		function EVT_andruavUnitModuleUpdated (p_andruavUnit) {
+			//TODO: 
 		}
 
 		function EVT_andruavUnitArmedUpdated(p_andruavUnit) {
@@ -3081,6 +3083,7 @@ function fn_handleKeyBoard() {
 				v_andruavClient.EVT_andruavUnitFlyingUpdated 		= EVT_andruavUnitFlyingUpdated;
 				v_andruavClient.EVT_andruavUnitFightModeUpdated 	= EVT_andruavUnitFightModeUpdated;
 				v_andruavClient.EVT_andruavUnitVehicleTypeUpdated 	= EVT_andruavUnitVehicleTypeUpdated;
+				v_andruavClient.EVT_andruavUnitModuleUpdated 		= EVT_andruavUnitModuleUpdated;
 				v_andruavClient.EVT_OnTelemetryIn 					= EVT_OnTelemetryIn;
 				fn_console_log(c_SOCKET_STATUS);
 
