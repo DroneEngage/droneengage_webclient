@@ -383,7 +383,7 @@ class CAndruavClient {
         this.EVT_andruavUnitFightModeUpdated = function () {};
         this.EVT_andruavUnitFlyingUpdated = function () {};
         this.EVT_andruavUnitFCBUpdated = function () {};
-        this.EVT_andruavUnitVehicleTypeUpdated = function () {};
+        
         // CODEBLOCK_START
         this.EVT_andruavUnitSwarmUpdated2 = function () {};
         this.EVT_andruavUnitSwarmUpdated = function () {};
@@ -392,6 +392,7 @@ class CAndruavClient {
         this.EVT_HomePointChanged = function () {};
         this.EVT_DistinationPointChanged = function () {};
         this.EVT_andruavUnitVehicleTypeUpdated = function () {};
+        this.EVT_andruavUnitModuleUpdated = function () {};
         /**
 			 * 	Received when a notification sent by remote UNIT.
 			 * 	It could be error, warning or notification.
@@ -1810,6 +1811,7 @@ class CAndruavClient {
                     var v_trigger_on_armed = false;
                     var v_trigger_on_FCB = false;
                     var v_trigger_on_flightMode = false;
+                    var v_trigger_on_module_changed = false;
                     var v_trigger_on_vehiclechanged = false;
                     var v_trigger_on_swarm_status = false,
                         v_trigger_on_swarm_status2 = false;
@@ -1830,6 +1832,14 @@ class CAndruavClient {
                         p_unit.m_Video.VideoRecording = p_jmsg.VR; // ON DRONE RECORDING
                         p_unit.m_GPS_Info1.gpsMode = p_jmsg.GM;
                         p_unit.m_Permissions = p_jmsg.p;
+                        
+                        if (p_jmsg.hasOwnProperty('m1') == true) {
+                            if (p_jmsg.m1.length != p_unit.m_modules.length)
+                            {
+                                v_trigger_on_module_changed = true;
+                            }
+                            p_unit.m_modules = p_jmsg.m1;
+                        }
 
                         
                         if (p_jmsg.hasOwnProperty('dv') === true) {
@@ -1930,6 +1940,10 @@ class CAndruavClient {
                         p_unit.m_GPS_Info1.gpsMode = p_jmsg.GM;
                         v_trigger_on_FCB = (p_unit.m_useFCBIMU != p_jmsg.FI);
                         p_unit.m_useFCBIMU = p_jmsg.FI;
+                        
+                        if (p_jmsg.hasOwnProperty('m1') == true) {
+                            p_unit.m_modules = p_jmsg.m1;
+                        }
 
                         if (p_jmsg.hasOwnProperty('dv') == true) {
                             p_unit.m_isDE = true;
@@ -2014,7 +2028,9 @@ class CAndruavClient {
                     
                     if (v_trigger_on_vehiclechanged) 
                         this.EVT_andruavUnitVehicleTypeUpdated(p_unit);
-                    
+                        
+                    if (v_trigger_on_module_changed)
+                        this.EVT_andruavUnitModuleUpdated(p_unit);
                 }
 
                 break;
