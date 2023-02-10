@@ -2788,7 +2788,7 @@ class CAndruavClient {
                     p_unit.m_GPS_Info1.m_satCount = c_mavlinkMessage.satellites_visible;
                     p_unit.m_GPS_Info1.accuracy = c_mavlinkMessage.h_acc;
                     p_unit.m_GPS_Info1.lat = c_mavlinkMessage.lat * 0.0000001;
-                    p_unit.m_GPS_Info1.lng = c_mavlinkMessage.lng * 0.0000001;
+                    p_unit.m_GPS_Info1.lng = c_mavlinkMessage.lon * 0.0000001;
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.vel / 100.0; // we should depend on VFR
                     p_unit.m_Nav_Info.p_Location.bearing = c_mavlinkMessage.yaw;
                     p_unit.m_GPS_Info1.m_isValid = true;
