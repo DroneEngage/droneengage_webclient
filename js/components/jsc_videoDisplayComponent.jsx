@@ -640,7 +640,7 @@ render() {
     if (len==0)
     {
         return (
-            <div> NO VIDEOS </div>
+            <div> Please press camera icon to start streaming to see video.</div>
         );
     }
     
