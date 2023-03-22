@@ -1548,13 +1548,20 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_battery_display 		= this.hlp_getBatteryCSSClass(v_andruavUnit);
         var id = v_andruavUnit.partyID + "__FAKE";
 
-        module_version = "DE version: " + v_andruavUnit.m_version;
-        const len = v_andruavUnit.m_modules.length;
-        for (var i=0; i< len; ++i)
+        if (v_andruavUnit.m_isDE==false)
         {
-            const module = v_andruavUnit.m_modules[i];
-            module_version += '\n';
-            module_version += module.i + ' ver:' + module.v;
+            module_version = "Andruav";
+        }
+        else
+        {
+            module_version = "DE version: " + v_andruavUnit.m_version;
+            const len = v_andruavUnit.m_modules.length;
+            for (var i=0; i< len; ++i)
+            {
+                const module = v_andruavUnit.m_modules[i];
+                module_version += '\n';
+                module_version += module.i + ' ver:' + module.v;
+            }
         }
 
         if ( v_andruavUnit.m_IsShutdown === true)
