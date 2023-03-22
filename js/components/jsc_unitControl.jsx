@@ -1739,7 +1739,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#log" + v_andruavUnit.partyID}>Log</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
+                        <a className="nav-link  " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
