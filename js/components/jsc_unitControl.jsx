@@ -1,4 +1,5 @@
-import {CLSS_AndruavMessageLog} from './jsc_messagesControl.jsx' // add extension to allow encryptor to see it as same as file name.
+import {CLSS_CTRL_SETTINGS} from './gadgets/jsc_ctrl_settingsControl.jsx'
+import {CLSS_AndruavMessageLog} from './gadgets/jsc_ctrl_messagesControl.jsx' // add extension to allow encryptor to see it as same as file name.
 import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
@@ -1728,7 +1729,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#home" + v_andruavUnit.partyID}>Home</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#profile" + v_andruavUnit.partyID}>Log</a>
+                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#log" + v_andruavUnit.partyID}>Log</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
@@ -1739,8 +1743,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                             {this.renderIMU(v_andruavUnit)}
                             {this.renderControl(v_andruavUnit)}
                     </div>
-                    <div className="tab-pane fade pt-2" id={"profile" + v_andruavUnit.partyID}>
+                    <div className="tab-pane fade pt-2" id={"log" + v_andruavUnit.partyID}>
                             <CLSS_AndruavMessageLog  p_unit={v_andruavUnit}/>
+                    </div>
+                    <div className="tab-pane fade" id={"details" + v_andruavUnit.partyID}>
+                            <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
                     </div>
                     <div className="tab-pane fade" id={"empty" + v_andruavUnit.partyID}>
                     </div>
