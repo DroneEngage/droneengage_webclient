@@ -37,7 +37,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             for (var i=0; i< len; ++i)
             {
                 const module = v_andruavUnit.m_modules[i];
-                module_version += ',';
+                module_version += '  -  ';
                 module_version += module.i + '(' + module.v +')';
             }
         }
@@ -46,21 +46,21 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             <div>
             <div className='row css_margin_zero padding_zero '>
                 <div className="col-6">
-                    <p className="textunit"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
+                    <p className="textunit user-select-all"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
                 </div>
                 
                 <div className="col-6">
-                    <p className="textunit"><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
+                    <p className="textunit user-select-all"><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
                 </div>
             </div>
             <div className='row css_margin_zero padding_zero '>
                 <div className="col-12">
-                    <p className="textunit_nowidth"><span><small><b>{module_version}</b></small></span></p>
+                    <p className="textunit_nowidth user-select-all"><span><small><b>{module_version}</b></small></span></p>
                 </div>
             </div>
             <div className='row css_margin_zero padding_zero '>
                 <div className="col-12">
-                    <p className="textunit_nowidth"><span><small><b>Last Active {Date(v_andruavUnit.m_lastActiveTime)} </b></small></span></p>
+                    <p className="textunit_nowidth user-select-all"><span><small><b>Last Active {Date(v_andruavUnit.m_lastActiveTime)} </b></small></span></p>
                 </div>
             </div>
             </div>
