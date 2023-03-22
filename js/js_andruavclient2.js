@@ -1656,14 +1656,17 @@ class CAndruavClient {
     };
 
 
-    prv_parseCommunicationMessage(Me, msg) {
+    prv_parseCommunicationMessage(Me, msg, evt) {
 
         var p_jmsg;
         var p_unit = this.m_andruavUnitList.fn_getUnit(msg.senderName);
         if (p_unit != null) {
-            p_unit.m_lastActiveTime = Date.now();
+            p_unit.m_NetworkStatus.m_received_msg++;
+            p_unit.m_NetworkStatus.m_received_bytes += evt.data.length;
+            p_unit.m_lastActiveTime = evt.timeStamp; // Date.now();
         }
 
+            
         switch (msg.messageType) {
 
             case CONST_TYPE_AndruavMessage_UdpProxy_Info: {
@@ -3131,9 +3134,7 @@ class CAndruavClient {
         var v_unit;
         var byteLength;
 
-
         var Me = this;
-
         var reader = new FileReader();
         reader.onload = function (event) {
             var contents = event.target.result;
@@ -3148,7 +3149,9 @@ class CAndruavClient {
                 Me.API_requestID(p_jmsg.senderName);
                 return;
             }
-
+            v_unit.m_NetworkStatus.m_received_msg++;
+            v_unit.m_NetworkStatus.m_received_bytes +=data.length;
+            v_unit.m_lastActiveTime = event.timeStamp;
             Me.prv_parseBinaryAndruavMessage(v_unit, andruavCMD, data, out.nextIndex, byteLength);
         };
 
@@ -3216,7 +3219,7 @@ class CAndruavClient {
                             break;
 
                         case CMD_COMM_GROUP:
-                        case CMD_COMM_INDIVIDUAL: Me.prv_parseCommunicationMessage(Me, p_jmsg);
+                        case CMD_COMM_INDIVIDUAL: Me.prv_parseCommunicationMessage(Me, p_jmsg ,evt);
                             break;
                     }
                     Me.EVT_onMessage(evt);

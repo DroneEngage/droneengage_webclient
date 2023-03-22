@@ -3,16 +3,16 @@ const res_CLSS_LoginControl =
 {
 	'en':
 	{
-		'1': 'Connect',
-		'2': 'Disconnect',
+		'1': 'Login',
+		'2': 'Logout',
 		'3': 'Login',
 		'4': 'Password:',
 		'5': 'Connection URL'
 	},
 	'ar':
 	{
-		'1': 'اتصال',
-		'2': 'قطع الاتصال',
+		'1': 'دخول',
+		'2': 'خروج',
 		'3': ' بيانات الاتصال ',
 		'4': 'كود الاتصال:',
 		'5': 'رابط الاتصال'
@@ -159,10 +159,10 @@ export class CLSS_LoginControl extends React.Component {
 		}
 		else {
 			var control = [];
-			var title = "Connect";
+			var title = "Login";
 			var css = "bg-success";
 			if (this.state.is_connected == true) {
-				title = "Disconnect";
+				title = "Logout";
 				css = "bg-danger";
 			}
 			control.push(

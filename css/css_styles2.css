@@ -783,6 +783,11 @@ div.msgerror {
 	width:135px !important;
 }
 
+.textunit_nowidth {
+	display: inline-block;
+	font-size: smaller !important;
+}
+
 
 .modal-title {
 	font-size: medium !important;
