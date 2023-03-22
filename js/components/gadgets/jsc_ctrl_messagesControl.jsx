@@ -55,6 +55,7 @@ export  class CLSS_AndruavMessageLog  extends React.Component {
 		*/
 
         if (p_me.props.p_unit.partyID != p_msg.m_unit.partyID) return ;
+        
         p_me.state.m_message.push ({
             m_msg: p_msg,
             time: (new Date()).toLocaleTimeString()
@@ -77,8 +78,8 @@ export  class CLSS_AndruavMessageLog  extends React.Component {
     render () {
         var v_messages=[];
 
-        const len = this.state.m_message.length;
-        for (var i=0; i<len; ++i) 
+        const len = this.state.m_message.length>0?this.state.m_message.length:0;
+        for (var i=len-1; i>=0; --i) 
         {
             v_messages.push(<CLSS_AndruavMessageItem key={this.props.p_unit.partyID + "_log" + i} p_index={i} p_msg={this.state.m_message[i]}/>)
         }
