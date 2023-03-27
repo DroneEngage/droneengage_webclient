@@ -23,22 +23,36 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
 
     render () {
         
-        var module_version;
+        var module_version = [];
 
         const v_andruavUnit = this.props.p_unit;
         if (v_andruavUnit.m_isDE==false)
         {
-            module_version = "Andruav";
+            module_version.push(<span>Andruav</span>);
         }
         else
         {
-            module_version = "DE version: " + v_andruavUnit.m_version;
+            module_version.push(<span>DE version:  + {v_andruavUnit.m_version}</span>);
             const len = v_andruavUnit.m_modules.length;
-            for (var i=0; i< len; ++i)
+            if (len==0)
             {
-                const module = v_andruavUnit.m_modules[i];
-                module_version += '  -  ';
-                module_version += module.i + '(' + module.v +')';
+                module_version.push(<span className='text-warning'>&nbsp;( no modules connected ) </span>);
+            }
+            else
+            {
+                for (var i=0; i< len; ++i)
+                {
+                    const module = v_andruavUnit.m_modules[i];
+                    
+                    if (module.d == true)
+                    {
+                        module_version.push(<span>&nbsp;-&nbsp;<span className='text-danger'>{module.i} {module.v}</span> OFFLINE </span>);
+                    }
+                    else
+                    {
+                        module_version.push(<span>&nbsp;-&nbsp;<span className='text-success'>{module.i} {module.v}</span></span>);
+                    }
+                }
             }
         }
 
