@@ -429,6 +429,7 @@ class C_NetWorkStatus
 		this.m_parent 	= p_parent;
 		this.m_received_msg	= 0;
 		this.m_received_bytes = 0;
+		this.m_lastActiveTime = 0;
 	}
 }
 
@@ -501,7 +502,6 @@ class CAndruavUnitObject
 		this.m_isArmed					= false;
 		this.m_useFCBIMU				= false;
 		this.m_VehicleType 				= VEHICLE_UNKNOWN;
-		this.m_lastActiveTime 			= 0;
 		this.m_telemetry_protocol 		= CONST_No_Telemetry;
 		this.m_enum_userStatus 			= 0;	
 		this.m_version 					= "null";
