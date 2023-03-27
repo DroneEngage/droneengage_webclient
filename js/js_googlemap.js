@@ -185,17 +185,23 @@ class C_GoogleAndruavMap {
     /**
     * Create a marker with image and title
     */
-    fn_CreateMarker(p_image, p_title, p_draggable, p_isTop) {
+    fn_CreateMarker(p_image, p_title, anchor, p_draggable, p_isTop) {
         if ((p_image==null) || (p_image==""))
         {
             p_image = './images/destination_g_32x32.png';
         }
+        
         var v_image = {
             url: p_image,
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(16, 16),
             scaledSize: new google.maps.Size(32, 32)
         };
+
+        if (anchor!=null)
+        {
+            v_image.anchor = new google.maps.Point(anchor[0], anchor[1]);
+        }
 
 
         var v_marker = new google.maps.Marker({
