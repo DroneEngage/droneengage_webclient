@@ -180,7 +180,7 @@ class CLeafLetAndruavMap {
     /**
          * Create a marker with image and title
          */
-    fn_CreateMarker(p_image, p_title, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
+    fn_CreateMarker(p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
         if ((p_image==null) || (p_image==""))
         {
             p_image = './images/destination_g_32x32.png';
@@ -195,6 +195,14 @@ class CLeafLetAndruavMap {
             v_iconsize = p_iconsize;
         }
         var v_iconAnchor = [v_iconsize[0]/2,v_iconsize[1]/2];
+        if (anchor!=null)
+        {
+            v_iconAnchor = anchor;
+        }
+        else
+        {
+            v_iconAnchor = [v_iconsize[0]/2,v_iconsize[1]/2];
+        }
         var v_popupAnchor = [-v_iconsize[0]/2,-v_iconsize[0]/2];
         if (p_htmlTitle == null) {
             v_image = L.icon({

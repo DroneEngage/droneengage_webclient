@@ -621,7 +621,7 @@ function fn_handleKeyBoard() {
 				}
 				var v_htmladsb = "<p class='text-warning margin_zero'>" + p_adsbObject.m_icao_address + "</p>";
 					
-				v_marker = AndruavLibs.AndruavMap.fn_CreateMarker(icon, p_adsbObject.m_icao_address, false, false, v_htmladsb,[64,64]) ;
+				v_marker = AndruavLibs.AndruavMap.fn_CreateMarker(icon, p_adsbObject.m_icao_address, null, false, false, v_htmladsb,[64,64]) ;
 				p_adsbObject.p_marker = v_marker;
 			}
 
@@ -1518,7 +1518,7 @@ function fn_handleKeyBoard() {
 
 
 			
-            m_markGuided = AndruavLibs.AndruavMap.fn_CreateMarker ('./images/waypoint_bg_32x32.png', 'target', true, true);
+            m_markGuided = AndruavLibs.AndruavMap.fn_CreateMarker ('./images/waypoint_bg_32x32.png', 'target', [16,24], true, true);
             AndruavLibs.AndruavMap.fn_setPosition(this.m_markGuided , p_position);
 			
 			AndruavLibs.AndruavMap.fn_addListenerOnClickMarker (m_markGuided,
@@ -1768,15 +1768,12 @@ function fn_handleKeyBoard() {
 						switch (status) {
 							case CONST_Report_NAV_ItemReached:
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/camera_24x24.png', false, false, null, [16,16]);
-								//marker.setIcon({ url: './images/location_gy_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
 							case CONST_Report_NAV_ItemUnknown:
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/camera_gy_32x32.png', false, false, null, [16,16]);
-								//marker.setIcon({ url: './images/location_bb_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
 							case CONST_Report_NAV_ItemExecuting:
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/camera_bg_32x32.png', false, false, null, [16,16]);
-								//marker.setIcon({ url: './images/location_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
 						}
 					}
@@ -1785,15 +1782,12 @@ function fn_handleKeyBoard() {
 							case CONST_Report_NAV_ItemReached:
 								p_andruavUnit.m_Nav_Info._Target.wp_num = c_mission_index + 1;
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_gy_32x32.png');
-								//marker.setIcon({ url: './images/location_gy_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
 							case CONST_Report_NAV_ItemUnknown:
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_bb_32x32.png');
-								//marker.setIcon({ url: './images/location_bb_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
 							case CONST_Report_NAV_ItemExecuting:
 								AndruavLibs.AndruavMap.fn_setMarkerIcon(v_marker, './images/location_bg_32x32.png');
-								//marker.setIcon({ url: './images/location_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 23), scaledSize: new google.maps.Size(32, 32) });
 								break;
 
 						}
@@ -1879,7 +1873,7 @@ function fn_handleKeyBoard() {
 					if (subIcon==true) {
 						v_iconsize = [16,16];
 					}
-					var v_mark = AndruavLibs.AndruavMap.fn_CreateMarker(icon_img, p_andruavUnit.m_unitName + "  step: " + wayPointStep.m_Sequence, false, false, null, v_iconsize);
+					var v_mark = AndruavLibs.AndruavMap.fn_CreateMarker(icon_img, p_andruavUnit.m_unitName + "  step: " + wayPointStep.m_Sequence, [16,24], false, false, null, v_iconsize);
 					AndruavLibs.AndruavMap.fn_setPosition(v_mark, latlng);
 					p_andruavUnit.m_wayPoint.m_markers.push(v_mark);
 					v_mark.wayPointStep = wayPointStep;
@@ -2135,7 +2129,7 @@ function fn_handleKeyBoard() {
 						v_htmlTitle: Valid only for Leaflet
 					*/
 					v_htmlTitle = "<p class='text-white margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
-					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),false,false, v_htmlTitle,[64,64]) ;
+					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),null, false,false, v_htmlTitle,[64,64]) ;
 
 					
 					/* http://stackoverflow.com/questions/5329136/handling-click-events-in-google-maps-js-api-v3-while-ignoring-double-clicks 
@@ -2373,7 +2367,7 @@ function fn_handleKeyBoard() {
 				// 	icon: { url: './images/home_b_24x24.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(12, 23), scaledSize: new google.maps.Size(24, 24) }
 				// });
 				// v_home.setTitle("Home of: " + p_andruavUnit.m_unitName);
-				var v_home = AndruavLibs.AndruavMap.fn_CreateMarker('./images/home_b_24x24.png', "Home of: " + p_andruavUnit.m_unitName);
+				var v_home = AndruavLibs.AndruavMap.fn_CreateMarker('./images/home_b_24x24.png', "Home of: " + p_andruavUnit.m_unitName, [16,24]);
 				AndruavLibs.AndruavMap.fn_setPosition(v_home,v_latlng)
 				p_andruavUnit.p_marker_home = v_home;
 				
