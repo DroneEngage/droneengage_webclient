@@ -669,6 +669,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
     }
    
+    fn_requestUdpProxyStatus(p_andruavUnit)
+    {
+        v_andruavClient.API_requestUdpProxyStatus(p_andruavUnit);
+    }
 
     fn_changeTelemetryOptimizationLevel(p_andruavUnit, step)
     {
@@ -676,6 +680,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var next_step = (p_andruavUnit.m_Telemetry.m_telemetry_level + step);
         if (next_step<0) next_step = 0;
         if (next_step>3) next_step = 3;
+        v_andruavClient.API_requestUdpProxyStatus(p_andruavUnit);
         v_andruavClient.API_adjustTelemetryDataRate(p_andruavUnit, next_step)
         p_andruavUnit.m_Telemetry.m_telemetry_level = next_step;
     }
@@ -1424,7 +1429,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                     </svg>
                                 </span>
-                                <span id='telemetry_rate'  className='user-select-none'>
+                                <span id='telemetry_rate'  className='user-select-none' onClick={ (e) => this.fn_requestUdpProxyStatus(v_andruavUnit)}>
                                 <small><b>&nbsp;
                                  {'LVL: ' + this.telemetry_level[v_andruavUnit.m_Telemetry.m_telemetry_level]}
                                  &nbsp;</b></small>
