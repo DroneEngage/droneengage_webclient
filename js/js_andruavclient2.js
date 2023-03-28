@@ -1621,8 +1621,8 @@ class CAndruavClient {
 
     _fn_onNewUnitAdded(target) { // this.API_requestGeoFences (p_andruavUnit);
         this.API_requestGeoFencesAttachStatus(target);
-        this.API_requestWayPoints(target);
         this.API_requestUdpProxyStatus(target);
+        this.API_requestWayPoints(target);
 
         // CODEBLOCK_START
 
