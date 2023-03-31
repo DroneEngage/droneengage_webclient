@@ -106,8 +106,8 @@ var v_security_key              = "dynamic_event";
 var CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and keep it unchanged
 
 
-const CONST_TEST_MODE = false;
-const CONST_PROD_MODE_IP = 'airgap.droneengage.com'; 
+const CONST_TEST_MODE = true;
+const CONST_PROD_MODE_IP = 'cloud.ardupilot.org'; 
 const CONST_TEST_MODE_IP = "192.168.1.144";
 const CONST_TEST_MODE_ENABLE_LOG = false;
 
@@ -125,11 +125,12 @@ var CONST_MAP_EDITOR  = false;
 
 var VAR_MAP_LEAFLET_URL;
 
-// CHOOSE YOUR MAP SOURCE
+// IMPORTANT DO NOT COMMENT BELOW LINE.
 VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaHNhYWQiLCJhIjoiY2tqZnIwNXRuMndvdTJ4cnV0ODQ4djZ3NiJ9.LKojA3YMrG34L93jRThEGQ";
-//VAR_MAP_LEAFLET_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+//VAR_MAP_LEAFLET_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}";
 //VAR_MAP_LEAFLET_URL = "https://airgap.droneengage.com:88/{x}_{y}_{z}.jpeg" //LOCAL MAP
 //VAR_MAP_LEAFLET_URL = "http://127.0.0.1:9991/{x}_{y}_{z}.jpeg" //LOCAL MAP
+
 
 const CONST_PRO_VERSION = false;
 const CONST_DISABLE_ADSG = true;
