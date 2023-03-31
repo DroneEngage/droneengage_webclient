@@ -390,8 +390,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var next_step = (p_andruavUnit.m_Telemetry.m_telemetry_level + step);
         if (next_step<0) next_step = 0;
         if (next_step>3) next_step = 3;
+        v_andruavClient.API_adjustTelemetryDataRate(p_andruavUnit, next_step);
         v_andruavClient.API_requestUdpProxyStatus(p_andruavUnit);
-        v_andruavClient.API_adjustTelemetryDataRate(p_andruavUnit, next_step)
         p_andruavUnit.m_Telemetry.m_telemetry_level = next_step;
     }
 
@@ -1183,7 +1183,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             return (
                 <div id='ctrl_k' className='text-center'>
-                    <p className="text-warning bg-black user-select-none bi bi-exclamation-diamond"> Flight Control Board is not Connected</p> 
+                    <p className="text-warning bg-black user-select-none bi bi-exclamation-diamond "> Flight Control Board is not Connected</p> 
                 </div>
             );
         }
@@ -1281,8 +1281,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
         if ( v_andruavUnit.m_IsShutdown === true)
         {
-                online_class2 =" text-muted ";
-                online_class = " text-muted ";
+                online_class2 =" blink_offline ";
+                online_class = " blink_offline ";
                 online_text  = "offline";
         }
         else
@@ -1290,13 +1290,13 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             if (v_andruavUnit.m_isArmed==true) 
             {
                 online_class2 =" text-info ";
-                online_class = " bg-none text-danger ";
+                online_class = " bg-none blink_alert";
                 online_text  = "Armed";
             }
             else
             {
                 online_class2 =" text-info ";
-                online_class = " bg-success text-white ";
+                online_class = " blink_success ";
                 online_text  = "online";
             }
             if (v_andruavUnit.fn_canCamera()==true)
@@ -1581,24 +1581,24 @@ class CLSS_AndruavUnitList extends React.Component {
         }
         if ( v_andruavUnit.m_IsShutdown === true)
         {
-            classes = " text-muted ";
+            classes = " blink_offline ";
         }
         else
         {
             if (bad_fcb === true) 
             {
-                    classes = "  text-warning bi bi-exclamation-diamond";
+                    classes = "blink_warning animate_iteration_5s bi bi-exclamation-diamond ";
                     text = " " + text;
                     
             }
             else 
             if (v_andruavUnit.m_isArmed==true) 
             {
-                classes = " text-danger ";
+                classes = " blink_alert animate_iteration_3s";
             }
             else
             {
-                classes += " text-success ";
+                classes += " blink_success animate_iteration_3s ";
             }
 
             
@@ -1644,7 +1644,7 @@ class CLSS_AndruavUnitList extends React.Component {
                         var header_info = me.getHeaderInfo(v_andruavUnit);
                         units_header.push(
                             <li className="nav-item nav-units">
-                                <a className={"nav-link user-select-none " + header_info.classes} data-bs-toggle="tab" href={"#tab_" + v_andruavUnit.partyID}>{header_info.text}</a>
+                                <a className={"nav-link user-select-none "} data-bs-toggle="tab" href={"#tab_" + v_andruavUnit.partyID}><span className={header_info.classes}> {header_info.text}</span> </a>
                             </li>
                         );
 
