@@ -32,7 +32,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         }
         else
         {
-            module_version.push(<span>DE version:  + {v_andruavUnit.m_version}</span>);
+            module_version.push(<span className=''>DE version: {v_andruavUnit.m_version}</span>);
             const len = v_andruavUnit.m_modules.length;
             if (len==0)
             {
@@ -46,7 +46,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
                     
                     if (module.d == true)
                     {
-                        module_version.push(<span>&nbsp;-&nbsp;<span className='text-danger'>{module.i} {module.v}</span> OFFLINE </span>);
+                        module_version.push(<span>&nbsp;-&nbsp;<span className='text-danger'>{module.i} {module.v}</span> <span className='blink_alert animate_iteration_5s'>OFFLINE</span></span>);
                     }
                     else
                     {
@@ -74,7 +74,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             </div>
             <div className='row css_margin_zero padding_zero '>
                 <div className="col-12">
-                    <p className="textunit_nowidth user-select-all"><span><small><b>Last Active {Date(v_andruavUnit.m_lastActiveTime)} </b></small></span></p>
+                    <p className="textunit_nowidth user-select-all"><span><small><b>Last Active <span className='text-warning' ><small><b>{Date(v_andruavUnit.m_lastActiveTime)}</b></small></span> </b></small></span></p>
                 </div>
             </div>
             </div>

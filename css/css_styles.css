@@ -1,3 +1,43 @@
+
+:root {
+	--bs-blue: #375a7f;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #e83e8c;
+    --bs-red: #e74c3c;
+	--bs-light-red:#e98479;
+    --bs-dark-red:#68251d;
+    --bs-orange: #fd7e14;
+    --bs-light-orange:#f7c69e;
+    --bs-dark-orange:#85430d;
+    --bs-yellow: #f39c12;
+    --bs-green: #00bc8c;
+    --bs-light-green:#8de0cb;
+    --bs-dark-green:#064d3b;
+    --bs-teal: #20c997;
+    --bs-cyan: #3498db;
+    --bs-white: #fff;
+    --bs-gray: #888;
+    --bs-gray-dark: #303030;
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #ebebeb;
+    --bs-gray-300: #dee2e6;
+    --bs-gray-400: #ced4da;
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #888;
+    --bs-gray-700: #444;
+    --bs-gray-800: #303030;
+    --bs-gray-900: #222;
+    --bs-primary: #375a7f;
+    --bs-secondary: #444;
+    --bs-success: #00bc8c;
+    --bs-info: #3498db;
+    --bs-warning: #f39c12;
+    --bs-danger: #e74c3c;
+    --bs-light: #adb5bd;
+    --bs-dark: #303030;
+}
+
 html {
   height: 100%;
     width: 100%;
@@ -966,4 +1006,109 @@ padding-left: 5px
 .css_user_select_text
 {
 	user-select: text !important;
+}
+
+.blink_error {
+	animation: blink_error 0.5s ;
+	color: var(--bs-danger) ;
+}
+
+.blink_warning {
+	animation: blink_warning 0.5s ;
+	color: var(--bs-warning) ;
+}
+
+.blink_success {
+	animation: blink_success 1s ;
+	color: var(--bs-success) ;
+}
+
+.blink_alert {
+	animation: blink_alert 0.5s ;
+	color: var(--bs-danger) ;
+}
+
+.blink_offline {
+	animation: blink_offline 0.5s ;
+	color: var(--bs-light) ;
+}
+
+.animate_iteration_3s {
+	animation-iteration-count: 3;
+}
+  
+
+.animate_iteration_5s {
+	animation-iteration-count: 5;
+}
+  
+
+.animate_iteration_10s {
+	animation-iteration-count: 10;
+}
+  
+.animate_iteration_20s {
+	animation-iteration-count: 20;
+}
+
+
+
+@keyframes blink_success {
+	0% {
+	  color: var(--bs-success)
+	}
+	50% {
+	  color: var(--bs-light-green)
+	}
+	100% {
+		color: var(--bs-success)
+	}
+}
+
+@keyframes blink_error {
+	0% {
+	  color: var(--bs-danger)
+	}
+	50% {
+	  color: var(--bs-light-red)
+	}
+	100% {
+		color: var(--bs-danger)
+	}
+}
+
+@keyframes blink_warning {
+	0% {
+	  color: var(--bs-warning)
+	}
+	50% {
+	  color: var(--bs-dark-orange)
+	}
+	100% {
+		color: var(--bs-warning)
+	}
+}
+
+@keyframes blink_alert {
+		0% {
+		  color: var(--bs-danger)
+		}
+		50% {
+		  color: var(--bs-dark-red)
+		}
+		100% {
+			color: var(--bs-danger)
+		}
+}
+
+@keyframes blink_offline {
+	0% {
+	  color: var(--bs-white)
+	}
+	50% {
+	  color: var(--bs-light)
+	}
+	100% {
+		color: var(--bs-white)
+	}
 }
