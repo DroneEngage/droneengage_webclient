@@ -106,7 +106,7 @@ var v_security_key              = "dynamic_event";
 var CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and keep it unchanged
 
 
-const CONST_TEST_MODE = true;
+const CONST_TEST_MODE = false;
 const CONST_PROD_MODE_IP = 'cloud.ardupilot.org'; 
 const CONST_TEST_MODE_IP = "192.168.1.144";
 const CONST_TEST_MODE_ENABLE_LOG = false;
