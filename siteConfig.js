@@ -1,4 +1,4 @@
-const CONST_TEST_MODE = false;
+const CONST_TEST_MODE = true;
 const CONST_PROD_MODE_IP = 'cloud.ardupilot.org'; 
 const CONST_TEST_MODE_IP = "192.168.1.144";
 const CONST_TEST_MODE_ENABLE_LOG = false; 
