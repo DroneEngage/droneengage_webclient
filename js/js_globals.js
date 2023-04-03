@@ -106,8 +106,6 @@ var v_security_key              = "dynamic_event";
 var CONST_EXPERIMENTAL_FEATURES_ENABLED = false; // KEEP it above code block and keep it unchanged
 
 
-const CONST_TEST_MODE_ENABLE_LOG = false;
-
 // const CONST_MAP_GOOLE   = true;
 // const CONST_MAP_LEAFLET = false;
 
