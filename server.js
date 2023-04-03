@@ -33,4 +33,4 @@ const v_options = {
 
 const server = http2.createSecureServer(v_options, c_app).listen(c_app.get('port'))
 
-console.log ("ArdupilotCloud Web running on port " + c_webport);
+console.log ("DE WebClient running on port " + c_webport);
