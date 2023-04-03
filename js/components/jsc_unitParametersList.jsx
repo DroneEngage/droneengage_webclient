@@ -318,7 +318,7 @@ class CLSS_UnitParametersList extends React.Component {
                                                 <button id="btnGoto" type="button" className="btn  btn-sm btn-success" onClick={(e) => fn_gotoUnit(p_andruavUnit)}>Goto</button>
                                             </div>
                                             <div className = "col-6">
-                                                <button id="btnHelp" type="button" className="btn  btn-sm btn-primary" onClick={(e) => fn_helpPage("https://cloud.ardupilot.org")}>Help</button>
+                                                <button id="btnHelp" type="button" className="btn  btn-sm btn-primary" onClick={(e) => fn_helpPage({CONST_MANUAL_URL})}>Help</button>
                                             </div>
                                         </div>
                             </div>

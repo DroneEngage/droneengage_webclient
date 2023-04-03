@@ -120,7 +120,7 @@ class CLSS_ServoControl extends React.Component {
             fn_gotoUnit_byPartyID($('#modal_ctrl_servo').attr('partyID'));
         });
         $('#modal_ctrl_servo').find('#btnHelp').click(function () {
-            fn_helpPage("https://ardupilot.org/plane/docs/channel-output-functions.html");
+            fn_helpPage({CONST_MANUAL_URL});
         });
 
         
