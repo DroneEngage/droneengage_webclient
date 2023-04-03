@@ -50,7 +50,7 @@ class CLeafLetAndruavMap {
     */
     fn_initMap(p_mapelement) {
         var v_site_copyright;
-        v_site_copyright = '&copy; <a href="https://www.' + v_active_site_name + '">' + v_active_site_name + '</a>';
+        v_site_copyright = '&copy; <a href="' + CONST_HOME_URL + '">' + CONST_TITLE + '</a>';
 
 
         this.m_Map = L.map(p_mapelement).setView([

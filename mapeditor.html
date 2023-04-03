@@ -5,8 +5,7 @@
     <title>Andruav Geo Fence Manager</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script language="JavaScript" type="text/javascript" src="./js/js_siteselector.js"></script>
-	<link rel="stylesheet" href="./scss/custom.scss">
+    <link rel="stylesheet" href="./scss/custom.scss">
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger.css">	
 	<link rel="stylesheet" type="text/css" href="./css/messenger/messenger-theme-future.css">
@@ -28,7 +27,8 @@
 	<script language="JavaScript" type="text/javascript" src="./js/js_dictionary.js"></script>
 	<script language="JavaScript" type="text/javascript" src="./js/js_strings.js"></script>
     <script language="JavaScript" type="text/javascript" src="./js/js_helpers.js"></script>
-	<script language="JavaScript" type="text/javascript" src="./js/js_globals.js"></script>
+	<script language="JavaScript" type="text/javascript" src="./siteConfig.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./js/js_globals.js"></script>
 	<script language="JavaScript" type="text/javascript" >
 	CONST_MAP_EDITOR = true;
 	</script>
@@ -66,17 +66,19 @@
 		});
 	  </script>
 
-	
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/gadgets/jsc_ctrl_layoutControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_login.jsx"></script>
  	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_fenceControl.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_fenceGlobalSettings.jsx"></script>
 	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_missionItemsControl.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_header.jsx"></script>
+	<script type="text/babel" data-plugins="transform-modules-umd" src="./js/components/jsc_footer.jsx"></script>
 
 	<script language="JavaScript" type="text/javascript" src="./js/js_main.js"></script>
 	</head>
   <body>
 	<div id="rowheader" class="row margin_zero">
-	<div id="header"></div>
+	<div id="header_div"></div>
     </div>
 	  
 	<div class='container-fluid text-center' id='mainBody'>
@@ -139,10 +141,6 @@
 					
 					<div id="row11" class="col col-sm-6 col-md-4">
 								<div class="row">	
-									<div id="login_div" class='col  col-sm-12 container-fluid localcontainer'></div>
-								</div>
-
-								<div class="row">	
 									<div id="main_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
 									type="button" id="btn_missions" class="btn btn-success btn-sm button_large">Mission Plans</button><button
 									type="button" id="btn_geofences" class="btn btn-success btn-sm button_large">Geo Fences</button>
@@ -164,7 +162,7 @@
    
 	
 	</div>
-   <div id="footer"></div>
+   <div id="footer_div"></div>
   </body>
 
     <script src="./js/js_main_last.js"></script>  
