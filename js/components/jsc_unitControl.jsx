@@ -315,45 +315,44 @@ class CLSS_AndruavUnit extends React.Component {
 
     fn_unitUpdated (me,p_andruavUnit)
     {
-        return;
-    //     if (p_andruavUnit== null) return;
-    //     if (p_andruavUnit.partyID != me.props.m_unit.partyID) 
-    //     {
-    //       //  fn_console_log ('err: This is not me ' + p_andruavUnit.partyID);
-    //         return ; // not me
-    //     }
+        if (p_andruavUnit== null) return;
+        if (p_andruavUnit.partyID != me.props.m_unit.partyID) 
+        {
+          //  fn_console_log ('err: This is not me ' + p_andruavUnit.partyID);
+            return ; // not me
+        }
 
       
 
-    //     if (p_andruavUnit.m_IsGCS != me.props.m_unit.m_IsGCS)
-    //     {
-    //         // Drone converted to GCS or other type... class is not valid now and an add new should be created.
-    //       // fn_console_log ('err: Convert Me ' + p_andruavUnit.partyID);
+        if (p_andruavUnit.m_IsGCS != me.props.m_unit.m_IsGCS)
+        {
+            // Drone converted to GCS or other type... class is not valid now and an add new should be created.
+          // fn_console_log ('err: Convert Me ' + p_andruavUnit.partyID);
            
-    //        window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitAdded,p_andruavUnit);
+           window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitAdded,p_andruavUnit);
 	
-    //     }
+        }
 
-    //     var v_date = p_andruavUnit.date;
-    //     if (v_date == null)
-    //     {
-    //         p_andruavUnit.date = new Date();
-    //     }
-    //     else
-    //     {
-    //         var n = new Date();
-    //         if ((n - p_andruavUnit.date) < 300)
-    //         {
-    //             return ;
-    //         }
-    //         p_andruavUnit.date = new Date();
-    //     }
+        var v_date = p_andruavUnit.date;
+        if (v_date == null)
+        {
+            p_andruavUnit.date = new Date();
+        }
+        else
+        {
+            var n = new Date();
+            if ((n - p_andruavUnit.date) < 300)
+            {
+                return ;
+            }
+            p_andruavUnit.date = new Date();
+        }
 
-    //    // fn_console_log ('err: Force Update ' + p_andruavUnit.partyID);
+       // fn_console_log ('err: Force Update ' + p_andruavUnit.partyID);
           
-    //    me.setState({'m_update': me.state.m_update +1});
-    //    //me.state.m_update += 1;
-    //    //me.forceUpdate();
+       me.setState({'m_update': me.state.m_update +1});
+       //me.state.m_update += 1;
+       //me.forceUpdate();
        
     }
 
