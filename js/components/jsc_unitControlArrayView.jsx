@@ -62,6 +62,10 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     constructor()
 	{
 		super ();
+        this.state={
+            'm_update': 0
+        };
+        
         this.localvars={};
         this.localvars.speed_link = false;	
 		this.telemetry_level=["OFF","1","2","3"];
@@ -73,6 +77,11 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     }
 
 
+    componentDidMount () 
+    {
+        this.state.m_update = 1;
+    }
+
     childcomponentWillUnmount () {
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this,);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitNavUpdated,this,);
@@ -81,10 +90,13 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     }
 
 
-    fn_unitUpdated(me,p_andruavUnit)
+    fn_unitUpdated(p_me,p_andruavUnit)
     {
-        if (p_andruavUnit.partyID != me.props.m_unit.partyID) return ;
-        me.forceUpdate();
+        if (p_andruavUnit.partyID != p_me.props.m_unit.partyID) return ;
+        if (p_me.state.m_update == 0) return ;
+        p_me.setState({'m_update': p_me.state.m_update +1});
+        
+        //me.forceUpdate();
     }
 
     

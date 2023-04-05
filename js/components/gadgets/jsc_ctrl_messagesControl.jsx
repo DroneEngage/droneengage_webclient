@@ -1,7 +1,9 @@
 
 class CLSS_AndruavMessageItem extends React.Component {
 
-    
+    constructor(props) {
+        super(props);
+    }
     
     render () 
     {
@@ -34,13 +36,14 @@ class CLSS_AndruavMessageItem extends React.Component {
     }
 }
 
-export  class CLSS_AndruavMessageLog  extends React.Component {
+export  class CLSS_MESSAGE_LOG  extends React.Component {
 
-    constructor()
+    constructor(props)
     {
-        super();
+        super(props);
         this.state={
-            m_message: []
+            m_message: [],
+		    'm_update': 0
         };
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onMessage, this, this.fn_onMessage);
     }
@@ -61,8 +64,9 @@ export  class CLSS_AndruavMessageLog  extends React.Component {
             time: (new Date()).toLocaleTimeString()
         });
 
-        p_me.forceUpdate();
-
+        p_me.setState({'m_update': p_me.state.m_update +1});
+        //p_me.state.m_update += 1;
+        //me.forceUpdate();
     }
 
     fn_clear (e)
