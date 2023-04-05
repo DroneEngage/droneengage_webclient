@@ -1,5 +1,6 @@
 import {CLSS_CTRL_SETTINGS} from './gadgets/jsc_ctrl_settingsControl.jsx'
-import {CLSS_AndruavMessageLog} from './gadgets/jsc_ctrl_messagesControl.jsx' // add extension to allow encryptor to see it as same as file name.
+import {CLSS_CTRL_UDP_PROXY_TELEMETRY} from './gadgets/jsc_ctrl_udp_proxy_telemetry.jsx'
+import {CLSS_MESSAGE_LOG} from './gadgets/jsc_ctrl_messagesControl.jsx' // add extension to allow encryptor to see it as same as file name.
 import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
@@ -187,6 +188,7 @@ class CLSS_SearchableTargets extends React.Component {
 
     fn_unitSearchableTargets (me, p_andruavUnit)
     {
+        if (p_andruavUnit== null) return;
         if (p_andruavUnit.partyID != me.props.m_unit.partyID) 
         {
           //  fn_console_log ('err: This is not me ' + p_andruavUnit.partyID);
@@ -297,11 +299,11 @@ class CLSS_SearchableTargets extends React.Component {
 
 
 class CLSS_AndruavUnit extends React.Component {
-    constructor()
+    constructor(props)
 	{
-		super ();
+		super (props);
 		this.state = {
-		    
+		    'm_update': 0
 		};
 
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
@@ -313,6 +315,7 @@ class CLSS_AndruavUnit extends React.Component {
 
     fn_unitUpdated (me,p_andruavUnit)
     {
+        if (p_andruavUnit== null) return;
         if (p_andruavUnit.partyID != me.props.m_unit.partyID) 
         {
           //  fn_console_log ('err: This is not me ' + p_andruavUnit.partyID);
@@ -321,7 +324,7 @@ class CLSS_AndruavUnit extends React.Component {
 
       
 
-        if (p_andruavUnit.m_IsGCS != me.state.m_IsGCS)
+        if (p_andruavUnit.m_IsGCS != me.props.m_unit.m_IsGCS)
         {
             // Drone converted to GCS or other type... class is not valid now and an add new should be created.
           // fn_console_log ('err: Convert Me ' + p_andruavUnit.partyID);
@@ -347,7 +350,9 @@ class CLSS_AndruavUnit extends React.Component {
 
        // fn_console_log ('err: Force Update ' + p_andruavUnit.partyID);
           
-        me.forceUpdate();
+       me.setState({'m_update': me.state.m_update +1});
+       //me.state.m_update += 1;
+       //me.forceUpdate();
        
     }
 
@@ -544,10 +549,9 @@ class CLSS_AndruavUnit extends React.Component {
 }
 
 class CLSS_AndruavUnit_GCS extends CLSS_AndruavUnit {
-    constructor()
+    constructor(props)
 	{
-		super ();
-		
+		super (props);
     }
 
     render ()
@@ -574,9 +578,9 @@ class CLSS_AndruavUnit_GCS extends CLSS_AndruavUnit {
 
 
 class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
-    constructor()
+    constructor(props)
 	{
-		super ();
+		super (props);
         this.localvars={};
         this.localvars.speed_link = false;	
 		this.telemetry_level=["OFF","1","2","3"];
@@ -669,21 +673,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
     }
    
-    fn_requestUdpProxyStatus(p_andruavUnit)
-    {
-        v_andruavClient.API_requestUdpProxyStatus(p_andruavUnit);
-    }
 
-    fn_changeTelemetryOptimizationLevel(p_andruavUnit, step)
-    {
-        if (p_andruavUnit==null) return;
-        var next_step = (p_andruavUnit.m_Telemetry.m_telemetry_level + step);
-        if (next_step<0) next_step = 0;
-        if (next_step>3) next_step = 3;
-        v_andruavClient.API_adjustTelemetryDataRate(p_andruavUnit, next_step);
-        v_andruavClient.API_requestUdpProxyStatus(p_andruavUnit);
-        p_andruavUnit.m_Telemetry.m_telemetry_level = next_step;
-    }
 
 
     fn_connectToFCB (p_andruavUnit)
@@ -893,24 +883,24 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             res.btn_sendParameters_class = " btn-primary  ";
         }
         
-        if (p_andruavUnit.m_Telemetry.m_udpProxy_active === true)
-        {
-            res.btn_tele_class          = " btn-dark hidden disabled ";
-            res.btn_tele_text           = "Tele On";
-        }
-        else
-        {
-            if (p_andruavUnit.m_Telemetry._isActive == true)
-            {
-                res.btn_tele_class          = " btn-danger ";
-                res.btn_tele_text           = "Tele On";
-            }
-            else
-            {
-                res.btn_tele_class          = " btn-primary ";
-                res.btn_tele_text           = "Tele Off";
-            }
-        }
+        // if (p_andruavUnit.m_Telemetry.m_udpProxy_active === true)
+        // {
+        //     res.btn_tele_class          = " btn-dark hidden disabled ";
+        //     res.btn_tele_text           = "Tele On";
+        // }
+        // else
+        // {
+        //     if (p_andruavUnit.m_Telemetry._isActive == true)
+        //     {
+        //         res.btn_tele_class          = " btn-danger ";
+        //         res.btn_tele_text           = "Tele On";
+        //     }
+        //     else
+        //     {
+        //         res.btn_tele_class          = " btn-primary ";
+        //         res.btn_tele_text           = "Tele Off";
+        //     }
+        // }
 
         if ((p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != CONST_RC_SUB_ACTION_JOYSTICK_CHANNELS)
         && (p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != CONST_RC_SUB_ACTION_JOYSTICK_CHANNELS_GUIDED))
@@ -1007,10 +997,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_flight_status_text;
         var v_flight_status_class;
         var distanceToWP_class;
-        var v_udpproxy_text_ip = '';
-        var v_udpproxy_text_port = '';
-        var v_udpproxy_class = ' hidden ';
-        var v_telemetry_lvl_class = ' ';
         var wpdst_text;
         var v_leader_class,v_leader_text;
         var v_flyingTime = " ";
@@ -1092,13 +1078,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 v_flight_mode_text = "mode - " + hlp_getFlightMode(v_andruavUnit);
                 v_flight_mode_class = ' bg-info text-white ';
                 v_fcb_mode_title = 'Flight Mode';
-
-                if (v_andruavUnit.m_Telemetry.m_udpProxy_active === true)
-                {
-                    v_udpproxy_text_ip = 'ip:' + v_andruavUnit.m_Telemetry.m_udpProxy_ip ;
-                    v_udpproxy_text_port = 'port:' + v_andruavUnit.m_Telemetry.m_udpProxy_port;
-                    v_udpproxy_class = ' si-07x text-warning ';
-                }
 
             break;
         }
@@ -1421,35 +1400,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </div>
                         </div>
                         <div className= 'col-4   padding_zero css_user_select_text'>
-                            <div className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
-                                <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
-                                <p className=' rounded-3 text-warning cursor_hand textunit' title ='Smart Telemetry'>
-                                <span title="dec_tel" onClick={ (e) => this.fn_changeTelemetryOptimizationLevel(v_andruavUnit,-1)}>
-                                    <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                    </svg>
-                                </span>
-                                <span id='telemetry_rate'  className='user-select-none' onClick={ (e) => this.fn_requestUdpProxyStatus(v_andruavUnit)}>
-                                <small><b>&nbsp;
-                                 {'LVL: ' + this.telemetry_level[v_andruavUnit.m_Telemetry.m_telemetry_level]}
-                                 &nbsp;</b></small>
-                                </span>
-                                <span title="inc_tel" onClick={ (e) => this.fn_changeTelemetryOptimizationLevel(v_andruavUnit,+1)}>
-                                    <svg className="bi bi-caret-up-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
-                                    </svg>
-                                </span>
-                                </p>
-                                </div>
-                            </div>
-                            <div className = 'row al_l css_margin_zero css_user_select_text'>
-                                <div className= 'col-12   padding_zero css_user_select_text'>
-                                    <p id='udpproxy_t' className={ v_udpproxy_class + ' css_margin_zero css_user_select_text'}>Smart Telemetry</p>
-                                    <p id='udpproxy_a' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_ip}</p>
-                                    <p id='udpproxy_p' className={ v_udpproxy_class + ' css_margin_zero'}>{v_udpproxy_text_port}</p>
-                                </div>
-                            </div>
-                        </div>
+                        <CLSS_CTRL_UDP_PROXY_TELEMETRY p_unit={v_andruavUnit} /> </div>
                         <div className= 'col-1   padding_zero'>
                         {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
                         </div>
@@ -1503,7 +1454,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         }
 
         ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
-                    <button id='btn_telemetry' type='button' className={'btn btn-sm  flgtctrlbtn ' + btn.btn_tele_class}  title='Web based telemetry' onClick={ (e) => this.fn_telemetry_toggle(p_andruavUnit)}>{btn.btn_tele_text}</button>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Read Waypoints from Drone">R-WP</button>
                     <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
                     <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
@@ -1756,7 +1706,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                             {this.renderControl(v_andruavUnit)}
                     </div>
                     <div className="tab-pane fade pt-2" id={"log" + v_andruavUnit.partyID}>
-                            <CLSS_AndruavMessageLog  p_unit={v_andruavUnit}/>
+                            <CLSS_MESSAGE_LOG  p_unit={v_andruavUnit}/>
                     </div>
                     <div className="tab-pane fade" id={"details" + v_andruavUnit.partyID}>
                             <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
@@ -1780,7 +1730,8 @@ class CLSS_AndruavUnitList extends React.Component {
 		super ();
 		this.state = {
 			andruavUnitPartyIDs : [],
-            rnd:Math.random()
+            rnd:Math.random(),
+		    'm_update': 0
 		};
 
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onPreferenceChanged, this, this.fn_onPreferenceChanged);
@@ -1792,7 +1743,8 @@ class CLSS_AndruavUnitList extends React.Component {
 
     fn_unitUpdated(me,p_andruavUnit)
     {
-        me.forceUpdate();
+        me.setState({ 'm_update': me.state.m_update+1});
+        //me.forceUpdate();
     }
 
     fn_unitAdded (me,p_andruavUnit)
@@ -1802,6 +1754,7 @@ class CLSS_AndruavUnitList extends React.Component {
          me.setState({ 
             andruavUnitPartyIDs: me.state.andruavUnitPartyIDs.concat([p_andruavUnit.partyID])
         });
+        //me.state.andruavUnitPartyIDs= me.state.andruavUnitPartyIDs.concat([p_andruavUnit.partyID]);
     }
 
     fn_onSocketStatus (me,params) {
@@ -1813,7 +1766,8 @@ class CLSS_AndruavUnitList extends React.Component {
         else
         {				
                 me.state.andruavUnitPartyIDs = [];
-                me.forceUpdate();
+                me.setState({'m_update': me.state.m_update +1});
+                //me.forceUpdate();
         }
     }
 
@@ -1933,7 +1887,7 @@ class CLSS_AndruavUnitList extends React.Component {
                         // Display in Tabs
                         var header_info = me.getHeaderInfo(v_andruavUnit);
                         units_header.push(
-                            <li className="nav-item nav-units">
+                            <li key={'h' + partyID} className="nav-item nav-units">
                                 <a className={"nav-link user-select-none "} data-bs-toggle="tab" href={"#tab_" + v_andruavUnit.partyID}><span className={header_info.classes}> {header_info.text}</span> </a>
                             </li>
                         );
@@ -1966,12 +1920,23 @@ class CLSS_AndruavUnitList extends React.Component {
     }
 };
 
-ReactDOM.render(
-			<CLSS_AndruavUnitList key={'AUL'} />,
+if (CONST_TEST_MODE === true)
+{
+    ReactDOM.render(
+            <React.StrictMode>
+                <CLSS_AndruavUnitList key={'AUL'} />
+            </React.StrictMode>,
 			v_G_getElementById('andruavUnitList')
         );
-        
+}
+else
+{
+    ReactDOM.render(
+        <CLSS_AndruavUnitList key={'AUL'} />,
+        v_G_getElementById('andruavUnitList')
+    );
         // ReactDOM.render(
 		// 	<CLSS_AndruavUnitList key={'AUL'} />,
 		// 	v_G_getElementById('andruavUnitList2')
         // );
+}   
