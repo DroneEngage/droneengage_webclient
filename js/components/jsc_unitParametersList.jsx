@@ -330,8 +330,23 @@ class CLSS_UnitParametersList extends React.Component {
 };
 
 
-ReactDOM.render(
-    <CLSS_UnitParametersList />,
-    v_G_getElementById('modal_uplCtrl')
-);
-
+if (CONST_TEST_MODE === true)
+{
+   ReactDOM.render(
+            <React.StrictMode>
+                <CLSS_UnitParametersList />
+            </React.StrictMode>,
+            v_G_getElementById('modal_uplCtrl')
+    );
+}
+else
+{
+    ReactDOM.render(
+        <CLSS_UnitParametersList key={'AUL'} />,
+        v_G_getElementById('andruavUnitList')
+    );
+        // ReactDOM.render(
+		// 	<CLSS_AndruavUnitList key={'AUL'} />,
+		// 	v_G_getElementById('andruavUnitList2')
+        // );
+}   

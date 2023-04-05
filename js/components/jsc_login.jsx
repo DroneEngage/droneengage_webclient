@@ -200,9 +200,23 @@ export class CLSS_LoginControl extends React.Component {
 
 if ($('#login_div').length != 0) {
 
-	ReactDOM.render(
-		<CLSS_LoginControl />,
-		v_G_getElementById('login_div')
-	);
+	if (CONST_TEST_MODE === true)
+	{
+		ReactDOM.render(
+			<React.StrictMode>
+			<CLSS_LoginControl />
+			</React.StrictMode>,
+			
+			v_G_getElementById('login_div')
+		);
+	}
+	else
+	{
+		ReactDOM.render(
+			<CLSS_LoginControl />,
+			
+			v_G_getElementById('login_div')
+		);
+	}
 }
 

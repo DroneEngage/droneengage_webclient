@@ -1,6 +1,6 @@
 export class CLSS_CTRL_Layout extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {};
         window.AndruavLibs.LocalStorage.fn_getDisplayMode();
 

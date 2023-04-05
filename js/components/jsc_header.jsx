@@ -18,22 +18,22 @@ class CLSS_HeaderControl extends React.Component {
                         </a>
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav">
-                                <li className="nav-item active">
+                                <li key="Home" className="nav-item active">
                                     <a className="nav-link" href={CONST_HOME_URL}>Home </a>
                                 </li>
-                                <li className="nav-item">
+                                <li key="Geo" className="nav-item">
                                     <a className="nav-link" id='mapeditor' href="./mapeditor.html" target='_blank'>Geo Fence</a>
                                 </li>
-                                <li className="nav-item">
+                                <li key="Manual" className="nav-item">
                                     <a className="nav-link" href={CONST_MANUAL_URL} target='_blank' >Manual</a>
                                 </li>
-                                <li className="nav-item">
+                                <li key="FAQ" className="nav-item">
                                     <a className="nav-link" href={CONST_FAQ_URL} target='_blank' >FAQ</a>
                                 </li>
-                                <li className="nav-item">
+                                <li key="Contact" className="nav-item">
                                     <a className="nav-link" href={CONST_CONTACT_URL} target='_blank' >Contact</a>
                                 </li>
-                                <li className="nav-item">
+                                <li key="Account" className="nav-item">
                                     <a className="nav-link" href="accounts.html" target='_blank' >Account</a>
                                 </li>
                             </ul>
@@ -53,7 +53,23 @@ class CLSS_HeaderControl extends React.Component {
 
 
 
-ReactDOM.render(
-    <CLSS_HeaderControl />,
-    v_G_getElementById('header_div')
-);
+
+    if (CONST_TEST_MODE === true)
+	{
+        ReactDOM.render(
+            <React.StrictMode>
+		    <CLSS_HeaderControl />
+            </React.StrictMode>,
+        	
+            v_G_getElementById('header_div')
+        );
+    
+    }
+    else
+    {
+        ReactDOM.render(
+            <CLSS_HeaderControl />,
+            v_G_getElementById('header_div')
+        );
+    }
+
