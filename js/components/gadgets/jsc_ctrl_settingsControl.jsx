@@ -1,10 +1,11 @@
 export  class CLSS_CTRL_SETTINGS   extends React.Component {
     
-    constructor()
+    constructor(props)
     {
-        super();
+        super(props);
         this.state={
-            m_message: []
+            m_message: [],
+		    'm_update': 0
         };
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_unitUpdated,this,this.fn_unitUpdated);
 
@@ -14,11 +15,17 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_unitUpdated,this);
     }
 
+    componentDidMount () 
+    {
+        this.state.m_update = 1;
+    }
+
     fn_unitUpdated (p_me,p_andruavUnit)
     {
         if (p_me.props.p_unit.partyID != p_andruavUnit.partyID) return ;
-
-        p_me.forceUpdate();
+        if (p_me.state.m_update == 0) return ;
+        p_me.setState({'m_update': p_me.state.m_update +1});
+        //me.forceUpdate();
     }
 
     render () {
@@ -58,23 +65,23 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
 
         return (
             <div>
-            <div className='row css_margin_zero padding_zero '>
-                <div className="col-6">
-                    <p className="textunit user-select-all"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
+            <div key={v_andruavUnit.partyID + 'Set1'} className='row css_margin_zero padding_zero '>
+                <div key={v_andruavUnit.partyID + 'Set11'} className="col-6">
+                    <p key={v_andruavUnit.partyID + 'Set12'} className="textunit user-select-all"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
                 </div>
                 
                 <div className="col-6">
                     <p className="textunit user-select-all"><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
                 </div>
             </div>
-            <div className='row css_margin_zero padding_zero '>
-                <div className="col-12">
-                    <p className="textunit_nowidth user-select-all"><span><small><b>{module_version}</b></small></span></p>
+            <div key={v_andruavUnit.partyID + 'Set2'} className='row css_margin_zero padding_zero '>
+                <div key={v_andruavUnit.partyID + 'Set21'} className="col-12">
+                    <p key={v_andruavUnit.partyID + 'Set22'} className="textunit_nowidth user-select-all"><span><small><b>{module_version}</b></small></span></p>
                 </div>
             </div>
-            <div className='row css_margin_zero padding_zero '>
-                <div className="col-12">
-                    <p className="textunit_nowidth user-select-all"><span><small><b>Last Active <span className='text-warning' ><small><b>{Date(v_andruavUnit.m_lastActiveTime)}</b></small></span> </b></small></span></p>
+            <div key={v_andruavUnit.partyID + 'Set3'}  className='row css_margin_zero padding_zero '>
+                <div key={v_andruavUnit.partyID + 'Set31'} className="col-12">
+                    <p key={v_andruavUnit.partyID + 'Set32'} className="textunit_nowidth user-select-all"><span><small><b>Last Active <span className='text-warning' ><small><b>{Date(v_andruavUnit.m_lastActiveTime)}</b></small></span> </b></small></span></p>
                 </div>
             </div>
             </div>

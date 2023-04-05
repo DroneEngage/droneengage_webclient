@@ -1,8 +1,8 @@
 export class CLSS_CTRL_HUD extends React.Component {
 
-    constructor()
+    constructor(props)
 	{
-		super ();
+		super (props);
 		    this.state = {
 		};
     }

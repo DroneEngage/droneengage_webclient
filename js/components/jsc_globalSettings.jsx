@@ -274,6 +274,7 @@ class CLSS_GlobalSettings extends React.Component {
 		    m_unitText: 'm',
         CONST_DEFAULT_ALTITUDE:CONST_DEFAULT_ALTITUDE,
         CONST_DEFAULT_RADIUS:CONST_DEFAULT_RADIUS,
+		    'm_update': 0
 		};
 
       //gui_toggleUnits();
@@ -337,7 +338,9 @@ class CLSS_GlobalSettings extends React.Component {
   };
 
   fn_onAuthStatus (me,res) {
-      me.forceUpdate();
+    me.setState({'m_update': me.state.m_update +1});
+    //me.state.m_update += 1;
+    //me.forceUpdate();
   }
 
   updateSmartTelemetry (e,v) {
