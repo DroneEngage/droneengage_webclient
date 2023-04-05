@@ -359,6 +359,7 @@ class C_Telemetry
 		this.m_udpProxy_ip = null;
 		this.m_udpProxy_port = 0;
 		this.m_udpProxy_active = false;
+		this.m_udpProxy_paused = false;
 	};
 
 
