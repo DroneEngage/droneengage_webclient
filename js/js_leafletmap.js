@@ -186,28 +186,24 @@ class CLeafLetAndruavMap {
             p_image = './images/destination_g_32x32.png';
         }
         var v_image;
-        var v_iconsize;
         if (p_iconsize==null) {
-            v_iconsize = [32,32];
+            p_iconsize = [32,32];
         }
-        else
-        {
-            v_iconsize = p_iconsize;
-        }
-        var v_iconAnchor = [v_iconsize[0]/2,v_iconsize[1]/2];
+        
+        var v_iconAnchor = [p_iconsize[0]/2,p_iconsize[1]/2];
         if (anchor!=null)
         {
             v_iconAnchor = anchor;
         }
         else
         {
-            v_iconAnchor = [v_iconsize[0]/2,v_iconsize[1]/2];
+            v_iconAnchor = [p_iconsize[0]/2,p_iconsize[1]/2];
         }
-        var v_popupAnchor = [-v_iconsize[0]/2,-v_iconsize[0]/2];
+        var v_popupAnchor = [-p_iconsize[0]/2,-p_iconsize[0]/2];
         if (p_htmlTitle == null) {
             v_image = L.icon({
                 iconUrl: p_image,
-                iconSize: v_iconsize,
+                iconSize: p_iconsize,
                 iconAnchor: v_iconAnchor,
                 popupAnchor: v_popupAnchor,
                 // shadowUrl: 'my-icon-shadow.png',
@@ -218,7 +214,7 @@ class CLeafLetAndruavMap {
             var v_htmlIcon = p_htmlTitle + "<image src='" + p_image + "'/>";
             v_image = L.divIcon({
                 html: v_htmlIcon,
-                iconSize: v_iconsize,
+                iconSize: p_iconsize,
                 iconAnchor: v_iconAnchor,
                 popupAnchor: v_popupAnchor,
                 className: "css_leaflet_icon"
