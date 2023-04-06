@@ -2138,8 +2138,6 @@ function fn_handleKeyBoard() {
 							fn_showAndruavUnitInfo(event,p_andruavUnit);
 						  });
 					*/
-					var update_timeout = null;
-					var dontexecute = false;
 
 					AndruavLibs.AndruavMap.fn_addListenerOnClickMarker (p_andruavUnit.p_marker,
 						function (p_lat, p_lng) {
@@ -2160,15 +2158,6 @@ function fn_handleKeyBoard() {
 
 							fn_showAndruavUnitInfo(p_lat, p_lng, p_andruavUnit);
 						});
-					
-
-					// AndruavLibs.AndruavMap.fn_addListenerOnDblClickMarker (p_andruavUnit.p_marker,
-					// 	function (p_lat, p_lng) {
-					// 		clearTimeout(update_timeout);
-					// 		dontexecute = true;
-					// 		fn_contextMenu(p_lat, p_lng)
-					// 	});
-					
 				}
 				else {
 					// DRAW path
@@ -2191,23 +2180,6 @@ function fn_handleKeyBoard() {
 										p_andruavUnit.m_Nav_Info.p_Location.lat,
 										p_andruavUnit.m_Nav_Info.p_Location.lng
 										);
-
-							// var flightPlanCoordinates = [
-							// 	new google.maps.LatLng(p_andruavUnit.m_Nav_Info.p_Location.oldlat, p_andruavUnit.m_Nav_Info.p_Location.oldlng),
-							// 	latlng
-							// ];
-
-							// var flightPath = new google.maps.Polyline({
-							// 	path: flightPlanCoordinates,
-							// 	geodesic: true,
-							// 	strokeColor: '#F5D29A',
-							// 	strokeOpacity: 8.0,
-							// 	strokeWeight: 2,
-							// 	icons: [{
-							// 		icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW },
-							// 		offset: '100%'
-							// 	}]
-							// });
 
 							// Add flight path step
 							p_andruavUnit.m_gui_flightPath.fn_add(v_flightPath, true,
