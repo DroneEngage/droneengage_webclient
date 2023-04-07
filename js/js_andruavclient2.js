@@ -166,6 +166,8 @@ const CONST_TYPE_AndruavMessage_SearchTargetList = 1062;
 // CODEBLOCK_END
 
 const CONST_TYPE_AndruavMessage_UdpProxy_Info = 1071
+const CONST_TYPE_AndruavMessage_Unit_Name     = 1072
+
 
 // Binary Messages
 const CONST_TYPE_AndruavMessage_LightTelemetry = 2022;
@@ -720,6 +722,20 @@ class CAndruavClient {
 
         this._API_sendSYSCMD(CONST_TYPE_AndruavSystem_DisableTasks, c_msg);
     };
+
+
+
+    API_setUnitName (p_andruavUnit, p_name, p_description)
+    {
+        if ((p_name==null) || (p_name=="") || (p_description==null) || (p_description=="")) return ;
+        
+        var msg = {
+            UN:p_name,
+            DS:p_description
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Unit_Name, msg);
+    }
 
     /***
     * Tell drone I will send you control -gamepad- info.
@@ -1389,6 +1405,8 @@ class CAndruavClient {
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
        
     }
+
+    
     API_requestWayPoints(p_andruavUnit, p_enableFCB) {
 
         var msg = {};

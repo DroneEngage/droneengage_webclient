@@ -67,21 +67,21 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             <div>
             <div key={v_andruavUnit.partyID + 'Set1'} className='row css_margin_zero padding_zero '>
                 <div key={v_andruavUnit.partyID + 'Set11'} className="col-6">
-                    <p key={v_andruavUnit.partyID + 'Set12'} className="textunit user-select-all"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
+                    <p key={v_andruavUnit.partyID + 'Set12'} className="textunit user-select-all m-0"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
                 </div>
                 
                 <div className="col-6">
-                    <p className="textunit user-select-all"><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
+                    <p className="textunit user-select-all m-0"><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
                 </div>
             </div>
             <div key={v_andruavUnit.partyID + 'Set2'} className='row css_margin_zero padding_zero '>
                 <div key={v_andruavUnit.partyID + 'Set21'} className="col-12">
-                    <p key={v_andruavUnit.partyID + 'Set22'} className="textunit_nowidth user-select-all"><span><small><b>{module_version}</b></small></span></p>
+                    <p key={v_andruavUnit.partyID + 'Set22'} className="textunit_nowidth user-select-all m-0"><span><small><b>{module_version}</b></small></span></p>
                 </div>
             </div>
             <div key={v_andruavUnit.partyID + 'Set3'}  className='row css_margin_zero padding_zero '>
                 <div key={v_andruavUnit.partyID + 'Set31'} className="col-12">
-                    <p key={v_andruavUnit.partyID + 'Set32'} className="textunit_nowidth user-select-all"><span><small><b>Last Active <span className='text-warning' ><small><b>{Date(v_andruavUnit.m_lastActiveTime)}</b></small></span> </b></small></span></p>
+                    <p key={v_andruavUnit.partyID + 'Set32'} className="textunit_nowidth user-select-all m-0"><span><small><b>Last Active <span className='text-warning' ><small><b>{Date(v_andruavUnit.m_lastActiveTime)}</b></small></span> </b></small></span></p>
                 </div>
             </div>
             </div>

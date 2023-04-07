@@ -1004,6 +1004,26 @@ function fn_handleKeyBoard() {
 			window.open(p_url,'_blank');
 		}
 
+		function fn_changeUnitInfo (p_andruavUnit)
+		{
+			if (p_andruavUnit == null) return;
+			
+			$('#modal_changeUnitInfo').find('#title').html('Change Unit Name of ' + p_andruavUnit.m_unitName);
+			$('#modal_changeUnitInfo').find('#txtUnitName').val(p_andruavUnit.m_unitName);
+			$('#modal_changeUnitInfo').find('#txtDescription').val(p_andruavUnit.Description);
+			$('#modal_changeUnitInfo').find('#btnOK').unbind("click");
+			$('#modal_changeUnitInfo').find('#btnOK').click(function () {
+				var v_unitName = $('#modal_changeUnitInfo').find('#txtUnitName').val();
+				if (v_unitName == '') return;
+				
+				var v_unitDescription = $('#modal_changeUnitInfo').find('#txtDescription').val();
+				if (v_unitDescription == '') return;
+				
+				v_andruavClient.API_setUnitName(p_andruavUnit.partyID, v_unitName, v_unitDescription);
+			});
+			$('#modal_changeUnitInfo').modal('show');
+		}
+
 		function fn_changeAltitude (p_andruavUnit) {
 
 			if (p_andruavUnit == null) return;
