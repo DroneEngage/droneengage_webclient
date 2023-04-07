@@ -514,10 +514,15 @@ class CLSS_AndruavUnit extends React.Component {
 
     };
 
-    fn_gotoUnit_byPartyID (e,p_partyID)
+    fn_gotoUnit_byPartyID (e,v_andruavUnit)
     {
-        v_andruavClient.API_requestID(p_partyID);
-        fn_gotoUnit_byPartyID(p_partyID);
+        //v_andruavClient.API_requestID(p_partyID);
+        fn_gotoUnit_byPartyID(v_andruavUnit.partyID);
+    }
+
+    fn_set_unit_name (v_andruavUnit)
+    {
+        fn_changeUnitInfo (v_andruavUnit);
     }
 
     fn_toggleCamera(p_partyID)
@@ -567,7 +572,7 @@ class CLSS_AndruavUnit_GCS extends CLSS_AndruavUnit {
         return (
          <div id={v_andruavUnit.partyID + "__FAKE"}  className={v_hidden + " row mb-1 mt-0 me-0 ms-0 pt-1 IsGCS_" + v_andruavUnit.m_IsGCS + " IsShutdown_" + v_andruavUnit.m_IsShutdown}>
             <div className='col-11 css_margin_zero padding_zero'>
-                <div className='col-1' ><img className='gcs IsGCS_true cursor_hand' src={getVehicleIcon(v_andruavUnit)} alt='GCS' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} /> </div>
+                <div className='col-1' ><img className='gcs IsGCS_true cursor_hand' src={getVehicleIcon(v_andruavUnit)} alt='GCS' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} /> </div>
                 <div className='col-11'><p id='id' className='text-right text-warning cursor_hand'> GCS [<strong>{v_andruavUnit.m_unitName}</strong>]</p></div>
             </div>
             <hr/>
@@ -1502,14 +1507,16 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_battery_display_fcb  	= this.hlp_getFCBBatteryCSSClass(v_andruavUnit); 
         var v_battery_display 		= this.hlp_getBatteryCSSClass(v_andruavUnit);
         var id = v_andruavUnit.partyID + "__FAKE";
-
+        
+        module_version = (v_andruavUnit.Description+'\n');
+                
         if (v_andruavUnit.m_isDE==false)
         {
-            module_version = "Andruav";
+            module_version += "Andruav";
         }
         else
         {
-            module_version = "DE version: " + v_andruavUnit.m_version;
+            module_version += "DE version: " + v_andruavUnit.m_version;
             const len = v_andruavUnit.m_modules.length;
             for (var i=0; i< len; ++i)
             {
@@ -1658,8 +1665,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             }
             // add FCB battery
             rows.push (<div  key={id +"fc1"}className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(2).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
-            rows.push (<div  key={id +"fc2"} className= "col-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version}  ><strong>{v_andruavUnit.m_unitName } </strong> {sys_id}<span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div  key={id +"fc2"} className= "col-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ></div>);
+            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version} onClick={ (e)=> this.fn_set_unit_name(v_andruavUnit)} ><strong>{v_andruavUnit.m_unitName } </strong> {sys_id}<span className={' ' + online_class}>{online_text}</span></p></div>);
         }
         else
         {
@@ -1668,8 +1675,8 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 rows.push (<div key={id +"__5"} className= 'col-1  padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>);
             }
             // add FCB battery
-            rows.push (<div key={id +"fc4"} className= "col-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ></div>);
-            rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div key={id +"fc4"} className= "col-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ></div>);
+            rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
 
      
@@ -1679,7 +1686,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
              <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none d-none d-sm-flex'>        	
-                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={module_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}/></div>
+                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={module_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)}/></div>
                 <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
                 <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='Start Recording on Drone' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
