@@ -374,7 +374,6 @@ class CAndruavClient {
         this.EVT_msgFromUnit_WayPoints = function () {};
         this.EVT_msgFromUnit_WayPointsUpdated = function () {};
         this.EVT_onDeleted = function () {};
-        this.EVT_OnTelemetryIn = function () {};
         this.EVT_msgFromUnit_NavInfo = function () {};
         this.EVT_BadMavlink = function () {};
         this.EVT_msgFromUnit_IMG = function () {};
@@ -505,7 +504,7 @@ class CAndruavClient {
                 if (p_packet.p_buttonIndex == 0) { // Green
                     if (p_packet.p_buttons[p_packet.p_buttonIndex].m_longPress === true) {
                         if (c_now - p_me.m_lastgamePadCommandTime[0] > CONST_GAMEPAD_REPEATED) {
-                            p_me.API_do_Land(p_me.m_gamePadUnit.partyID);
+                            p_me.API_do_Land(p_me.m_gamePadUnit);
                             p_me.m_lastgamePadCommandTime[0] = c_now;
                             return;
                         }
@@ -630,7 +629,7 @@ class CAndruavClient {
         }
 
         if (this.ws != null) {
-            this.ws.sendex(this.fn_generateJSONMessage(this.m_groupName, this.partyID, p_target, v_rountingMsg, msgType, msg));
+            this.ws.sendex(this.fn_generateJSONMessage(this.partyID, p_target, v_rountingMsg, msgType, msg));
         } else { // send a warning
         }
     };
@@ -644,7 +643,7 @@ class CAndruavClient {
             v_msgRouting = CMD_COMM_GROUP;
         }
 
-        var h = fn_str2ByteArray(this.fn_generateJSONMessage(this.m_groupName, this.partyID, targetName, v_msgRouting, msgType));
+        var h = fn_str2ByteArray(this.fn_generateJSONMessage(this.partyID, targetName, v_msgRouting, msgType));
         var ws = this.ws;
         
         const msgx = fn_concatBuffers(h, data, true);
@@ -654,7 +653,7 @@ class CAndruavClient {
 
     _API_sendSYSCMD(p_msgID, p_msg) {
         if (this.ws != null) {
-            this.ws.sendex(this.fn_generateJSONMessage(this.m_groupName, this.partyID, null, CMDTYPE_SYS, p_msgID, p_msg));
+            this.ws.sendex(this.fn_generateJSONMessage(this.partyID, null, CMDTYPE_SYS, p_msgID, p_msg));
         }
     };
 
@@ -861,24 +860,7 @@ class CAndruavClient {
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
     }
 
-    API_startTelemetry(p_andruavUnit, lvl) {
 
-        if ((this.currentTelemetryUnit != null) && (this.currentTelemetryUnit.partyID != p_andruavUnit.partyID)) {
-            this.API_stopTelemetry(this.currentTelemetryUnit);
-        }
-
-        var msg = {
-            C: CONST_RemoteCommand_TELEMETRYCTRL,
-            Act: CONST_TELEMETRY_REQUEST_START
-        };
-        if ((lvl != null) && (lvl != -1)) {
-            msg.LVL = lvl;
-        }
-
-        this.currentTelemetryUnit = p_andruavUnit;
-        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
-        p_andruavUnit.m_Telemetry._isActive = true;
-    };
 
 
     API_resumeTelemetry(p_andruavUnit,lvl) {
@@ -961,7 +943,10 @@ class CAndruavClient {
 
     };
 
-
+    /**
+     * 
+     * @param {*} p_target is partyID not a unit object.
+     */
     API_sendID(p_target) {
         var msg = {
             VT: CONST_VEHICLE_GCS, // VehicleType
@@ -980,6 +965,10 @@ class CAndruavClient {
         this.API_sendCMD(p_target, CONST_TYPE_AndruavMessage_ID, msg);
     };
 
+    /**
+     * 
+     * @param {*} p_partyID is partyID not a unit object.
+     */
     API_requestID(p_partyID) {
         var msg = {
             C: CONST_TYPE_AndruavMessage_ID
@@ -1074,24 +1063,27 @@ class CAndruavClient {
     }
 
     // Very Danger to expose [emergencyDisarm]
-    API_do_Arm(p_partyID, param_toArm, param_emergencyDisarm) {
+    API_do_Arm(p_andruavUnit, param_toArm, param_emergencyDisarm) {
+        if (p_andruavUnit.partyID == null) return ;
         var msg = {
             A: param_toArm,
             D: param_emergencyDisarm
         };
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_Arm, msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Arm, msg);
     }
 
 
-    API_do_ChangeAltitude(p_partyID, param_altitude) {
+    API_do_ChangeAltitude(p_andruavUnit, param_altitude) {
+        if (p_andruavUnit.partyID == null) return ;
         var msg = {
             a: parseInt(param_altitude)
         };
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_ChangeAltitude, msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_ChangeAltitude, msg);
     }
 
 
     API_do_YAW(p_partyID, var_targetAngle, var_turnRate, var_isClockwise, var_isRelative) {
+        if (p_partyID == null) return ;
         var msg = {
             A: parseFloat(var_targetAngle),
             R: parseFloat(var_turnRate),
@@ -1104,6 +1096,7 @@ class CAndruavClient {
 
 
     API_do_SetHomeLocation(p_partyID, p_lat, p_lng, p_alt) {
+        if (p_partyID == null) return ;
         if (p_alt == null) {
             p_alt = 0;
         }
@@ -1119,7 +1112,8 @@ class CAndruavClient {
     }
 
 
-    API_do_GimbalCtrl(p_partyID, p_pitch, p_roll, p_yaw, p_isAbsolute) {
+    API_do_GimbalCtrl(p_andruavUnit, p_pitch, p_roll, p_yaw, p_isAbsolute) {
+        if (p_andruavUnit.partyID == null) return ;
         var v_msg = {
             A: Math.round(p_pitch),
             B: Math.round(p_roll),
@@ -1128,16 +1122,17 @@ class CAndruavClient {
 
         };
 
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_GimbalCtrl, v_msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_GimbalCtrl, v_msg);
     }
 
 
-    API_do_ChangeSpeed1(p_partyID, p_speed) {
-        this.API_do_ChangeSpeed2(p_partyID, p_speed);
+    API_do_ChangeSpeed1(p_andruavUnit, p_speed) {
+        this.API_do_ChangeSpeed2(p_andruavUnit, p_speed);
     }
 
 
-    API_do_ChangeSpeed2(p_partyID, p_speed, p_isGroundSpeed, p_throttle, p_isRelative) {
+    API_do_ChangeSpeed2(p_andruavUnit, p_speed, p_isGroundSpeed, p_throttle, p_isRelative) {
+        if (p_andruavUnit.partyID == null) return ;
         var v_msg = {
             a: p_speed,
             b: p_isGroundSpeed == null ? true : p_isGroundSpeed,
@@ -1145,15 +1140,16 @@ class CAndruavClient {
             d: p_isRelative == null ? false : p_isRelative
 
         };
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_ChangeSpeed, v_msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_ChangeSpeed, v_msg);
     }
 
-    API_do_Land(p_partyID) {
+    API_do_Land(p_andruavUnit) {
+        if (p_andruavUnit.partyID == null) return ;
         var v_msg = {};
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_Land, v_msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Land, v_msg);
     }
 
-
+    //TODO: change p_partyID to p_andruavUnit
     API_do_FlightMode(p_partyID, flightMode) {
         var v_msg = {
             F: flightMode
@@ -1162,13 +1158,14 @@ class CAndruavClient {
     }
 
 
-    API_setGPSSource(p_partyID, p_source) { // (p_andruavUnit,OnOff)
+    API_setGPSSource(p_andruavUnit, p_source) { // (p_andruavUnit,OnOff)
 
+        if (p_andruavUnit.partyID == null) return ;
         var v_msg = {
             C: CONST_RemoteCommand_SET_GPS_SOURCE,
             s: p_source
         };
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_RemoteExecute, v_msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, v_msg);
     };
 
 
@@ -1182,6 +1179,7 @@ class CAndruavClient {
 
     API_CONST_RemoteCommand_streamVideo(p_andruavUnit, p_OnOff, p_number, p_channel) {
 
+        if (p_andruavUnit.partyID == null) return ;
         var v_msg = {
             C: CONST_RemoteCommand_STREAMVIDEO,
             Act: p_OnOff
@@ -1306,6 +1304,8 @@ class CAndruavClient {
 
 
     API_uploadWayPoints(p_andruavUnit, p_eraseFirst, p_textMission) { // eraseFirst NOT IMPLEMENTED YET
+        if (p_andruavUnit.partyID == null) return ;
+        
         var v_msg = {};
 
         v_msg.a = p_textMission;
@@ -1338,6 +1338,8 @@ class CAndruavClient {
 
     API_clearWayPoints(p_andruavUnit, p_enableFCB) {
 
+        if (p_andruavUnit.partyID == null) return ;
+        
         var v_msg = {
             C: CONST_RemoteCommand_CLEAR_WAY_POINTS
 
@@ -1358,6 +1360,8 @@ class CAndruavClient {
 		 */
     API_do_StartMissionFrom(p_andruavUnit, p_missionNumber) {
 
+        if (p_andruavUnit.partyID == null) return ;
+        
         if (p_missionNumber < 0) 
             p_missionNumber = 0;
         
@@ -1373,6 +1377,8 @@ class CAndruavClient {
 
     API_FireEvent(p_andruavUnit, p_event_id)
     {
+        const c_party = p_andruavUnit!=null?p_andruavUnit.partyID:null;
+        
         if (CONST_EXPERIMENTAL_FEATURES_ENABLED === false) { // used to test behavior after removing code and as double check
             return;
         }
@@ -1381,12 +1387,12 @@ class CAndruavClient {
             a: parseInt(p_event_id)
         };
 
-        const c_party = p_andruavUnit!=null?p_andruavUnit.partyID:null;
         this.API_sendCMD(c_party, CONST_TYPE_AndruavMessage_Sync_EventFire, p_msg);
     }
 
     // CODEBLOCK_START
     API_requestSearchableTargets(p_andruavUnit) {
+        if (p_andruavUnit.partyID == null) return ;
         if (CONST_EXPERIMENTAL_FEATURES_ENABLED === false) { // used to test behavior after removing code and as double check
             return;
         }
@@ -1398,6 +1404,7 @@ class CAndruavClient {
 
     API_requestUdpProxyStatus (p_andruavUnit)
     {
+        if (p_andruavUnit.partyID == null) return ;
         var msg = {
             C: CONST_TYPE_AndruavMessage_UdpProxy_Info
         };
@@ -1407,8 +1414,9 @@ class CAndruavClient {
     }
 
     
-    API_requestWayPoints(p_andruavUnit, p_enableFCB) {
-
+    API_requestWayPoints(p_andruavUnit, p_enableFCB) 
+    {
+        if (p_andruavUnit.partyID == null) return ;
         var msg = {};
         if (p_enableFCB == true) {
             msg.C = CONST_RemoteCommand_RELOAD_WAY_POINTS_FROM_FCB;
@@ -1426,8 +1434,10 @@ class CAndruavClient {
     };
 
 
-    API_requestParamList(p_andruavUnit) {
-
+    API_requestParamList(p_andruavUnit) 
+    {
+        if (p_andruavUnit.partyID == null) return ;
+        
         var msg = {};
         msg.C = CONST_RemoteCommand_REQUEST_PARAM_LIST;
         
@@ -1435,7 +1445,8 @@ class CAndruavClient {
     };
 
 
-    API_requestCameraList(p_PartyID, p_callback) {
+    API_requestCameraList(p_andruavUnit, p_callback) {
+        if (p_andruavUnit.partyID == null) return ;
         if (p_callback != null) {
             this.fn_callbackOnMessageID(p_callback, CONST_TYPE_AndruavMessage_CameraList);
         }
@@ -1444,7 +1455,7 @@ class CAndruavClient {
             C: CONST_TYPE_AndruavMessage_CameraList
         };
 
-        this.API_sendCMD(p_PartyID, CONST_TYPE_AndruavMessage_RemoteExecute, p_msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, p_msg);
     };
 
 
@@ -1489,6 +1500,7 @@ class CAndruavClient {
 
 
     API_TXCtrl(p_andruavUnit, p_subAction) {
+        if (p_andruavUnit.partyID == null) return ;
         var p_msg = {
             b: p_subAction
 
@@ -1499,6 +1511,7 @@ class CAndruavClient {
 
 
     API_connectToFCB(p_andruavUnit) {
+        if (p_andruavUnit.partyID == null) return ;
         var p_msg = {
             C: CONST_RemoteCommand_CONNECT_FCB
 
@@ -1629,7 +1642,7 @@ class CAndruavClient {
     };
 
     // please move it out side
-    fn_generateJSONMessage(p_senderGroup, p_senderID, p_targetID, p_msgRouting, p_msgID, p_msg) { // prepare json data
+    fn_generateJSONMessage(p_senderID, p_targetID, p_msgRouting, p_msgID, p_msg) { // prepare json data
         var p_jmsg = {
             ty: p_msgRouting,
             // MSGRrouting,
@@ -1637,18 +1650,13 @@ class CAndruavClient {
             sd: p_senderID, // p_senderID,
             st: 'w', // senderType Web,
             tg: p_targetID,
-            // targetName,
-            // gr: p_senderGroup, //senderGroup,   YOU DONT NEED GROUPS HERE
             mt: p_msgID, // msgID,
             ms: p_msg
 
         };
 
-        // convert and send data to server
 
-        // CODEBLOCK_START
         fn_console_log("out:" + JSON.stringify(p_jmsg));
-        // CODEBLOCK_END
 
         return JSON.stringify(p_jmsg);
     };
@@ -2611,30 +2619,6 @@ class CAndruavClient {
         this.fn_onSocketStatus(status, c_SOCKET_STATUS[status - 1]);
     };
 
-    sendParametersValuesToGCS(p_unit)
-    {
-        const c_keys = Object.keys(p_unit.m_FCBParameters.m_list_by_index);
-        const c_len = c_keys.length;
-        
-        if (c_len ==0) 
-        {
-            return false; // no parameters forward to Vehicle
-        }
-
-        const c_list = p_unit.m_FCBParameters.m_list_by_index;
-                    
-                        
-        for (var i =0; i<c_len; ++i) 
-        {
-            const c_mst = c_list[c_keys[i]];    
-            c_mst.srcSystem=1;
-            c_mst.srcComponent=1;
-
-            this.EVT_OnTelemetryIn(p_unit.partyID, array_to_ArrayBuffer(c_mst.pack(c_mst)));
-        }
-
-        return true;
-    }
 
     prv_parseSystemMessage(Me, msg) {
         if (msg.messageType == CONST_TYPE_AndruavSystem_ConnectedCommServer) {
@@ -2703,30 +2687,7 @@ class CAndruavClient {
                     // fn_console_log ("PARAM_GCS:" + c_mst.param_id);
                     // c_mst.srcSystem=p_unit.m_FCBParameters.m_systemID;
                     // //c_mst.srcComponent=0; //p_unit.m_FCBParameters.m_componentID;
-                    // this.EVT_OnTelemetryIn(p_unit.partyID, array_to_ArrayBuffer(c_mst.pack(c_mst)));                    
                     // return true;
-                break;
-
-                case mavlink20.MAVLINK_MSG_ID_PARAM_REQUEST_LIST:
-                {
-                    // const c_keys = Object.keys(p_unit.m_FCBParameters.m_list);
-                    // const c_len = c_keys.length;
-                    // const c_list = p_unit.m_FCBParameters.m_list;
-                    
-                    // for (var i =0; i<c_len; ++i) 
-                    // {
-                    //     const c_mst = c_list[c_keys[i]];    
-                    //     c_mst.srcSystem=1;
-                    //     c_mst.srcComponent=1;
-
-                    //     var x = c_mst.pack(c_mst);
-                    //     var z = array_to_ArrayBuffer(x);
-                    //     this.EVT_OnTelemetryIn(p_unit.partyID, z);
-                    // }
-                    
-                    return this.sendParametersValuesToGCS(p_unit);
-                }
-                    
                 break;
 
                 case mavlink20.MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL:
@@ -2743,8 +2704,6 @@ class CAndruavClient {
                     //         ftp.payload = p_payload;
                     //         ftp.srcSystem=1;
                     //         ftp.srcComponent=1;
-                    //         Me.EVT_OnTelemetryIn(p_unit.partyID, array_to_ArrayBuffer(ftp.pack(ftp)));
-
                     //     }) === true) 
                     // {
                     //     return false;
@@ -3067,11 +3026,6 @@ class CAndruavClient {
                 
                 
             }
-            // c_mavlinkMessage.srcSystem=1;
-            // c_mavlinkMessage.srcComponent=1;
-
-            //var x = c_mavlinkMessage.pack(array_to_ArrayBuffer(c_mavlinkMessage));
-            //this.EVT_OnTelemetryIn(p_unit,p_mavlinkPacket) ;//array_to_ArrayBuffer(c_mavlinkMessage.pack(c_mavlinkMessage)));
         }
     };
 
@@ -3087,17 +3041,6 @@ class CAndruavClient {
 
 
         switch (andruavCMD.mt) {
-
-            case CONST_TYPE_AndruavMessage_LightTelemetry: {
-
-                    var v_andruavMessage = {
-                        'src': CONST_TelemetryProtocol_Source_REMOTE,
-                        'data': data.buffer.slice(v_internalCommandIndexByteBased)
-                    };
-                    this.prv_parseUnitMavlinkMessage(v_unit, v_andruavMessage.data);
-                    this.EVT_OnTelemetryIn(v_unit, v_andruavMessage.data);
-                }
-                break;
 
             case CONST_TYPE_AndruavBinaryMessage_Mavlink: {
 

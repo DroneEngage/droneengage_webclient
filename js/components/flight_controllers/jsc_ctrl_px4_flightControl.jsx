@@ -225,7 +225,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
         return res;
 	}
 
-    fn_ToggleArm(v_andruavUnit) {
+    fn_ToggleArm(v_andruavUnit) { //bug no need to pass parameter
         if (this.props.v_andruavUnit != null) {
             if (this.props.v_andruavUnit.m_isArmed) {
                 this.fn_doDisarm(v_andruavUnit);
@@ -236,19 +236,19 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
         }
     }
 
-    fn_doArm(v_andruavUnit) {
+    fn_doArm(v_andruavUnit) { //bug no need to pass parameter
         if (this.props.v_andruavUnit != null) {
             fn_do_modal_confirmation("DANGEROUS: FORCE ADMING  " + this.props.v_andruavUnit.m_unitName + "   " + this.props.v_andruavUnit.m_VehicleType_TXT,
                 "OVERRIDE ARM .. Are You SURE?", function (p_approved) {
                     if (p_approved === false) 
                     {
-                        v_andruavClient.API_do_Arm(v_andruavUnit.partyID, true, false);
+                        v_andruavClient.API_do_Arm(v_andruavUnit, true, false);
                         return;
                     }
                     else
                     {
 					    v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
-                        v_andruavClient.API_do_Arm(v_andruavUnit.partyID, true, true);
+                        v_andruavClient.API_do_Arm(v_andruavUnit, true, true);
                         return ;
                     }
                 }, "FORCED-ARM", "bg-danger text-white", "ARM");
@@ -261,7 +261,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                 "STOP all MOTORS and if vehicle in air will CRASH. Are You SURE?", function (p_approved) {
                     if (p_approved === false) return;
 					v_SpeakEngine.fn_speak('DANGEROUS EMERGENCY DISARM');
-                    v_andruavClient.API_do_Arm(this.props.v_andruavUnit.partyID, false, true);
+                    v_andruavClient.API_do_Arm(this.props.v_andruavUnit, false, true);
                 }, "KILL-MOTORS", "bg-danger text-white");
 
 
