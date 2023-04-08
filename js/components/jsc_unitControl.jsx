@@ -443,7 +443,7 @@ class CLSS_AndruavUnit extends React.Component {
 
         v_SpeakEngine.fn_speak(v_speak);
 
-        v_andruavClient.API_do_ChangeSpeed1(p_andruavUnit.partyID, parseFloat(p_speed));
+        v_andruavClient.API_do_ChangeSpeed1(p_andruavUnit, parseFloat(p_speed));
     }
 
     fn_takeTXCtrl (e,p_andruavUnit)
@@ -474,45 +474,6 @@ class CLSS_AndruavUnit extends React.Component {
         window.AndruavLibs.EventEmitter.fn_dispatch(EE_displayParameters, p_andruavUnit);
     }
 
-    fn_telemetry_toggle(p_andruavUnit) {
-        if (v_andruavClient == null) return;
-        
-        if (p_andruavUnit.m_Telemetry._isActive == true) {
-            this.fn_telemetryOff(p_andruavUnit);
-        }
-        else {
-            this.fn_telemetryOn(p_andruavUnit, v_smart_Telemetry_Level);
-        }
-
-    };
-
-    
-
-    
-
-    fn_telemetryOn(p_andruavUnit) {
-
-        if (v_andruavClient == null) return;
-        window.AndruavLibs.LocalTelemetry.fn_init(function () {
-            // NOT TESTED YET
-            $('#btn_send').removeAttr('readonly');
-            $('#btn_send').addClass ('btn-primary').removeClass('btn-secondary');
-            fn_console_log("Connection is Open");
-
-            v_andruavClient.API_startTelemetry(p_andruavUnit);
-        });
-
-
-
-    };
-
-    fn_telemetryOff(p_andruavUnit) {
-
-        if (v_andruavClient == null) return;
-        
-        v_andruavClient.API_stopTelemetry(p_andruavUnit);
-
-    };
 
     fn_gotoUnit_byPartyID (e,v_andruavUnit)
     {
@@ -525,7 +486,7 @@ class CLSS_AndruavUnit extends React.Component {
         fn_changeUnitInfo (v_andruavUnit);
     }
 
-    fn_toggleCamera(p_partyID)
+    fn_toggleCamera(p_andruavUnit)
     {
         function fn_callback (p_session)
         {
@@ -535,21 +496,9 @@ class CLSS_AndruavUnit extends React.Component {
             }
         }
         
-        v_andruavClient.API_requestCameraList(p_partyID, fn_callback);
+        v_andruavClient.API_requestCameraList(p_andruavUnit, fn_callback);
 
     }
-
-    fn_toggleVideo(p_partyID)
-    {
-        toggleVideo(p_partyID);
-    }
-
-    fn_toggleRecord (p_partyID)
-    {
-        toggleRecrodingVideo(p_partyID);
-    }
-
-
 
 }
 
@@ -665,13 +614,13 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             v_speak = "change depth to " + v_speak;
 
-            v_andruavClient.API_do_ChangeAltitude(p_andruavUnit.partyID, -p_AltitudeInMeter);
+            v_andruavClient.API_do_ChangeAltitude(p_andruavUnit, -p_AltitudeInMeter);
         }
         else
         {
             v_speak = "change altitude to " + v_speak;
             
-            v_andruavClient.API_do_ChangeAltitude(p_andruavUnit.partyID, p_AltitudeInMeter);
+            v_andruavClient.API_do_ChangeAltitude(p_andruavUnit, p_AltitudeInMeter);
         }
 
         v_SpeakEngine.fn_speak(v_speak);
@@ -1348,7 +1297,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 
                         </div>
                         <div className= 'col-6 col-sm-3 user-select-none  '>
-                                <p id='gps' className={' rounded-3 textunit text-center cursor_hand  ' + gps.m_gps_class} title ={gps.m_gps_status} onClick={ (e) => fn_switchGPS(v_andruavUnit.partyID)} >{gps.m_gps_source + gps.m_gps_text + ' ' + gps.m_gps_text2}</p>
+                                <p id='gps' className={' rounded-3 textunit text-center cursor_hand  ' + gps.m_gps_class} title ={gps.m_gps_status} onClick={ (e) => fn_switchGPS(v_andruavUnit)} >{gps.m_gps_source + gps.m_gps_text + ' ' + gps.m_gps_text2}</p>
                         </div>
                         <div className= 'col-6 col-sm-3 user-select-none '>
                                   <p id='DFM' className={' rounded-3 text-center textunit ' + v_distanceToMe_class} title ="Unit's distance from Me (Browser Location)" >{"DFM: " + v_distanceToMe_text}</p>
@@ -1687,9 +1636,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
              <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none d-none d-sm-flex'>        	
                 <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={module_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)}/></div>
-                <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit.partyID)}/></div>
-                <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => this.fn_toggleVideo(v_andruavUnit.partyID)}/></div>
-                <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='Start Recording on Drone' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit.partyID)}/></div>
+                <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit)}/></div>
+                <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => toggleVideo(v_andruavUnit)}/></div>
+                <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='Start Recording on Drone' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit)}/></div>
                 {rows}
             </div>
              

@@ -234,14 +234,14 @@ function fn_handleKeyBoard() {
 
 
 		function fn_doGimbalCtrlStep(unit, stepPitch, stepRoll, stepYaw) {
-			v_andruavClient.API_do_GimbalCtrl(unit.partyID,
+			v_andruavClient.API_do_GimbalCtrl(unit,
 				stepPitch,
 				stepRoll,
 				stepYaw, false);
 		}
 
 		function fn_doGimbalCtrl(unit, pitch, roll, yaw) {
-			v_andruavClient.API_do_GimbalCtrl(unit.partyID, pitch, roll, yaw, true);
+			v_andruavClient.API_do_GimbalCtrl(unit, pitch, roll, yaw, true);
 		}
 
 
@@ -871,15 +871,12 @@ function fn_handleKeyBoard() {
 			return false;
 		}
 
-		function fn_switchGPS(p_partyID) {
-			var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_partyID);
+		function fn_switchGPS(p_andruavUnit) {
 			if (p_andruavUnit == null) {
 				return;
 			}
 
-
-			v_andruavClient.API_setGPSSource(p_partyID, (p_andruavUnit.m_GPS_Info1.gpsMode + 1) % 3)
-
+			v_andruavClient.API_setGPSSource(p_andruavUnit, (p_andruavUnit.m_GPS_Info1.gpsMode + 1) % 3)
 		}
 
 		
@@ -1019,7 +1016,7 @@ function fn_handleKeyBoard() {
 				var v_unitDescription = $('#modal_changeUnitInfo').find('#txtDescription').val();
 				if (v_unitDescription == '') return;
 				
-				v_andruavClient.API_setUnitName(p_andruavUnit.partyID, v_unitName, v_unitDescription);
+				v_andruavClient.API_setUnitName(p_andruavUnit, v_unitName, v_unitDescription);
 			});
 			$('#modal_changeUnitInfo').modal('show');
 		}
@@ -1058,11 +1055,11 @@ function fn_handleKeyBoard() {
 				// save target speed as indication.
 				if (p_andruavUnit.m_VehicleType == VEHICLE_SUBMARINE)
 				{
-					v_andruavClient.API_do_ChangeAltitude(p_andruavUnit.partyID, -v_alt);
+					v_andruavClient.API_do_ChangeAltitude(p_andruavUnit, -v_alt);
 				}
 				else
 				{
-					v_andruavClient.API_do_ChangeAltitude(p_andruavUnit.partyID, v_alt);
+					v_andruavClient.API_do_ChangeAltitude(p_andruavUnit, v_alt);
 				}
 			});
 			$('#changespeed_modal').modal('show');
@@ -1117,7 +1114,7 @@ function fn_handleKeyBoard() {
 				}
 				// save target speed as indication.
 				p_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed = v_speed;
-				v_andruavClient.API_do_ChangeSpeed1(p_andruavUnit.partyID, parseFloat(v_speed));
+				v_andruavClient.API_do_ChangeSpeed1(p_andruavUnit, parseFloat(v_speed));
 			});
 			$('#changespeed_modal').modal('show');
 
@@ -1128,11 +1125,9 @@ function fn_handleKeyBoard() {
 		/**
 		   Switch Video OnOff
 		*/
-		function toggleVideo(p_partyID) {
-			var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_partyID);
+		function toggleVideo(p_andruavUnit) {
 			if (p_andruavUnit == null) return;
 			fn_retreiveCamerasList(p_andruavUnit);
-			
 		}
 
 
@@ -1154,16 +1149,15 @@ function fn_handleKeyBoard() {
 					}
 				}
         
-        		v_andruavClient.API_requestCameraList(p_andruavUnit.partyID, fn_callback);
+        		v_andruavClient.API_requestCameraList(p_andruavUnit, fn_callback);
 		}
 
 
 		/**
 		   Switch Video OnOff
 		*/
-		function toggleRecrodingVideo(p_partyID) {
+		function toggleRecrodingVideo(p_andruavUnit) {
 
-			 var p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(p_partyID);
 			if (p_andruavUnit == null) return;
 
 			function fn_callback (p_session)
@@ -1182,7 +1176,7 @@ function fn_handleKeyBoard() {
 				}
         	}
         
-        	v_andruavClient.API_requestCameraList(p_partyID, fn_callback);
+        	v_andruavClient.API_requestCameraList(p_andruavUnit, fn_callback);
 		}
 
 
@@ -1714,24 +1708,6 @@ function fn_handleKeyBoard() {
 		};
 
 
-		var EVT_GCSDataError = function () {
-			//gui_alert('Web Telemetry', 'webplugin not found. Please check <a href="www.npmjs.com/package/andruavwebplugin" target="_blank">web plugin</a>', 'danger');
-			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onGUIMessage, {
-				p_title:'Web Telemetry',
-				p_msg:'webplugin not found. Please check <a href="www.npmjs.com/package/andruavwebplugin" target="_blank">web plugin</a>',
-				p_level:'danger'
-			});
-
-			var units = v_andruavClient.m_andruavUnitList.fn_getUnitValues();
-			var len = units.length;
-			for (var i = 0; i < len; ++i) {
-				var unit = units[i];
-				if (unit.m_Telemetry._isActive == true) {
-					v_andruavClient.API_stopTelemetry(unit);
-				}
-			}
-		};
-
 		var EVT_BadMavlink = function () {
 			//gui_alert('Web Telemetry', 'Please make sure that you use MAVLINK <b>version 2</b>.', 'danger');
 			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onGUIMessage, {
@@ -1740,26 +1716,8 @@ function fn_handleKeyBoard() {
 				p_level:'danger'
 			});
 
-			var units = v_andruavClient.m_andruavUnitList.fn_getUnitValues();
-			var len = units.length;
-			for (var i = 0; i < len; ++i) {
-				var unit = units[i];
-				if (unit.m_Telemetry._isActive == true) {
-					//v_andruavClient.API_stopTelemetry(unit);
-				
-				}
-			}
 		};
 
-		var EVT_OnTelemetryIn = function (p_andruavUnit, p_mavlinkPacket) {
-			if ((v_andruavClient == null) || (v_andruavClient.currentTelemetryUnit == null)) {
-				// highlight that there is an p_error ... redundant traffic
-				v_andruavClient.API_stopTelemetry(p_andruavUnit);
-				return;
-			}
-			
-			window.AndruavLibs.LocalTelemetry.fn_send(p_mavlinkPacket, true);
-		};
 
 
 
@@ -1969,7 +1927,7 @@ function fn_handleKeyBoard() {
 		function EVT_andruavUnitFCBUpdated(p_andruavUnit) {
 			if (p_andruavUnit.m_useFCBIMU == true) {
 				v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' connected to flying board');
-				this.API_requestParamList(p_andruavUnit.partyID);
+				this.API_requestParamList(p_andruavUnit);
 			}
 			else {
 				v_SpeakEngine.fn_speak(p_andruavUnit.m_unitName + ' disconnected from flying board');
@@ -3070,7 +3028,6 @@ function fn_handleKeyBoard() {
 				v_andruavClient.EVT_andruavUnitFightModeUpdated 	= EVT_andruavUnitFightModeUpdated;
 				v_andruavClient.EVT_andruavUnitVehicleTypeUpdated 	= EVT_andruavUnitVehicleTypeUpdated;
 				v_andruavClient.EVT_andruavUnitModuleUpdated 		= EVT_andruavUnitModuleUpdated;
-				v_andruavClient.EVT_OnTelemetryIn 					= EVT_OnTelemetryIn;
 				fn_console_log(c_SOCKET_STATUS);
 
 				v_andruavClient.fn_connect(window.AndruavLibs.AndruavAuth.fn_getSessionID());
@@ -3385,7 +3342,6 @@ function fn_handleKeyBoard() {
             {
 				window.AndruavLibs.LocalTelemetry.fn_onPacketReceived = EVT_GCSDataReceived;
 				window.AndruavLibs.LocalTelemetry.fn_onWebSocketOpened = EVT_GCSDataOpen;
-				window.AndruavLibs.LocalTelemetry.fn_onWebSocketError = EVT_GCSDataError;
 			}
 			
 			$("#alert .close").click(function (e) {
