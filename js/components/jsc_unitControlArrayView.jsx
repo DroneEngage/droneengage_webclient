@@ -797,7 +797,6 @@ class CLSS_AndruavUnitListArray extends React.Component {
         var units_details = [];
         var units_gcs = [];
 
-        {/* <p id='gps' className={' rounded-3 textunit text-center cursor_hand  ' + gps.m_gps_class} title ={gps.m_gps_status} onClick={ (e) => fn_switchGPS(v_andruavUnit.partyID)} >{gps.m_gps_source + gps.m_gps_text + ' ' + gps.m_gps_text2}</p> */}
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
