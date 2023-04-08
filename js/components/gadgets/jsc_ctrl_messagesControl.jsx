@@ -96,7 +96,7 @@ export  class CLSS_MESSAGE_LOG  extends React.Component {
                  <table className = "table table-dark css_table_log">
                     <thead>
                         <tr>
-                        <th data-sort-type="text" className="w-25" scope="col">time</th>
+                        <th data-sort-type="text" className="w-25" scope="col">Time</th>
                         <th className="w-25" scope="col">Type</th>
                         <th data-sort-type="text" className="w-75" scope="col">Message</th>
                         </tr>
