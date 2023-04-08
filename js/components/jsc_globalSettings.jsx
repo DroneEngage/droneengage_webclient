@@ -332,10 +332,6 @@ class CLSS_GlobalSettings extends React.Component {
 			  
   }
 
-  fn_resumeTelemetry() {
-    //if (v_andruavClient == null) return;
-    v_andruavClient.API_resumeTelemetry(v_smart_Telemetry_Level);
-  };
 
   fn_onAuthStatus (me,res) {
     me.setState({'m_update': me.state.m_update +1});
@@ -343,11 +339,6 @@ class CLSS_GlobalSettings extends React.Component {
     //me.forceUpdate();
   }
 
-  updateSmartTelemetry (e,v) {
-      v_smart_Telemetry_Level = v;
-      this.fn_resumeTelemetry();
-  }
-  
  
   componentWillUnmount () {
 				window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_Auth_Logined,this);
