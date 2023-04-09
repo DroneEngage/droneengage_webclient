@@ -62,7 +62,9 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
                 }
             }
         }
-
+        
+        const v_date = (new Date(v_andruavUnit.m_NetworkStatus.m_lastActiveTime));
+        
         return (
             <div>
             <div key={v_andruavUnit.partyID + 'Set1'} className='row css_margin_zero padding_zero '>
@@ -81,7 +83,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             </div>
             <div key={v_andruavUnit.partyID + 'Set3'}  className='row css_margin_zero padding_zero '>
                 <div key={v_andruavUnit.partyID + 'Set31'} className="col-12">
-                    <p key={v_andruavUnit.partyID + 'Set32'} className="textunit_nowidth user-select-all m-0"><span><small><b>Last Active <span className='text-warning' ><small><b>{Date(v_andruavUnit.m_lastActiveTime)}</b></small></span> </b></small></span></p>
+                    <p key={v_andruavUnit.partyID + 'Set32'} className="textunit_nowidth user-select-all m-0"><span><small><b>Last Active <span className='text-warning' ><small><b>{v_date.toUTCString()}</b></small></span> </b></small></span></p>
                 </div>
             </div>
             </div>
