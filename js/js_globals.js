@@ -127,7 +127,6 @@ VAR_MAP_LEAFLET_URL = "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tile
 const CONST_PRO_VERSION = false;
 const CONST_DISABLE_ADSG = true;
 
-const CONST_DONT_BROADCAST_TO_GCSs = true;
 
 
 function fn_console_log(p_txt)
