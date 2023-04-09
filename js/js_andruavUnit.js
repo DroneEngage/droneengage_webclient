@@ -22,6 +22,8 @@ const VEHICLE_QUAD 					= 2;
 const VEHICLE_PLANE 				= 3;
 const VEHICLE_ROVER 				= 4;
 const VEHICLE_HELI 					= 5;
+const VEHICLE_BOAT 					= 6;
+
 const VEHICLE_SUBMARINE    			= 12;
 
 const VEHICLE_GIMBAL 				= 15;
@@ -248,6 +250,7 @@ class C_NavInfo
 		this.p_UserDesired= {
 			m_NavSpeed: 0.0,	// user desired speed..requested from web
 		};
+		// flight path as points (lng,lat,alt)
 		this.m_FlightPath=[];
 	};
 }
@@ -480,6 +483,19 @@ class C_DistanceSensor
 	}	
 }
 
+class C_GUIHelper
+{
+	constructor (p_parent)
+	{
+		this.m_parent 	= p_parent;
+		// actual lines on map
+		this.m_gui_flightPath = new CLSS_CustomCircularBuffer(CONST_DEFAULT_FLIGHTPATH_STEPS_COUNT); 
+		this.m_wayPoint_markers = [];
+		this.m_wayPoint_polygons = [];
+	}
+} 
+
+
 class CAndruavUnitObject 
 {
 	
@@ -552,10 +568,12 @@ class CAndruavUnitObject
 		this.m_GPS_Info2				= new C_GPS (this);
 		this.m_GPS_Info3				= new C_GPS (this);
 		this.m_Nav_Info 				= new C_NavInfo(this);
-		this.m_Terrain_Info = new C_Terrain (this);
-		this.m_NetworkStatus = new C_NetWorkStatus (this);
+		this.m_Terrain_Info 			= new C_Terrain (this);
+		this.m_NetworkStatus 			= new C_NetWorkStatus (this);
+		// create a buffer for flight path
 		Object.seal(this.m_NetworkStatus);
 		Object.seal(this.m_Nav_Info);
+		this.m_gui						= new C_GUIHelper(this);
 		this.m_Geo_Tags 				= new C_GeoTags(this);
 		this.m_Telemetry				= new C_Telemetry(this);
 		this.m_Servo 					= new C_Servo(this);

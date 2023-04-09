@@ -31,7 +31,8 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
 		{
             switch (p_andruavUnit.m_VehicleType)
             {
-                case VEHICLE_ROVER:
+                case VEHICLE_BOAT:
+				case VEHICLE_ROVER:
                     res.btn_arm_class                   = " btn-danger ";
                     res.btn_manual_ctl_class            = " btn-primary ";
                     res.btn_yaw_class                   = " disabled hidden ";
@@ -157,6 +158,7 @@ export class CLSS_CTRL_PX4_FLIGHT_CONTROL extends React.Component {
                     res.btn_pos_orbit_class             = " disabled hidden ";
                     break;
 
+                case VEHICLE_BOAT:
                 case VEHICLE_ROVER:
                     res.btn_arm_class                   = " btn-outline-light ";
                     res.btn_yaw_class                   = " disabled hidden  ";

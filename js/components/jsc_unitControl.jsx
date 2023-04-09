@@ -479,6 +479,7 @@ class CLSS_AndruavUnit extends React.Component {
     {
         //v_andruavClient.API_requestID(p_partyID);
         fn_gotoUnit_byPartyID(v_andruavUnit.partyID);
+        v_andruavClient.API_do_GetHomeLocation(v_andruavUnit);
     }
 
     fn_changeUnitInfo (v_andruavUnit)
