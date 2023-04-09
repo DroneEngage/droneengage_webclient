@@ -475,7 +475,7 @@ class CLeafLetAndruavMap {
         var v_image = L.icon({
             iconUrl: p_image,
             iconSize: [
-                32, 32
+                64, 64
             ],
             iconAnchor: [
                 16, 16
