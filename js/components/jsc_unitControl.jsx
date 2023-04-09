@@ -481,8 +481,9 @@ class CLSS_AndruavUnit extends React.Component {
         fn_gotoUnit_byPartyID(v_andruavUnit.partyID);
     }
 
-    fn_set_unit_name (v_andruavUnit)
+    fn_changeUnitInfo (v_andruavUnit)
     {
+        if ((CONST_FEATURE.hasOwnProperty('DISABLE_UNIT_NAMING')) && (CONST_FEATURE.DISABLE_UNIT_NAMING===true)) return ;
         fn_changeUnitInfo (v_andruavUnit);
     }
 
@@ -1372,9 +1373,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
     renderControl (p_andruavUnit)
     {
 
-        if ((p_andruavUnit.m_useFCBIMU === false) 
-        ||((p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_DroneKit_Telemetry)
-            && (p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_Mavlink_Telemetry)))
+        if (p_andruavUnit.m_useFCBIMU !== true) 
+        // ||((p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_DroneKit_Telemetry)
+        //     && (p_andruavUnit.m_telemetry_protocol != CONST_TelemetryProtocol_CONST_Mavlink_Telemetry)))
         {
             return (
                 <div id='ctrl_k' className='text-center'>
@@ -1613,9 +1614,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 rows.push (<div key={id +"__5"} className= 'col-1  padding_zero'><img className={v_battery_display.css}  src={v_battery_display.m_battery_src} title={'Andruav batt: ' + v_battery_display.level +'% ' + v_battery_display.charging }/></div>);
             }
             // add FCB battery
-            rows.push (<div  key={id +"fc1"}className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(2).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
+            rows.push (<div  key={id +"fc1"} className= "col-1 padding_zero"><img className= {v_battery_display_fcb.css}   src={v_battery_display_fcb.m_battery_src}  title={"fcb batt: " +  parseFloat(v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryRemaining).toFixed(1) + "%  " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryVoltage/1000).toFixed(2).toString() + "v " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryCurrent/1000).toFixed(1).toString() + "A " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_TotalCurrentConsumed).toFixed(1).toString() + " mAh " + (v_andruavUnit.m_Power._FCB.p_Battery.FCB_BatteryTemprature/1000).toFixed(1).toString() + "C"} /></div>);
             rows.push (<div  key={id +"fc2"} className= "col-1 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ></div>);
-            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version} onClick={ (e)=> this.fn_set_unit_name(v_andruavUnit)} ><strong>{v_andruavUnit.m_unitName } </strong> {sys_id}<span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div  key={id +"fc3"} className= "col-4 padding_zero text-end" onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version} onClick={ (e)=> this.fn_changeUnitInfo(v_andruavUnit)} ><strong>{v_andruavUnit.m_unitName } </strong> {sys_id}<span className={' ' + online_class}>{online_text}</span></p></div>);
         }
         else
         {
@@ -1625,7 +1626,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             }
             // add FCB battery
             rows.push (<div key={id +"fc4"} className= "col-2 padding_zero"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ></div>);
-            rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version}  ><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
+            rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version}  onClick={ (e)=> this.fn_changeUnitInfo(v_andruavUnit)}><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
 
      

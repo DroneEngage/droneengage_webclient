@@ -23,11 +23,18 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
 
     fn_unitUpdated (p_me,p_andruavUnit)
     {
+        try
+        {
         if (p_me.props.p_unit.partyID != p_andruavUnit.partyID) return ;
 
         if (p_me.state.m_update == 0) return ;
         p_me.setState({'m_update': p_me.state.m_update +1});
         //p_me.forceUpdate();
+        }
+        catch (ex)
+        {
+
+        }
     }
     
     fn_requestUdpProxyStatus(p_andruavUnit)
@@ -69,14 +76,14 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
         var v_andruavUnit = this.props.p_unit;
         var v_udp_data = [];
         var v_udp_on_off = [];
-        switch (v_andruavUnit.m_telemetry_protocol)
-        {
-            case CONST_TelemetryProtocol_CONST_Andruav_Telemetry:
-            case CONST_TelemetryProtocol_CONST_Mavlink_Telemetry:
-            case CONST_TelemetryProtocol_CONST_MW_Telemetry:
-            case CONST_TelemetryProtocol_DroneKit_Telemetry:
-            case CONST_TelemetryProtocol_DJI_Telemetry:
-            case CONST_TelemetryProtocol_CONST_Unknown_Telemetry:
+        // switch (v_andruavUnit.m_telemetry_protocol)
+        // {
+        //     case CONST_TelemetryProtocol_CONST_Andruav_Telemetry:
+        //     case CONST_TelemetryProtocol_CONST_Mavlink_Telemetry:
+        //     case CONST_TelemetryProtocol_CONST_MW_Telemetry:
+        //     case CONST_TelemetryProtocol_DroneKit_Telemetry:
+        //     case CONST_TelemetryProtocol_DJI_Telemetry:
+        //     case CONST_TelemetryProtocol_CONST_Unknown_Telemetry:
                 if (v_andruavUnit.m_Telemetry.m_udpProxy_active === true)
                 {
                     v_udpproxy_text_ip = 'ip:' + v_andruavUnit.m_Telemetry.m_udpProxy_ip ;
@@ -124,8 +131,8 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
                             </div>
                         </div>);
                 }
-            break;
-        }
+        //     break;
+        // }
 
         var rows = [];
         rows = (

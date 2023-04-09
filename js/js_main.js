@@ -131,7 +131,7 @@ function fn_handleKeyBoard() {
 			fn_showMap();
 		}
 		
-		if (p_event.key.toLowerCase() == 'c') {
+		if (p_event.key.toLowerCase() == 'r') {
 			fn_showVideoMainTab();
 		}
 	}
