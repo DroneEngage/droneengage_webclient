@@ -1111,6 +1111,16 @@ class CAndruavClient {
         this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_SetHomeLocation, p_msg);
     }
 
+    API_do_GetHomeLocation (p_andruavUnit)
+    {
+        if (p_andruavUnit.partyID == null) return ;
+        var v_msg = {
+            C: CONST_TYPE_AndruavMessage_HomeLocation
+        };
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, v_msg);
+    };
+    
+
 
     API_do_GimbalCtrl(p_andruavUnit, p_pitch, p_roll, p_yaw, p_isAbsolute) {
         if (p_andruavUnit.partyID == null) return ;

@@ -195,10 +195,7 @@ class CLeafLetAndruavMap {
         {
             v_iconAnchor = anchor;
         }
-        else
-        {
-            v_iconAnchor = [p_iconsize[0]/2,p_iconsize[1]/2];
-        }
+        
         var v_popupAnchor = [-p_iconsize[0]/2,-p_iconsize[0]/2];
         if (p_htmlTitle == null) {
             v_image = L.icon({
@@ -386,7 +383,7 @@ class CLeafLetAndruavMap {
 
     }
 
-    fn_drawMissionPolyline(p_lnglatFromTo) {
+    fn_drawMissionPolyline(p_lnglatFromTo, p_color) {
         // var v_missionLine = new google.maps.Polyline({
         //     path: p_lnglatFromTo,
         //     geodesic: true,
@@ -397,9 +394,10 @@ class CLeafLetAndruavMap {
         // v_missionLine.setMap(this.m_Map);
 
         // return v_missionLine;
+        var v_color = (p_color == null)?'#75A4D3':p_color;
 
         return L.polyline(p_lnglatFromTo, {
-            color: '#75A4D3',
+            color: v_color,
             opacity: 0.9,
             weight: 2
         }).addTo(this.m_Map);
