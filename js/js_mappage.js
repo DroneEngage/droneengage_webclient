@@ -234,7 +234,7 @@ var QueryString = function () {
 				 marker.setMap(p_map);
 			 }
 
-			 var p_polygons = p_andruavUnit.m_wayPoint.polygons;
+			 var p_polygons = p_andruavUnit.m_gui.m_wayPoint_polygons;
 			 if (p_polygons != null)
 			 {
 			 	count = p_polygons.length;
@@ -262,7 +262,7 @@ var QueryString = function () {
 		// 	andruavUnit.m_wayPoint = {};
 		// 	andruavUnit.m_wayPoint.wayPointPath = wayPointArray;
 		// 	andruavUnit.m_wayPoint.markers=[];
-		// 	andruavUnit.m_wayPoint.polygons=[];
+		// 	andruavUnit.m_gui.m_wayPoint_polygons=[];
 			
 		// 	if ((wayPointArray == null) || (wayPointArray.length ==0)) return ;
 		// 	var lastValidlatlng 	= null;
@@ -343,7 +343,7 @@ var QueryString = function () {
 		// 					radius: parseInt(wayPointStep.m_Radius)
 		// 					});
 		// 					circleMission.setMap(map);
-		// 				andruavUnit.m_wayPoint.polygons.push (circleMission);		 
+		// 				andruavUnit.m_gui..m_wayPoint_polygons.push (circleMission);		 
 		// 				break;			
 		// 		}
 

@@ -56,7 +56,8 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
 		{
             switch (p_andruavUnit.m_VehicleType)
             {
-                case VEHICLE_ROVER:
+                case VEHICLE_BOAT:
+				case VEHICLE_ROVER:
                     res.btn_arm_class 		    = " btn-danger";
                     res.btn_climb_class 	    = " disabled hidden ";
                     res.btn_land_class 		    = " disabled hidden ";
@@ -236,6 +237,7 @@ export class CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL extends React.Component {
                     res.btn_yaw_class 	 	    = " btn-outline-light ";
                     res.btn_speed_class 	    = " btn-outline-light ";
                     break;
+                case VEHICLE_BOAT:
                 case VEHICLE_ROVER:
                     res.btn_arm_class 		    = " btn-danger ";
                     res.btn_climb_class 	    = " disabled hidden ";
