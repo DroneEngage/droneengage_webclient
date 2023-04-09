@@ -1667,14 +1667,12 @@ class CAndruavClient {
         this.API_requestUdpProxyStatus(target);
         this.API_requestWayPoints(target);
 
-        // CODEBLOCK_START
-
+        
         if (CONST_EXPERIMENTAL_FEATURES_ENABLED === false) { // used to test behavior after removing code and as double check
             return;
         }
 
-        this.API_requestSearchableTargets(target);
-        // CODEBLOCK_END
+        
         
     };
 
@@ -1989,7 +1987,6 @@ class CAndruavClient {
                         p_unit.m_VehicleType = p_jmsg.VT;
                         p_unit.m_Video.VideoRecording = p_jmsg.VR;
                         p_unit.m_Permissions = p_jmsg.p;
-                        p_unit.m_IsShutdown = p_jmsg.SD;
                         p_unit.m_GPS_Info1.gpsMode = p_jmsg.GM;
                         v_trigger_on_FCB = (p_unit.m_useFCBIMU != p_jmsg.FI);
                         p_unit.m_useFCBIMU = p_jmsg.FI;
@@ -2013,8 +2010,9 @@ class CAndruavClient {
                         if (p_jmsg.hasOwnProperty('B') == true) {
                             p_unit.m_Telemetry.m_isGCSBlocked = p_jmsg.B;
                         }
-                        if (p_jmsg.hasOwnProperty('SD') != true) {
-                            p_jmsg.SD = false;
+                        
+                        if (p_jmsg.hasOwnProperty('SD') == true) {
+                            p_unit.m_IsShutdown = p_jmsg.SD;
                         }
                         if (p_jmsg.hasOwnProperty('FM') == true) {
                             v_trigger_on_flightMode = (p_unit.m_flightMode != p_jmsg.FM);
