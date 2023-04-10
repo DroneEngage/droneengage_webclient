@@ -336,17 +336,17 @@ if (CONST_TEST_MODE === true)
             <React.StrictMode>
                 <CLSS_UnitParametersList />
             </React.StrictMode>,
-            v_G_getElementById('modal_uplCtrl')
+            window.document.getElementById('modal_uplCtrl')
     );
 }
 else
 {
     ReactDOM.render(
         <CLSS_UnitParametersList key={'AUL'} />,
-        v_G_getElementById('andruavUnitList')
+        window.document.getElementById('modal_uplCtrl')
     );
         // ReactDOM.render(
 		// 	<CLSS_AndruavUnitList key={'AUL'} />,
-		// 	v_G_getElementById('andruavUnitList2')
+		// 	window.document.getElementById('andruavUnitList2')
         // );
 }   
