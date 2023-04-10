@@ -24,5 +24,5 @@ class CLSS_FooterControl extends React.Component {
 
 ReactDOM.render(
     <CLSS_FooterControl  />,
-    v_G_getElementById('footer_div')
+    window.document.getElementById('footer_div')
 );

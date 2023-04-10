@@ -924,5 +924,5 @@ class CMissionsContainer extends React.Component {
 
 ReactDOM.render(
     <CMissionsContainer  />,
-    v_G_getElementById('c_missioncontrol')
+    window.document.getElementById('c_missioncontrol')
 );

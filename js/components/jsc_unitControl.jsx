@@ -1884,17 +1884,17 @@ if (CONST_TEST_MODE === true)
             <React.StrictMode>
                 <CLSS_AndruavUnitList key={'AUL'} />
             </React.StrictMode>,
-			v_G_getElementById('andruavUnitList')
+			window.document.getElementById('andruavUnitList')
         );
 }
 else
 {
     ReactDOM.render(
         <CLSS_AndruavUnitList key={'AUL'} />,
-        v_G_getElementById('andruavUnitList')
+        window.document.getElementById('andruavUnitList')
     );
         // ReactDOM.render(
 		// 	<CLSS_AndruavUnitList key={'AUL'} />,
-		// 	v_G_getElementById('andruavUnitList2')
+		// 	window.document.getElementById('andruavUnitList2')
         // );
 }   

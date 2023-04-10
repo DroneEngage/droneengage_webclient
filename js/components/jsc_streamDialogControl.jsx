@@ -240,6 +240,6 @@ class CLSS_StreamDialog extends React.Component
        
 ReactDOM.render(
     <CLSS_StreamDialog />,
-    v_G_getElementById('CTRL_streamCtrl')
+    window.document.getElementById('CTRL_streamCtrl')
 );
 

@@ -148,5 +148,5 @@ class CLSS_FenceGlobalSettingsControl extends React.Component {
 
 ReactDOM.render(
 			<CLSS_FenceGlobalSettingsControl />,
-			v_G_getElementById('fence_global')
+			window.document.getElementById('fence_global')
 		);

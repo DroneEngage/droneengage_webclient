@@ -116,7 +116,7 @@ class C_GoogleAndruavMap {
          */
     fn_initMap(p_mapelement) {
 
-        this.m_Map = new google.maps.Map(v_G_getElementById(p_mapelement), {
+        this.m_Map = new google.maps.Map(window.document.getElementById(p_mapelement), {
             zoom: 2,
             rotateControl: true,
             scrollwheel: true,

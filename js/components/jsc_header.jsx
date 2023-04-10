@@ -61,7 +61,7 @@ class CLSS_HeaderControl extends React.Component {
 		    <CLSS_HeaderControl />
             </React.StrictMode>,
         	
-            v_G_getElementById('header_div')
+            window.document.getElementById('header_div')
         );
     
     }
@@ -69,7 +69,7 @@ class CLSS_HeaderControl extends React.Component {
     {
         ReactDOM.render(
             <CLSS_HeaderControl />,
-            v_G_getElementById('header_div')
+            window.document.getElementById('header_div')
         );
     }
 

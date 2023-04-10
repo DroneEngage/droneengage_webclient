@@ -312,5 +312,5 @@ class CLSS_CameraDialog extends React.Component
        
 ReactDOM.render(
     <CLSS_CameraDialog />,
-    v_G_getElementById('CTRL_cameraCtrl')
+    window.document.getElementById('CTRL_cameraCtrl')
 );
