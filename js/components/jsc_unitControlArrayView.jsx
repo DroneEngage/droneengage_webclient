@@ -855,7 +855,7 @@ if ($('#andruav_unit_list_array_float').length != 0) {
 
 	ReactDOM.render(
 		<CLSS_AndruavUnitListArray />,
-		v_G_getElementById('andruav_unit_list_array_float')
+		window.document.getElementById('andruav_unit_list_array_float')
 	);
 }
 
@@ -863,7 +863,7 @@ if ($('#andruav_unit_list_array_fixed').length != 0) {
 
 	ReactDOM.render(
 		<CLSS_AndruavUnitListArray />,
-		v_G_getElementById('andruav_unit_list_array_fixed')
+		window.document.getElementById('andruav_unit_list_array_fixed')
 	);
 }
 

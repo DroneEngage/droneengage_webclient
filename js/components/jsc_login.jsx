@@ -207,7 +207,7 @@ if ($('#login_div').length != 0) {
 			<CLSS_LoginControl />
 			</React.StrictMode>,
 			
-			v_G_getElementById('login_div')
+			window.document.getElementById('login_div')
 		);
 	}
 	else
@@ -215,7 +215,7 @@ if ($('#login_div').length != 0) {
 		ReactDOM.render(
 			<CLSS_LoginControl />,
 			
-			v_G_getElementById('login_div')
+			window.document.getElementById('login_div')
 		);
 	}
 }

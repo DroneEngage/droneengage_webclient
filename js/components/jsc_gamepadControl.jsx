@@ -289,7 +289,7 @@ class CLSS_GamePadControl extends React.Component {
 
 ReactDOM.render(
     <CLSS_GamePadControl p_index='0' />,
-    v_G_getElementById('gamepadCtrl')
+    window.document.getElementById('gamepadCtrl')
 );
 
 

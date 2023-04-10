@@ -194,7 +194,7 @@ class CLSS_CVideoScreen extends React.Component {
     {
         const c_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.obj.v_unit);
         const c_talk = c_andruavUnit.m_Video.m_videoactiveTracks[this.props.obj.v_track];
-        var v_video = v_G_getElementById("videoObject" + c_talk.targetVideoTrack);
+        var v_video = window.document.getElementById("videoObject" + c_talk.targetVideoTrack);
         if (v_video == null) return ;
         v_video.srcObject = c_talk.stream;
         //fn_console_log (c_talk.stream.getTracks()[0]);
@@ -291,7 +291,7 @@ class CLSS_CVideoScreen extends React.Component {
 
     fnl_requestFullScreen (e)
     {
-        const c_ele = v_G_getElementById("div_video_control");
+        const c_ele = window.document.getElementById("div_video_control");
         fn_console_log ("fnl_requestFullScreen");
         if (this.fnl_isFullScreen())
         {
@@ -693,5 +693,5 @@ render() {
 
 ReactDOM.render(
     <CLSS_CVideoControl />,
-    v_G_getElementById('div_video_control')
+    window.document.getElementById('div_video_control')
 );

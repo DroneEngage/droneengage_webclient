@@ -482,5 +482,5 @@ class CLSS_GlobalSettings extends React.Component {
 ReactDOM.render(
   
   <React.StrictMode><CLSS_GlobalSettings key="global_settings" date={'GLK'} myname={' '} /></React.StrictMode>,
-			v_G_getElementById('andruavUnits_in')
+			window.document.getElementById('andruavUnits_in')
 		);

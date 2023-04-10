@@ -78,6 +78,6 @@ class CLSS_GUIMessage extends React.Component {
 
 ReactDOM.render(
     <CLSS_GUIMessage p_index='0' />,
-    v_G_getElementById('guiMessageCtrl')
+    window.document.getElementById('guiMessageCtrl')
 );
 
