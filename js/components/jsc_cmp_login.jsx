@@ -130,6 +130,6 @@ class CLSS_LoginControl extends React.Component {
 
 ReactDOM.render(
 			<CLSS_LoginControl />,
-			v_G_getElementById('loginCtrl')
+			window.document.getElementById('loginCtrl')
 		);
 

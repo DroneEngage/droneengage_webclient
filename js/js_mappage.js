@@ -891,7 +891,7 @@ var QueryString = function () {
 
 			
 
-			window.v_map = new google.maps.Map(v_G_getElementById('geofence_map'), {
+			window.v_map = new google.maps.Map(window.document.getElementById('geofence_map'), {
 			  center: {lat: -34.397, lng: 150.644},
 			  zoom: 8
 			});

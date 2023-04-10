@@ -523,5 +523,5 @@ class CLSS_FenceCLSS_ShapeControl extends React.Component {
 
 ReactDOM.render(
 			<CLSS_FenceCLSS_ShapeControl  />,
-			v_G_getElementById('fenceControl')
+			window.document.getElementById('fenceControl')
 		);

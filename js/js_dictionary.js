@@ -5,7 +5,3 @@ function  v_G_createElement (p_ele)
     return v_G_document.createElement(p_ele);
 }
 
-function v_G_getElementById(p_ele)
-{
-    return v_G_document.getElementById(p_ele);
-}

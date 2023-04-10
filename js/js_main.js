@@ -147,7 +147,7 @@ function fn_handleKeyBoard() {
 }
         
 
-        //var video_out = v_G_getElementById("vid-box");
+        //var video_out = window.document.getElementById("vid-box");
 		var recordRTC;
 
 
@@ -1697,7 +1697,7 @@ function fn_handleKeyBoard() {
 
 		function fn_putWayPoints(p_andruavUnit, p_eraseFirst) {
 
-			var files = v_G_getElementById('btn_filesWP').files;
+			var files = window.document.getElementById('btn_filesWP').files;
 			if (p_andruavUnit == null) return ;
 
 			if (!files.length) {
@@ -1712,7 +1712,6 @@ function fn_handleKeyBoard() {
 			// If we use onloadend, we need to check the readyState.
 			reader.onloadend = function (evt) {
 				if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-					//v_G_getElementById('byte_content').textContent = evt.target.result;
 					v_andruavClient.API_uploadWayPoints(p_andruavUnit, p_eraseFirst, evt.target.result);
 				}
 			};
