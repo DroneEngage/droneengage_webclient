@@ -1547,22 +1547,10 @@ function fn_handleKeyBoard() {
 			// use event.pixel.x and event.pixel.y 
 			// to position menu at mouse position
 
-
-
-
 			if (this.m_markGuided != null) {
 				AndruavLibs.AndruavMap.fn_hideItem(this.m_markGuided);
 				this.m_markGuided = null;
 			}
-			// this.m_markGuided = new google.maps.Marker({
-			// 	position: event.latLng,
-			// 	map: Me.m_Map,
-			// 	draggable: true,
-			// 	icon: { url: './images/waypoint_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(16, 32), scaledSize: new google.maps.Size(32, 32) }
-			// 	//anchor: new google.maps.Point(16, 32), // bottom middle
-			// });
-
-
 			
             m_markGuided = AndruavLibs.AndruavMap.fn_CreateMarker ('./images/waypoint_bg_32x32.png', 'target', [16,24], true, true);
             AndruavLibs.AndruavMap.fn_setPosition(this.m_markGuided , p_position);
@@ -2131,8 +2119,6 @@ function fn_handleKeyBoard() {
 				var v_image =  getVehicleIcon(p_andruavUnit, (CONST_MAP_GOOLE === true));
 
 				if (marker == null) {
-					
-					
 					// create a buffer for flight path
 					p_andruavUnit.m_gui.m_gui_flightPath.fn_flush();
 					p_andruavUnit.m_gui.m_flightPath_style = {
@@ -2151,13 +2137,6 @@ function fn_handleKeyBoard() {
 					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),null, false,false, v_htmlTitle,[64,64]) ;
 
 					
-					/* http://stackoverflow.com/questions/5329136/handling-click-events-in-google-maps-js-api-v3-while-ignoring-double-clicks 
-					google.maps.event.addListener(p_andruavUnit.p_marker, 'dblclick', fn_contextMenu);
-					google.maps.event.addListener(p_andruavUnit.p_marker, 'click', function(event) {
-							fn_showAndruavUnitInfo(event,p_andruavUnit);
-						  });
-					*/
-
 					AndruavLibs.AndruavMap.fn_addListenerOnClickMarker (p_andruavUnit.p_marker,
 						function (p_lat, p_lng) {
 							fn_showAndruavUnitInfo(p_lat, p_lng, p_andruavUnit);
@@ -2274,21 +2253,6 @@ function fn_handleKeyBoard() {
 		}
 
 		function fn_showCameraIcon(latlng) {
-			// var image = {
-			// 	url: './images/camera_24x24.png',
-			// 	origin: new google.maps.Point(0, 0),
-			// 	anchor: new google.maps.Point(16, 16),
-			// 	scaledSize: new google.maps.Size(24, 24)
-			// };
-
-			// var marker = new google.maps.Marker({
-			// 	map: map,
-			// 	label: 'image',
-			// 	anchor: new google.maps.Point(16, 16),
-			// 	icon: image
-			// });
-			// marker.setPosition(latlng);
-
 			var v_marker = AndruavLibs.AndruavMap.fn_CreateMarker('./images/camera_24x24.png', 'image');
 			AndruavLibs.AndruavMap.fn_setPosition(v_marker,latlng);
 		}
@@ -2350,12 +2314,6 @@ function fn_handleKeyBoard() {
 			var v_latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(p_andruavUnit.m_Geo_Tags.p_HomePoint.lat, p_andruavUnit.m_Geo_Tags.p_HomePoint.lng);
 
 			if (p_andruavUnit.p_marker_home == null) {
-				// var v_home = new google.maps.Marker({
-				// 	position: latlng,
-				// 	map: map,
-				// 	icon: { url: './images/home_b_24x24.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(12, 23), scaledSize: new google.maps.Size(24, 24) }
-				// });
-				// v_home.setTitle("Home of: " + p_andruavUnit.m_unitName);
 				const v_html = "<p class='text-light margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
 				var v_home = AndruavLibs.AndruavMap.fn_CreateMarker('./images/home_b_24x24.png', v_html, [16,24], false, false, p_andruavUnit.m_unitName , [32,32]);
 				AndruavLibs.AndruavMap.fn_setPosition(v_home,v_latlng)
@@ -2379,14 +2337,6 @@ function fn_handleKeyBoard() {
 			var v_latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(p_andruavUnit.m_Geo_Tags.p_DestinationPoint.lat, p_andruavUnit.m_Geo_Tags.p_DestinationPoint.lng);
 
 			if (p_andruavUnit.p_marker_destination == null) {
-				// var destination = new google.maps.Marker({
-				// 	position: latlng,
-				// 	map: map,
-				// 	icon: { url: './images/destination_bg_32x32.png', origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(12, 23), scaledSize: new google.maps.Size(24, 24) }
-				// });
-
-				// p_andruavUnit.p_marker_destination = destination;
-
 				p_andruavUnit.p_marker_destination = AndruavLibs.AndruavMap.fn_CreateMarker('./images/destination_bg_32x32.png', "Target of: " + p_andruavUnit.m_unitName);
 			}
 			AndruavLibs.AndruavMap.fn_setPosition(p_andruavUnit.p_marker_destination,v_latlng)
