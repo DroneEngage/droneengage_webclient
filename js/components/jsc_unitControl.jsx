@@ -1417,6 +1417,8 @@ class CLSS_AndruavUnitList extends React.Component {
     fn_unitAdded (me,p_andruavUnit)
     {
          fn_console_log ("REACT:fn_unitAdded" );
+
+         if (me.state.andruavUnitPartyIDs.includes(p_andruavUnit.partyID)) return ;
          // http://stackoverflow.com/questions/26253351/correct-modification-of-state-arrays-in-reactjs      
          me.setState({ 
             andruavUnitPartyIDs: me.state.andruavUnitPartyIDs.concat([p_andruavUnit.partyID])
@@ -1539,8 +1541,9 @@ class CLSS_AndruavUnitList extends React.Component {
             {
                 var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
                 
-                if (v_andruavUnit==null) return ;
-
+                // dont display if unit is not defined yet.
+                if ((v_andruavUnit==null) || (v_andruavUnit.m_defined!==true))return ;
+                
                 if (v_andruavUnit.m_IsGCS===true)
                 {
                     units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);

@@ -44,12 +44,16 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
             <div className = 'col-1  css_margin_zero text-center fw-bold '>ID</div>
             <div className = {'col-1  css_margin_zero text-center fw-bold '}>MODE</div>
             <div className = 'col-1  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
+            {/* heading is not there */}
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>HUD</div>
             <div className = 'col-2  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleBattery()}>BATT</div>
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>GPS</div>
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>SPEED</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ALT</div>
+            {/* not important for boat or rover */}
+            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ALT</div> 
+            {/* not important for boat or rover */}
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>WIND</div>
+            {/* always important */}
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>WP</div>
             <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '></div>
             </div>
@@ -678,7 +682,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero'>
+            <div className = 'col-1  css_margin_zero skinny'>
                 <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
                     <div className = 'col-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
                     <div className = {'col-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
@@ -810,7 +814,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
                 {
                     var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
                     
-                    if (v_andruavUnit==null) return ;
+                    if ((v_andruavUnit==null) || (v_andruavUnit.m_defined!==true))return ;
 
                     if (v_andruavUnit.m_IsGCS===true)
                     {

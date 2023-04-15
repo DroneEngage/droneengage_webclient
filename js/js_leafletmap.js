@@ -181,46 +181,8 @@ class CLeafLetAndruavMap {
          * Create a marker with image and title
          */
     fn_CreateMarker(p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
-        if ((p_image==null) || (p_image==""))
-        {
-            p_image = './images/destination_g_32x32.png';
-        }
-        var v_image;
-        if (p_iconsize==null) {
-            p_iconsize = [32,32];
-        }
         
-        var v_iconAnchor = [p_iconsize[0]/2,p_iconsize[1]/2];
-        if (anchor!=null)
-        {
-            v_iconAnchor = anchor;
-        }
-        
-        var v_popupAnchor = [-p_iconsize[0]/2,-p_iconsize[0]/2];
-        if (p_htmlTitle == null) {
-            v_image = L.icon({
-                iconUrl: p_image,
-                iconSize: p_iconsize,
-                iconAnchor: v_iconAnchor,
-                popupAnchor: v_popupAnchor,
-                // shadowUrl: 'my-icon-shadow.png',
-                // shadowSize: [68, 95],
-                // shadowAnchor: [22, 94]
-            });
-        } else {
-            var v_htmlIcon = p_htmlTitle + "<image src='" + p_image + "'/>";
-            v_image = L.divIcon({
-                html: v_htmlIcon,
-                iconSize: p_iconsize,
-                iconAnchor: v_iconAnchor,
-                popupAnchor: v_popupAnchor,
-                className: "css_leaflet_icon"
-                // shadowUrl: 'my-icon-shadow.png',
-                // shadowSize: [68, 95],
-                // shadowAnchor: [22, 94]
-            });
-
-        }
+        const v_image = this.fn_createIcon (p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize);
 
         var v_marker = L.marker([
             0, 0
@@ -467,27 +429,57 @@ class CLeafLetAndruavMap {
 
     };
 
-    fn_setVehicleIcon(p_marker, p_image) {
+    fn_createIcon (p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
+        if ((p_image==null) || (p_image==""))
+        {
+            p_image = './images/destination_g_32x32.png';
+        }
+        var v_image;
+        if (p_iconsize==null) {
+            p_iconsize = [32,32];
+        }
+        
+        var v_iconAnchor = [p_iconsize[0]/2,p_iconsize[1]/2];
+        if (anchor!=null)
+        {
+            v_iconAnchor = anchor;
+        }
+        
+        var v_popupAnchor = [-p_iconsize[0]/2,-p_iconsize[0]/2];
+        if (p_htmlTitle == null) {
+            v_image = L.icon({
+                iconUrl: p_image,
+                iconSize: p_iconsize,
+                iconAnchor: v_iconAnchor,
+                popupAnchor: v_popupAnchor,
+                // shadowUrl: 'my-icon-shadow.png',
+                // shadowSize: [68, 95],
+                // shadowAnchor: [22, 94]
+            });
+        } else {
+            var v_htmlIcon = p_htmlTitle + "<image src='" + p_image + "'/>";
+            v_image = L.divIcon({
+                html: v_htmlIcon,
+                iconSize: p_iconsize,
+                iconAnchor: v_iconAnchor,
+                popupAnchor: v_popupAnchor,
+                className: "css_leaflet_icon"
+                // shadowUrl: 'my-icon-shadow.png',
+                // shadowSize: [68, 95],
+                // shadowAnchor: [22, 94]
+            });
+
+        }
+
+        return v_image;
+    }
+
+    fn_setVehicleIcon(p_marker, p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
         if (p_marker == null) 
             return;
         
+        const v_image = this.fn_createIcon (p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize);
 
-        var v_image = L.icon({
-            iconUrl: p_image,
-            iconSize: [
-                64, 64
-            ],
-            iconAnchor: [
-                16, 16
-            ],
-            popupAnchor: [
-                0, 0
-            ],
-            // shadowUrl: 'my-icon-shadow.png',
-            // shadowSize: [68, 95],
-            // shadowAnchor: [22, 94]
-
-        });
 
         p_marker.setRotationOrigin('center center');
         p_marker.setIcon(v_image);

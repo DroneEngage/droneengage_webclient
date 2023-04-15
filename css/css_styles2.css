@@ -1,4 +1,8 @@
 
+div.css_mainbody
+{
+	margin-right: 0px !important;
+}
 
 img.camera_switch
 {
@@ -786,6 +790,7 @@ div.msgerror {
 .textunit_nowidth {
 	display: inline-block;
 	font-size: smaller !important;
+	padding: 0px 10px 0px 10px !important;
 }
 
 
