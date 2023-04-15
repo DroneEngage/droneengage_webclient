@@ -1151,7 +1151,31 @@ function fn_handleKeyBoard() {
 
 		}
 
-		
+		function fn_changeUDPPort(p_andruavUnit, init_pot) {
+			if (p_andruavUnit == null) return;
+
+			var v_port_val = init_pot;
+			if (v_port_val == null) 
+			{	
+				v_port_val = p_andruavUnit.m_Telemetry.m_udpProxy_port;
+			}
+			
+			v_unit = "";
+
+
+			$('#changespeed_modal').find('#title').html('Change Speed of ' + p_andruavUnit.m_unitName);
+			$('#changespeed_modal').find('#btnOK').unbind("click");
+			$('#changespeed_modal').find('#txtSpeed').val(v_port_val);
+			$('#changespeed_modal').find('#txtSpeedUnit').html(v_unit);
+			$('#changespeed_modal').find('#btnOK').click(function () {
+				var v_port_val = $('#changespeed_modal').find('#txtSpeed').val();
+				if (v_port_val == '' || isNaN(v_port_val) || v_port_val >= 0xffff) return;
+				v_andruavClient.API_setUdpProxyClientPort(p_andruavUnit, parseInt(v_port_val));
+			});
+			$('#changespeed_modal').modal('show');
+
+		}
+
 		/**
 		   Switch Video OnOff
 		*/

@@ -429,7 +429,6 @@ class CLeafLetAndruavMap {
 
     };
 
-    
     fn_createIcon (p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
         if ((p_image==null) || (p_image==""))
         {
@@ -475,7 +474,17 @@ class CLeafLetAndruavMap {
         return v_image;
     }
 
-    
+    fn_setVehicleIcon(p_marker, p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize) {
+        if (p_marker == null) 
+            return;
+        
+        const v_image = this.fn_createIcon (p_image, p_title, anchor, p_draggable, p_isTop, p_htmlTitle, p_iconsize);
+
+
+        p_marker.setRotationOrigin('center center');
+        p_marker.setIcon(v_image);
+
+    };
 
 
     fn_setMarkerIcon(p_marker, p_image) {

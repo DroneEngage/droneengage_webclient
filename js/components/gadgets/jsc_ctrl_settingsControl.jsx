@@ -28,7 +28,14 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         //me.forceUpdate();
     }
 
-    render () {
+    fn_changeTelemetryPort(p_andruavUnit)
+    {
+        if (p_andruavUnit==null) return;
+        
+        fn_changeUDPPort(p_andruavUnit);
+    }
+
+    render() {
         
         var module_version = [];
 
@@ -63,6 +70,21 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             }
         }
         
+        var cmd_btns = [];
+        if (CONST_FEATURE.DISABLE_UDPPROXY_UPDATE !== true)
+        {
+            cmd_btns.push(<div key={v_andruavUnit.partyID + 'Set4'}  className='row css_margin_zero padding_zero '>
+                <hr/>
+                <div key={v_andruavUnit.partyID + 'Set41'} className="col-12">
+                <div className = 'row al_l css_margin_zero d-flex '>
+                    <div className= 'col-6 col-sm-3 user-select-none '>
+                    <p className=' rounded-3 text-white bg-danger cursor_hand textunit_nowidth al_c' title ='Change UDP Proxy Port' onClick={() => this.fn_changeTelemetryPort(v_andruavUnit)}>Proxy Port</p>
+                    </div>
+                </div>
+                </div>
+            </div>);
+        }
+        
         const v_date = (new Date(v_andruavUnit.m_NetworkStatus.m_lastActiveTime));
         
         return (
@@ -86,6 +108,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
                     <p key={v_andruavUnit.partyID + 'Set32'} className="textunit_nowidth user-select-all m-0"><span><small><b>Last Active <span className='text-warning' ><small><b>{v_date.toUTCString()}</b></small></span> </b></small></span></p>
                 </div>
             </div>
+            {cmd_btns}
             </div>
             
         )
