@@ -493,7 +493,33 @@ class C_GUIHelper
 		this.m_wayPoint_markers = [];
 		this.m_wayPoint_polygons = [];
 	}
-} 
+}
+
+class C_Messages
+{
+	constructor(p_parent)
+	{
+		this.m_parent = parent;
+		this.m_messages_repeat = {};
+	}
+
+	fn_doNotRepeatMessageBefore(message_id, interval_ms,from_time)
+	{
+		this.m_messages_repeat[message_id] = {
+			'interval_ms': interval_ms,
+			'timestamp' : from_time
+		}
+	}
+
+	fn_sendMessageAllowed(message_id)
+	{
+		const data = this.m_messages_repeat[message_id];
+		if (data == null) return true;
+
+		const can_send =  (((new Date()) - data.from_time)>data.interval_ms);
+		return can_send;
+	}
+}
 
 
 class CAndruavUnitObject 
@@ -502,13 +528,14 @@ class CAndruavUnitObject
 	constructor()
 	{
 		this.m_index					= 0;
+		this.m_defined					= false;
 		this.m_IsMe 					= false;
 		this.m_IsGCS 					= true;
 		this.m_isDE						= false; // is Drone Engage
 		this.m_IsShutdown 				= false;
 		this.Description 				= "";
 		this.m_inZone 					= null;  // name of A ZONE  that the unit is IN. 
-		this.m_unitName;
+		this.m_unitName					="unknown";
 		this.partyID					= null;
 		this.m_groupName;
 		this.m_isFlying					= false; 
@@ -563,6 +590,7 @@ class CAndruavUnitObject
 		this.m_WindSpeed				= null;
 		this.m_WindSpeed_z				= null;
 		this.m_WindDirection			= null;
+		this.m_Messages					= new C_Messages(this);
 		this.m_Power 					= new C_Power (this);
 		this.m_GPS_Info1				= new C_GPS (this);
 		this.m_GPS_Info2				= new C_GPS (this);
