@@ -1425,6 +1425,17 @@ class CAndruavClient {
        
     }
 
+    API_setUdpProxyClientPort (p_andruavUnit, p_clientPort)
+    {
+        if (p_andruavUnit.partyID == null) return ;
+        var msg = {
+            C: CONST_RemoteCommand_SET_UDPPROXY_CLIENT_PORT,
+            P: p_clientPort
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
+       
+    }
     
     API_requestWayPoints(p_andruavUnit, p_enableFCB) 
     {
