@@ -1151,8 +1151,7 @@ function fn_handleKeyBoard() {
 
 		}
 
-
-
+		
 		/**
 		   Switch Video OnOff
 		*/
@@ -1992,7 +1991,8 @@ function fn_handleKeyBoard() {
 		}
 
 		function EVT_andruavUnitVehicleTypeUpdated(p_andruavUnit) {
-			AndruavLibs.AndruavMap.fn_setVehicleIcon(p_andruavUnit.p_marker, getVehicleIcon(p_andruavUnit, (CONST_MAP_GOOLE === true)));
+			const v_htmlTitle = "<p class='text-white margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
+			AndruavLibs.AndruavMap.fn_setVehicleIcon(p_andruavUnit.p_marker, getVehicleIcon(p_andruavUnit, (CONST_MAP_GOOLE === true)), p_andruavUnit.m_unitName,null, false,false, v_htmlTitle,[64,64]) ;
 		}
 
 		function EVT_andruavUnitModuleUpdated (p_andruavUnit) {
@@ -2109,7 +2109,7 @@ function fn_handleKeyBoard() {
 			}
 
 			
-			if (p_andruavUnit.m_Nav_Info.p_Location.lat != null) {
+			if ((p_andruavUnit.m_defined ===true) && (p_andruavUnit.m_Nav_Info.p_Location.lat != null)) {
 				var marker = p_andruavUnit.p_marker;
 
 				if (CONST_DISABLE_ADSG == false) {
@@ -2132,7 +2132,7 @@ function fn_handleKeyBoard() {
 					/*
 						v_htmlTitle: Valid only for Leaflet
 					*/
-					v_htmlTitle = "<p class='text-white margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
+					var v_htmlTitle = "<p class='text-white margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
 					// Add new Vehicle
 					p_andruavUnit.p_marker = AndruavLibs.AndruavMap.fn_CreateMarker(v_image, getLabel(),null, false,false, v_htmlTitle,[64,64]) ;
 

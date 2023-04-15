@@ -216,6 +216,7 @@ const CONST_RemoteCommand_CLEAR_WAY_POINTS = 502;
 const CONST_RemoteCommand_CLEAR_FENCE_DATA = 503;
 const CONST_RemoteCommand_SET_START_MISSION_ITEM = 504;
 const CONST_RemoteCommand_REQUEST_PARAM_LIST = 505;
+const CONST_RemoteCommand_SET_UDPPROXY_CLIENT_PORT = 506;
 
 
 const CONST_TelemetryProtocol_CONST_No_Telemetry = 0;
@@ -730,7 +731,8 @@ class CAndruavClient {
         
         var msg = {
             UN:p_name,
-            DS:p_description
+            DS:p_description,
+            PR:true // reset partyID
         };
 
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Unit_Name, msg);
@@ -1711,22 +1713,39 @@ class CAndruavClient {
 
         var p_jmsg;
         var p_unit = this.m_andruavUnitList.fn_getUnit(msg.senderName);
-        if (p_unit != null) {
-            p_unit.m_NetworkStatus.m_received_msg++;
-            p_unit.m_NetworkStatus.m_received_bytes += evt.data.length;
-            p_unit.m_NetworkStatus.m_lastActiveTime = Date.now();
+
+        if (p_unit == null)
+        {
+            
+            p_unit = new CAndruavUnitObject();
+            // p_unit.m_defined = false; define it as incomplete
+            p_unit.m_IsMe = false;
+            p_unit.m_defined = false;
+            p_unit.partyID = msg.senderName;
+            Me.m_andruavUnitList.Add(p_unit.partyID, p_unit);
+            if (msg.messageType != CONST_TYPE_AndruavMessage_ID) 
+            {
+                if (p_unit.m_Messages.fn_sendMessageAllowed(CONST_TYPE_AndruavMessage_ID) === true)
+                {
+                    // it is already identifying itself.
+                    Me.API_requestID(msg.senderName);
+                    p_unit.m_Messages.fn_doNotRepeatMessageBefore(CONST_TYPE_AndruavMessage_ID,1000,new Date())
+                }
+                else
+                {
+                    console.log ("skip");
+                }
+            }
         }
 
-            
+        p_unit.m_NetworkStatus.m_received_msg++;
+        p_unit.m_NetworkStatus.m_received_bytes += evt.data.length;
+        p_unit.m_NetworkStatus.m_lastActiveTime = Date.now();
+        
         switch (msg.messageType) {
 
             case CONST_TYPE_AndruavMessage_UdpProxy_Info: {
                 p_jmsg = msg.msgPayload;
-                if (p_unit == null) {
-                    Me.API_requestID(msg.senderName);
-                    return;
-                }
-
                 p_unit.m_Telemetry.m_udpProxy_ip        = p_jmsg.a;
                 p_unit.m_Telemetry.m_udpProxy_port      = p_jmsg.p;
                 p_unit.m_Telemetry.m_telemetry_level    = p_jmsg.o;
@@ -1746,10 +1765,7 @@ class CAndruavClient {
 
             case CONST_TYPE_AndruavMessage_GPS: 
                 p_jmsg = msg.msgPayload;
-                if (p_unit == null) {
-                    Me.API_requestID(msg.senderName);
-                    return;
-                }
+                
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                     p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                 }
@@ -1786,10 +1802,6 @@ class CAndruavClient {
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
-                    if (p_unit == null) {
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
                     const c_obj = {};
                     c_obj.p_unit = p_unit;
                     c_obj.p_jmsg = p_jmsg;
@@ -1801,10 +1813,6 @@ class CAndruavClient {
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
-                    }
-                    if (p_unit == null) {
-                        Me.API_requestID(msg.senderName);
-                        return;
                     }
                     const c_obj = {};
                     c_obj.p_unit = p_unit;
@@ -1818,12 +1826,7 @@ class CAndruavClient {
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
-                    if (p_unit == null) {
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
-
-
+                    
                     var v_session = {};
                     v_session.status = 'connected';
                     v_session.m_unit = p_unit;
@@ -1855,10 +1858,7 @@ class CAndruavClient {
 
             case CONST_TYPE_AndruavMessage_CommSignalsStatus: {
                     p_jmsg = msg.msgPayload;
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
+                    
                     p_unit.m_SignalStatus.m_mobile = true;
                     p_unit.m_SignalStatus.m_mobileSignalLevel = p_jmsg.r;
                     p_unit.m_SignalStatus.m_mobileNetworkType = p_jmsg.s;
@@ -1882,7 +1882,7 @@ class CAndruavClient {
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
                     }
 
-                    if (p_unit != null) {
+                    if ((p_unit != null) && (p_unit.m_defined === true)){
                         p_unit.m_IsMe = false;
                         p_unit.m_IsGCS = p_jmsg.GS;
                         p_unit.m_unitName = p_jmsg.UD;
@@ -1986,7 +1986,7 @@ class CAndruavClient {
                         this.m_andruavUnitList.putUnit(p_unit.partyID, p_unit);
                         window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, p_unit);
                     } else {
-                        p_unit = new CAndruavUnitObject();
+                        p_unit.m_defined = true;
                         p_unit.m_NetworkStatus.m_lastActiveTime = Date.now();
                         p_unit.m_IsMe = false;
                         p_unit.m_IsGCS = p_jmsg.GS;
@@ -2141,15 +2141,13 @@ class CAndruavClient {
                 }
                 break;
 
-            case CONST_TYPE_AndruavMessage_POW: if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                    Me.API_requestID(msg.senderName);
-                    return;
-                }
-
+            case CONST_TYPE_AndruavMessage_POW: 
+                
                 p_jmsg = msg.msgPayload;
                 if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                     p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
-                }p_unit.m_Power._Mobile.p_Battery.BatteryLevel = p_jmsg.BL;
+                }
+                p_unit.m_Power._Mobile.p_Battery.BatteryLevel = p_jmsg.BL;
                 p_unit.m_Power._Mobile.p_Battery.Voltage = p_jmsg.V;
                 p_unit.m_Power._Mobile.p_Battery.BatteryTemperature = p_jmsg.BT;
                 p_unit.m_Power._Mobile.p_Battery.Health = p_jmsg.H;
@@ -2190,11 +2188,8 @@ class CAndruavClient {
                 }
                 break;
 
-            case CONST_TYPE_AndruavMessage_HomeLocation: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
+            case CONST_TYPE_AndruavMessage_HomeLocation: 
+                {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
@@ -2208,11 +2203,8 @@ class CAndruavClient {
                 }
                 break;
 
-            case CONST_TYPE_AndruavMessage_DistinationLocation: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
+            case CONST_TYPE_AndruavMessage_DistinationLocation: 
+                {
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
@@ -2227,10 +2219,6 @@ class CAndruavClient {
                 break;
 
             case CONST_TYPE_AndruavMessage_GeoFence: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
@@ -2242,10 +2230,6 @@ class CAndruavClient {
 
 
             case CONST_TYPE_AndruavMessage_GeoFenceAttachStatus: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
@@ -2295,10 +2279,6 @@ class CAndruavClient {
 
 
             case CONST_TYPE_AndruavMessage_GEOFenceHit: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
@@ -2322,12 +2302,6 @@ class CAndruavClient {
                     if (CONST_EXPERIMENTAL_FEATURES_ENABLED === false) { // used to test behavior after removing code and as double check
                         return;
                     }
-
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
-
 
                     p_jmsg = msg.msgPayload;
                     if (! p_jmsg.hasOwnProperty('t')) 
@@ -2354,12 +2328,6 @@ class CAndruavClient {
                     if (CONST_EXPERIMENTAL_FEATURES_ENABLED === false) { // used to test behavior after removing code and as double check
                         return;
                     }
-
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
-
 
                     p_jmsg = msg.msgPayload.t;
                     const c_len = p_jmsg.length;
@@ -2393,10 +2361,6 @@ class CAndruavClient {
                 // CODEBLOCK_END
 
             case CONST_TYPE_AndruavMessage_DroneReport: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
@@ -2407,12 +2371,7 @@ class CAndruavClient {
                 break;
 
             case CONST_TYPE_AndruavMessage_Signaling: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
-
-
+                    
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
@@ -2423,11 +2382,6 @@ class CAndruavClient {
                 break;
 
             case CONST_TYPE_AndruavMessage_Error: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
-
                     var v_error = {};
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
@@ -2444,11 +2398,6 @@ class CAndruavClient {
                 break;
 
             case CONST_TYPE_AndruavMessage_WayPoints: {
-
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        Me.API_requestID(msg.senderName);
-                        return;
-                    }
 
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
@@ -2569,10 +2518,6 @@ class CAndruavClient {
                 break;
 
             case CONST_TYPE_AndruavMessage_NAV_INFO: {
-                    if (p_unit == null) { // p_unit not defined here ... send a request for ID
-                        this.API_requestID(msg.senderName);
-                        return;
-                    }
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
@@ -3138,8 +3083,25 @@ class CAndruavClient {
             andruavCMD = JSON.parse(out.text);
             p_jmsg = Me.fn_parseJSONMessage(out.text);
             v_unit = Me.m_andruavUnitList.fn_getUnit(fn_getFullName(p_jmsg.groupID, p_jmsg.senderName));
-            if ((v_unit == null) && (p_jmsg.messageType != CONST_TYPE_AndruavMessage_ID)) {
-                Me.API_requestID(p_jmsg.senderName);
+            if (v_unit == null) {
+                v_unit = new CAndruavUnitObject();
+                // p_unit.m_defined = false; define it as incomplete
+                v_unit.m_IsMe = false;
+                v_unit.m_defined = false;
+                v_unit.partyID = p_jmsg.senderName;
+                Me.m_andruavUnitList.Add(v_unit.partyID, v_unit);
+                        
+                if (p_unit.m_Messages.fn_sendMessageAllowed(CONST_TYPE_AndruavMessage_ID) === true)
+                {
+                    // it is already identifying itself.
+                    Me.API_requestID(p_jmsg.senderName);
+                    p_unit.m_Messages.fn_doNotRepeatMessageBefore(CONST_TYPE_AndruavMessage_ID,1000,new Date())
+                }
+                else
+                {
+                    console.log ("skip");
+                }
+                
                 return;
             }
             v_unit.m_NetworkStatus.m_received_msg++;
@@ -3212,7 +3174,8 @@ class CAndruavClient {
                             break;
 
                         case CMD_COMM_GROUP:
-                        case CMD_COMM_INDIVIDUAL: Me.prv_parseCommunicationMessage(Me, p_jmsg ,evt);
+                        case CMD_COMM_INDIVIDUAL: 
+                            Me.prv_parseCommunicationMessage(Me, p_jmsg ,evt);
                             break;
                     }
                     Me.EVT_onMessage(evt);
