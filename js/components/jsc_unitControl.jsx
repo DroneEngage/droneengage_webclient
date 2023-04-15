@@ -235,7 +235,6 @@ class CLSS_AndruavUnit_GCS extends CLSS_AndruavUnit {
                 <div className='col-1' ><img className='gcs IsGCS_true cursor_hand' src={getVehicleIcon(v_andruavUnit)} alt='GCS' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} /> </div>
                 <div className='col-11'><p id='id' className='text-right text-warning cursor_hand'> GCS [<strong>{v_andruavUnit.m_unitName}</strong>]</p></div>
             </div>
-            <hr/>
         </div>
         );
     }
@@ -1381,11 +1380,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     <div className="tab-pane fade" id={"empty" + v_andruavUnit.partyID}>
                     </div>
                 </div>
-                 <hr/>
             </div>		
-            
-        
-             
        );
     }
 }
