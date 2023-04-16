@@ -73,9 +73,9 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         var cmd_btns = [];
         if (CONST_FEATURE.DISABLE_UDPPROXY_UPDATE !== true)
         {
-            cmd_btns.push(<div key={v_andruavUnit.partyID + 'Set4'}  className='row css_margin_zero padding_zero '>
-                <hr/>
-                <div key={v_andruavUnit.partyID + 'Set41'} className="col-12">
+            cmd_btns.push(<div key={v_andruavUnit.partyID + 'Set4'}  className='row css_margin_zero padding_zero border-top border-secondary'>
+                
+                <div key={v_andruavUnit.partyID + 'Set41'} className="col-12 mt-1">
                 <div className = 'row al_l css_margin_zero d-flex '>
                     <div className= 'col-6 col-sm-3 user-select-none '>
                     <p className=' rounded-3 text-white bg-danger cursor_hand textunit_nowidth al_c' title ='Change UDP Proxy Port' onClick={() => this.fn_changeTelemetryPort(v_andruavUnit)}>Proxy Port</p>
