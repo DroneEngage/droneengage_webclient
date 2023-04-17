@@ -1632,9 +1632,6 @@ function fn_handleKeyBoard() {
 
 		// Websocket Connection established
 		var EVT_onOpen = function () {
-			// v_andruavClient.m_groupName = $('#txtGroupName').val();
-			// v_andruavClient.unitID = $('#txtUnitID').val();
-			// v_andruavClient.partyID = $('#txtUnitID').val();
 			$('#andruavUnitGlobals').show();
 
 			v_connectState = true;
@@ -2989,16 +2986,13 @@ function fn_handleKeyBoard() {
 				return;
 			}
 
-			//var connectURL = 'http://andruav.com/arcs/globalarclight.html?accesscode='+ $('#txtAccessCode').val() + '&email=' + $('#txtEmail').val() + '&m_groupName=' + $('#txtGroupName').val() + '&m_unitName=' + $('#txtUnitID').val();
-
-
 			// create a group object
 			if (v_andruavClient == null) {
 
 				if (window.AndruavLibs.AndruavAuth.fn_logined() == false) return;
 				v_andruavClient = window.AndruavLibs.AndruavClient; //Object.create(AndruavClientSocket.prototype);
 
-				v_andruavClient.partyID = $('#txtUnitID').val().replace('#','_');
+				v_andruavClient.partyID = ($('#txtUnitID').val()+$('#txtUnitID_ext').val()).replace('#','_');
 				v_andruavClient.unitID = $('#txtUnitID').val();
 				v_andruavClient.m_groupName = $('#txtGroupName').val();
 				v_andruavClient.fn_init();
