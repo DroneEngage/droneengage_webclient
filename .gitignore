@@ -3,5 +3,4 @@ ssl-keys/*
 ssl-keys/*.*
 ssl/*
 package-lock.json
-dist/
-.babelrc
+
