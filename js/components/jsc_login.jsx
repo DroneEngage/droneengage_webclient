@@ -38,9 +38,7 @@ export class CLSS_LoginControl extends React.Component {
 		if (params.status == CONST_SOCKET_STATUS_REGISTERED) {
 			me.state.is_connected = true;
 			me.setState({ btnConnectText: res_CLSS_LoginControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['2'] });
-			//	$('#btnConnect').removeClass('btn-success');
-			//	$('#btnConnect').addClass('btn-danger');
-			//	$('div#login').hide();
+			me.state.username = $('#txtUnitID').val();
 			v_SpeakEngine.fn_speak('Connected');
 
 
@@ -139,7 +137,7 @@ export class CLSS_LoginControl extends React.Component {
 							<br />
 						</div>
 						<div id='login_btn mb-2 ' className='text-center'>
-							<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false ? 'btn-success' : 'btn-danger')} id="btnConnect" onClick={(e) => this.clickConnect(e)}>{this.state.btnConnectText}</button>
+							<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false ? 'btn-success' : 'btn-danger')} id="btnConnect" title={this.state.username} onClick={(e) => this.clickConnect(e)}>{this.state.btnConnectText}</button>
 
 						</div>
 					</div>
@@ -171,7 +169,15 @@ export class CLSS_LoginControl extends React.Component {
 								<br />
 							</div>
 							<div id='login_btn mb-2 ' className='text-center'>
-								<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false ? 'btn-success' : 'btn-danger')} id="btnConnect" onClick={(e) => this.clickConnect(e)}>{this.state.btnConnectText}</button>
+							<div className={this.state.is_connected == false ? "hidden" : " "} >
+								<div className="form-group al_l"><label htmlFor="txtEmail" id="email" className="text-muted">Email</label>
+									<p>  {window.AndruavLibs.LocalStorage.fn_getEmail()} </p>
+								</div>
+								<div className="form-group al_l"><label id="unitID" className="text-muted">GCS ID</label>
+									<p> {window.AndruavLibs.LocalStorage.fn_getUnitID()} </p>
+								</div>
+							</div>
+							<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false ? 'btn-success' : 'btn-danger')} id="btnConnect" title={this.state.username} onClick={(e) => this.clickConnect(e)}>{this.state.btnConnectText}</button>
 							</div>
 						</div>
 					</div>
