@@ -20,6 +20,13 @@ var rover_icon  = [ './images/car1.png',
 					'./images/car4.png'];
 
 
+var boat_icon  = [ './images/boat1.png',
+					'./images/boat2.png',
+					'./images/boat3.png',
+					'./images/boat4.png'];
+
+
+
 var flightPath_colors = [
 							'#75A4D3',
 							'#75D3A4',
@@ -2071,7 +2078,7 @@ function fn_handleKeyBoard() {
 						return rover_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_BOAT:
 						p_andruavUnit.m_VehicleType_TXT = "Boat";
-						return rover_icon[p_andruavUnit.m_index%4];
+						return boat_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_SUBMARINE:
 						p_andruavUnit.m_VehicleType_TXT = "Submarine";
 						return './images/submarine_gb_32x32.png';
