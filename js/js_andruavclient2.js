@@ -598,7 +598,6 @@ class CAndruavClient {
         v_unit.m_telemetry_protocol = CONST_Unknown_Telemetry;
         v_unit.m_VehicleType = CONST_VEHICLE_GCS;
 
-        // this.m_andruavUnitList.Add(v_unit.partyID,v_unit);
         this.m_andruavUnit = v_unit;
 
 
@@ -1733,6 +1732,7 @@ class CAndruavClient {
             p_unit.m_IsMe = false;
             p_unit.m_defined = false;
             p_unit.partyID = msg.senderName;
+            p_unit.m_index = Me.m_andruavUnitList.count;
             Me.m_andruavUnitList.Add(p_unit.partyID, p_unit);
             if (msg.messageType != CONST_TYPE_AndruavMessage_ID) 
             {
@@ -3100,6 +3100,7 @@ class CAndruavClient {
                 v_unit.m_IsMe = false;
                 v_unit.m_defined = false;
                 v_unit.partyID = p_jmsg.senderName;
+                v_unit.m_index = Me.m_andruavUnitList.count;
                 Me.m_andruavUnitList.Add(v_unit.partyID, v_unit);
                         
                 if (p_unit.m_Messages.fn_sendMessageAllowed(CONST_TYPE_AndruavMessage_ID) === true)
