@@ -501,7 +501,35 @@ class C_Messages
 	{
 		this.m_parent = parent;
 		this.m_messages_repeat = {};
+		this.m_messages_in = {};
+		this.m_messages_in_mavlink = {};
 	}
+
+	
+	fn_addMavlinkMsg(message_mavlin)
+	{
+		if (this.m_messages_in_mavlink.hasOwnProperty(message_mavlin.name)==false)
+		{
+			this.m_messages_in_mavlink[message_mavlin.name] = 1;
+		}
+		else
+		{
+			++this.m_messages_in_mavlink[message_mavlin.name];
+		}
+	}
+
+	fn_addMsg (message_id)
+	{
+		if (this.m_messages_in.hasOwnProperty(message_id)==false)
+		{
+			this.m_messages_in[message_id] = 1;
+		}
+		else
+		{
+			++this.m_messages_in[message_id];
+		}
+	}
+
 
 	fn_doNotRepeatMessageBefore(message_id, interval_ms,from_time)
 	{
