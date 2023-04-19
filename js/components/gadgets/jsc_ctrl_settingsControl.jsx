@@ -1,14 +1,16 @@
+import {CLSS_RX_MESSAGE} from './gadgets/jsc_ctrl_rx_messageControl.jsx'
+
 export  class CLSS_CTRL_SETTINGS   extends React.Component {
     
     constructor(props)
     {
         super(props);
         this.state={
+            m_traffic_monitor: false,
             m_message: [],
 		    'm_update': 0
         };
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_unitUpdated,this,this.fn_unitUpdated);
-
     }
 
     componentWillUnmount () {
@@ -33,6 +35,11 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         if (p_andruavUnit==null) return;
         
         fn_changeUDPPort(p_andruavUnit);
+    }
+
+    fn_toggleTrafficMonitor()
+    {
+        this.setState({'m_traffic_monitor': !this.state.m_traffic_monitor});
     }
 
     render() {
@@ -85,17 +92,28 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
             </div>);
         }
         
+        var cmd_data = [];
+        if (this.state.m_traffic_monitor===true)
+        {
+            cmd_data.push(<div key={v_andruavUnit.partyID + 'Set4'}  className='row css_margin_zero padding_zero border-top border-secondary'>
+                            <div key={v_andruavUnit.partyID + 'Set41'} className="col-12 mt-1">
+                            <CLSS_RX_MESSAGE p_unit={v_andruavUnit}/>
+                            </div>
+                        </div>
+            );
+        }
+
         const v_date = (new Date(v_andruavUnit.m_NetworkStatus.m_lastActiveTime));
         
         return (
             <div>
             <div key={v_andruavUnit.partyID + 'Set1'} className='row css_margin_zero padding_zero '>
                 <div key={v_andruavUnit.partyID + 'Set11'} className="col-6">
-                    <p key={v_andruavUnit.partyID + 'Set12'} className="textunit user-select-all m-0"><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
+                    <p key={v_andruavUnit.partyID + 'Set12'} className="textunit user-select-all m-0" onClick={(e) => this.fn_toggleTrafficMonitor(e)}><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
                 </div>
                 
                 <div className="col-6">
-                    <p className="textunit user-select-all m-0"><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
+                    <p className="textunit user-select-all m-0" onClick={(e) => this.fn_toggleTrafficMonitor(e)}><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
                 </div>
             </div>
             <div key={v_andruavUnit.partyID + 'Set2'} className='row css_margin_zero padding_zero '>
@@ -109,6 +127,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
                 </div>
             </div>
             {cmd_btns}
+            {cmd_data}
             </div>
             
         )
