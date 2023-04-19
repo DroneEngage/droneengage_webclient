@@ -627,6 +627,8 @@ function fn_handleKeyBoard() {
 				switch (parseInt(p_adsbObject.m_emitter_type))
 				{
 					case mavlink20.ADSB_EMITTER_TYPE_NO_INFO:
+						icon = './images/ufo.png';
+						break;
 					case mavlink20.ADSB_EMITTER_TYPE_LIGHT:
 					case mavlink20.ADSB_EMITTER_TYPE_SMALL:
 					case mavlink20.ADSB_EMITTER_TYPE_LARGE:
