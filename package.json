@@ -1,6 +1,6 @@
 {
   "name": "andruav_local_website",
-  "version": "2.9.1",
+  "version": "2.10.1",
   "description": "Web Client for Andruav/DroneEngage",
   "main": "server.js",
   "scripts": {
