@@ -83,9 +83,23 @@ var message_names = {
     1002: "GPS",
     1003: "POW",
     1004: "ID",
+    1005: "Remote Execute",
+    1006: "Image",
+    1008: "Message",
+    1012: "CameraList",
+    1021: "Signaling",
+    1022: "Home Location",
+    1027: "WayPoints",
+    1036: "NAV_INFO",
+    1049: "Camera Zoom",
+    1050: "Camera Switch",
+    1051: "Camera Flash",
     1013: "BinaryIMU",
     1016: "IMUStatistics",
+    1052: "RemoteControl2",
     1071: "UdpProxy_Info",
+    6001: "ServoChannel",
+    6501: "ServoOutput",
     6502: "Mavlink"
 };
 
