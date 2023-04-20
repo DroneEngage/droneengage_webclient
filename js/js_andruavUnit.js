@@ -678,7 +678,7 @@ class CAndruavUnitList
 	Add (partyID,andruavUnit)
 	{
 		if (this.List[partyID]!=null) return ;
-
+		andruavUnit.m_index = this.count;
 		this.List[partyID] = andruavUnit;
 		this.count = this.count + 1;
 	};
