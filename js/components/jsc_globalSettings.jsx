@@ -366,7 +366,6 @@ class CLSS_GlobalSettings extends React.Component {
   render() {
 
      var m_unitText= "";
-     var tele = "";
 
      if (window.AndruavLibs.LocalStorage.fn_getMetricSystem()==true)
       {
@@ -377,11 +376,6 @@ class CLSS_GlobalSettings extends React.Component {
         m_unitText = 'ft';
       }
 
-      if (window.AndruavLibs.AndruavAuth.fn_do_canTele()==false)
-      {
-        tele = " " ; //" hidden ";
-      }
-      
   //  fn_console_log ("REACT:RENDER CLSS_GlobalSettings" + this.state.CONST_DEFAULT_ALTITUDE );
   var v_gadgets = [];
   var v_uploadFile = [];
@@ -418,13 +412,11 @@ class CLSS_GlobalSettings extends React.Component {
 
     v_uploadFile.push (
               <div key='v_uploadFile0' className="row width_100 margin_zero css_margin_top_small ">
-                <div  className={"col-12 " + tele}>
-                  <div className="form-inline">
-                    <div className="form-group">
-                      
+                <div  key='v_uploadFile1' className={"col-12 "}>
+                  <div key='v_uploadFile2' className="form-inline">
+                    <div key='v_uploadFile3' className="form-group">
                         <label htmlFor="btn_filesWP" className="user-select-none text-white mt-2"><small>Mission&nbsp;File</small></label>
                         <input type="file" id="btn_filesWP" name="file" className="form-control input-xs input-sm css_margin_left_5"/>
-                      
                     </div>
                   </div>
                 </div>
@@ -435,7 +427,12 @@ class CLSS_GlobalSettings extends React.Component {
 
 
     v_uploadFile.push ();
-    
+    var cls_ctrl_wp = '  ';
+    if (!window.AndruavLibs.AndruavAuth.fn_do_canControlWP()) 
+    { // no permission
+      cls_ctrl_wp = ' hidden disabled ';
+    }
+        
   
   return (
      <div key='g1' className="row margin_zero">
@@ -447,7 +444,7 @@ class CLSS_GlobalSettings extends React.Component {
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#settings_home"}>Defaults</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#settings_profile"}>Mission</a>
+                        <a className={"nav-link user-select-none " + cls_ctrl_wp} data-bs-toggle="tab" href={"#settings_profile"}>Mission</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#settings_preference"}>Preferences</a>
@@ -459,7 +456,7 @@ class CLSS_GlobalSettings extends React.Component {
                     {v_telemetryModes}      
                     
                     </div>
-                    <div className="tab-pane fade pt-2" id={"settings_profile"}>
+                    <div className={"tab-pane fade pt-2" + cls_ctrl_wp} id={"settings_profile"}>
                     {v_uploadFile} 
                     <CLSS_FireEvent/>
                     </div>

@@ -78,6 +78,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         
         var cmd_btns = [];
         if (CONST_FEATURE.DISABLE_UDPPROXY_UPDATE !== true)
+        if (window.AndruavLibs.AndruavAuth.fn_do_canControl())
         {
             cmd_btns.push(<div key={v_andruavUnit.partyID + 'SC_4'}  className='row css_margin_zero padding_zero border-top border-secondary'>
                 
