@@ -838,25 +838,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             res.btn_sendParameters_class = " btn-primary  ";
         }
         
-        // if (p_andruavUnit.m_Telemetry.m_udpProxy_active === true)
-        // {
-        //     res.btn_tele_class          = " btn-dark hidden disabled ";
-        //     res.btn_tele_text           = "Tele On";
-        // }
-        // else
-        // {
-        //     if (p_andruavUnit.m_Telemetry._isActive == true)
-        //     {
-        //         res.btn_tele_class          = " btn-danger ";
-        //         res.btn_tele_text           = "Tele On";
-        //     }
-        //     else
-        //     {
-        //         res.btn_tele_class          = " btn-primary ";
-        //         res.btn_tele_text           = "Tele Off";
-        //     }
-        // }
-
         if ((p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != CONST_RC_SUB_ACTION_JOYSTICK_CHANNELS)
         && (p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != CONST_RC_SUB_ACTION_JOYSTICK_CHANNELS_GUIDED))
         {   
@@ -884,8 +865,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             }
         }
         else
-        {  // p_andruavUnit.m_Telemetry.fn_getManualTXBlockedSubAction() != RC_SUB_ACTION_RELEASE  ONLY
-
+        {  
             if (p_andruavUnit.m_Telemetry.m_rxEngaged == true)
             {
                 res.btn_rx_class          = " btn-danger ";
@@ -963,7 +943,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         {
             if ((v_andruavUnit.m_FlyingLastStartTime != undefined) || (v_andruavUnit.m_FlyingLastStartTime === 0))
             {
-                //v_flyingTime = fn_getTimeSpanDetails_Shortest ( v_now, v_andruavUnit.m_FlyingLastStartTime );
                 /**
                  * You need to depend on board. cannot assume that board Local Time is the same so you neeed to rely
                  * on second difference. however you can make local counter to update time untill second update received from vehicle
@@ -988,7 +967,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         }
 
         // calculate Total Time
-        //const c_delta = v_andruavUnit.m_FlyingLastStartTime==0?0.0:Math.abs(v_now - v_andruavUnit.m_FlyingLastStartTime);
         const c_delta = v_andruavUnit.m_FlyingLastStartTime==0?0.0:v_andruavUnit.m_FlyingLastStartTime;
         v_totalFlyingTime = fn_getTimeDiffDetails_Shortest ( (c_delta + v_andruavUnit.m_FlyingTotalDuration));
         
@@ -1397,30 +1375,41 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var btn = this.hlp_getflightButtonStyles(p_andruavUnit);
         var ctrl_flight_controller=[];
         var ctrl2=[];
-        
-        switch (p_andruavUnit.m_autoPilot)
+        var cls_ctrl_modes = '  ';
+        var cls_ctrl_wp = '  ';
+        if (!window.AndruavLibs.AndruavAuth.fn_do_canControlWP()) 
+        {   // no permission
+            cls_ctrl_wp = ' hidden disabled ';
+        }
+        if (window.AndruavLibs.AndruavAuth.fn_do_canControlModes()) 
         {
-            case mavlink20.MAV_AUTOPILOT_PX4:
-                ctrl_flight_controller.push(<CLSS_CTRL_PX4_FLIGHT_CONTROL key={p_andruavUnit.partyID + "_ctrl_fc"} id={p_andruavUnit.partyID + "_ctrl_fc"} v_andruavUnit={p_andruavUnit}/>);
-            break;
-            default:
-                ctrl_flight_controller.push(<CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL key={p_andruavUnit.partyID + "_ctrl_fc"} id={p_andruavUnit.partyID + "_ctrl_fc"} v_andruavUnit={p_andruavUnit}/>);
-            break;
+            switch (p_andruavUnit.m_autoPilot)
+            {
+                case mavlink20.MAV_AUTOPILOT_PX4:
+                    ctrl_flight_controller.push(<CLSS_CTRL_PX4_FLIGHT_CONTROL  key={p_andruavUnit.partyID + "_ctrl_fc"} id={p_andruavUnit.partyID + "_ctrl_fc"} v_andruavUnit={p_andruavUnit}/>);
+                break;
+                default:
+                    ctrl_flight_controller.push(<CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL  key={p_andruavUnit.partyID + "_ctrl_fc"} id={p_andruavUnit.partyID + "_ctrl_fc"} v_andruavUnit={p_andruavUnit}/>);
+                break;
+            }
+        }
+        else
+        {   // no permission
+            cls_ctrl_modes = ' hidden disabled ';
         }
 
-        ctrl2.push (<div key="rc3"  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
+
+
+
+        ctrl2.push (<div key={p_andruavUnit.partyID + "rc3"}  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
                     <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Read Waypoints from Drone">R-WP</button>
-                    <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
-                    <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
+                    <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + cls_ctrl_wp + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
+                    <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + cls_ctrl_wp + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
                     <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class } onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class } onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
+                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class + cls_ctrl_modes} onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
+                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class + cls_ctrl_modes} onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
                     <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
-        
-
-        
-        
 
         return (
             <div id='ctrl_k' className='ps-2 pb-2'>

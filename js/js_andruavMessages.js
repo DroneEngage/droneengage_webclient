@@ -79,6 +79,16 @@ const CONST_TYPE_AndruavSystem_DisableTasks         = 9004;
 const CONST_TYPE_AndruavSystem_LogoutCommServer     = 9006;
 const CONST_TYPE_AndruavSystem_ConnectedCommServer  = 9007;
 
+
+
+const CONST_ALLOW_GCS                   = 0x00000001;
+const CONST_ALLOW_UNIT                  = 0x00000010;
+const CONST_ALLOW_GCS_FULL_CONTROL      = 0x00000f00;
+const CONST_ALLOW_GCS_WP_CONTROL        = 0x00000100;
+const CONST_ALLOW_GCS_MODES_CONTROL     = 0x00000200;
+const CONST_ALLOW_GCS_VIDEO             = 0x0000f000;
+
+
 var message_names = {
     1002: "GPS",
     1003: "POW",
