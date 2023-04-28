@@ -2306,7 +2306,7 @@ function fn_handleKeyBoard() {
 
 			if (p_andruavUnit.p_marker_home == null) {
 				const v_html = "<p class='text-light margin_zero fs-6'>" + p_andruavUnit.m_unitName + "</p>";
-				var v_home = AndruavLibs.AndruavMap.fn_CreateMarker('./images/home_b_24x24.png', v_html, [16,24], false, false, p_andruavUnit.m_unitName , [32,32]);
+				var v_home = AndruavLibs.AndruavMap.fn_CreateMarker('./images/home_b_24x24.png', p_andruavUnit.m_unitName, [16,24], false, false, v_html, [32,32]);
 				AndruavLibs.AndruavMap.fn_setPosition(v_home,v_latlng)
 				p_andruavUnit.p_marker_home = v_home;
 				
