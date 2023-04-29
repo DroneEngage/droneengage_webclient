@@ -43,6 +43,7 @@ class CAndruavAuth {
         }
         this._m_auth_port = '19408';
         this._m_auth_ports = '19408'; 
+        this._m_perm = 0;
         this._m_permissions_ = '';
         this._m_session_ID = null;
         this._m_logined = false;
@@ -65,26 +66,25 @@ class CAndruavAuth {
     }
 
     fn_do_canGCS() {
-        if (this._m_permissions_.length > 2) {
-            return this._m_permissions_[2] == 'G';
-        }
-        return false;
+        return ((this._m_perm & CONST_ALLOW_GCS) === CONST_ALLOW_GCS);
     }
 
-    fn_do_canTele() {
-        if (this._m_permissions_.length > 4) {
-            return this._m_permissions_[4] == 'T';
-        }
-        return false;
+    fn_do_canControl() {
+        return ((this._m_perm & CONST_ALLOW_GCS_FULL_CONTROL) === CONST_ALLOW_GCS_FULL_CONTROL);
     }
 
-
-	fn_do_canControl = function () {
-		if (this._m_permissions_.length > 6) {
-			return this._m_permissions_[6] == 'R';
-		}
-		return false;
-	}
+    fn_do_canControlWP() {
+        return ((this._m_perm & CONST_ALLOW_GCS_WP_CONTROL) === CONST_ALLOW_GCS_WP_CONTROL);
+    }
+    
+    
+    fn_do_canControlModes() {
+        return ((this._m_perm & CONST_ALLOW_GCS_MODES_CONTROL) === CONST_ALLOW_GCS_MODES_CONTROL);
+    }
+    
+    fn_do_canVideo() {
+        return ((this._m_perm & CONST_ALLOW_GCS_VIDEO) === CONST_ALLOW_GCS_VIDEO);
+    }
 
 
 
@@ -133,6 +133,8 @@ class CAndruavAuth {
                 Me.server_AuthKey = v_res.cs.f; // authentication key of WS
                 Me.m_username = p_userName;
                 Me._m_permissions_ = v_res.per;
+                if (v_res.prm==null) v_res.prm = 0xffffffff;  // auth server does not support permission (backward compatibility)
+                Me._m_perm = v_res.prm;
                 window.AndruavLibs.EventEmitter.fn_dispatch(EE_Auth_Logined, v_res);
             } else {
                 Me._m_logined = false;
