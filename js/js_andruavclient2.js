@@ -1829,7 +1829,7 @@ class CAndruavClient {
                             p_unit.m_isDE = true;
                             if(p_unit.m_version != p_jmsg['dv'])
                             {
-                                p_unit.m_version == p_jmsg['dv'];
+                                p_unit.m_version = p_jmsg['dv'];
                                 Me.EVT_andruavUnitError (p_unit, {
                                     notification_Type:5,
                                     Description: "DE SW ver:" + p_unit.m_version
