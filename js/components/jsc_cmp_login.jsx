@@ -16,7 +16,6 @@ class CLSS_LoginControl extends React.Component {
             
             window.AndruavLibs.LocalStorage.fn_setEmail($('#txtEmail').val());
             window.AndruavLibs.LocalStorage.fn_setAccessCode($('#txtAccessCode').val());
-           // $('#loginCtrl').hide();
             
             me.setState({'is_connected':true});
    
@@ -41,11 +40,12 @@ class CLSS_LoginControl extends React.Component {
 		
 		fn_do_modal_confirmation ("<strong>Attention: </strong>Access Code" ,
 				"Create New Access Code.<br>You will need to define the new accesscode in ALL your Andruav units.<br> \
-				Make sure you use a valid email because the access code will be sent to it.",function (p_approved) {
+				The first access code has FULL CONTROL",function (p_approved) {
 					if (p_approved === false) return;
 					if (CCaptcha.fn_validCaptcha() === true)
 					{
-						window.AndruavLibs.AndruavAuth.fn_generateAccessCode($('#txtEmail').val());
+						var v_permission = '0xffffffff';
+						window.AndruavLibs.AndruavAuth.fn_generateAccessCode($('#txtEmail').val(), v_permission);
 					}
 					
 				}, "Create", "bg-danger text-white");
@@ -55,11 +55,25 @@ class CLSS_LoginControl extends React.Component {
 
 	fn_clickRegenerate (e) {
 		fn_do_modal_confirmation ("<strong>Attention: </strong>Access Code" ,
-				"Create New Access Code.<br>You will get a new Access Code via email only, abd the current one will be invalid. You need to copy and paste the new Access Code in all other Andruav mobiles.",function (p_approved) {
+				"Regenerating Access Code.<br>The current one will be invalid if it has the same permissions.<br>It is important that you have already access code before regenerating a new one.<br>Read-Only permission is intended to be used with GCS.",function (p_approved) {
 					if (p_approved === false) return;
 					if (CCaptcha.fn_validCaptcha() === true)
 					{
-						window.AndruavLibs.AndruavAuth.fn_regenerateAccessCode($('#txtEmail').val());
+						// Get references to the radio buttons
+						var chk_fullctrl = document.getElementById("input_fullctrl");
+						var chk_readonlyctrl = document.getElementById("input_readonlyctrl");
+
+						// Check which radio button is selected
+						var v_permission = 0x0;
+						if (chk_fullctrl.checked) {
+							v_permission = '0xffffffff';
+						} else if (chk_readonlyctrl.checked) {
+							v_permission = '0xffff00ff';
+						} else {
+							v_permission = '0xffffffff';
+						}
+						
+						window.AndruavLibs.AndruavAuth.fn_regenerateAccessCode($('#txtEmail').val(), v_permission);
 					}
 					
 				}, "Create", "bg-danger text-white");
@@ -109,13 +123,25 @@ class CLSS_LoginControl extends React.Component {
         		<br/>
         </div>
 
+				<div className="form-check">
+				<input className="form-check-input" type="radio" value="" id="input_fullctrl" name='grp_permission'/>
+				<label className="form-check-label" for="myCheckbox">
+					Full Control
+				</label>
+				</div>
+				<div className="form-check">
+				<input className="form-check-input" type="radio" value="" id="input_readonlyctrl" name='grp_permission'/>
+				<label className="form-check-label" for="myCheckbox">
+					Read Only
+				</label>
+				</div>  
 				<div  className="row">
 				<div className="col-6 al_l">
 				<a href="#" id='login_btn' className="btn btn-primary" onClick={ (e) => this.fn_clickConnect(e) }><span className="glyphicon glyphicon-download-alt"  ></span> AccessCode</a>
 				</div>
 				<div className="col-6 al_l">
-				<a href="#" className="btn btn-danger" data-toggle="modal" href="#regeneratemodal" onClick={ (e) => this.fn_clickRegenerate(e) }><span className="glyphicon glyphicon-retweet"></span> Regenerate</a>
-				</div>  
+				<a className="btn btn-danger" data-toggle="modal" href="#regeneratemodal" onClick={ (e) => this.fn_clickRegenerate(e) }><span className="glyphicon glyphicon-retweet"></span> Regenerate</a>
+				</div>
 				</div>
       </div>
     );
