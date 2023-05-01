@@ -260,7 +260,10 @@ class CAndruavClient {
     // EVENT HANDLER AREA
     _fn_sendRXChannels(p_me) {
         if (p_me.v_sendAxes === false) 
-            return;
+        {
+            p_me.v_sendAxes_skip++;
+            if (p_me.v_sendAxes_skip%4 !=0) return;
+        }
         
 
         p_me.v_sendAxes = false;
@@ -277,6 +280,7 @@ class CAndruavClient {
 
         this.v_axes = null;
         this.v_sendAxes = false;
+        this.v_sendAxes_skip = 0;
         this.andruavGeoFences = {};
         this.videoFrameCount = 0;
         this.socketStatus = CONST_SOCKET_STATUS_FREASH;
