@@ -141,14 +141,6 @@ class C_LocalStorage {
         return this.getDefaultAttribute('_vTabsDisplayEnabled', true) === 'true';
     }
     
-    fn_setGoogleMapEnabled = function (value) {
-        localStorage._vGoogleMapEnabled = value;
-    }
-
-    fn_getGoogleMapEnabled = function () {
-        return this.getDefaultAttribute('_vGoogleMapEnabled', false) === 'true';
-    }
-    
     fn_setGoogleMapKey = function (value) {
         localStorage._vGoogleMapKey = value;
     }
