@@ -15,12 +15,15 @@
 // single GamePad status that is stored inside this.v_controllers
 
 
-const GAME_PAD_MICROSOFT  = 1;
-const GAME_PAD_WAILLY_PPM = 2;
+const GAME_XBOX_360_MICROSOFT   = 1;
+const GAME_XBOX_360_MICROSOFT_VENDOR  = ["045e","054c","054c","054c"];
+const GAME_XBOX_360_MICROSOFT_PRODUCT = ["028e","0ce6","09cc","05c4"];
+const GAME_PAD_WAILLY_PPM       = 2;
+const GAME_COR_CTRL_MICROSOFT   = 3;
 class fn_Obj_padStatus {
     constructor() 
     {
-    this.p_ctrl_type = GAME_PAD_MICROSOFT;
+    this.p_ctrl_type = GAME_XBOX_360_MICROSOFT;
     this.p_axes = [-1, 0, 0, 0];
 
     this.p_buttons = [];
@@ -119,10 +122,70 @@ class CAndruavGamePad {
 
     fn_addgamepad(me, p_gamepad) {
         var v_padStatus = new fn_Obj_padStatus();
-        if ((p_gamepad.id.indexOf("06f7")!=-1) && (p_gamepad.id.indexOf("0003")!=-1))
+
+        console.log(p_gamepad.id);
+        var vendorNumber;
+        var productNumber;
+        if (fn_isFireFox())
+        {
+            const regex = /^([^-]+)-([^-]+)/;
+            const match = regex.exec(p_gamepad.id);
+            if (match) {
+                vendorNumber = match[1];
+                productNumber = match[2];
+            }
+        }
+        else if (fn_isChrome())
+        {
+            var regex = /Vendor:\s+(\w+)/i;
+            var match = regex.exec(p_gamepad.id);
+            if (match) {
+            vendorNumber = match[1];
+            
+            }
+            regex = /Product:\s+(\w+)/i;
+            match = regex.exec(p_gamepad.id);
+            if (match) {
+            productNumber = match[1];
+            
+            }
+        }
+
+        console.log("vendorNumber:" + vendorNumber);  
+        console.log("productNumber:" + productNumber);
+
+        if ((vendorNumber=="06f7") && (productNumber == "0003"))
         {
             v_padStatus.p_ctrl_type = GAME_PAD_WAILLY_PPM;
+        }else
+        if ((vendorNumber=="0e6f") && (productNumber == "f501"))
+        {
+            if (p_gamepad.axes.length == 4)
+            {  // just in case this 'bug' exists
+                v_padStatus.p_ctrl_type = GAME_XBOX_360_MICROSOFT;
+            }
+            else
+            {   
+                v_padStatus.p_ctrl_type = GAME_COR_CTRL_MICROSOFT;
+            }
+
+        }else
+        if ((GAME_XBOX_360_MICROSOFT_VENDOR.includes(vendorNumber) === true) && (GAME_XBOX_360_MICROSOFT_PRODUCT.includes(productNumber) === true))
+        {
+            if (p_gamepad.axes.length == 4)
+            {
+                v_padStatus.p_ctrl_type = GAME_XBOX_360_MICROSOFT;
+            }
+            else
+            {   // on firefox I found it can be detected as GAME_COR_CTRL_MICROSOFT
+                v_padStatus.p_ctrl_type = GAME_COR_CTRL_MICROSOFT;
+            }
+            
+            
         }
+        
+        v_padStatus.id = p_gamepad.id;
+        
         me.v_controllers[p_gamepad.index] = v_padStatus;
         v_padStatus.p_connected = true;
         v_padStatus.p_vibration = (p_gamepad.vibrationActuator != null);
@@ -145,7 +208,11 @@ class CAndruavGamePad {
                     if (this.v_controllers[c_gamepads[i].index] == null) {
                         this.v_controllers[c_gamepads[i].index] = c_gamepads[i];
                     }
-                    this.fn_universalPad(c_gamepads[i]);
+                    if (i==active_gamepad_index) 
+                    {
+                        if (c_gamepads[i]==null) return; 
+                        this.fn_universalPad(c_gamepads[i]);
+                    }
                 }
             }
         }
@@ -205,7 +272,7 @@ class CAndruavGamePad {
                 this.v_lastUpdateSent = c_now;
             }
         }
-        else if (c_padStatus.p_ctrl_type==GAME_PAD_MICROSOFT)
+        else if (c_padStatus.p_ctrl_type==GAME_XBOX_360_MICROSOFT)
         {
 
             for (var j = 0; j < 4; ++ j) {
@@ -213,6 +280,58 @@ class CAndruavGamePad {
                     v_axesChanged = true;
                     c_padStatus.p_axes[j] = p_gamepad.axes[j].toFixed(2);
                 }
+            }
+
+            if ((v_axesChanged === true) ) {
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Axes_Updated);
+                this.v_lastUpdateSent = c_now;
+            }
+
+            var v_buttonChanged = false;
+
+            for (var i = 0; i <= 5; ++ i) {
+                const c_pressed = p_gamepad.buttons[i].pressed;
+                if (c_padStatus.p_buttons[i].m_pressed != c_pressed) {
+                    v_buttonChanged = true;
+                    c_padStatus.p_buttons[i].m_pressed = p_gamepad.buttons[i].pressed;
+                    c_padStatus.p_buttons[i].m_timestamp = Date.now();
+                    c_padStatus.p_buttons[i].m_longPress = false;
+                    if (v_buttonChanged === true) {
+                        var v_Packet = {};
+                        v_Packet.p_buttonIndex = i;
+                        v_Packet.p_buttons = c_padStatus.p_buttons;
+                        window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Button_Updated, v_Packet);
+                    }
+                } else {
+                    if ((c_pressed === true) && (c_padStatus.p_buttons[i].m_longPress === false) && ((Date.now() - c_padStatus.p_buttons[i].m_timestamp) > CONST_GAMEPAD_LONG_PRESS)) { // long press
+                        var v_Packet = {};
+                        v_Packet.p_buttonIndex = i;
+                        v_Packet.p_buttons = c_padStatus.p_buttons;
+                        c_padStatus.p_buttons[i].m_longPress = true;
+                        window.AndruavLibs.EventEmitter.fn_dispatch(EE_GamePad_Button_Updated, v_Packet);
+                        fn_console_log("button " + i + " long press");
+                    }
+                }
+            }
+        }
+        else if (c_padStatus.p_ctrl_type==GAME_COR_CTRL_MICROSOFT)
+        {
+
+            if (c_padStatus.p_axes[0] != p_gamepad.axes[0]) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[0] = p_gamepad.axes[0].toFixed(2);
+            }
+            if (c_padStatus.p_axes[1] != p_gamepad.axes[1]) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[1] = p_gamepad.axes[1].toFixed(2);
+            }
+            if (c_padStatus.p_axes[2] != p_gamepad.axes[3]) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[2] = p_gamepad.axes[3].toFixed(2);
+            }
+            if (c_padStatus.p_axes[3] != p_gamepad.axes[4]) {
+                v_axesChanged = true;
+                c_padStatus.p_axes[3] = p_gamepad.axes[4].toFixed(2);
             }
 
             if ((v_axesChanged === true) ) {

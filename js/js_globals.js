@@ -9,6 +9,7 @@ const CONST_DFM_FAR                 = 3000; // more than 10 Km is far.
 const CONST_DFM_SAFE                = 1000; // less than 1 Km is safe.
 
 var v_displayMode                   = 0;
+var active_gamepad_index            = 0;
 
 // Metric System        
 var v_useMetricSystem               = true;
