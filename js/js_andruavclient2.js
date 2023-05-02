@@ -267,7 +267,7 @@ class CAndruavClient {
         
 
         p_me.v_sendAxes = false;
-        p_me.API_sendRXChannels(this.v_axes);
+        if (this.v_axes!=null) p_me.API_sendRXChannels(this.v_axes);
     }
 
 
@@ -381,7 +381,7 @@ class CAndruavClient {
             return;
         
 
-        const c_controller = window.AndruavLibs.AndruavGamePad.fn_getGamePad(0);
+        const c_controller = window.AndruavLibs.AndruavGamePad.fn_getGamePad(active_gamepad_index);
         if (c_controller == null) 
             return;
         
