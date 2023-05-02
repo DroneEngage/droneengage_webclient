@@ -497,4 +497,27 @@ function fn_getNetworkType (p_networkType)
         }
     }
 
+
+ function fn_isChrome()
+ {
+    if (navigator.userAgent.indexOf("Chrome") !== -1) return true;
+
+    return false;
+ }  
+ 
+ function fn_isFireFox()
+ {
+    if (navigator.userAgent.indexOf("Firefox") !== -1) return true;
+
+    return false;
+ }
+
+ function fn_isEdge()
+ {
+    if (navigator.userAgent.indexOf("Chrome") !== -1) return true;
+
+    return false;
+ }
+    
+
 fn_eval = eval;
