@@ -3,7 +3,7 @@ import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
-import {CLSS_CTRL_ARDUPILOT_EKF} from './gadgets/jsc_ctl_ardupilot_ekf.jsx'
+import {CLSS_CTRL_ARDUPILOT_EKF} from './gadgets/jsc_ctrl_ardupilot_ekf.jsx'
 import {CLSS_CTRL_VIBRATION} from './gadgets/jsc_ctrl_vibration.jsx'
 import {CLSS_CTRL_BATTERY} from './gadgets/jsc_ctrl_battery.jsx'
 
