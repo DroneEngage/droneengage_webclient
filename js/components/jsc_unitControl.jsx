@@ -5,6 +5,7 @@ import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
+import {CLSS_CTRL_SWARM} from './gadgets/jsc_ctrl_swarm.jsx'
 
 
 class CLSS_AndruavUnit extends React.Component {
@@ -1041,10 +1042,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 <div id='bearingtargetknob' >{v_bearingTarget_knob}</div>
                                 </div>
                         </div>
-                        <div className= 'col-4   padding_zero css_user_select_text'>
+                        <div className= 'col-3   padding_zero css_user_select_text'>
                         <CLSS_CTRL_UDP_PROXY_TELEMETRY p_unit={v_andruavUnit} /> </div>
-                        <div className= 'col-1   padding_zero'>
-                        {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
+                        <div className= 'col-2   padding_zero'>
+                        <CLSS_CTRL_SWARM   m_unit={v_andruavUnit}/>
                         </div>
                         
                     </div>

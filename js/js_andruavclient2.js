@@ -918,11 +918,12 @@ class CAndruavClient {
 
 
     // CODEBLOCK_START
-    API_requestFromDroneToFollowAnother(partyID, slaveIndex, leaderPartyID) {
+    API_requestFromDroneToFollowAnother(partyID, slaveIndex, leaderPartyID, do_follow) {
 
         let p_msg = {
             a: slaveIndex, // index ... could be -1 to take available location.
-            c: partyID // slave
+            c: partyID, // slave
+            f: do_follow
         };
 
         if (leaderPartyID != null) {
