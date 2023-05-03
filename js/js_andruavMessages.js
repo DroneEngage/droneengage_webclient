@@ -80,6 +80,8 @@ const CONST_TYPE_AndruavSystem_LogoutCommServer     = 9006;
 const CONST_TYPE_AndruavSystem_ConnectedCommServer  = 9007;
 
 
+const CONST_TYPE_SWARM_FOLLOW           = 1;
+const CONST_TYPE_SWARM_UNFOLLOW         = 2;
 
 const CONST_ALLOW_GCS                   = 0x00000001;
 const CONST_ALLOW_UNIT                  = 0x00000010;
