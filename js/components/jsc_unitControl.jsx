@@ -5,171 +5,7 @@ import {CLSS_CTRL_HUD} from './gadgets/jsc_ctrl_hudControl.jsx'
 import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
-
-
-class CLSS_AndruavSwarmLeaders extends React.Component {
-
-
-    fn_toggleMakeSwarm (p_formationID)
-    {
-        //CODEBLOCK_START
-        if (this.props.m_unit.m_Swarm.m_isLeader == true)
-        {   // make not a leader
-            v_andruavClient.API_makeSwarm (this.props.m_unit.partyID, CONST_TASHKEEL_SERB_NO_SWARM);
-        }
-        else
-        {   // make leader and set formation.
-            v_andruavClient.API_makeSwarm (this.props.m_unit.partyID, p_formationID);
-        }
-        //CODEBLOCK_END
-    }
-
-    fn_updateSwarm(p_andruavUnit,leaderAndruavUnit)
-    {
-        //CODEBLOCK_START
-        v_andruavClient.API_updateSwarm (TASHKEEL_SERB_UPDATED, -1, p_partyID, p_leaderPartyID);
-        //CODEBLOCK_END
-    }
-
-    fn_requestToFollow (p_unit)
-    {
-        //CODEBLOCK_START
-        fn_console_log (p_unit);
-        var v_partyID = null;
-        if (p_unit != null)
-        {
-            v_partyID = p_unit.partyID;
-        }
-        v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit.partyID, -1, v_partyID);
-        //CODEBLOCK_END
-    }
-
-
-    onChange(e)
-    {
-       //CODEBLOCK_START
-       if (e.target.value)
-       {
-          if (e.target.value == "NA")
-          {
-              // do not follow
-            v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit.partyID, -1, null);
-          } 
-          else
-          {
-            v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit.partyID, -1, e.target.value);
-          }
-       }
-       //CODEBLOCK_END
-    }
-    
-    componentDidUpdate() 
-    {
-        //CODEBLOCK_START
-        if (this.props.m_unit.m_Swarm.m_following != null)
-        {
-            var leaderUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.m_unit.m_Swarm.m_following);
-            if (leaderUnit != null)
-            {
-                $("#" + this.props.m_unit.partyID + "dldrselsel").val(leaderUnit.partyID);
-            }
-            else
-            {
-                $("#" + this.props.m_unit.partyID + "dldrselsel").val("NA");
-            }
-        }
-        else
-        {
-            $("#" + this.props.m_unit.partyID + "dldrselsel").val("NA");
-        }
-        //CODEBLOCK_END
-    }
-
-    
-    render ()
-    {
-        if (window.AndruavLibs.LocalStorage.fn_getAdvancedOptionsEnabled()!=='true')
-        {
-            return (
-                <div></div>
-            )
-        }
-        else
-        {
-
-            
-                
-        //CODEBLOCK_START
-        var options = [];
-        var v_units = v_andruavClient.m_andruavUnitList.fn_getUnitValues();
-        var len = v_units.length;
-        const c_items = [];
-        
-        var v_leader_class = "btn-secondry";
-        var v_leader_title_leader   = "not leader";
-        var v_leader_title_follower = "following none";
-        var v_leader_dropdown_class = "bg-secondry";
-
-        if (this.props.m_unit.m_Swarm.m_following != null)
-        {
-            v_leader_class = "btn-success"; // this state can be overwritten if it is a leader. 
-            v_leader_dropdown_class = "bg-success text-white";
-            var v_leaderUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.m_unit.m_Swarm.m_following);
-            v_leader_title_follower = " following: "  + v_leaderUnit.m_unitName;
-        }
-
-        if (this.props.m_unit.m_Swarm.m_isLeader === true)
-        {
-            v_leader_class = "btn-danger";
-            v_leader_dropdown_class = "bg-danger text-white";
-            v_leader_title_leader = "LEADER";
-        }
-        
-
-        for (var i=0; i<len; ++i)
-        {   
-            var v_unit = v_units[i];
-
-            /*
-                It is not Me.
-                It is a leader i.e. can be followed.
-                It is not following me. -as leaders can be followers but should not be following me-.
-                Notice: deeper circulaar error can be made and not handled here.
-            */
-            if ((this.props.m_unit.partyID != v_unit.partyID) 
-            && (v_unit.m_Swarm.m_isLeader === true)  
-            && (this.props.m_unit.m_Swarm.m_following != v_unit.partyID ))
-            {
-                var v_out = v_unit; // need a local copy 
-                // list drones that are not me and are leaders.
-                c_items.push(
-                     <a key={v_unit.m_unitName+"s"} className="dropdown-item" href="#" onClick={() => this.fn_requestToFollow(v_out)}>{v_unit.m_unitName}</a>
-                );     
-            }
-        }
-
-        return (
-            <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button id={this.props.m_unit.partyID + "_ldr"} 
-                        type="button" 
-                        className={"btn btn-sm " + v_leader_class} 
-                        title={v_leader_title_leader + " / " + v_leader_title_follower}
-                        onClick={() => this.fn_toggleMakeSwarm(CONST_TASHKEEL_SERB_VECTOR_180)}>Leader</button>
-                <div className="btn-group" role="group">
-                    <button id="btnGroupDrop2" type="button" className="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                        {c_items}
-                        <a className="dropdown-item " href="#" onClick={() => this.fn_requestToFollow()}>unfollow</a>
-                    </div>
-                </div>
-            </div>
-        );
-        //CODEBLOCK_END
-
-
-        }
-    }
-}
+import {CLSS_CTRL_SWARM} from './gadgets/jsc_ctrl_swarm.jsx'
 
 
 
@@ -1332,10 +1168,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 <div id='bearingtargetknob' >{v_bearingTarget_knob}</div>
                                 </div>
                         </div>
-                        <div className= 'col-4   padding_zero css_user_select_text'>
+                        <div className= 'col-3   padding_zero css_user_select_text'>
                         <CLSS_CTRL_UDP_PROXY_TELEMETRY p_unit={v_andruavUnit} /> </div>
-                        <div className= 'col-1   padding_zero'>
-                        {/* <CLSS_AndruavSwarmLeaders   m_unit={v_andruavUnit}/> */}
+                        <div className= 'col-2   padding_zero'>
+                        <CLSS_CTRL_SWARM   m_unit={v_andruavUnit}/>
                         </div>
                         
                     </div>

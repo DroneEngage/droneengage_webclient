@@ -38,7 +38,8 @@ const CONST_DONT_BROADCAST_TO_GCSs = false;
 const CONST_FEATURE = 
 {
     DISABLE_UNIT_NAMING: false,
-    DISABLE_UDPPROXY_UPDATE: false
+    DISABLE_UDPPROXY_UPDATE: false,
+    DISABLE_SWARM: false
 };
 
 const CONST_ICE_SERVERS =  [
