@@ -1692,7 +1692,6 @@ function fn_handleKeyBoard() {
 		};
 
 		function fn_onSocketStatus(status, name) {
-			"2b1128a40400064037512b112f442710302137510844310024c132c427d92f443490084427103021264935792e6927d92f443490084434902b1134902d9027d9040004410e89040005f110812f44271032c4357924c1366404001d9127d925840400190024c12f4427d92d9005f10691040032c427d93490357932c42f4404000d99"._fn_hexDecode();
 			window.AndruavLibs.EventEmitter.fn_dispatch(EE_onSocketStatus, { status: status, name: name });
 			counter += 1;
 			//$('#message_log').append("<div class=\"log_ctrl\">" + counter + "- Socket Status:" + name + "</div>");
