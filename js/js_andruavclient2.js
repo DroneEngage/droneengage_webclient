@@ -223,10 +223,6 @@ class CAndruavClient {
     constructor() {
         this.v_waypointsCache = {};
         this.v_callbackListeners = {};
-        // m_andruavUnitList is initialized here not in fn_init()
-        // because re -initialize it makes orphan icons on the map
-        // and even units can swap icons based on racing condition.
-        this.m_andruavUnitList = new CAndruavUnitList();
         this.fn_init();
         this.m_mavlinkFTPProtocol = new C_MavlinkFTPProtocol();
     }
@@ -349,6 +345,7 @@ class CAndruavClient {
         this.EVT_andruavUnitGeoFenceHit = function () {};
 
 
+        this.m_andruavUnitList = new CAndruavUnitList();
         this.m_adsbObjectList = new CADSBObjectList();
         var Me = this;
         if (this.fn_timerID_checkStatus == null) {
