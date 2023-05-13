@@ -154,7 +154,7 @@ export class CLSS_CTRL_SWARM extends React.Component {
                         type="button" 
                         className={"btn btn-sm " + v_leader_class} 
                         title={v_leader_title_leader + " / " + v_leader_title_follower}
-                        onClick={() => this.fn_toggleMakeSwarm(CONST_TASHKEEL_SERB_VECTOR_180)}>Leader</button>
+                        onClick={() => this.fn_toggleMakeSwarm(CONST_TASHKEEL_SERB_THREAD)}>Leader</button>
                 <div className="btn-group" role="group">
                     <button id="btnGroupDrop2" type="button" className="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop2">

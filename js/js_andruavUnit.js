@@ -296,7 +296,8 @@ class C_Swarm
 	{
 		this.m_parent = p_parent;
 		this.m_isLeader = false;
-		this.m_formation = 0;
+		this.m_formation_as_leader = CONST_TASHKEEL_SERB_NO_SWARM;
+		this.m_formation_as_follower = CONST_TASHKEEL_SERB_NO_SWARM;
 		this.m_following = null;
 	};
 }
