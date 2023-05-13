@@ -248,41 +248,31 @@ function fn_concatBuffers(a, b, addzero) {
 
 function prv_extractString(data,startIndex,endIndex)
 {
-		var out = {'text':"", 'nextIndex': startIndex};
-		var bytes = [];
-		var c;
-		//byteLength = data.byteLength;
-		for (var i=startIndex; i<endIndex; ++i)
-		{
-			c = data[i];
-            if (c!=0)
-			{
-				// end of string has been reached...after that it is the binary msg contents that could include string as well based on the internal command.
-				bytes.push(String.fromCharCode(c));
-			}
-			else
-			{
-				var j = bytes.join("");
-				out.text = j;     // for backword compatibility only
-				out.nextIndex = i+1;
-										
-				return out;
-			}
-		}
-        // startIndex = endIndex 
+		var out = {}; // {'text':"", 'nextIndex': startIndex};
+		
+        let i = startIndex;
+        while ( i < endIndex && data[i] !== 0) {
+            i++;
+        }
+        if (i == endIndex) 
+        {
+            return  {'text':"", 'nextIndex': startIndex};
+        }
+
+        const text = new TextDecoder().decode(data.slice(startIndex, i));
+        out.text = text;
+        out.nextIndex = i+1;
         return out;
+
 }
 
 
 function prv_extractBinary(data,startIndex,endIndex)
 {
-	var intArr= []; 
-	for (var j=startIndex; j<endIndex ;++j)
-	{
-	    intArr.push(String.fromCharCode(data[j]));
-	}
-	
-    return intArr.join("");
+
+    const binaryData = data.subarray(startIndex, endIndex);
+    const binaryString = String.fromCharCode.apply(null, binaryData);
+    return binaryString;
 }	
 
 
