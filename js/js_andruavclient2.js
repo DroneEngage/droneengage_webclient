@@ -23,9 +23,8 @@ const WAYPOINT_CHUNK = 1;
 const WAYPOINT_LAST_CHUNK = 999;
 
 // Command Types either System or Communication
-const CMDTYPE_SYS = '33a9'._fn_hexDecode();// 's'; // system command
-const CMDTYPE_COMM = '2649'._fn_hexDecode();// 'c';
-// communication command
+const CMDTYPE_SYS = 's'; // system command
+const CMDTYPE_COMM = 'c';// 'c';
 
 // Communication Commands
 const CMD_COMM_GROUP = '2971'._fn_hexDecode();//'g'; // group broadcast
@@ -33,15 +32,11 @@ const CMD_COMM_INDIVIDUAL = '2b11'._fn_hexDecode(); 'i';
 // individual broadcast
 
 // System Commands:
-const CMD_SYS_PING = '31002b112f442971'._fn_hexDecode(); //'ping'; // group broadcast
-const CMD_SYS_ADD = '24c127102710'._fn_hexDecode(); //'add'; // group broadcast
-const CMD_SYS_ADD_ENFORCE = '24c1271027102710'._fn_hexDecode() //'addd'; // group broadcast
-const CMD_SYS_DEL = '271027d92d90'._fn_hexDecode();  //'del'; // group broadcast
-const CMD_SYS_DEL_ENFORCE = 'dell'._fn_hexDecode(); // group broadcast
-const CMD_SYS_TASKS = '349033a92cb9'._fn_hexDecode(); //'tsk'; // group broadcast
+const CMD_SYS_PING = 'ping'; //'ping'; // group broadcast
+const CMD_SYS_TASKS = 'tsk'; //'tsk'; // group broadcast
 
-const CONST_TARGETS_GCS = '234113b111891ae92341'._fn_hexDecode(); //'_GCS_';
-const CONST_TARGETS_DRONES = '2341108113b117c42341'._fn_hexDecode(); //'_AGN_';
+const CONST_TARGETS_GCS = '_GCS_';
+const CONST_TARGETS_DRONES = '_AGN_';
 
 // SOCKET STATUS
 const CONST_SOCKET_STATUS_FREASH = 1; // socket is new
@@ -895,7 +890,7 @@ class CAndruavClient {
     // CODEBLOCK_START
     API_makeSwarm(p_partyID, p_formationID) {
         let p_msg = {
-            a: p_formationID, // m_formation
+            a: p_formationID, // m_formation_as_leader
             b: p_partyID // Leader
         };
 
@@ -906,7 +901,7 @@ class CAndruavClient {
     // CODEBLOCK_START
     API_updateSwarm(p_partyID, p_action, p_slaveIndex, p_leaderPartyID) {
         let p_msg = {
-            a: p_action, // m_formation
+            a: p_action, // m_formation as a follower
             b: p_slaveIndex, // index ... could be -1 to take available location.
             c: p_leaderPartyID, // LeaderPartyID
             d: p_partyID // SlavePartyID
@@ -1893,14 +1888,22 @@ class CAndruavClient {
                             p_unit.m_FlyingTotalDuration = p_jmsg.a  / 1000; // to seconds
                         }
 
-                        if ((p_jmsg.hasOwnProperty('o') === true) && (p_jmsg.o != 0)) { // SwarmMemberLeaderFormation
+                        if ((p_jmsg.hasOwnProperty('n') === true) && (p_jmsg.n != CONST_TASHKEEL_SERB_NO_SWARM)) { // SwarmMemberLeaderFormation
+                            v_trigger_on_swarm_status = (p_unit.m_Swarm.m_formation_as_follower != CONST_TASHKEEL_SERB_NO_SWARM);
+                            p_unit.m_Swarm.m_formation_as_follower = p_jmsg.n;
+                        } else {
+                            v_trigger_on_swarm_status = (p_unit.m_Swarm.m_formation_as_follower != CONST_TASHKEEL_SERB_NO_SWARM);
+                            p_unit.m_Swarm.m_formation_as_follower = CONST_TASHKEEL_SERB_NO_SWARM;
+                        }
+
+                        if ((p_jmsg.hasOwnProperty('o') === true) && (p_jmsg.o != CONST_TASHKEEL_SERB_NO_SWARM)) { // SwarmMemberLeaderFormation
                             v_trigger_on_swarm_status = (p_unit.m_Swarm.m_isLeader != true);
                             p_unit.m_Swarm.m_isLeader = true;
-                            p_unit.m_Swarm.m_formation = p_jmsg.o;
+                            p_unit.m_Swarm.m_formation_as_leader = p_jmsg.o;
                         } else {
                             v_trigger_on_swarm_status = (p_unit.m_Swarm.m_isLeader != false);
                             p_unit.m_Swarm.m_isLeader = false;
-                            p_unit.m_Swarm.m_formation = null;
+                            p_unit.m_Swarm.m_formation_as_leader = CONST_TASHKEEL_SERB_NO_SWARM;
                         }
 
                         if ((p_jmsg.hasOwnProperty('q') === true) && (p_jmsg.q != "")){
@@ -1973,12 +1976,18 @@ class CAndruavClient {
                             p_unit.m_FlyingTotalDuration = p_jmsg.a;
                         }
 
-                        // CODEBLOCK_START
+                        if ((p_jmsg.hasOwnProperty('n') === true) && (p_jmsg.n != CONST_TASHKEEL_SERB_NO_SWARM)) { // SwarmMemberLeaderFormation
+                            p_unit.m_Swarm.m_formation_as_follower = p_jmsg.n;
+                        } else {
+                            p_unit.m_Swarm.m_formation_as_follower = CONST_TASHKEEL_SERB_NO_SWARM;
+                        }
+                        
                         if ((p_jmsg.hasOwnProperty('o') == true) && (p_jmsg.o != 0)) { // SwarmMemberLeaderFormation
                             p_unit.m_Swarm.m_isLeader = true;
-                            p_unit.m_Swarm.m_formation = p_jmsg.o;
+                            p_unit.m_Swarm.m_formation_as_leader = p_jmsg.o;
                         } else {
                             p_unit.m_Swarm.m_isLeader = false;
+                            p_unit.m_Swarm.m_formation_as_leader = CONST_TASHKEEL_SERB_NO_SWARM;
 
                         }
 
@@ -1987,7 +1996,7 @@ class CAndruavClient {
                         } else {
                             p_unit.m_Swarm.m_following = null;
                         }
-                        // CODEBLOCK_END
+                        
                         this.m_andruavUnitList.Add(p_unit.partyID, p_unit);
                         this._fn_onNewUnitAdded(p_unit);
 
@@ -2989,10 +2998,6 @@ class CAndruavClient {
 
 
     prv_extractBinaryPacket(evt) {
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView
-        // https://millermedeiros.github.io/mdoc/examples/node_api/doc/buffers.html
-        // http://blog.tojicode.com/2011/08/jsstruct-c-style-struct-reading-in.html [*****]
-
         var andruavCMD;
         var p_jmsg;
         var data;
