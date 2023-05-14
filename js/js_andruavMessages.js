@@ -104,6 +104,7 @@ var message_names = {
     1022: "Home Location",
     1027: "WayPoints",
     1036: "NAV_INFO",
+    1037: "Distination Location",
     1049: "Camera Zoom",
     1050: "Camera Switch",
     1051: "Camera Flash",
