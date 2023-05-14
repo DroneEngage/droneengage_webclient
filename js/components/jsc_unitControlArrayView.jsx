@@ -741,13 +741,13 @@ class CLSS_AndruavUnitListArray extends React.Component {
         {
             // if (p_andruavUnit.m_gui != null)
             // {
-            //     //p_andruavUnit.p_marker.setMap(p_andruavUnit.m_gui.m_mapObj);
-            //     AndruavLibs.AndruavMap.setMap(p_andruavUnit.p_marker, p_andruavUnit.m_gui.m_mapObj);
+            //     //p_andruavUnit.m_gui.m_marker.setMap(p_andruavUnit.m_gui.m_mapObj);
+            //     AndruavLibs.AndruavMap.setMap(p_andruavUnit.m_gui.m_marker, p_andruavUnit.m_gui.m_mapObj);
             // }   
         }
         else
         {
-            AndruavLibs.AndruavMap.fn_hideItem(p_andruavUnit.p_marker);
+            AndruavLibs.AndruavMap.fn_hideItem(p_andruavUnit.m_gui.m_marker);
         }
 
         return ;

@@ -493,6 +493,7 @@ class C_GUIHelper
 		this.m_gui_flightPath = new CLSS_CustomCircularBuffer(CONST_DEFAULT_FLIGHTPATH_STEPS_COUNT); 
 		this.m_wayPoint_markers = [];
 		this.m_wayPoint_polygons = [];
+		this.m_marker = null;
 	}
 }
 
