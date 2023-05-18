@@ -1,5 +1,6 @@
+const v_pjson = require('./package.json');
+const colors   = require ("./helpers/js_colors.js").Colors;
 const express   = require('express');
-//const v_https   = require('https');
 const v_path    = require('path');
 // 'http2-express-bridge' is a work-around until express5 supports http2 correctly.
 // see: https://stackoverflow.com/questions/28639995/node-js-server-and-http-2-2-0-with-express-js
@@ -11,8 +12,6 @@ const c_app   = http2Express(express);
 
 
 c_app.use(function(req, res, next) {
-    // //res.setHeader("Content-Security-Policy", "script-src 'self' https://apis.google.com");
-    // return next();
     req.secure ? next() : res.redirect('https://' + req.headers.host + req.url)
 });
 
@@ -29,8 +28,13 @@ const v_options = {
     cert: v_certFile,
     allowHTTP1: true
 };
-//v_https.createServer(v_options, c_app).listen(c_app.get('port'));
 
 const server = http2.createSecureServer(v_options, c_app).listen(c_app.get('port'))
 
-console.log ("DE WebClient running on port " + c_webport);
+
+console.log ("==============================================");
+console.log (colors.Bright + "DE WebClient version " +  JSON.stringify(v_pjson.version) + colors.Reset);
+console.log ("----------------------------------");
+console.log ("Listening on Port "  + colors.BSuccess + c_webport + colors.Reset);
+console.log ("Datetime: %s", new Date());
+console.log ("==============================================");
