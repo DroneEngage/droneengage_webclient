@@ -92,30 +92,47 @@ export class CLSS_CTRL_SWARM extends React.Component {
             
                 
         //CODEBLOCK_START
-        var options = [];
         var v_units = v_andruavClient.m_andruavUnitList.fn_getUnitValues();
         var len = v_units.length;
         const c_items = [];
         
         var v_leader_class = "btn-secondry";
+        var v_follower_class  = "bg-secondry";
         var v_leader_title_leader   = "not leader";
-        var v_leader_title_follower = "following none";
+        var v_leader_title_follower = "none";
         var v_leader_dropdown_class = "bg-secondry";
+        var v_swarm_class = ' text-light';
+
+        var v_class_follower = '  hidden  ';
+        var v_class_formation_as_leader = ' hidden  ';
+        var v_class_formation_as_follower = ' hidden ';
 
         if (this.props.m_unit.m_Swarm.m_following != null)
         {
-            v_leader_class = "btn-success"; // this state can be overwritten if it is a leader. 
+            
+            v_follower_class = "bg-danger";
+            //v_leader_class = "btn-success"; // this state can be overwritten if it is a leader. 
             v_leader_dropdown_class = "bg-success text-white";
             var v_leaderUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.m_unit.m_Swarm.m_following);
+            
             if (v_leaderUnit!=null) 
-            { // [v_leaderUnit==null] maybe the web is loading and this unit has not been received yet.
-                v_leader_title_follower = " following: "  + v_leaderUnit.m_unitName;
+            {   // display name of party_id as a temp solution untill name is available.
+                // [v_leaderUnit==null] maybe the web is loading and this unit has not been received yet.
+                v_leader_title_follower = v_leaderUnit.m_unitName;
             }
             else
             {
                 v_leader_title_follower = this.props.m_unit.m_Swarm.m_following; // add party_id
             }
+
+            v_class_formation_as_follower = '';
+            v_class_follower = '';    
             
+        }
+        else
+        {
+            
+            v_follower_class = "bg-secondry";
         }
 
         if (this.props.m_unit.m_Swarm.m_isLeader === true)
@@ -123,6 +140,7 @@ export class CLSS_CTRL_SWARM extends React.Component {
             v_leader_class = "btn-danger";
             v_leader_dropdown_class = "bg-danger text-white";
             v_leader_title_leader = "LEADER";
+            v_class_formation_as_leader = '';
         }
         
 
@@ -149,19 +167,32 @@ export class CLSS_CTRL_SWARM extends React.Component {
         }
 
         return (
+            <div key={'swr_' + this.props.m_unit.partyID }  className= 'row padding_zero '>
             <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
             <button id={this.props.m_unit.partyID + "_ldr"} 
                         type="button" 
                         className={"btn btn-sm " + v_leader_class} 
-                        title={v_leader_title_leader + " / " + v_leader_title_follower}
+                        title={v_leader_title_leader + " / folowing:" + v_leader_title_follower}
                         onClick={() => this.fn_toggleMakeSwarm(CONST_TASHKEEL_SERB_THREAD)}>Leader</button>
                 <div className="btn-group" role="group">
-                    <button id="btnGroupDrop2" type="button" className="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <button id="btnGroupDrop2" 
+                    type="button" 
+                    className={"btn  btn-sm dropdown-toggle " + v_follower_class} 
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop2">
                         {c_items}
                         <a className="dropdown-item " href="#" onClick={() => this.fn_requestToFollow()}>unfollow</a>
                     </div>
                 </div>
+            </div>
+            <div className="row al_l css_margin_zero">
+                <div className= {' col-12   padding_zero text-warning ' + v_swarm_class}>
+                            <p className={ ' si-07x css_margin_zero user-select-none text-danger' + v_class_follower} title='leader I am following'><i className="bi bi-chevron-double-right text-danger"></i> { ' ' + v_leader_title_follower}</p>
+                            <p className={ ' si-07x css_margin_zero css_user_select_text text-warning' + v_class_formation_as_follower}  title='formation of my leader'><i className="bi bi-dice-5 text-warning"></i> {' ' + swarm_formation_names[this.props.m_unit.m_Swarm.m_formation_as_follower]}</p>
+                            <p className={ ' si-07x css_margin_zero css_user_select_text text-success' + v_class_formation_as_leader} title='formation as a leader'><i className="bi bi-dice-5 text-success"></i> {' ' + swarm_formation_names[this.props.m_unit.m_Swarm.m_formation_as_leader]}</p>
+                            
+                </div>
+            </div>
             </div>
         );
         //CODEBLOCK_END

@@ -92,6 +92,10 @@ const CONST_ALLOW_GCS_MODES_CONTROL     = 0x00000200;
 const CONST_ALLOW_GCS_VIDEO             = 0x0000f000;
 
 
+
+const CONST_DESTINATION_GUIDED_POINT            = 0;
+const CONST_DESTINATION_SWARM_MY_LOCATION       = 1;
+
 var message_names = {
     1002: "GPS",
     1003: "POW",
@@ -118,3 +122,9 @@ var message_names = {
     6503: "SWARM"
 };
 
+var swarm_formation_names = {
+    0 : 'None',
+    1 : 'Thread',
+    2 : 'V-Shape',
+    3 : 'V-Shape2'
+};

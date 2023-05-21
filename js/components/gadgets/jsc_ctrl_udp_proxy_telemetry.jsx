@@ -146,7 +146,7 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
 
         var rows = [];
         rows = (
-        <div className= 'row padding_zero css_user_select_text'>
+        <div key={'prx_' + v_andruavUnit.partyID }  className= 'row padding_zero css_user_select_text'>
                             <div className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
                                 <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
                                 <p className=' rounded-3 cursor_hand textunit' title ='Smart Telemetry'>
