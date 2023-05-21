@@ -2144,10 +2144,15 @@ class CAndruavClient {
                     p_jmsg = msg.msgPayload;
                     if (typeof p_jmsg === 'string' || p_jmsg instanceof String) { // backword compatible
                         p_jmsg = JSON.parse(msg.msgPayload); // Internal message JSON
-                    }p_unit.m_Geo_Tags.p_DestinationPoint.m_isValid = true;
-                    p_unit.m_Geo_Tags.p_DestinationPoint.lat = p_jmsg.T;
-                    p_unit.m_Geo_Tags.p_DestinationPoint.lng = p_jmsg.O;
-                    p_unit.m_Geo_Tags.p_DestinationPoint.alt = p_jmsg.A;
+                    }
+                    p_unit.m_Geo_Tags.p_DestinationPoint.m_isValid = true;
+                    var destination_type = CONST_DESTINATION_GUIDED_POINT;
+                    if (p_jmsg.P != null)
+                    {
+                        destination_type = p_jmsg.P;
+                    }
+                    
+                    p_unit.m_Geo_Tags.fn_addDestinationPoint(p_jmsg.T, p_jmsg.O, p_jmsg.A, destination_type);
 
                     this.EVT_DistinationPointChanged(p_unit);
                 }
