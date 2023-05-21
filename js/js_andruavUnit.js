@@ -262,8 +262,25 @@ class C_GeoTags
 	{
 		this.m_parent = p_parent;
 		this.p_HomePoint = {m_isValid:false};
-		this.p_DestinationPoint={m_isValid:false};
+		this.p_DestinationPoint={
+			m_isValid:false,
+			m_needsIcon:false
+			};
 	};
+
+
+	fn_addDestinationPoint (p_lat,p_lng,p_alt,p_type)
+	{
+		if (this.p_DestinationPoint.type != p_type)
+		{
+			this.p_DestinationPoint.m_needsIcon = true;
+			this.p_DestinationPoint.type = p_type;
+		}
+		this.p_DestinationPoint.lat = p_lat;
+		this.p_DestinationPoint.lng = p_lng;
+		this.p_DestinationPoint.alt = p_alt;
+		this.p_DestinationPoint.m_isValid = true;
+	}
 }
 
 
@@ -494,6 +511,7 @@ class C_GUIHelper
 		this.m_wayPoint_markers = [];
 		this.m_wayPoint_polygons = [];
 		this.m_marker = null;
+		this.m_marker_destination = null;
 	}
 }
 

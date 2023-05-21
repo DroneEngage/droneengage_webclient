@@ -38,7 +38,12 @@ var flightPath_colors = [
 					];
 
 
-
+var swarm_location_icon = [
+				'./images/drone_q1_32x32.png',
+				'./images/drone_q2_32x32.png',
+				'./images/drone_q3_32x32.png',
+				'./images/drone_q4_32x32.png',
+				];
 
 
 $.fn.append = function($el){
@@ -1946,6 +1951,16 @@ function fn_handleKeyBoard() {
 		}
 
 
+		function getDestinationPointIcon (p_point_type, p_vehicle_index)
+		{
+			switch (p_point_type)
+			{
+				case CONST_DESTINATION_GUIDED_POINT:
+				return './images/destination_bg_32x32.png';
+				case CONST_DESTINATION_SWARM_MY_LOCATION:
+				return swarm_location_icon[p_vehicle_index];
+			}
+		}
 
 		function getPlanIcon(bearingIndex, vehicle_index) {
 			return planes_icon[vehicle_index];
@@ -2006,16 +2021,8 @@ function fn_handleKeyBoard() {
 						p_andruavUnit.m_VehicleType_TXT = "Quadcopter";
 						return quad_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_PLANE:
-						{
-							p_andruavUnit.m_VehicleType_TXT = "Fixed Wings";
-							var bearingIndex = 0;
-							
-							if (applyBearing == true) {
-								bearingIndex = parseInt(p_andruavUnit.m_Nav_Info.p_Orientation.yaw * CONST_RADIUS_TO_DEGREE / 23);
-							}
-							return getPlanIcon(bearingIndex, p_andruavUnit.m_index%4);
-						}
-						break;
+						p_andruavUnit.m_VehicleType_TXT = "Fixed Wings";
+						return planes_icon[p_andruavUnit.m_index%4];
 					case VEHICLE_HELI:
 						p_andruavUnit.m_VehicleType_TXT = "Heli";
 						return './images/heli_1_32x32.png';
@@ -2278,11 +2285,24 @@ function fn_handleKeyBoard() {
 
 
 		var EVT_DistinationPointChanged = function (p_andruavUnit) {
+
+			if ((CONST_FEATURE.DISABLE_SWARM_DESTINATION_PONTS===true) && (p_andruavUnit.m_Geo_Tags.p_DestinationPoint.type == CONST_DESTINATION_SWARM_MY_LOCATION))
+			{
+				return ;
+			}
 			var v_latlng = AndruavLibs.AndruavMap.fn_getLocationObjectBy_latlng(p_andruavUnit.m_Geo_Tags.p_DestinationPoint.lat, p_andruavUnit.m_Geo_Tags.p_DestinationPoint.lng);
 
 			if (p_andruavUnit.m_gui.m_marker_destination == null) {
 				p_andruavUnit.m_gui.m_marker_destination = AndruavLibs.AndruavMap.fn_CreateMarker('./images/destination_bg_32x32.png', "Target of: " + p_andruavUnit.m_unitName);
 			}
+			
+			if (p_andruavUnit.m_Geo_Tags.p_DestinationPoint.m_needsIcon===true)
+			{
+				AndruavLibs.AndruavMap.fn_setMarkerIcon(p_andruavUnit.m_gui.m_marker_destination, getDestinationPointIcon(p_andruavUnit.m_Geo_Tags.p_DestinationPoint.type, p_andruavUnit.m_index%4));
+				p_andruavUnit.m_Geo_Tags.p_DestinationPoint.m_needsIcon = false;
+			}
+			
+				
 			AndruavLibs.AndruavMap.fn_setPosition(p_andruavUnit.m_gui.m_marker_destination,v_latlng)
 		};
 
@@ -2444,7 +2464,7 @@ function fn_handleKeyBoard() {
 			  	<style class='img-rounded help-block'>" + p_andruavUnit.Description + "</style>";
 
 			if (p_andruavUnit.m_IsGCS == false) {
-				markerContent += "<span>" + armedBadge + " <span class='text-success'>" + hlp_getFlightMode(p_andruavUnit) + "</span> </span>";
+				markerContent += "<span>" + armedBadge + " <span class='text-success'><strong>" + hlp_getFlightMode(p_andruavUnit) + "</strong></span> </span>";
 			}
 			else {
 				markerContent += "<p> <span class='text-success'>Ground Control Station</span> </p>";
@@ -2500,12 +2520,24 @@ function fn_handleKeyBoard() {
 					{
 						p_elevation = p_elevation.toFixed(1);
 					}
-					markerContent = markerContent + '<br><span class="text-primary">lat:' 
+					markerContent += '<br><span class="text-primary">lat:' 
 								+ '<span class="text-success">'+ (p_lat).toFixed(6) 
 								+ '</span><span class="text-primary">,lng:' + '</span><span class="text-success">' + (p_lng).toFixed(6) 
-								+ '</span><br>  <span class="text-primary ">alt:' + '</span><span class="text-success">' + vAlt + '</span><span class="text-primary"> m</span>'
-								+ '</span><br>  <span class="text-primary ">GS:' + '</span><span class="text-success">' + vSpeed + ' </span><span class="text-primary"> m/s</span>'
+								+ '</span><br><span class="text-primary ">alt:' + '</span><span class="text-success">' + vAlt + '</span><span class="text-primary"> m</span>'
+								+ '<br><span class="text-primary ">GS:' + '</span><span class="text-success">' + vSpeed + ' </span><span class="text-primary"> m/s</span>'
 								+ '<span class="text-primary "> AS:' + '</span><span class="text-success">' + vAirSpeed + ' </span><span class="text-primary"> m/s</span>';
+					
+					if (p_andruavUnit.m_Swarm.m_isLeader === true)
+					{
+						
+						markerContent += '<br><span class="text-danger "><strong>Leader</strong></span>'
+					}
+					if (p_andruavUnit.m_Swarm.m_following != null)
+					{
+						var v_andruavUnitLeader = v_andruavClient.m_andruavUnitList.fn_getUnit(p_andruavUnit.m_Swarm.m_following);
+						markerContent += '<br><span class="text-warning ">Following:</span><span class="text-success ">'+ v_andruavUnitLeader.m_unitName +'</span>'
+					}
+					
 					if (CONST_MAP_GOOLE === true)
 					{
 						markerContent += '<br> sea-lvl alt:' + p_elevation + ' m.</p>';
