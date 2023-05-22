@@ -111,7 +111,7 @@ class CAndruavAuth {
         'gr': "1",
         'app': 'andruav',
         'ver': this._m_ver,
-        'ex': fn_eval("try{window.parent.document.title; \t}catch (e) {'Andruav';}"),
+        'ex': 'Andruav',
         'at': 'g' // GCS
     };
 
