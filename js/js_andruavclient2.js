@@ -985,7 +985,7 @@ class CAndruavClient {
 
 
     API_do_ChangeAltitude(p_andruavUnit, param_altitude) {
-        if (p_andruavUnit.partyID == null) return ;
+        if ((p_andruavUnit == null) ||(p_andruavUnit.partyID == null)) return ;
         var msg = {
             a: parseInt(param_altitude)
         };
@@ -993,8 +993,8 @@ class CAndruavClient {
     }
 
 
-    API_do_YAW(p_partyID, var_targetAngle, var_turnRate, var_isClockwise, var_isRelative) {
-        if (p_partyID == null) return ;
+    API_do_YAW(p_andruavUnit, var_targetAngle, var_turnRate, var_isClockwise, var_isRelative) {
+        if ((p_andruavUnit == null) ||(p_andruavUnit.partyID == null)) return ;
         var msg = {
             A: parseFloat(var_targetAngle),
             R: parseFloat(var_turnRate),
@@ -1002,7 +1002,7 @@ class CAndruavClient {
             L: var_isRelative
 
         };
-        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_DoYAW, msg);
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_DoYAW, msg);
     }
 
 

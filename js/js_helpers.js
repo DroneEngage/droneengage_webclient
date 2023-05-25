@@ -156,6 +156,27 @@ function fn_point2LatLng(point, map) {
     return map.getProjection().fromPointToLatLng(worldPoint);
 }
 
+function absAngle(a) 
+{
+	// this yields correct counter-clock-wise numbers, like 350deg for -370
+    return (360 + (a % 360)) % 360;
+}
+		  
+function isClockwiseAngle (p_start, p_end)
+{
+	return (p_start - p_end >= 0 && p_start - p_end <= 180) || (p_start - p_end <= -180) ? true : false;
+}
+		
+function angleDelta(a, b) 
+{
+	const abs_a = absAngle(a);
+	const abs_b = absAngle(b);
+	const delta = Math.abs(abs_a - abs_b);
+	let sign = abs_a > abs_b || delta >= 180 ? -1 : 1;
+    return {diff:(180 - Math.abs(delta - 180)) * sign, dir:direction};
+}
+
+
 function fn_calcDistance(lat1, lon1, lat2, lon2) 
 {
         var R = 6371e3; // metres
