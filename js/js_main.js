@@ -456,8 +456,8 @@ function fn_handleKeyBoard() {
 		}
 
 
-        function fn_doYAW(p_partyID, targetAngle, turnRate, isClockwise, isRelative) {
-        	v_andruavClient.API_do_YAW(p_partyID, targetAngle, turnRate, isClockwise, isRelative);
+        function fn_doYAW(p_andruavUnit, targetAngle, turnRate, isClockwise, isRelative) {
+        	v_andruavClient.API_do_YAW(p_andruavUnit, targetAngle, turnRate, isClockwise, isRelative);
 		}
 		
 		function fn_getadsbIcon(_obj, droneAltitude) {
@@ -891,7 +891,11 @@ function fn_handleKeyBoard() {
 			var ctrl_yaw = $('#modal_ctrl_yaw').find('#btnYaw');
 			ctrl_yaw.unbind("click");
 			ctrl_yaw.click(function () {
-				fn_doYAW(p_partyID, $('#yaw_knob').val(), 0, true, false);
+				const target_angle_deg = $('#yaw_knob').val();
+				const current_angle_deg = (CONST_RADIUS_TO_DEGREE * ((p_andruavUnit.m_Nav_Info.p_Orientation.yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1);
+				//let diff = angleDelta(target_angle_deg, current_angle_deg);
+				let direction = isClockwiseAngle (current_angle_deg, target_angle_deg);
+				fn_doYAW(p_andruavUnit, $('#yaw_knob').val(), 0, !direction, false);
 			});
 
 			var ctrl_yaw = $('#modal_ctrl_yaw').find('#btnResetYaw');
@@ -899,7 +903,7 @@ function fn_handleKeyBoard() {
 			ctrl_yaw.click(function () {
 				$('#yaw_knob').val(0);
 				$('#yaw_knob').trigger('change');
-				fn_doYAW(p_partyID, -1, 0, true, false);
+				fn_doYAW(p_andruavUnit, -1, 0, true, false);
 			});
 
 
