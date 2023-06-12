@@ -220,7 +220,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             'terH': new C_GUI_READING_VALUE(),
         };
         
-        if (p_andruavUnit.m_Nav_Info.p_Location.abs_alt==null)
+        if (p_andruavUnit.m_Nav_Info.p_Location.alt_abs==null)
         {
             res.abs.value = 'NA';
             res.abs.css = ' text-muted ';
@@ -230,12 +230,12 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         {
             if (v_useMetricSystem==true)
             {
-                res.abs.value = p_andruavUnit.m_Nav_Info.p_Location.abs_alt;
+                res.abs.value = p_andruavUnit.m_Nav_Info.p_Location.alt_abs;
                 res.abs.unit = ' m';
             }
             else
             {
-                res.abs.value = p_andruavUnit.m_Nav_Info.p_Location.abs_alt * CONST_METER_TO_FEET;
+                res.abs.value = p_andruavUnit.m_Nav_Info.p_Location.alt_abs * CONST_METER_TO_FEET;
                 res.abs.unit = ' ft';
             }
 
