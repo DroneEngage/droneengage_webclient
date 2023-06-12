@@ -220,7 +220,7 @@ class C_NavInfo
 		this.m_parent = p_parent;
 		this.p_Location={
 			alt: null, 			// MAVLINK_MSG_ID_GLOBAL_POSITION_INT.relative_alt ... Altitude above ground - or baro alt if GPS is not available
-			abs_alt: null,		// MAVLINK_MSG_ID_GLOBAL_POSITION_INT.alt  ... Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.
+			alt_abs: null,		// MAVLINK_MSG_ID_GLOBAL_POSITION_INT.alt  ... Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.
 			air_speed:null,		// MAVLINK_MSG_ID_VFR_HUD.airspeed ... Vehicle speed in form appropriate for vehicle type. For standard aircraft this is typically calibrated airspeed (CAS) or indicated airspeed (IAS) - either of which can be used by a pilot to estimate stall speed.
 			ground_speed:null   // MAVLINK_MSG_ID_VFR_HUD.ground_speed ... float (m/s) ... Note HIGH_LATENCY uses unit8 m/s*5
 		};

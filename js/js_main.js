@@ -1474,8 +1474,9 @@ function fn_handleKeyBoard() {
 							|| (p_andruavUnit.m_flightMode == CONST_FLIGHT_PX4_AUTO_HOLD)) {
 								v_contextMenu += "<div class='row'>";
 								v_contextMenu += "<div class= 'col-sm-12'><p class='bg-primary text-white  si-07x'>" + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT + "</p></div>";
-								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
-								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Goto Here</p></div>";
+								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.m_Nav_Info.p_Location.alt + " )\">Goto Here</p></div>";
+								v_contextMenu += "<div class= 'col-6'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.m_Nav_Info.p_Location.alt_abs + " )\">Set Home</p></div>";
+								
 								v_contextMenu += "</div>";
 								v_menuitems = v_menuitems + 1;
 							}
@@ -1486,8 +1487,8 @@ function fn_handleKeyBoard() {
 								v_contextMenu += "<div class='row css_txt_center'>";
 								v_contextMenu += "<div class= 'col-sm-12'><p class='bg-primary text-white si-07x'>" + p_andruavUnit.m_unitName + "   " + p_andruavUnit.m_VehicleType_TXT + "</p></div>";
 								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doCircle2('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + fn_convertToMeter(CONST_DEFAULT_ALTITUDE) + "," + fn_convertToMeter(CONST_DEFAULT_RADIUS) + "," + 10 + " )\">Circle</p></div>";
-								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Goto Here</p></div>";
-								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.altitude + " )\">Set Home</p></div>";
+								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doFlyHere('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.m_Nav_Info.p_Location.alt+ " )\">Goto Here</p></div>";
+								v_contextMenu += "<div class= 'col-4 padding_zero'><p class='cursor_hand margin_zero text-primary si-07x' onclick=\"fn_doSetHome('" + p_andruavUnit.partyID + "'," + p_lat + "," + p_lng + "," + p_andruavUnit.m_Nav_Info.p_Location.alt_abs + " )\">Set Home</p></div>";
 								v_contextMenu += "</div>";
 								v_menuitems = v_menuitems + 1;
 							}
@@ -2514,7 +2515,7 @@ function fn_handleKeyBoard() {
 			}
 
 			var vAlt = p_andruavUnit.m_Nav_Info.p_Location.alt;
-			var vAlt_abs = p_andruavUnit.m_Nav_Info.p_Location.abs_alt;
+			var vAlt_abs = p_andruavUnit.m_Nav_Info.p_Location.alt_abs;
 			if (vAlt == undefined)
 			{
 				vAlt='?';
