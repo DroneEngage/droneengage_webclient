@@ -99,38 +99,6 @@ const CONST_WayPoint_TYPE_CAMERA_TRIGGER = 206; // same as mavlink
 
 
 
-// SWARM FORMATION
-// CODEBLOCK_START
-const CONST_TASHKEEL_SERB_NO_SWARM = 0;
-const CONST_TASHKEEL_SERB_THREAD = 1;
-const CONST_TASHKEEL_SERB_VECTOR = 2; // requires angle
-const CONST_TASHKEEL_SERB_VECTOR_180 = 3;
-// CODEBLOCK_END
-
-// AndruavMessage_RemoteExecute Commands
-const CONST_RemoteCommand_MAKETILT = 100;
-const CONST_RemoteCommand_TAKEIMAGE = 102;
-const CONST_RemoteCommand_MAKEBEEP = 103;
-const CONST_RemoteCommand_SENDSMS = 104;
-const CONST_RemoteCommand_ROTATECAM = 105;
-const CONST_RemoteCommand_IMUCTRL = 106;
-const CONST_RemoteCommand_TELEMETRYCTRL = 108;
-const CONST_RemoteCommand_NOTIFICATION = 109;
-const CONST_RemoteCommand_STREAMVIDEO = 110;
-const CONST_RemoteCommand_RECORDVIDEO = 111;
-const CONST_RemoteCommand_STREAMVIDEORESUME = 112;
-const CONST_RemoteCommand_SWITCHCAM = 114;
-const CONST_RemoteCommand_SET_GPS_SOURCE = 115;
-const CONST_RemoteCommand_CONNECT_FCB = 118;
-const CONST_RemoteCommand_GET_WAY_POINTS = 500;
-const CONST_RemoteCommand_RELOAD_WAY_POINTS_FROM_FCB = 501;
-const CONST_RemoteCommand_CLEAR_WAY_POINTS = 502;
-const CONST_RemoteCommand_CLEAR_FENCE_DATA = 503;
-const CONST_RemoteCommand_SET_START_MISSION_ITEM = 504;
-const CONST_RemoteCommand_REQUEST_PARAM_LIST = 505;
-const CONST_RemoteCommand_SET_UDPPROXY_CLIENT_PORT = 506;
-
-
 const CONST_TelemetryProtocol_CONST_No_Telemetry = 0;
 const CONST_TelemetryProtocol_CONST_Andruav_Telemetry = 1;
 const CONST_TelemetryProtocol_CONST_Mavlink_Telemetry = 2;
@@ -493,11 +461,19 @@ class CAndruavClient {
 
 
     /*
-			This function is used by some messages to call back modules when the message 
-			is received. For now only one function can wait and newer request overwrite older.
-		*/
+		This function is used by some messages to call back modules when the message 
+		is received. For now only one function can wait per mission and newer request overwrite older.
+	*/
     fn_callbackOnMessageID = function (p_callback, p_messageID) {
         this.v_callbackListeners[p_messageID] = p_callback;
+    }
+
+    fn_callbackOnMessageID_Answer (p_messageID)
+    {
+        if (this.v_callbackListeners.hasOwnProperty(p_messageID) === true) {
+            this.v_callbackListeners[p_messageID](v_session);
+            delete this.v_callbackListeners[p_messageID];
+        }
     }
 
     API_addMe2() {
@@ -1346,6 +1322,17 @@ class CAndruavClient {
        
     }
     
+    API_requestMissionCount (p_andruavUnit)
+    {
+        if (p_andruavUnit.partyID == null) return ;
+        var msg = {
+            C: CONST_RemoteCommand_MISSION_COUNT
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
+       
+    }
+    
     API_requestWayPoints(p_andruavUnit, p_enableFCB) 
     {
         if (p_andruavUnit.partyID == null) return ;
@@ -1361,7 +1348,6 @@ class CAndruavClient {
             // ! this value will be reset each time load wp is called.
             delete this.v_waypointsCache[p_andruavUnit.partyID];
         }
-
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
     };
 
@@ -1766,10 +1752,11 @@ class CAndruavClient {
                         p_unit.m_Video.m_videoTracks = p_jmsg.T;
 
                         if (p_jmsg.R === true) { // this is a reply to request.
-                            if (this.v_callbackListeners.hasOwnProperty(CONST_TYPE_AndruavMessage_CameraList) === true) {
-                                this.v_callbackListeners[CONST_TYPE_AndruavMessage_CameraList](v_session);
-                                delete this.v_callbackListeners[CONST_TYPE_AndruavMessage_CameraList];
-                            }
+                            // if (this.v_callbackListeners.hasOwnProperty(CONST_TYPE_AndruavMessage_CameraList) === true) {
+                            //     this.v_callbackListeners[CONST_TYPE_AndruavMessage_CameraList](v_session);
+                            //     delete this.v_callbackListeners[CONST_TYPE_AndruavMessage_CameraList];
+                            // }
+                            this.fn_callbackOnMessageID_Answer(CONST_TYPE_AndruavMessage_CameraList);
                         }
                     } else {
                         // NO AVAILABLE CAMERA
@@ -2779,7 +2766,7 @@ class CAndruavClient {
                     p_unit.m_FCBParameters.m_systemID = c_mavlinkMessage.header.srcSystem;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.lat * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.lon * 0.0000001);
-                    p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.alt * 0.001;
+                    p_unit.m_Nav_Info.p_Location.alt_abs = c_mavlinkMessage.alt * 0.001;
                     p_unit.m_Nav_Info.p_Location.alt = c_mavlinkMessage.relative_alt * 0.001;
                     this.EVT_msgFromUnit_GPS(p_unit);
                 }
@@ -2877,7 +2864,7 @@ class CAndruavClient {
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
-                    p_unit.m_Nav_Info.p_Location.abs_alt = c_mavlinkMessage.altitude_amsl;
+                    p_unit.m_Nav_Info.p_Location.alt_abs = c_mavlinkMessage.altitude_amsl;
                     p_unit.m_Nav_Info.p_Location.alt_sp = c_mavlinkMessage.altitude_sp;
                     p_unit.m_Nav_Info.p_Location.ground_speed = c_mavlinkMessage.groundspeed;
                     p_unit.m_Nav_Info.p_Location.air_speed = c_mavlinkMessage.airspeed;
@@ -2904,7 +2891,7 @@ class CAndruavClient {
                     p_unit.m_FCBParameters.m_componentID = c_mavlinkMessage.header.srcComponent;
                     p_unit.m_Nav_Info.p_Location.lat = (c_mavlinkMessage.latitude * 0.0000001)  ;
                     p_unit.m_Nav_Info.p_Location.lng = (c_mavlinkMessage.longitude * 0.0000001);
-                    p_unit.m_Nav_Info.p_Location.abs_alt = (c_mavlinkMessage.altitude );
+                    p_unit.m_Nav_Info.p_Location.alt_abs = (c_mavlinkMessage.altitude );
                     p_unit.m_Nav_Info.p_Orientation.yaw = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info.p_Desired.nav_bearing = c_mavlinkMessage.heading * 0.02   * CONST_DEGREE_TO_RADIUS;
                     p_unit.m_Nav_Info._Target.target_bearing = c_mavlinkMessage.target_heading * 0.02   * CONST_DEGREE_TO_RADIUS;

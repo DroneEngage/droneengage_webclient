@@ -808,7 +808,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             }
         }
 
-        var v_altitude_abs = v_andruavUnit.m_Nav_Info.p_Location.abs_alt;
+        var v_altitude_abs = v_andruavUnit.m_Nav_Info.p_Location.alt_abs;
 		if (v_altitude_abs==null) 
         {
             v_altitude_abs = 'NA';
@@ -831,9 +831,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         //     {
         //         v_altitude_text = v_altitude_text.toFixed(0).toString();
                 
-        //         if (v_andruavUnit.m_Nav_Info.p_Location.abs_alt!= null) 
+        //         if (v_andruavUnit.m_Nav_Info.p_Location.alt_abs!= null) 
         //         {
-        //             v_altitude_text += '/' + v_andruavUnit.m_Nav_Info.p_Location.abs_alt.toFixed(0).toString();
+        //             v_altitude_text += '/' + v_andruavUnit.m_Nav_Info.p_Location.alt_abs.toFixed(0).toString();
         //         }
                 
         //         v_altitude_text += " m";
@@ -843,9 +843,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         //     {
         //         v_altitude_text = (v_altitude_text * CONST_METER_TO_FEET).toFixed(0);
                 
-        //         if (v_andruavUnit.m_Nav_Info.p_Location.abs_alt!= null) 
+        //         if (v_andruavUnit.m_Nav_Info.p_Location.alt_abs!= null) 
         //         {
-        //             v_altitude_text += '/' + (v_andruavUnit.m_Nav_Info.p_Location.abs_alt * CONST_METER_TO_FEET).toFixed(0).toString();
+        //             v_altitude_text += '/' + (v_andruavUnit.m_Nav_Info.p_Location.alt_abs * CONST_METER_TO_FEET).toFixed(0).toString();
         //         }
                 
         //         v_altitude_text += " ft";
