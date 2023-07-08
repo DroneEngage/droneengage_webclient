@@ -11,9 +11,11 @@ class CEventEmitter {
     fn_dispatch(p_event, p_data) {
         if (!this.m_v_events[p_event]) 
             return;
-         // no one is listening to this event
-        for (var i = 0; i < this.m_v_events[p_event].length; i++) {
-            var v_subscriber = this.m_v_events[p_event][i];
+        // no one is listening to this event
+        const len = this.m_v_events[p_event].length;
+        const subscribers = this.m_v_events[p_event];
+        for (var i = 0; i < len; i++) {
+            var v_subscriber = subscribers[i];
             v_subscriber.callback(v_subscriber.listner, p_data);
         }
     };
