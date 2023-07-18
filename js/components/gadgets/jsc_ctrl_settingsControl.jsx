@@ -8,7 +8,7 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         this.state={
             m_traffic_monitor: false,
             m_message: [],
-		    'm_update': 0
+		    m_update: 0
         };
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_unitUpdated,this,this.fn_unitUpdated);
     }
