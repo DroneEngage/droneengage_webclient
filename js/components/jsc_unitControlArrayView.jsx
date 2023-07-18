@@ -703,7 +703,6 @@ class CLSS_AndruavUnitListArray extends React.Component {
 		this.state = {
 			andruavUnitPartyIDs : [],
 		};
-
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onPreferenceChanged, this, this.fn_onPreferenceChanged);
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onSocketStatus, this, this.fn_onSocketStatus);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitAdded,this,this.fn_unitAdded);
@@ -712,10 +711,10 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
 
 
-    fn_unitUpdated(me,p_andruavUnit)
-    {
-        //me.forceUpdate();
-    }
+    // fn_unitUpdated(me,p_andruavUnit)
+    // {
+    //     //me.forceUpdate();
+    // }
 
     fn_unitAdded (me,p_andruavUnit)
     {
@@ -770,7 +769,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onSocketStatus,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitAdded,this);
-        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
+        //window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
     }
 
     fn_OnClick()
