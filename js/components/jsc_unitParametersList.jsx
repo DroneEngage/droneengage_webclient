@@ -345,8 +345,4 @@ else
         <CLSS_UnitParametersList key={'AUL'} />,
         window.document.getElementById('modal_uplCtrl')
     );
-        // ReactDOM.render(
-		// 	<CLSS_AndruavUnitList key={'AUL'} />,
-		// 	window.document.getElementById('andruavUnitList2')
-        // );
 }   
