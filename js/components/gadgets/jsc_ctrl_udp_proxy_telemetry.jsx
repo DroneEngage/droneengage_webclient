@@ -83,7 +83,7 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
         var v_udpproxy_text_ip = '';
         var v_udpproxy_text_port = '';
         var v_telemetry_lvl_class = ' text-warning';
-        var v_andruavUnit = this.props.p_unit;
+        const v_andruavUnit = this.props.p_unit;
         var v_udp_data = [];
         var v_udp_on_off = [];
         // switch (v_andruavUnit.m_telemetry_protocol)
