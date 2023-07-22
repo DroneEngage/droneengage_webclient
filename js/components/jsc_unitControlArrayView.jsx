@@ -711,10 +711,10 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
 
 
-    // fn_unitUpdated(me,p_andruavUnit)
-    // {
-    //     //me.forceUpdate();
-    // }
+    fn_unitUpdated(me,p_andruavUnit)
+    {
+        me.forceUpdate();
+    }
 
     fn_unitAdded (me,p_andruavUnit)
     {
