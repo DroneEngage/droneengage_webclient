@@ -94,7 +94,7 @@ const EE_ErrorMessage                = "_E_A642XYZB4E4_";
 const EE_adsbExpiredUpdate           = "_E_XXAZQD6B3E4_";
 
 
-
+const EE_customSONAR            = "_C_123456789_";
 
 // EOF LOCAL EVENTS
 
