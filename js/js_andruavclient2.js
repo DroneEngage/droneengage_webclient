@@ -514,7 +514,7 @@ class CAndruavClient {
         }
 
         if (this.ws != null) {
-            this.ws.sendex(this.fn_generateJSONMessage(this.partyID, p_target, v_rountingMsg, msgType, msg));
+            this.ws.sendex(this.fn_generateJSONMessage(this.partyID, p_target, v_rountingMsg, msgType, msg), { binary: false });
         } else { // send a warning
         }
     };
@@ -538,7 +538,7 @@ class CAndruavClient {
 
     _API_sendSYSCMD(p_msgID, p_msg) {
         if (this.ws != null) {
-            this.ws.sendex(this.fn_generateJSONMessage(this.partyID, null, CMDTYPE_SYS, p_msgID, p_msg));
+            this.ws.sendex(this.fn_generateJSONMessage(this.partyID, null, CMDTYPE_SYS, p_msgID, p_msg), { binary: false });
         }
     };
 
@@ -747,7 +747,44 @@ class CAndruavClient {
     }
 
 
+    API_requestSonarRequestStatus (p_andruavUnit)
+    {
+        if (p_andruavUnit.partyID == null) return ;
+        
+        var msg = {
+            C: CONST_TYPE_AndruavMessage_Sonar_Info
+        };
 
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Sonar_RemoteExecute, msg);
+       
+    }
+    
+    API_resumeSonar(p_andruavUnit,lvl) {
+        if (p_andruavUnit == null) 
+            return;
+        
+
+        var msg = {
+            A: CONST_SONAR_REQUEST_RESUME
+        };
+        if ((lvl != null) && (lvl != -1)) {
+            msg.LVL = lvl;
+        }
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Sonar_Action, msg);
+    };
+
+
+    API_pauseSonar(p_andruavUnit) {
+        if (p_andruavUnit == null) 
+            return;
+        
+        var msg = {
+            A: CONST_SONAR_REQUEST_END
+        };
+        
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Sonar_Action, msg);
+    };
 
     API_resumeTelemetry(p_andruavUnit,lvl) {
         if (p_andruavUnit == null) 
@@ -1651,6 +1688,15 @@ class CAndruavClient {
         p_unit.m_NetworkStatus.m_lastActiveTime = Date.now();
         
         switch (msg.messageType) {
+
+            case CONST_TYPE_AndruavMessage_Sonar_Info: {
+                p_jmsg = msg.msgPayload;
+                p_unit.m_extra.m_sonar.m_is_initialized = p_jmsg.r;
+                p_unit.m_extra.m_sonar.m_is_paused = p_jmsg.p;
+                p_unit.m_extra.m_sonar.m_log_filename = p_jmsg.f;
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_customSONAR, p_unit);
+            }
+            break;
 
             case CONST_TYPE_AndruavMessage_UdpProxy_Info: {
                 p_jmsg = msg.msgPayload;

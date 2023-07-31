@@ -570,6 +570,19 @@ class C_Messages
 }
 
 
+class CSonarModule
+{
+	constructor()
+	{
+		this.m_is_initialized = false;
+		this.m_is_paused = true;
+		this.m_log_filename = '';
+	}
+
+	
+}
+
+
 class CAndruavUnitObject 
 {
 	
@@ -598,6 +611,8 @@ class CAndruavUnitObject
 		this.m_enum_userStatus 			= 0;	
 		this.m_version 					= "null";
 		this.m_modules					= [];
+		this.m_extra					= {};
+
 		this.init();
 	}
 
@@ -666,6 +681,11 @@ class CAndruavUnitObject
 
 		this.m_DistanceSensors = [];
 		this.m_Throttle					= 0; //MAVLINK_MSG_ID_VFR_HUD.throttle uint16_t % Current throttle setting (0 to 100).
+
+		this.m_extra =
+		{
+			'm_sonar':	new CSonarModule(this)
+		};
 
 		for (var i=0;i<=40;++i)
 		{

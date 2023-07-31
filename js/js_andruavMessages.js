@@ -130,6 +130,11 @@ const CONST_RemoteCommand_SET_UDPPROXY_CLIENT_PORT          = 506;
 const CONST_RemoteCommand_MISSION_COUNT                     = 507;
 const CONST_RemoteCommand_MISSION_CURRENT                   = 508;
 
+// 3rdparty
+const CONST_TYPE_AndruavMessage_Sonar_Info                  = 13001;
+const CONST_TYPE_AndruavMessage_Sonar_Action                = 13002;
+const CONST_TYPE_AndruavMessage_Sonar_RemoteExecute         = 13003;
+
 
 
 var message_names = {
@@ -165,3 +170,10 @@ var swarm_formation_names = {
     2 : 'V-Shape',
     3 : 'V-Shape2'
 };
+
+
+
+// SONAR Commands:
+const CONST_SONAR_REQUEST_START     = 1;
+const CONST_SONAR_REQUEST_END       = 2;
+const CONST_SONAR_REQUEST_RESUME    = 3;
