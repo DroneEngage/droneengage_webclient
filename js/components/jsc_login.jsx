@@ -31,7 +31,7 @@ export class CLSS_LoginControl extends React.Component {
 		window.AndruavLibs.EventEmitter.fn_subscribe(EE_onSocketStatus, this, this.fn_onSocketStatus);
 	}
 
-
+	
 	fn_onSocketStatus(me, params) {
 		fn_console_log('REACT:' + JSON.stringify(params));
 
@@ -109,10 +109,7 @@ export class CLSS_LoginControl extends React.Component {
 
 	}
 
-	componentDidUpdate() {
-
-
-	}
+	
 
 
 	render() {
@@ -124,7 +121,7 @@ export class CLSS_LoginControl extends React.Component {
 		}
 		if (this.props.simple == null) {
 			return (
-				<div className="card text-white border-light mb-3" >
+				<div key={Math.random().toString(36)}  className="card text-white border-light mb-3" >
 					<div className="card-header  text-center"> <strong>{login}</strong></div>
 					<div id='login_form' className="card-body">
 						<div className={this.state.is_connected == true ? "hidden" : " "} >
@@ -153,7 +150,7 @@ export class CLSS_LoginControl extends React.Component {
 				css = "bg-danger";
 			}
 			control.push(
-				<div className="dropdown">
+				<div key={Math.random().toString(36)}  className="dropdown">
 					<button className={'btn btn-secondary dropdown-toggle ' + css} type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 						{title}
 					</button>
