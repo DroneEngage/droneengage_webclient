@@ -9,7 +9,7 @@ class CLSS_HeaderControl extends React.Component {
 
     render() {
         return (
-            <div className = 'row  css_padding_zero bg-dark'>
+            <div key='CLSS_HeaderControl' className = 'row  css_padding_zero bg-dark'>
                 <div className = 'col-7  css_margin_zero css_padding_zero d-lg-block d-none d-xl-block'>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                         <a className="navbar-brand fs-3" href="#">
