@@ -48,15 +48,15 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         const v_andruavUnit = this.props.p_unit;
         if (v_andruavUnit.m_isDE==false)
         {
-            module_version.push(<span>Andruav</span>);
+            module_version.push(<span key={Math.random().toString(36)} >Andruav</span>);
         }
         else
         {
-            module_version.push(<span className=''>DE version: {v_andruavUnit.m_version}</span>);
+            module_version.push(<span key={Math.random().toString(36)} className=''>DE version: {v_andruavUnit.m_version}</span>);
             const len = v_andruavUnit.m_modules.length;
             if (len==0)
             {
-                module_version.push(<span className='text-warning'>&nbsp;( no modules connected ) </span>);
+                module_version.push(<span key={Math.random().toString(36)}  className='text-warning'>&nbsp;( no modules connected ) </span>);
             }
             else
             {
@@ -66,11 +66,11 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
                     
                     if (module.d == true)
                     {
-                        module_version.push(<span>&nbsp;-&nbsp;<span className='text-danger'>{module.i} {module.v}</span> <span className='blink_alert animate_iteration_5s'>OFFLINE</span></span>);
+                        module_version.push(<span key={Math.random().toString(36)}  >&nbsp;-&nbsp;<span className='text-danger'>{module.i} {module.v}</span> <span className='blink_alert animate_iteration_5s'>OFFLINE</span></span>);
                     }
                     else
                     {
-                        module_version.push(<span>&nbsp;-&nbsp;<span className='text-success'>{module.i} {module.v}</span></span>);
+                        module_version.push(<span key={Math.random().toString(36)}  >&nbsp;-&nbsp;<span className='text-success'>{module.i} {module.v}</span></span>);
                     }
                 }
             }
@@ -80,12 +80,12 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         if (CONST_FEATURE.DISABLE_UDPPROXY_UPDATE !== true)
         if (window.AndruavLibs.AndruavAuth.fn_do_canControl())
         {
-            cmd_btns.push(<div key={v_andruavUnit.partyID + 'SC_4'}  className='row css_margin_zero padding_zero border-top border-secondary'>
+            cmd_btns.push(<div key={Math.random().toString(36)}  className='row css_margin_zero padding_zero border-top border-secondary'>
                 
-                <div key={v_andruavUnit.partyID + 'SC_41'} className="col-12 mt-1">
-                <div className = 'row al_l css_margin_zero d-flex '>
-                    <div className= 'col-6 col-sm-3 user-select-none '>
-                    <p className=' rounded-3 text-white bg-danger cursor_hand textunit_nowidth al_c' title ='Change UDP Proxy Port' onClick={() => this.fn_changeTelemetryPort(v_andruavUnit)}>Proxy Port</p>
+                <div key={Math.random().toString(36)} className="col-12 mt-1">
+                <div key={Math.random().toString(36)} className = 'row al_l css_margin_zero d-flex '>
+                    <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 user-select-none '>
+                    <p key={Math.random().toString(36)} className=' rounded-3 text-white bg-danger cursor_hand textunit_nowidth al_c' title ='Change UDP Proxy Port' onClick={() => this.fn_changeTelemetryPort(v_andruavUnit)}>Proxy Port</p>
                     </div>
                 </div>
                 </div>
@@ -95,8 +95,8 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         var cmd_data = [];
         if (this.state.m_traffic_monitor===true)
         {
-            cmd_data.push(<div key={v_andruavUnit.partyID + 'SC_4'}  className='row css_margin_zero padding_zero border-top border-secondary'>
-                            <div key={v_andruavUnit.partyID + 'SC_41'} className="col-12 mt-1">
+            cmd_data.push(<div key={Math.random().toString(36)} className='row css_margin_zero padding_zero border-top border-secondary'>
+                            <div key={Math.random().toString(36)} className="col-12 mt-1">
                             <CLSS_RX_MESSAGE p_unit={v_andruavUnit}/>
                             </div>
                         </div>
@@ -107,23 +107,23 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         
         return (
             <div>
-            <div key={v_andruavUnit.partyID + 'SC_1'} className='row css_margin_zero padding_zero '>
-                <div key={v_andruavUnit.partyID + 'SC_11'} className="col-6 cursor_hand">
-                    <p key={v_andruavUnit.partyID + 'SC_12'} className="textunit user-select-all m-0" onClick={(e) => this.fn_toggleTrafficMonitor(e)}><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
+            <div key={Math.random().toString(36)} className='row css_margin_zero padding_zero '>
+                <div key={Math.random().toString(36)} className="col-6 cursor_hand">
+                    <p key={Math.random().toString(36)}className="textunit user-select-all m-0" onClick={(e) => this.fn_toggleTrafficMonitor(e)}><span><small><b>Received {parseFloat(v_andruavUnit.m_NetworkStatus.m_received_bytes/1024).toFixed(2)} KB</b></small></span></p>
                 </div>
                 
-                <div key={v_andruavUnit.partyID + 'SC_5'}  className="col-6 cursor_hand">
+                <div key={Math.random().toString(36)}  className="col-6 cursor_hand">
                     <p className="textunit user-select-all m-0" key={v_andruavUnit.partyID + 'SC_51'} onClick={(e) => this.fn_toggleTrafficMonitor(e)}><span><small><b>Received {v_andruavUnit.m_NetworkStatus.m_received_msg} msgs</b></small></span></p>
                 </div>
             </div>
-            <div key={v_andruavUnit.partyID + 'SC_2'} className='row css_margin_zero padding_zero '>
-                <div key={v_andruavUnit.partyID + 'SC_21'} className="col-12 ">
-                    <p key={v_andruavUnit.partyID + 'SC_22'} className="textunit_nowidth user-select-all curd m-0"><span><small><b>{module_version}</b></small></span></p>
+            <div key={Math.random().toString(36)}className='row css_margin_zero padding_zero '>
+                <div key={Math.random().toString(36)} className="col-12 ">
+                    <p key={Math.random().toString(36)} className="textunit_nowidth user-select-all curd m-0"><span><small><b>{module_version}</b></small></span></p>
                 </div>
             </div>
-            <div key={v_andruavUnit.partyID + 'SC_3'}  className='row css_margin_zero padding_zero '>
-                <div key={v_andruavUnit.partyID + 'SC_31'} className="col-12">
-                    <p key={v_andruavUnit.partyID + 'SC_32'} className="textunit_nowidth user-select-all m-0"><span><small><b>Last Active <span className='text-warning' ><small><b>{v_date.toUTCString()}</b></small></span> </b></small></span></p>
+            <div key={Math.random().toString(36)}  className='row css_margin_zero padding_zero '>
+                <div key={Math.random().toString(36)}className="col-12">
+                    <p key={Math.random().toString(36)} className="textunit_nowidth user-select-all m-0"><span><small><b>Last Active <span className='text-warning' ><small><b>{v_date.toUTCString()}</b></small></span> </b></small></span></p>
                 </div>
             </div>
             {cmd_btns}
