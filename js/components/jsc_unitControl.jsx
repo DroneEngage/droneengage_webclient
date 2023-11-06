@@ -963,7 +963,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var imu=[];
         // https://icons.getbootstrap.com/icons/caret-down-fill/
         imu.push (
-                <div key='imu_1' id='imu_1' className= 'row al_l  css_margin_zero '>
+                <div key={Math.random().toString(36)} id='imu_1' className= 'row al_l  css_margin_zero '>
                     <div className = 'row al_l css_margin_zero d-flex '>
                         <div className= 'col-6 col-sm-3 user-select-none '>
                                 <p className=' rounded-3 text-warning cursor_hand textunit' title ='Ground Speed'>
@@ -985,19 +985,19 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </p>
                                 
                         </div>
-                        <div className= 'col-6 col-sm-3 user-select-none  '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 user-select-none  '>
                                 <p id='gps' className={' rounded-3 textunit text-center cursor_hand  ' + gps.m_gps_class} title ={gps.m_gps_status} onClick={ (e) => fn_switchGPS(v_andruavUnit)} >{gps.m_gps_source + gps.m_gps_text + ' ' + gps.m_gps_text2}</p>
                         </div>
-                        <div className= 'col-6 col-sm-3 user-select-none '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 user-select-none '>
                                   <p id='DFM' className={' rounded-3 text-center textunit ' + v_distanceToMe_class} title ="Unit's distance from Me (Browser Location)" >{"DFM: " + v_distanceToMe_text}</p>
                          </div>
-                        <div className= 'col-6 col-sm-3 user-select-none '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 user-select-none '>
                         <p id='fence' className={'rounded-3 textunit text-center cursor_hand ' + v_fence_class} title ='Fence Violation Status' onClick={ (e) => fn_openFenceManager(v_andruavUnit.partyID)} >{v_fence_text}</p>
                         </div>
                     </div>
 
-                    <div className = 'row al_l css_margin_zero d-flex '>
-                        <div className= 'col-6 col-sm-3 user-select-none  '>
+                    <div key={Math.random().toString(36)} className = 'row al_l css_margin_zero d-flex '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 user-select-none  '>
                                   <p id='alt'   className=' rounded-3 cursor_hand textunit text-warning' >
                                         <span title={"decrease altitude"} onClick={ (e) => this.fn_doChangeAltitudeByStep(v_andruavUnit, v_andruavUnit.m_Nav_Info.p_Location.alt - fn_convertToMeter(window.AndruavLibs.LocalStorage.fn_getDefaultAltitude()) )}>
                                             <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1017,34 +1017,34 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                   </p>
                               
                         </div>
-                        <div className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
                                 <p id='alt'   className={' rounded-3  textunit text-center ' + v_flight_status_class} title = {'Total Flying: ' + v_totalFlyingTime}>
                                 {v_flight_status_text + " "}   <small> {v_flyingTime}</small>
                                 </p>
                         </div>
-                        <div className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
                             <p id='wpd' className={' rounded-3 textunit text-center ' + distanceToWP_class} title ='Distance to next waypoint' >{'wp: '+ wpdst_text}</p>
                             
                         </div>
-                        <div className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
+                        <div key={Math.random().toString(36)} className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
                         <p id='fcb_mode'  className={' rounded-3 textunit   text-center ' + v_flight_mode_class} title ={v_fcb_mode_title} onClick={ (e) => this.fn_connectToFCB(v_andruavUnit,true)}> {v_flight_mode_text } </p>
                         </div>
                     </div>
 
-                    <div className = 'row al_l bg-gradient css_margin_zero user-select-none '>
-                        <div className= 'col-4   padding_zero'>
+                    <div key={Math.random().toString(36)} className = 'row al_l bg-gradient css_margin_zero user-select-none '>
+                        <div key={Math.random().toString(36)} className= 'col-4   padding_zero'>
                                 <p id='yaw' className=' rounded-3 text-white css_margin_zero '><small>{v_yaw_text}</small></p><div id ='imu_v_yaw_knob'>{v_yaw_knob}</div>
                         </div>
-                        <div className= 'col-3  padding_zero'>
+                        <div key={Math.random().toString(36)} className= 'col-3  padding_zero'>
                                 <p id='bearing' className=' rounded-3 text-white css_margin_zero '><small>{v_bearing_text}</small></p>
                                 <div id='bearing_main' className='css_margin_zero'>
                                 <div id='bearingknob' >{v_bearing_knob}</div>
                                 <div id='bearingtargetknob' >{v_bearingTarget_knob}</div>
                                 </div>
                         </div>
-                        <div className= 'col-3   padding_zero css_user_select_text'>
-                        <CLSS_CTRL_UDP_PROXY_TELEMETRY p_unit={v_andruavUnit} /> </div>
-                        <div className= 'col-2   padding_zero'>
+                        <div key={Math.random().toString(36)} className= 'col-3   padding_zero css_user_select_text'>
+                        <CLSS_CTRL_UDP_PROXY_TELEMETRY  p_unit={v_andruavUnit} /> </div>
+                        <div key={Math.random().toString(36)} className= 'col-2   padding_zero'>
                         <CLSS_CTRL_SWARM   m_unit={v_andruavUnit}/>
                         </div>
                         
@@ -1111,25 +1111,25 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
 
 
 
-        ctrl2.push (<div key={p_andruavUnit.partyID + "rc3"}  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
-                    <button id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Read Waypoints from Drone">R-WP</button>
-                    <button id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + cls_ctrl_wp + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
-                    <button id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + cls_ctrl_wp + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
-                    <button id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
-                    <button id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class + cls_ctrl_modes} onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
-                    <button id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class + cls_ctrl_modes} onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
-                    <button id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
+        ctrl2.push (<div key={Math.random().toString(36)}  id='rc33' className= 'col-12  al_l ctrldiv'><div className='btn-group flex-wrap '>
+                    <button key={Math.random().toString(36)} id='btn_refreshwp' type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_load_wp_class}   onClick={ (e) => this.fn_requestWayPoints(p_andruavUnit,true)} title="Read Waypoints from Drone">R-WP</button>
+                    <button key={Math.random().toString(36)} id='btn_writewp'  type='button' className={'btn btn-sm flgtctrlbtn ' + cls_ctrl_wp + btn.btn_save_wp_class}   onClick={ (e) => fn_putWayPoints(p_andruavUnit,true)} title="Write Waypoints into Drone">W-WP</button>
+                    <button key={Math.random().toString(36)} id='btn_clearwp'   type='button' className={'btn btn-sm flgtctrlbtn ' + cls_ctrl_wp + btn.btn_clear_wp_class}   onClick={ (e) => this.fn_clearWayPoints(p_andruavUnit,true)} title="Clear Waypoints" >C-WP</button>
+                    <button key={Math.random().toString(36)} id='btn_webRX'      type='button' className={'btn btn-sm flgtctrlbtn ' + btn.btn_rx_class}   onClick={ (e) => this.fn_webRX_toggle(p_andruavUnit)} title={btn.btn_rx_title}>{btn.btn_rx_text}</button>
+                    <button key={Math.random().toString(36)} id='btn_freezerx' type='button' title="Freeze RemoteControl -DANGER-" className={'hidden btn btn-sm flgtctrlbtn ' + btn.btn_takeCTRL_class + cls_ctrl_modes} onClick={ (e) => this.fn_takeTXCtrl(e,p_andruavUnit)}>&nbsp;TX-Frz&nbsp;</button>
+                    <button key={Math.random().toString(36)} id='btn_releaserx' type='button' title="Release Control" className={'btn btn-sm flgtctrlbtn ' + btn.btn_releaseCTRL_class + cls_ctrl_modes} onClick={ (e) => this.fn_releaseTXCtrl(p_andruavUnit)}>&nbsp;TX-Rel&nbsp;</button>
+                    <button key={Math.random().toString(36)} id='btn_inject_param' type='button' title="Send Parameters to GCS" className={'btn btn-sm flgtctrlbtn ' + btn.btn_sendParameters_class } onClick={ (e) => this.fn_sendParametersToGCS(p_andruavUnit)}>&nbsp;PARM&nbsp;</button>
                     </div></div>);
 
         return (
-            <div id='ctrl_k' className='ps-2 pb-2'>
-            <div className= 'row'>
+            <div key={Math.random().toString(36)} id='ctrl_k' className='ps-2 pb-2'>
+            <div key={Math.random().toString(36)} className= 'row'>
             {ctrl_flight_controller}
             </div>
-            <div className= 'row'>
+            <div key={Math.random().toString(36)} className= 'row'>
             {ctrl2}
             </div>
-            <div className= 'row'>
+            <div key={Math.random().toString(36)} className= 'row'>
             </div>
             </div>
         );
@@ -1342,30 +1342,36 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                 {rows}
             </div>
              
-                <ul className="nav nav-tabs">
-                    <li className="nav-item">
+                <ul key={v_andruavUnit.partyID + 'ul'} className="nav nav-tabs">
+                    <li key={v_andruavUnit.partyID + 'li1'} className="nav-item">
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#home" + v_andruavUnit.partyID}>Home</a>
                     </li>
-                    <li className="nav-item">
+                    <li key={v_andruavUnit.partyID + 'li2'} className="nav-item">
                         <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#log" + v_andruavUnit.partyID}>Log</a>
                     </li>
-                    <li className="nav-item">
+                    <li key={v_andruavUnit.partyID + 'li3'} className="nav-item">
                         <a className="nav-link  " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link  " data-bs-toggle="tab" href={"#sonar" + v_andruavUnit.partyID}>Sonar</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
                     </li>
                 </ul>
-                <div id="myTabContent" className="tab-content padding_zero">
-                    <div className="tab-pane fade  active show pt-2" id={"home" + v_andruavUnit.partyID}>
+                <div key={v_andruavUnit.partyID + 'myTabContent'} id="myTabContent" className="tab-content padding_zero">
+                    <div key={v_andruavUnit.partyID + 'myTabContent_1'} className="tab-pane fade  active show pt-2" id={"home" + v_andruavUnit.partyID}>
                             {this.renderIMU(v_andruavUnit)}
                             {this.renderControl(v_andruavUnit)}
                     </div>
-                    <div className="tab-pane fade pt-2" id={"log" + v_andruavUnit.partyID}>
+                    <div key={v_andruavUnit.partyID + 'myTabContent_2'} className="tab-pane fade pt-2" id={"log" + v_andruavUnit.partyID}>
                             <CLSS_MESSAGE_LOG  p_unit={v_andruavUnit}/>
                     </div>
-                    <div className="tab-pane fade" id={"details" + v_andruavUnit.partyID}>
+                    <div key={v_andruavUnit.partyID + 'myTabContent_3'} className="tab-pane fade" id={"details" + v_andruavUnit.partyID}>
                             <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
+                    </div>
+                    <div className="tab-pane fade" id={"sonar" + v_andruavUnit.partyID}>
+                            <CLSS_CTRL_SONAR p_unit={v_andruavUnit}/>
                     </div>
                     <div className="tab-pane fade" id={"empty" + v_andruavUnit.partyID}>
                     </div>
@@ -1391,8 +1397,8 @@ class CLSS_AndruavUnitList extends React.Component {
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitAdded,this,this.fn_unitAdded);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
         
-	}
-
+    }
+      
     fn_unitUpdated(me,p_andruavUnit)
     {
         me.setState({ 'm_update': me.state.m_update+1});
@@ -1525,7 +1531,7 @@ class CLSS_AndruavUnitList extends React.Component {
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
-            unit.push (<div key={unit.length + this.state.rnd} className='text-center' >NO ONLINE UNITS</div>);
+            unit.push (<div key={Math.random().toString(36)} className='text-center' >NO ONLINE UNITS</div>);
         }
         else 
         {
@@ -1539,7 +1545,7 @@ class CLSS_AndruavUnitList extends React.Component {
                 
                 if (v_andruavUnit.m_IsGCS===true)
                 {
-                    units_gcs.push (<CLSS_AndruavUnit_GCS key={partyID} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);
+                    units_gcs.push (<CLSS_AndruavUnit_GCS key={Math.random().toString(36)} v_en_GCS= {window.AndruavLibs.LocalStorage.fn_getGCSDisplayEnabled()} m_unit = {v_andruavUnit}/>);
                 }
                 else 
                 if (v_andruavUnit.m_IsGCS===false)
@@ -1550,20 +1556,20 @@ class CLSS_AndruavUnitList extends React.Component {
                         // Display in Tabs
                         var header_info = me.getHeaderInfo(v_andruavUnit);
                         units_header.push(
-                            <li key={'h' + partyID} className="nav-item nav-units">
+                            <li key={v_andruavUnit.partyID} className="nav-item nav-units">
                                 <a className={"nav-link user-select-none "} data-bs-toggle="tab" href={"#tab_" + v_andruavUnit.partyID}><span className={header_info.classes}> {header_info.text}</span> </a>
                             </li>
                         );
 
                         units_details.push(
-                            <div className="tab-pane fade" id={"tab_"+v_andruavUnit.partyID}>
-                                <CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>
+                            <div key={v_andruavUnit.partyID} className="tab-pane fade" id={"tab_"+v_andruavUnit.partyID}>
+                                <CLSS_AndruavUnit_Drone key={v_andruavUnit.partyID} m_unit = {v_andruavUnit}/>
                             </div>
                         );
                     }
                     else
                     {   // Display as List
-                        units_details.push(<CLSS_AndruavUnit_Drone key={partyID}  m_unit = {v_andruavUnit}/>);
+                        units_details.push(<CLSS_AndruavUnit_Drone key={v_andruavUnit.partyID}  m_unit = {v_andruavUnit}/>);
                     }
                 }
 
@@ -1572,13 +1578,13 @@ class CLSS_AndruavUnitList extends React.Component {
             });
         }
        
-        unit.push (<ul className="nav nav-tabs"> {units_header} </ul>    );
-        unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
+        unit.push (<ul key={Math.random().toString(36)} className="nav nav-tabs"> {units_header} </ul>    );
+        unit.push (<div  key={Math.random().toString(36)}  id='myTabContent' className="tab-content padding_zero"> {units_details} </div>);
         unit.push (units_gcs);
         
     return (
 
-                <div key='main' className='margin_zero row'>{unit}</div>
+                <div key={Math.random().toString(36)} className='margin_zero row'>{unit}</div>
             );
     }
 };
