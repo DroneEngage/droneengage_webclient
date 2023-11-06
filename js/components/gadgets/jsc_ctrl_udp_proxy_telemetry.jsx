@@ -86,14 +86,7 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
         const v_andruavUnit = this.props.p_unit;
         var v_udp_data = [];
         var v_udp_on_off = [];
-        // switch (v_andruavUnit.m_telemetry_protocol)
-        // {
-        //     case CONST_TelemetryProtocol_CONST_Andruav_Telemetry:
-        //     case CONST_TelemetryProtocol_CONST_Mavlink_Telemetry:
-        //     case CONST_TelemetryProtocol_CONST_MW_Telemetry:
-        //     case CONST_TelemetryProtocol_DroneKit_Telemetry:
-        //     case CONST_TelemetryProtocol_DJI_Telemetry:
-        //     case CONST_TelemetryProtocol_CONST_Unknown_Telemetry:
+        
                 if (v_andruavUnit.m_Telemetry.m_udpProxy_active === true)
                 {
                     v_udpproxy_text_ip = 'ip:' + v_andruavUnit.m_Telemetry.m_udpProxy_ip ;
@@ -103,7 +96,11 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
                     {
                         v_telemetry_lvl_class = ' text-warning';
                         v_udp_on_off.push(
+<<<<<<< Updated upstream
                             <span key={v_andruavUnit.partyID + 'pause'} title="Pause Telemetry" onClick={ (e) => this.fn_pauseTelemetry(v_andruavUnit)}>
+=======
+                            <span key={Math.random().toString(36)} title="Pause Telemetry" onClick={ (e) => this.fn_pauseTelemetry(v_andruavUnit)}>
+>>>>>>> Stashed changes
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-power " viewBox="0 0 16 16">
                                         <path d="M7.5 1v7h1V1h-1z"/>
                                         <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
@@ -115,7 +112,11 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
                     {
                         v_telemetry_lvl_class = ' text-light';
                         v_udp_on_off.push(
+<<<<<<< Updated upstream
                             <span key={v_andruavUnit.partyID + 'active'} title="Activate Telemetry" onClick={ (e) => this.fn_startTelemetry(v_andruavUnit)}>
+=======
+                            <span key={Math.random().toString(36)} title="Activate Telemetry" onClick={ (e) => this.fn_startTelemetry(v_andruavUnit)}>
+>>>>>>> Stashed changes
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-power text-light" viewBox="0 0 16 16">
                                         <path d="M7.5 1v7h1V1h-1z"/>
                                         <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
@@ -125,7 +126,11 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
                     }
 
                     v_udp_data.push(
+<<<<<<< Updated upstream
                         <div key={v_andruavUnit.partyID + 'txt'} className= {' col-12   padding_zero css_user_select_text ' + v_telemetry_lvl_class}>
+=======
+                        <div key={Math.random().toString(36)} className= {' col-12   padding_zero css_user_select_text ' + v_telemetry_lvl_class}>
+>>>>>>> Stashed changes
                             <p id='udpproxy_t' className={ ' si-07x css_margin_zero user-select-none'}>Smart Telemetry</p>
                             <p id='udpproxy_a' className={ ' si-07x css_margin_zero css_user_select_text'}>{v_udpproxy_text_ip}</p>
                             <p id='udpproxy_p' className={ ' si-07x css_margin_zero css_user_select_text'}>{v_udpproxy_text_port}</p>
@@ -135,7 +140,11 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
                 {
                     v_telemetry_lvl_class = ' text-light';
                     v_udp_data.push(
+<<<<<<< Updated upstream
                         <div key={v_andruavUnit.partyID + 'refresh'} className= 'col-12   padding_zero css_user_select_text'>
+=======
+                        <div key={Math.random().toString(36)} className= 'col-12   padding_zero css_user_select_text'>
+>>>>>>> Stashed changes
                             <div className= 'css_margin_zero user-select-none '>
                                 <p id='udp_get' className={' bg-warning cursor_hand rounded-3 textunit text-center  user-select-none text-white '} title ='Click to get UDP Info' onClick={ (e) => this.fn_requestUdpProxyStatus(v_andruavUnit)} > UDP Refresh</p>
                             </div>
@@ -144,8 +153,8 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
         
         var rows = [];
         rows = (
-        <div key={'prx_' + v_andruavUnit.partyID }  className= 'row padding_zero css_user_select_text'>
-                            <div className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
+        <div key={Math.random().toString(36)}  className= 'row padding_zero css_user_select_text'>
+                            <div key={Math.random().toString(36)} className = { v_telemetry_lvl_class + ' row al_l css_margin_zero'}>
                                 <div className= 'col-12  margin_2px padding_zero css_user_select_text'>
                                 <p className=' rounded-3 cursor_hand textunit' title ='Smart Telemetry'>
                                 <span title="dec_tel" onClick={ (e) => this.fn_changeTelemetryOptimizationLevel(v_andruavUnit,-1)}>
@@ -167,7 +176,7 @@ export  class CLSS_CTRL_UDP_PROXY_TELEMETRY   extends React.Component {
                                 </p>
                                 </div>
                             </div>
-                            <div className = 'row al_l css_margin_zero css_user_select_text'>
+                            <div key={Math.random().toString(36)} className = 'row al_l css_margin_zero css_user_select_text'>
                                 {v_udp_data}
                             </div>
                         </div>);

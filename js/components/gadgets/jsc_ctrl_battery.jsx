@@ -84,17 +84,26 @@ export class CLSS_CTRL_BATTERY extends React.Component {
         if (this.state.is_compact === true)
         {
             return (
+<<<<<<< Updated upstream
                 <div key='bat_com_m' className = 'row  css_margin_zero fss-4 text-white cursor_hand' onClick={ (e) => this.fn_toggle()}>
                     <div key='bat_com_m1' className = {'col-3  css_margin_zero ' + v_battery_display_fcb.css}><span className="text-warning">{this.props.m_title}</span></div>
                     <div key='bat_com_m2' className = {'col-3  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
                     <div key='bat_com_m3' className = {'col-3  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
                     <div key='bat_com_m4' className = {'col-3  css_margin_zero text-white' + v_battery_display_fcb.css}>{parseFloat(this.props.m_battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
+=======
+                <div key={Math.random().toString(36)} className = 'row  css_margin_zero fss-4 text-white cursor_hand' onClick={ (e) => this.fn_toggle()}>
+                    <div key={Math.random().toString(36)} className = {'col-3  css_margin_zero ' + v_battery_display_fcb.css}><span className="text-warning">{this.props.m_title}</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-3  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-3  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-3  css_margin_zero text-white' + v_battery_display_fcb.css}>{parseFloat(this.props.m_battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
+>>>>>>> Stashed changes
                 </div>
             );
         }
         else
         {
             return (
+<<<<<<< Updated upstream
             <div key='bat_ncom_m' className = 'row  css_margin_zero fss-4 ' onClick={ (e) => this.fn_toggle()}>
                     <div key='bat_ncom_m5' className = {'col-2  css_margin_zero ' + v_battery_display_fcb.css}><span className="text-warning">{this.props.m_title}</span></div>
                     <div key='bat_ncom_m6' className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
@@ -102,6 +111,15 @@ export class CLSS_CTRL_BATTERY extends React.Component {
                     <div key='bat_ncom_m8' className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{parseFloat(this.props.m_battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
                     <div key='bat_ncom_m9' className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
                     <div key='bat_ncom_m10' className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
+=======
+            <div key={Math.random().toString(36)} className = 'row  css_margin_zero fss-4 ' onClick={ (e) => this.fn_toggle()}>
+                    <div key={Math.random().toString(36)} className = {'col-2  css_margin_zero ' + v_battery_display_fcb.css}><span className="text-warning">{this.props.m_title}</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryVoltage/1000).toFixed(1).toString()} <span className="text-warning">v</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryCurrent/1000).toFixed(0).toString()} <span className="text-warning">A</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{parseFloat(this.props.m_battery.FCB_BatteryRemaining).toFixed(0)} <span className="text-warning">%</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_TotalCurrentConsumed/1000).toFixed(0).toString()} <span className="text-warning">AH</span></div>
+                    <div key={Math.random().toString(36)} className = {'col-2  css_margin_zero text-white' + v_battery_display_fcb.css}>{(this.props.m_battery.FCB_BatteryTemprature/1000).toFixed(1).toString()} <span className="text-warning">C</span></div>
+>>>>>>> Stashed changes
             </div>
             );
         }

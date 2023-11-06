@@ -11,9 +11,15 @@
  * Communication Server
  */
 
+<<<<<<< Updated upstream
 const CONST_TEST_MODE = true;
 const CONST_PROD_MODE_IP = 'simpleunmanned.droneextend.com'; 
 const CONST_TEST_MODE_IP =  "127.0.0.1";
+=======
+const CONST_TEST_MODE = false;
+const CONST_PROD_MODE_IP = 'simpleunmanned.droneextend.com'; 
+const CONST_TEST_MODE_IP =  'simpleunmanned.droneextend.com';  //"192.168.1.144";
+>>>>>>> Stashed changes
 const CONST_TEST_MODE_ENABLE_LOG = false; 
 const CONST_TITLE = "Drone Extend";
 
