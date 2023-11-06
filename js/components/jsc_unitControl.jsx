@@ -1412,6 +1412,8 @@ class CLSS_AndruavUnitList extends React.Component {
 
     fn_onSocketStatus (me,params) {
        
+        if (me._isMounted!==true) return ;
+    
         if (params.status == CONST_SOCKET_STATUS_REGISTERED)
         {				
                 $('#andruavUnits').show();
@@ -1422,6 +1424,11 @@ class CLSS_AndruavUnitList extends React.Component {
                 me.setState({'m_update': me.state.m_update +1});
                 //me.forceUpdate();
         }
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+    
     }
 
     fn_onPreferenceChanged(me)
@@ -1453,7 +1460,8 @@ class CLSS_AndruavUnitList extends React.Component {
 
 
     componentWillUnmount () {
-        window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
+        this._isMounted = false;
+		window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onSocketStatus,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitAdded,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
@@ -1578,7 +1586,7 @@ if (CONST_TEST_MODE === true)
 {
     ReactDOM.render(
             <React.StrictMode>
-                <CLSS_AndruavUnitList key={'AUL'} />
+                <CLSS_AndruavUnitList  />
             </React.StrictMode>,
 			window.document.getElementById('andruavUnitList')
         );
@@ -1586,7 +1594,7 @@ if (CONST_TEST_MODE === true)
 else
 {
     ReactDOM.render(
-        <CLSS_AndruavUnitList key={'AUL'} />,
+        <CLSS_AndruavUnitList />,
         window.document.getElementById('andruavUnitList')
     );
         // ReactDOM.render(

@@ -26,7 +26,6 @@ export class CLSS_LoginControl extends React.Component {
 		this.state = {
 			is_connected: false,
 			btnConnectText: res_CLSS_LoginControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['1'],
-			initialized: false,
 		};
 		window.AndruavLibs.EventEmitter.fn_subscribe(EE_onSocketStatus, this, this.fn_onSocketStatus);
 	}
@@ -35,7 +34,8 @@ export class CLSS_LoginControl extends React.Component {
 	fn_onSocketStatus(me, params) {
 		fn_console_log('REACT:' + JSON.stringify(params));
 
-		if (params.status == CONST_SOCKET_STATUS_REGISTERED) {
+		if (me._isMounted!==true) return ;
+    	if (params.status == CONST_SOCKET_STATUS_REGISTERED) {
 			me.state.is_connected = true;
 			me.setState({ btnConnectText: res_CLSS_LoginControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['2'] });
 			me.state.username = $('#txtUnitID').val();
@@ -72,17 +72,13 @@ export class CLSS_LoginControl extends React.Component {
 	}
 
 	componentWillUnmount() {
+		this._isMounted = false;
 		window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_onSocketStatus, this);
 	}
 
 	componentDidMount() {
 		//EventEmitter.fn_dispatch(EE_updateLogin,{});
-
-		if (this.state.initialized == true) {
-			return;
-		}
-
-		this.state.initialized = true;
+		this._isMounted = true;
 
 		if (QueryString.accesscode != null) {
 
