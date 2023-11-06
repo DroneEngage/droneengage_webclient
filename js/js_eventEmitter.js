@@ -49,7 +49,11 @@ class CEventEmitter {
             }
             else
             {
+<<<<<<< Updated upstream
                 //console.log ("unknown");
+=======
+                console.log ("unknown");
+>>>>>>> Stashed changes
             }
         }
     };
