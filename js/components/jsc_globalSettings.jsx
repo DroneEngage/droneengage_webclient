@@ -310,14 +310,21 @@ class CLSS_GlobalSettings extends React.Component {
 
 
   fn_onAuthStatus (me,res) {
+    if (me._isMounted!==true) return ;
     me.setState({'m_update': me.state.m_update +1});
     //me.state.m_update += 1;
     //me.forceUpdate();
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+
+  }
+
  
   componentWillUnmount () {
-				window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_Auth_Logined,this);
+    this._isMounted = false;
+		window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_Auth_Logined,this);
   }
   
   

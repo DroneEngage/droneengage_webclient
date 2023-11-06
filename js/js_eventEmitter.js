@@ -20,11 +20,38 @@ class CEventEmitter {
         }
     };
 
+
+    fn_getIndex(p_event, p_listner)
+    {
+        if (!this.m_v_events[p_event]) 
+            return -1;
+        
+        for (var i = 0; i < this.m_v_events[p_event].length; i++) {
+            var v_subscriber = this.m_v_events[p_event][i];
+            if (v_subscriber.listner === p_listner) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     fn_subscribe(p_event, p_listner, callback) {
         if (!this.m_v_events[p_event]) 
             this.m_v_events[p_event] = [];
          // new event
-        this.m_v_events[p_event].push({listner: p_listner, callback: callback});
+        
+        if (this.fn_getIndex(p_event, p_listner)===-1)
+        {
+            if (callback!=null)
+            {
+                this.m_v_events[p_event].push({listner: p_listner, callback: callback});
+            }
+            else
+            {
+                //console.log ("unknown");
+            }
+        }
     };
 
     fn_removeEvent(p_event) {
@@ -35,11 +62,12 @@ class CEventEmitter {
         if (!this.m_v_events[p_event]) 
             return;
          // no one is listening to this event
-        for (var i = 0; i < this.m_v_events[p_event].length; i++) {
-            var v_subscriber = this.m_v_events[p_event][i];
-            if (v_subscriber.listner === p_listner) {
-                this.m_v_events[p_event].splice(i, 1);
-            }
+
+        while (true)
+        {
+            let index = this.fn_getIndex(p_event, p_listner);
+            if (index ==-1) return ;
+            this.m_v_events[p_event].splice(index, 1);
         }
     }
 };

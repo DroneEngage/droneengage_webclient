@@ -39,55 +39,55 @@ const v_colorDrawPathes = ['#D9524F', '#337AB7', '#62D284', '#F0AD4E'];
 
 //////////////////////////////////
 //LOCAL EVENTS
-const EE_onMessage                  = "_E_96A4ED6B1E1_";    
-const EE_onPreferenceChanged        = "_E_96A4ED6B1E4_";
-const EE_unitAdded                  = "_E_96D4ED6B3E4_";
-const EE_unitUpdated                = "_E_96A4ED6B2E4_";
-const EE_unitNavUpdated             = "_E_96E4ED6B3E4_";
-const EE_onSocketStatus             = "_E_964FED6B3E4_";
-const EE_onGUIMessage               = "_E_A64FED6B3E4_";
-const EE_onGUIMessageHide           = "_E_AZ4FED6B3E4_";
-const EE_updateLogin                = "_E_964CED6B1E4_";
-const EE_videoStreamStarted         = "_E_964CXD6B1E4_";
-const EE_videoStreamRedraw          = "_E_964CXD6B1E3_";
-const EE_videoStreamStopped         = "_E_964CWD6B1E4_";
-const EE_unitTelemetryOn            = "_E_96ADED6B3E4_";
-const EE_unitTelemetryOff           = "_E_9642ED6B4E4_";
-const EE_BattViewToggle             = "_E_T642ED6B4E4_";
-const EE_EKFViewToggle              = "_E_T942ED6B4E4_";
-const EE_adsbExchangeReady          = "_E_9642ED6B4Z4_";
-const EE_displayGeoForm             = "_E_9642FD6B4E4_";
-const EE_onShapeCreated             = "_E_9642FD6B4X4_";
-const EE_onShapeSelected            = "_E_9642FD6B4Y4_";
-const EE_onShapeEdited              = "_E_9646FD6B4Y4_";
-const EE_onShapeDeleted             = "_E_9642FD6B4Z4_";
-const EE_mapMissionUpdate           = "_E_A642FD6B4E4_";
-const EE_displayServoForm           = "_E_96A4XD6B1E4_";
-const EE_servoOutputUpdate          = "_E_96ADDD6B3E4_";
-const EE_DetectedTarget             = "_E_96AZQD6B3E4_";
-const EE_SearchableTarget           = "_E_9XAZQD6B3E4_";
-const EE_cameraZoomChanged          = "_E_8XAZQD6B3E4_";
-const EE_cameraFlashChanged         = "_E_8YAZQD6B3E4_";
+const EE_onMessage                  = "EE_onMessage";    
+const EE_onPreferenceChanged        = "EE_onPreferenceChanged";
+const EE_unitAdded                  = "EE_unitAdded";
+const EE_unitUpdated                = "EE_unitUpdated";
+const EE_unitNavUpdated             = "EE_unitNavUpdated";
+const EE_onSocketStatus             = "EE_onSocketStatus";
+const EE_onGUIMessage               = "EE_onGUIMessage";
+const EE_onGUIMessageHide           = "EE_onGUIMessageHide";
+const EE_updateLogin                = "EE_updateLogin";
+const EE_videoStreamStarted         = "EE_videoStreamStarted";
+const EE_videoStreamRedraw          = "EE_videoStreamRedraw";
+const EE_videoStreamStopped         = "EE_videoStreamStopped";
+const EE_unitTelemetryOn            = "EE_unitTelemetryOn";
+const EE_unitTelemetryOff           = "EE_unitTelemetryOff";
+const EE_BattViewToggle             = "EE_BattViewToggle";
+const EE_EKFViewToggle              = "EE_EKFViewToggle";
+const EE_adsbExchangeReady          = "EE_adsbExchangeReady";
+const EE_displayGeoForm             = "EE_displayGeoForm";
+const EE_onShapeCreated             = "EE_onShapeCreated";
+const EE_onShapeSelected            = "EE_onShapeSelected";
+const EE_onShapeEdited              = "EE_onShapeEdited";
+const EE_onShapeDeleted             = "EE_onShapeDeleted";
+const EE_mapMissionUpdate           = "EE_mapMissionUpdate";
+const EE_displayServoForm           = "EE_displayServoForm";
+const EE_servoOutputUpdate          = "EE_servoOutputUpdate";
+const EE_DetectedTarget             = "EE_DetectedTarget";
+const EE_SearchableTarget           = "EE_SearchableTarget";
+const EE_cameraZoomChanged          = "EE_cameraZoomChanged";
+const EE_cameraFlashChanged         = "EE_cameraFlashChanged";
 
-const EE_displayParameters          = "_E_7YAZQD6B3E3_";
-const EE_updateParameters           = "_E_7YAZQD6B3E4_";
+const EE_displayParameters          = "EE_displayParameters";
+const EE_updateParameters           = "EE_updateParameters";
 
-const EE_requestGamePad             = "__E_8ZAZQD6B3E4_";
-const EE_releaseGamePad             = "__E_AZAZQD6B3E4_";
+const EE_requestGamePad             = "EE_requestGamePad";
+const EE_releaseGamePad             = "EE_releaseGamePad";
 
-const EE_GamePad_Connected           = "_EG_96A4ED6B1E1_";
-const EE_GamePad_Disconnected        = "_EG_96A4ED6B1E2_";
-const EE_GamePad_Axes_Updated		 = "_EG_96A4ED6B1E3_";
-const EE_GamePad_Button_Updated		 = "_EG_96A4ED6B1E4_";
+const EE_GamePad_Connected           = "EE_GamePad_Connected";
+const EE_GamePad_Disconnected        = "EE_GamePad_Disconnected";
+const EE_GamePad_Axes_Updated		 = "EE_GamePad_Axes_Updated";
+const EE_GamePad_Button_Updated		 = "EE_GamePad_Button_Updated";
 
 
-const EE_displayStreamDlgForm        = "_EG_96AZZD6B1E4_";
-const EE_hideStreamDlgForm           = "_EG_96AZZZ6B1E4_";
+const EE_displayStreamDlgForm        = "EE_displayStreamDlgForm";
+const EE_hideStreamDlgForm           = "EE_hideStreamDlgForm";
 
-const EE_displayCameraDlgForm        = "_EG_66AZZD6B1E4_";
-const EE_hideCameraDlgForm           = "_EG_66AZZZ6B1E4_";
+const EE_displayCameraDlgForm        = "EE_displayCameraDlgForm";
+const EE_hideCameraDlgForm           = "EE_hideCameraDlgForm";
 
-const EE_onMissionItemToggle         = "_MS_96A4ED6B1E4_";
+const EE_onMissionItemToggle         = "EE_onMissionItemToggle";
 
 const EE_onAdvancedMode              = "_MS_96A4ED6B1E5_";
 const EE_ErrorMessage                = "_E_A642XYZB4E4_";

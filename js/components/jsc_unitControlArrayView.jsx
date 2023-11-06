@@ -75,16 +75,13 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
 		this.telemetry_level=["OFF","1","2","3"];
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitUpdated,this,this.fn_unitUpdated);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitNavUpdated,this,this.fn_unitUpdated);
-        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitTelemetryOn,this,this.fn_unitTelemetryOn);
-        window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitTelemetryOff,this,this.fn_unitTelemetryOFF);
+        // window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitTelemetryOn,this,this.fn_unitTelemetryOn);
+        // window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitTelemetryOff,this,this.fn_unitTelemetryOFF);
         
     }
 
-
-    componentDidMount () 
-    {
-        this.state.m_update = 1;
-    }
+     
+    
 
     childcomponentWillUnmount () {
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this,);
@@ -796,10 +793,8 @@ class CLSS_AndruavUnitListArray extends React.Component {
     render() {
         var unit = [];
         
-        var units_header = [];
         var units_details = [];
-        var units_gcs = [];
-
+        
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
@@ -808,7 +803,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
         else 
             {
                 var me = this;
-                units_details.push(<CLSS_AndruavUnit_Drone_Header key='LH' />);
+                units_details.push(<CLSS_AndruavUnit_Drone_Header key={'drone_hdr'} />);
                 this.state.andruavUnitPartyIDs.map(function (partyID)
                 {
                     var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
@@ -822,7 +817,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
                     else 
                     if (v_andruavUnit.m_IsGCS===false)
                     {
-                        units_details.push(<CLSS_AndruavUnit_Drone_Row key={partyID}  m_unit = {v_andruavUnit}/>);
+                        units_details.push(<CLSS_AndruavUnit_Drone_Row key={partyID + 'row'} m_unit = {v_andruavUnit}/>);
                     }
 
                     me.fn_updateMapStatus(v_andruavUnit);
@@ -834,13 +829,13 @@ class CLSS_AndruavUnitListArray extends React.Component {
             //unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
             //unit.push (units_gcs);
         
-            unit.push (<div className="card-header text-center">
+            unit.push (<div key={Math.random().toString(36)} className="card-header text-center">
 							<div className="row">
 							<div className="col-11">
 								<h3 className="text-success text-start">Units</h3>
 							</div>
-							<div className="col-1 float-right">
-							<span id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
+							<div key={Math.random().toString(36)} className="col-1 float-right">
+							<span key={Math.random().toString(36)} id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
 							</div>
 							</div>
                             {units_details} 
@@ -854,19 +849,19 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
 
 
-if ($('#andruav_unit_list_array_float').length != 0) {
+// if ($('#andruav_unit_list_array_float').length != 0) {
 
-	ReactDOM.render(
-		<CLSS_AndruavUnitListArray />,
-		window.document.getElementById('andruav_unit_list_array_float')
-	);
-}
+// 	ReactDOM.render(
+// 		<CLSS_AndruavUnitListArray />,
+// 		window.document.getElementById('andruav_unit_list_array_float')
+// 	);
+// }
 
-if ($('#andruav_unit_list_array_fixed').length != 0) {
+// if ($('#andruav_unit_list_array_fixed').length != 0) {
 
-	ReactDOM.render(
-		<CLSS_AndruavUnitListArray />,
-		window.document.getElementById('andruav_unit_list_array_fixed')
-	);
-}
+// 	ReactDOM.render(
+// 		<CLSS_AndruavUnitListArray />,
+// 		window.document.getElementById('andruav_unit_list_array_fixed')
+// 	);
+// }
 
