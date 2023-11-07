@@ -253,12 +253,13 @@ class CLSS_GlobalSettings extends React.Component {
 		    'm_update': 0
 		};
 
-      //gui_toggleUnits();
+    this._isMounted = false;
+    //gui_toggleUnits();
 
-      if (window.AndruavLibs.LocalStorage.fn_getMetricSystem()==true)
-      {
-        this.state.m_unitText = 'm';
-      }
+    if (window.AndruavLibs.LocalStorage.fn_getMetricSystem()==true)
+    {
+      this.state.m_unitText = 'm';
+    }
       else
       {
         this.state.m_unitText = 'ft';

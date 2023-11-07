@@ -45,6 +45,9 @@ export  class CLSS_MESSAGE_LOG  extends React.Component {
             m_message: [],
 		    'm_update': 0
         };
+        
+        this._isMounted = false;
+        
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onMessage, this, this.fn_onMessage);
     }
 
@@ -64,9 +67,16 @@ export  class CLSS_MESSAGE_LOG  extends React.Component {
             time: (new Date()).toLocaleTimeString()
         });
 
+        if (p_me._isMounted!==true) return ;
+    
         p_me.setState({'m_update': p_me.state.m_update +1});
         //p_me.state.m_update += 1;
         //me.forceUpdate();
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+    
     }
 
     fn_clear (e)
@@ -76,7 +86,8 @@ export  class CLSS_MESSAGE_LOG  extends React.Component {
     }
 
     componentWillUnmount () {
-        window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onMessage,this);
+        this._isMounted = false;
+		window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onMessage,this);
     }
 
     render () {
