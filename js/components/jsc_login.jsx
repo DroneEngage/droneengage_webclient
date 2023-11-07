@@ -27,7 +27,8 @@ export class CLSS_LoginControl extends React.Component {
 			is_connected: false,
 			btnConnectText: res_CLSS_LoginControl[window.AndruavLibs.LocalStorage.fn_getLanguage()]['1'],
 		};
-		window.AndruavLibs.EventEmitter.fn_subscribe(EE_onSocketStatus, this, this.fn_onSocketStatus);
+		this._isMounted = false;
+    	window.AndruavLibs.EventEmitter.fn_subscribe(EE_onSocketStatus, this, this.fn_onSocketStatus);
 	}
 
 	
