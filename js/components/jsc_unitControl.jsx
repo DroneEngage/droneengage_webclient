@@ -139,7 +139,8 @@ class CLSS_AndruavUnit extends React.Component {
 	{
 		super (props);
 		this.state = {
-		    'm_update': 0
+		    'm_update': 0,
+            'm_IsGCS':this.props.m_unit.m_IsGCS,
 		};
 
         this._isMounted = false;
@@ -225,12 +226,10 @@ class CLSS_AndruavUnit extends React.Component {
     childcomponentWillUnmount() {};
 
     
-    componentDidMount() {
-        var v_andruavUnit = this.props.m_unit; 
+    componentDidMount() 
+    {
         this._isMounted = true;
-        this.setState({m_IsGCS:v_andruavUnit.m_IsGCS});
-
-
+        
         this.childcomponentWillMount();
     }
 
@@ -1174,10 +1173,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 <div id='bearingtargetknob' >{v_bearingTarget_knob}</div>
                                 </div>
                         </div>
-                        <div key={'telem'} className= 'col-3   padding_zero css_user_select_text'>
-                        <CLSS_CTRL_UDP_PROXY_TELEMETRY p_unit={v_andruavUnit} /> </div>
-                        <div key={'swarm'} className= 'col-2   padding_zero'>
-                        <CLSS_CTRL_SWARM   m_unit={v_andruavUnit}/>
+                        <div key={'telem' + v_andruavUnit.partyID} className= 'col-3   padding_zero css_user_select_text'>
+                        <CLSS_CTRL_UDP_PROXY_TELEMETRY key={'ctele' + v_andruavUnit.partyID} p_unit={v_andruavUnit} /> </div>
+                        <div key={'swarm' + v_andruavUnit.partyID} className= 'col-2   padding_zero'>
+                        <CLSS_CTRL_SWARM   key={'cswarm' + v_andruavUnit.partyID}  m_unit={v_andruavUnit}/>
                         </div>
                         
                     </div>
