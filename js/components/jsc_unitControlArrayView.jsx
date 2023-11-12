@@ -70,6 +70,8 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
             'm_update': 0
         };
         
+        this._isMounted = false;
+        
         this.localvars={};
         this.localvars.speed_link = false;	
 		this.telemetry_level=["OFF","1","2","3"];
@@ -81,18 +83,23 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
     }
 
      
-    
+    componentDidMount() {
+        this._isMounted = true;
+    }
 
     childcomponentWillUnmount () {
+        this._isMounted = false;
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this,);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitNavUpdated,this,);
-        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitTelemetryOn,this,);
-        window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitTelemetryOff,this,);
+        //window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitTelemetryOn,this,);
+        //window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitTelemetryOff,this,);
     }
 
 
     fn_unitUpdated(p_me,p_andruavUnit)
     {
+        if (p_me._isMounted !== true) return ;
+
         if (p_andruavUnit.partyID != p_me.props.m_unit.partyID) return ;
         if (p_me.state.m_update == 0) return ;
         p_me.setState({'m_update': p_me.state.m_update +1});
@@ -603,43 +610,43 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         
 
         return (
-            <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap border-bottom bg-gradient'>
-            <div className = {'col-1  css_margin_zero text-center cursor_hand ' + v_id_class} onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}>
-                <div className = 'row  css_margin_zero '>
-                    <div className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
+            <div key={this.props.prop_key+'1'} className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap border-bottom bg-gradient'>
+            <div key={this.props.prop_key+'2'} className = {'col-1  css_margin_zero text-center cursor_hand ' + v_id_class} onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}>
+                <div key={this.props.prop_key+'23'} className = 'row  css_margin_zero '>
+                    <div key={this.props.prop_key+'24'} className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
                 </div>
-                <div className = 'row  css_margin_zero css_padding_zero'>
-                        <div className = 'col-12  css_margin_zero '>{'mavid: ' + v_mav_id_text}</div>
-                </div>
-            </div>
-            <div className = {'col-1  css_margin_zero text-center css_padding_zero '}>
-                <div className = 'row  css_margin_zero css_padding_zero '>
-                    <div className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css} title ={v_flight_mode.title}>{v_flight_mode.txt}</div>
-                </div>
-                <div className = 'row  css_margin_zero css_padding_zero'>
-                    <div className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
+                <div key={this.props.prop_key+'25'} className = 'row  css_margin_zero css_padding_zero'>
+                        <div key={this.props.prop_key+'26'} className = 'col-12  css_margin_zero '>{'mavid: ' + v_mav_id_text}</div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>
-                    <div className = 'row  css_margin_zero  '>
+            <div key={this.props.prop_key+'3'} className = {'col-1  css_margin_zero text-center css_padding_zero '}>
+                <div key={this.props.prop_key+'31'} className = 'row  css_margin_zero css_padding_zero '>
+                    <div key={this.props.prop_key+'32'} className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css} title ={v_flight_mode.title}>{v_flight_mode.txt}</div>
+                </div>
+                <div key={this.props.prop_key+'33'} className = 'row  css_margin_zero css_padding_zero'>
+                    <div key={this.props.prop_key+'34'} className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
+                </div>
+            </div>
+            <div key={this.props.prop_key+'4'} className = 'col-1  css_margin_zero css_padding_zero'>
+                    <div key={this.props.prop_key+'41'} className = 'row  css_margin_zero  '>
                         {ctrl_ekf}
                     </div>
-                    <div className = 'row  css_margin_zero  '>
+                    <div key={this.props.prop_key+'42'} className = 'row  css_margin_zero  '>
                         <CLSS_CTRL_VIBRATION key={v_andruavUnit.partyID + "_ctrl_vib"} id={v_andruavUnit.partyID + "_ctrl_vib"} m_unit={v_andruavUnit}/>
                     </div>
                 
             </div>
-            <div className = 'col-1  css_margin_zero css_padding_zero'>
+            <div key={this.props.prop_key+'5'} className = 'col-1  css_margin_zero css_padding_zero'>
                     <ul className="css_hud_bullets">
                         <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>
                         <li><span className="text-warning">P:</span><span className="text-white">{v_HUD.p}</span><span className="text-warning">º</span></li>
                     </ul>
             </div>
-            <div className = 'col-2  css_margin_zero'>
+            <div key={this.props.prop_key+'6'} className = 'col-2  css_margin_zero'>
                     <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat1"} id={v_andruavUnit.partyID + "_ctrl_bat1"} m_title='Batt1' m_battery={v_andruavUnit.m_Power._FCB.p_Battery}/>
                     <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat2"} id={v_andruavUnit.partyID + "_ctrl_bat2"} m_title='Batt2' m_battery={v_andruavUnit.m_Power._FCB.p_Battery2}/>
             </div>
-            <div className = 'col-1  css_margin_zero css_padding_zero '>
+            <div key={this.props.prop_key+'7'} className = 'col-1  css_margin_zero css_padding_zero '>
                 <div className = 'row  css_margin_zero css_padding_zero'>
                     <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}><span className='fss-4'>{v_gps1.value}</span></div>
                 </div>
@@ -647,7 +654,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}><span className='fss-4'>{v_gps2.value}</span></div>
                 </div>
              </div>
-            <div className = 'col-1  css_margin_zero '>
+            <div key={this.props.prop_key+'8'} className = 'col-1  css_margin_zero '>
                 <div className = {'row  css_margin_zero' + v_speed.GS.css}>
                     <div className = {'col-4  css_margin_zero text-warning' + v_speed.AS.css}>AS:</div>
                     <div className = {'col-8  css_margin_zero text-white' + v_speed.AS.css}>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
@@ -658,7 +665,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 </div>
             </div>
             
-            <div className = 'col-1  css_margin_zero '>
+            <div key={this.props.prop_key+'9'} className = 'col-1  css_margin_zero '>
                 <div className = {'row  css_margin_zero ' + v_alt.rel.css}>
                     <div className = {'col-6  css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
                     <div className = {'col-6  css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
@@ -669,7 +676,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 </div>
             </div>
            
-            <div className = {'col-1  css_margin_zero ' + v_wind.WS.css}>
+            <div key={this.props.prop_key+'10'} className = {'col-1  css_margin_zero ' + v_wind.WS.css}>
                 <div className = 'row  css_margin_zero'>
                     <div className = 'col-4  css_margin_zero text-warning al_l'>WS/Z:</div>
                     <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
@@ -679,13 +686,13 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero skinny'>
+            <div key={this.props.prop_key+'11'} className = 'col-1  css_margin_zero skinny'>
                 <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
                     <div className = 'col-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
                     <div className = {'col-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
                 </div>
             </div>
-            <div className = 'col-1  css_margin_zero'></div>
+            <div key={this.props.prop_key+'12'} className = 'col-1  css_margin_zero'></div>
             </div>
             
         );
@@ -700,6 +707,9 @@ class CLSS_AndruavUnitListArray extends React.Component {
 		this.state = {
 			andruavUnitPartyIDs : [],
 		};
+        
+        this._isMounted = false;
+        
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onPreferenceChanged, this, this.fn_onPreferenceChanged);
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_onSocketStatus, this, this.fn_onSocketStatus);
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_unitAdded,this,this.fn_unitAdded);
@@ -708,14 +718,24 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
 
 
+    componentDidMount() 
+    {
+        this._isMounted = true;
+    }
+
+
     fn_unitUpdated(me,p_andruavUnit)
     {
+        if (me._isMounted!==true) return ;
+        
         me.forceUpdate();
     }
 
     fn_unitAdded (me,p_andruavUnit)
     {
-         fn_console_log ("REACT:fn_unitAdded" );
+        if (me._isMounted!==true) return ;
+        
+        fn_console_log ("REACT:fn_unitAdded" );
          // http://stackoverflow.com/questions/26253351/correct-modification-of-state-arrays-in-reactjs      
          me.setState({ 
             andruavUnitPartyIDs: me.state.andruavUnitPartyIDs.concat([p_andruavUnit.partyID])
@@ -724,6 +744,8 @@ class CLSS_AndruavUnitListArray extends React.Component {
     
     fn_onPreferenceChanged(me)
     {
+        if (me._isMounted!==true) return ;
+        
         me.forceUpdate();
     }
 
@@ -751,19 +773,22 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
     fn_onSocketStatus (me,params) {
        
+        if (me._isMounted!==true) return ;
         if (params.status == CONST_SOCKET_STATUS_REGISTERED)
         {				
                 $('#andruavUnits').show();
         }
         else
         {				
+                if (me._isMounted!==true) return ;
+        
                 me.state.andruavUnitPartyIDs = [];
                 me.forceUpdate();
         }
     }
-
     componentWillUnmount () {
-        window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
+        this._isMounted = false;
+		window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onPreferenceChanged,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_onSocketStatus,this);
         window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitAdded,this);
         //window.AndruavLibs.EventEmitter.fn_unsubscribe(EE_unitUpdated,this);
@@ -798,12 +823,12 @@ class CLSS_AndruavUnitListArray extends React.Component {
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
-            unit.push (<div key={unit.length} className='bg-success'>NO ONLINE UNITS</div>);
+            unit.push (<div key={'CLSS_AndruavUnitListArray_unit_length' + this.props.prop_key} className='bg-success'>NO ONLINE UNITS</div>);
         }
         else 
             {
                 var me = this;
-                units_details.push(<CLSS_AndruavUnit_Drone_Header key={'drone_hdr'} />);
+                units_details.push(<CLSS_AndruavUnit_Drone_Header prop_key={this.props.prop_key} key={'drone_hdr'+ this.props.prop_key} />);
                 this.state.andruavUnitPartyIDs.map(function (partyID)
                 {
                     var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
@@ -817,7 +842,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
                     else 
                     if (v_andruavUnit.m_IsGCS===false)
                     {
-                        units_details.push(<CLSS_AndruavUnit_Drone_Row key={partyID + 'row'} m_unit = {v_andruavUnit}/>);
+                        units_details.push(<CLSS_AndruavUnit_Drone_Row prop_key={me.props.prop_key+partyID} key={partyID + 'row' + me.props.prop_key} m_unit={v_andruavUnit}/>);
                     }
 
                     me.fn_updateMapStatus(v_andruavUnit);
@@ -829,39 +854,64 @@ class CLSS_AndruavUnitListArray extends React.Component {
             //unit.push (<div id="myTabContent" className="tab-content padding_zero"> {units_details} </div>);
             //unit.push (units_gcs);
         
-            unit.push (<div key={Math.random().toString(36)} className="card-header text-center">
+            unit.push (<div key={'CLSS_AndruavUnitListArray1' + this.props.prop_key} className="card-header text-center">
 							<div className="row">
 							<div className="col-11">
 								<h3 className="text-success text-start">Units</h3>
 							</div>
-							<div key={Math.random().toString(36)} className="col-1 float-right">
-							<span key={Math.random().toString(36)} id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
+							<div key={'CLSS_AndruavUnitListArray2' + this.props.prop_key} className="col-1 float-right">
+							<span key={'CLSS_AndruavUnitListArray3' + this.props.prop_key} id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
 							</div>
 							</div>
                             {units_details} 
 						</div>);
 
         return (
-            <div key={new Date()} className='margin_zero padding_zero row'>{unit}</div>
+            <div key={'CLSS_AndruavUnitListArray_main' + this.props.prop_key} className='margin_zero padding_zero row'>{unit}</div>
         );
     }
 };
 
 
-// comments
-// if ($('#andruav_unit_list_array_float').length != 0) {
+if (CONST_TEST_MODE === true)
+{
+    if ($('#andruav_unit_list_array_float').length != 0) {
 
-// 	ReactDOM.render(
-// 		<CLSS_AndruavUnitListArray />,
-// 		window.document.getElementById('andruav_unit_list_array_float')
-// 	);
-// }
+        ReactDOM.render(
+            <React.StrictMode>
+            <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+            </React.StrictMode>,
+			window.document.getElementById('andruav_unit_list_array_float')
+        );
+    }
+    
+    // if ($('#andruav_unit_list_array_fixed').length != 0) {
+    
+    //     ReactDOM.render(
+    //         <React.StrictMode>
+    //         <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
+    //         </React.StrictMode>,
+	// 		window.document.getElementById('andruav_unit_list_array_fixed')
+    //     );
+    // }
+}
+else
+{
+    // comments
+    if ($('#andruav_unit_list_array_float').length != 0) {
 
-// if ($('#andruav_unit_list_array_fixed').length != 0) {
+        ReactDOM.render(
+            <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+            window.document.getElementById('andruav_unit_list_array_float')
+        );
+    }
 
-// 	ReactDOM.render(
-// 		<CLSS_AndruavUnitListArray />,
-// 		window.document.getElementById('andruav_unit_list_array_fixed')
-// 	);
-// }
+    // if ($('#andruav_unit_list_array_fixed').length != 0) {
 
+    //     ReactDOM.render(
+    //         <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
+    //         window.document.getElementById('andruav_unit_list_array_fixed')
+    //     );
+    // }
+
+}
