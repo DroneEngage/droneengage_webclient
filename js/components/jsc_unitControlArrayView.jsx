@@ -706,6 +706,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
 		super ();
 		this.state = {
 			andruavUnitPartyIDs : [],
+		    'm_update': 0
 		};
         
         this._isMounted = false;
@@ -728,7 +729,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
     {
         if (me._isMounted!==true) return ;
         
-        me.forceUpdate();
+        me.setState({'m_update': me.state.m_update +1});
     }
 
     fn_unitAdded (me,p_andruavUnit)
@@ -782,8 +783,7 @@ class CLSS_AndruavUnitListArray extends React.Component {
         {				
                 if (me._isMounted!==true) return ;
         
-                me.state.andruavUnitPartyIDs = [];
-                me.forceUpdate();
+                me.setState({andruavUnitPartyIDs:[]});
         }
     }
     componentWillUnmount () {
@@ -875,43 +875,43 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
 if (CONST_TEST_MODE === true)
 {
-    // if ($('#andruav_unit_list_array_float').length != 0) {
+    if ($('#andruav_unit_list_array_float').length != 0) {
 
-    //     ReactDOM.render(
-    //         <React.StrictMode>
-    //         <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
-    //         </React.StrictMode>,
-	// 		window.document.getElementById('andruav_unit_list_array_float')
-    //     );
-    // }
+         ReactDOM.render(
+             <React.StrictMode>
+             <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+             </React.StrictMode>,
+	 		window.document.getElementById('andruav_unit_list_array_float')
+         );
+    }
     
-    // if ($('#andruav_unit_list_array_fixed').length != 0) {
+    if ($('#andruav_unit_list_array_fixed').length != 0) {
     
-    //     ReactDOM.render(
-    //         <React.StrictMode>
-    //         <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
-    //         </React.StrictMode>,
-	// 		window.document.getElementById('andruav_unit_list_array_fixed')
-    //     );
-    // }
+         ReactDOM.render(
+             <React.StrictMode>
+             <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
+             </React.StrictMode>,
+	 		window.document.getElementById('andruav_unit_list_array_fixed')
+         );
+    }
 }
 else
 {
     // comments
-    // if ($('#andruav_unit_list_array_float').length != 0) {
+    if ($('#andruav_unit_list_array_float').length != 0) {
 
-    //     ReactDOM.render(
-    //         <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
-    //         window.document.getElementById('andruav_unit_list_array_float')
-    //     );
-    // }
+         ReactDOM.render(
+             <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+             window.document.getElementById('andruav_unit_list_array_float')
+         );
+     }
 
-    // if ($('#andruav_unit_list_array_fixed').length != 0) {
+     if ($('#andruav_unit_list_array_fixed').length != 0) {
 
-    //     ReactDOM.render(
-    //         <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
-    //         window.document.getElementById('andruav_unit_list_array_fixed')
-    //     );
-    // }
+         ReactDOM.render(
+             <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
+             window.document.getElementById('andruav_unit_list_array_fixed')
+         );
+    }
 
 }
