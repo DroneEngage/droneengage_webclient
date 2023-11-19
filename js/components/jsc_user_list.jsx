@@ -227,7 +227,8 @@ class CLSS_UserList extends React.Component {
     {
         super ();
 		this.state = {
-            m_search: ""
+            m_search: "",
+            users: [],
 		};
 	
         window.StreamSensLibs.EventEmitter.fn_subscribe (EE_Update_Users, this, this.fn_displayForm);
@@ -238,7 +239,6 @@ class CLSS_UserList extends React.Component {
     {
         p_me.setState({'users':p_res.users});
         console.log (p_res.users);
-        p_me.forceUpdate();
     }
 
     fn_onSearch (e)
