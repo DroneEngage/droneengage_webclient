@@ -875,15 +875,15 @@ class CLSS_AndruavUnitListArray extends React.Component {
 
 if (CONST_TEST_MODE === true)
 {
-    if ($('#andruav_unit_list_array_float').length != 0) {
+    // if ($('#andruav_unit_list_array_float').length != 0) {
 
-        ReactDOM.render(
-            <React.StrictMode>
-            <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
-            </React.StrictMode>,
-			window.document.getElementById('andruav_unit_list_array_float')
-        );
-    }
+    //     ReactDOM.render(
+    //         <React.StrictMode>
+    //         <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+    //         </React.StrictMode>,
+	// 		window.document.getElementById('andruav_unit_list_array_float')
+    //     );
+    // }
     
     // if ($('#andruav_unit_list_array_fixed').length != 0) {
     
@@ -898,13 +898,13 @@ if (CONST_TEST_MODE === true)
 else
 {
     // comments
-    if ($('#andruav_unit_list_array_float').length != 0) {
+    // if ($('#andruav_unit_list_array_float').length != 0) {
 
-        ReactDOM.render(
-            <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
-            window.document.getElementById('andruav_unit_list_array_float')
-        );
-    }
+    //     ReactDOM.render(
+    //         <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+    //         window.document.getElementById('andruav_unit_list_array_float')
+    //     );
+    // }
 
     // if ($('#andruav_unit_list_array_fixed').length != 0) {
 
