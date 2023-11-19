@@ -25,6 +25,8 @@ class CLSS_CustomCircularBuffer
                  {
                     fn_onDeleteCallBack (this.m_buffer[this.m_head]);
                  }
+
+                 delete this.m_buffer[this.m_head];
                  this.m_buffer[this.m_head] = p_toAdd;
                  this.m_head +=1;
                  this.m_unitCount = (this.m_unitCount + 1) % this.m_buffer.length;
