@@ -212,6 +212,11 @@ function C_RecordRTC(mediaStream, config) {
             reader.readAsDataURL(blob);
             reader.onload = function(event) {
                 callback(event.target.result);
+
+                // Cleanup the reader object
+				reader.abort();
+                reader = null;
+				return;
             };
         }
 
@@ -1149,6 +1154,11 @@ function MRecordRTC(mediaStream) {
                 reader.readAsDataURL(blob);
                 reader.onload = function(event) {
                     callback00(event.target.result);
+
+                    // Cleanup the reader object
+					reader.abort();
+                    reader = null;
+					return;
                 };
             }
         }
