@@ -2229,7 +2229,10 @@ function fn_handleKeyBoard() {
 					$('#unitImg').data('binaryImage', contents);
 					//saveData (contents,'image.jpg');
 
-
+					// Cleanup the reader object
+					reader.abort();
+                    reader = null;
+					return;
 				};
 
 				reader.onerror = function (event) {

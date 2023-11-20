@@ -856,9 +856,17 @@ class CAndruavClient {
         var reader = new FileReader();
         reader.onload = function (event) {
             const contents = event.target.result;
-            
-            if (me.prv_parseGCSMavlinkMessage (p_andruavUnit, contents) === true) return ;
-            me.API_sendBinCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_LightTelemetry, contents);
+                
+            if (me.prv_parseGCSMavlinkMessage (p_andruavUnit, contents) !== true) 
+            {
+                me.API_sendBinCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_LightTelemetry, contents);
+            }
+
+            // Cleanup the reader object
+            reader.abort();
+            reader = null;
+					
+            return;
             
         }
         reader.readAsArrayBuffer(data);
@@ -3038,15 +3046,14 @@ class CAndruavClient {
     prv_extractBinaryPacket(evt) {
         var andruavCMD;
         var p_jmsg;
-        var data;
         var v_unit;
         var byteLength;
 
-        var Me = this;
+        const Me = this;
         var reader = new FileReader();
         reader.onload = function (event) {
             var contents = event.target.result;
-            data = new Uint8Array(contents);
+            var data= new Uint8Array(contents);
             byteLength = contents.byteLength;
             var out = prv_extractString(data, 0, byteLength);
             // extract command:
@@ -3072,8 +3079,12 @@ class CAndruavClient {
                 {
                     console.log ("skip");
                 }
-                
-                return;
+    
+                // Cleanup the reader object
+                data = null;
+                reader.abort();
+                reader = null;
+				return;
             }
         
             v_unit.m_Messages.fn_addMsg(p_jmsg.messageType);
@@ -3081,6 +3092,11 @@ class CAndruavClient {
             v_unit.m_NetworkStatus.m_received_bytes +=data.length;
             v_unit.m_NetworkStatus.m_lastActiveTime = Date.now();
             Me.prv_parseBinaryAndruavMessage(v_unit, andruavCMD, data, out.nextIndex, byteLength);
+            
+            data = null;
+            reader.abort();
+            reader = null;
+					
         };
 
         reader.onerror = function (event) {
