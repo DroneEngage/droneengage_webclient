@@ -1729,7 +1729,7 @@ if (CONST_TEST_MODE === true)
 {
     ReactDOM.render(
             <React.StrictMode>
-                <CLSS_AndruavUnitList  />
+                <CLSS_AndruavUnitList  key='CLSS_AndruavUnitList' />
             </React.StrictMode>,
 			window.document.getElementById('andruavUnitList')
         );
@@ -1737,7 +1737,7 @@ if (CONST_TEST_MODE === true)
 else
 {
     ReactDOM.render(
-        <CLSS_AndruavUnitList />,
+        <CLSS_AndruavUnitList key='CLSS_AndruavUnitList' />,
         window.document.getElementById('andruavUnitList')
     );
         // ReactDOM.render(

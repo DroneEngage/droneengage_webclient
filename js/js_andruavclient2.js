@@ -2589,7 +2589,7 @@ class CAndruavClient {
         const p_mavlinkMessages = p_mavlinkGCSProcessor.parseBuffer(new Uint8Array(p_mavlinkPacket));
         const len = p_mavlinkMessages.length;
         for (var i = 0; i < len; ++ i) {
-            let c_mavlinkMessage = p_mavlinkMessages[i];
+            const c_mavlinkMessage = p_mavlinkMessages[i];
             if (c_mavlinkMessage.id == -1)
             {
                 // bad mavlink ... make sure you are using MAVLINK V2
@@ -2664,7 +2664,7 @@ class CAndruavClient {
 	* @param p_mavlinkPacket: should be a mavlink message.
 	*/
     prv_parseUnitMavlinkMessage(p_unit, p_mavlinkPacket) {
-        let p_mavlinkProcessor = new MAVLink20Processor(null, 0, 0);
+        const p_mavlinkProcessor = new MAVLink20Processor(null, 0, 0);
         const p_mavlinkMessages = p_mavlinkProcessor.parseBuffer(new Int8Array(p_mavlinkPacket));
         const len = p_mavlinkMessages.length;
         for (var i = 0; i < len; ++ i) {
