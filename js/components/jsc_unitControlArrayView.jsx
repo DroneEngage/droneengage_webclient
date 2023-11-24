@@ -40,8 +40,8 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
     render()
     {
         return (
-            <div className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
-            <div className = 'col-1  css_margin_zero text-center fw-bold '>ID</div>
+            <div className = 'row  d-none d-lg-flex mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
+            <div className = 'col-1  d.none- css_margin_zero text-center fw-bold '>ID</div>
             <div className = {'col-1  css_margin_zero text-center fw-bold '}>MODE</div>
             <div className = 'col-1  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
             {/* heading is not there */}
@@ -667,29 +667,29 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                 
                 <div key={this.props.prop_key+'9'} className = 'col-1  css_margin_zero '>
                     <div className = {'row  css_margin_zero ' + v_alt.rel.css}>
-                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
-                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
+                        <div className = {'col-12  col-xxl-6 css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
+                        <div className = {'col-12  col-xxl-6 css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
                     </div>
                     <div className = 'row  css_margin_zero '>
-                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.terC.css}><span className='text-warning'>TC:</span>{v_alt.terC.value}<span className='text-warning'>{v_alt.terC.unit}</span></div>
-                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.lidar.css}><span className='text-warning'>L:</span>{v_alt.lidar.value}<span className='text-warning'>{v_alt.lidar.unit}</span></div>
+                        <div className = {'col-12  col-xxl-6 css_margin_zero al_l '+ v_alt.terC.css}><span className='text-warning'>TC:</span>{v_alt.terC.value}<span className='text-warning'>{v_alt.terC.unit}</span></div>
+                        <div className = {'col-12  col-xxl-6 css_margin_zero al_l '+ v_alt.lidar.css}><span className='text-warning'>L:</span>{v_alt.lidar.value}<span className='text-warning'>{v_alt.lidar.unit}</span></div>
                     </div>
                 </div>
             
                 <div key={this.props.prop_key+'10'} className = {'col-1  css_margin_zero ' + v_wind.WS.css}>
                     <div className = 'row  css_margin_zero'>
-                        <div className = 'col-4  css_margin_zero text-warning al_l'>WS/Z:</div>
-                        <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
+                        <div className = 'col-12  col-xxl-4 css_margin_zero text-warning al_l'>WS/Z:</div>
+                        <div className = 'col-12  col-xxl-8 css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
                     </div>
                     <div className = {'row  css_margin_zero  ' + v_wind.WD.css}>
-                        <div  className = 'col-4  css_margin_zero text-warning al_l'>WD:</div>
-                        <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
+                        <div  className = 'col-12  col-xxl-4  css_margin_zero text-warning al_l'>WD:</div>
+                        <div  className = 'col-12  col-xxl-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                     </div>
                 </div>
                 <div key={this.props.prop_key+'11'} className = 'col-1  css_margin_zero skinny'>
                     <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
-                        <div className = 'col-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
-                        <div className = {'col-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
+                        <div className = 'col-12  col-xxl-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
+                        <div className = {'col-12  col-xxl-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>{'>>'}</span>{v_wp.count}</div>
                     </div>
                 </div>
                 <div key={this.props.prop_key+'12'} className = 'col-1  css_margin_zero'></div>

@@ -40,10 +40,10 @@ class CLSS_HeaderControl extends React.Component {
                         </div>
                     </nav>
                 </div>
-                <div className='col-lg-4  col-sm-8   css_margin_zero css_padding_zero al_r'>
+                <div className='col-9 col-lg-4     css_margin_zero css_padding_zero al_r'>
                     <CLSS_CTRL_Layout/>     
                 </div>
-                <div className='col-lg-1  col-sm-4   css_margin_zero  al_r'>
+                <div className=' col-2 col-lg-1    css_margin_zero  al_r'>
                     <CLSS_LoginControl simple='true'/>
                 </div>
             </div>
