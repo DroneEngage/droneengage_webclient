@@ -272,7 +272,7 @@ class CLSS_CameraDialog extends React.Component
                                     <div className="form-group">
                                     <div>
                                         <label htmlFor="txt_ShootingInterval" className="text-primary"><small>Each&nbsp;N&nbsp;sec</small></label>
-                                        <input id="txtShootingInterval" type="number"  className="form-control input-xs input-sm"   />
+                                        <input id="txt_ShootingInterval" type="number"  className="form-control input-xs input-sm"   />
                                     </div>
                                     </div>
                             </div>
@@ -280,7 +280,7 @@ class CLSS_CameraDialog extends React.Component
                                     <div className="form-group">
                                         <div>
                                         <label htmlFor="txt_TotalImages" className="text-primary"><small>Total&nbsp;Img</small></label>
-                                        <input id="txtTotalImages" type="number"  className="form-control input-xs input-sm"  />
+                                        <input id="txt_TotalImages" type="number"  className="form-control input-xs input-sm"  />
                                         </div>
                                     </div>
                             </div>
