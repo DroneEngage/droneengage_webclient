@@ -611,88 +611,88 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
 
         return (
             <div key={this.props.prop_key+'1'} className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap border-bottom bg-gradient'>
-            <div key={this.props.prop_key+'2'} className = {'col-1  css_margin_zero text-center cursor_hand ' + v_id_class} onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}>
-                <div key={this.props.prop_key+'23'} className = 'row  css_margin_zero '>
-                    <div key={this.props.prop_key+'24'} className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
-                </div>
-                <div key={this.props.prop_key+'25'} className = 'row  css_margin_zero css_padding_zero'>
-                        <div key={this.props.prop_key+'26'} className = 'col-12  css_margin_zero '>{'mavid: ' + v_mav_id_text}</div>
-                </div>
-            </div>
-            <div key={this.props.prop_key+'3'} className = {'col-1  css_margin_zero text-center css_padding_zero '}>
-                <div key={this.props.prop_key+'31'} className = 'row  css_margin_zero css_padding_zero '>
-                    <div key={this.props.prop_key+'32'} className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css} title ={v_flight_mode.title}>{v_flight_mode.txt}</div>
-                </div>
-                <div key={this.props.prop_key+'33'} className = 'row  css_margin_zero css_padding_zero'>
-                    <div key={this.props.prop_key+'34'} className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
-                </div>
-            </div>
-            <div key={this.props.prop_key+'4'} className = 'col-1  css_margin_zero css_padding_zero'>
-                    <div key={this.props.prop_key+'41'} className = 'row  css_margin_zero  '>
-                        {ctrl_ekf}
+                <div key={this.props.prop_key+'2'} className = {'col-1  css_margin_zero text-center cursor_hand ' + v_id_class} onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}>
+                    <div key={this.props.prop_key+'23'} className = 'row  css_margin_zero '>
+                        <div key={this.props.prop_key+'24'} className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
                     </div>
-                    <div key={this.props.prop_key+'42'} className = 'row  css_margin_zero  '>
-                        <CLSS_CTRL_VIBRATION key={v_andruavUnit.partyID + "_ctrl_vib"} id={v_andruavUnit.partyID + "_ctrl_vib"} m_unit={v_andruavUnit}/>
+                    <div key={this.props.prop_key+'25'} className = 'row  css_margin_zero css_padding_zero'>
+                            <div key={this.props.prop_key+'26'} className = 'col-12  css_margin_zero '>{'mavid: ' + v_mav_id_text}</div>
                     </div>
+                </div>
+                <div key={this.props.prop_key+'3'} className = {'col-1  css_margin_zero text-center css_padding_zero '}>
+                    <div key={this.props.prop_key+'31'} className = 'row  css_margin_zero css_padding_zero '>
+                        <div key={this.props.prop_key+'32'} className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css} title ={v_flight_mode.title}>{v_flight_mode.txt}</div>
+                    </div>
+                    <div key={this.props.prop_key+'33'} className = 'row  css_margin_zero css_padding_zero'>
+                        <div key={this.props.prop_key+'34'} className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
+                    </div>
+                </div>
+                <div key={this.props.prop_key+'4'} className = 'col-1  css_margin_zero css_padding_zero'>
+                        <div key={this.props.prop_key+'41'} className = 'row  css_margin_zero  '>
+                            {ctrl_ekf}
+                        </div>
+                        <div key={this.props.prop_key+'42'} className = 'row  css_margin_zero  '>
+                            <CLSS_CTRL_VIBRATION key={v_andruavUnit.partyID + "_ctrl_vib"} id={v_andruavUnit.partyID + "_ctrl_vib"} m_unit={v_andruavUnit}/>
+                        </div>
+                    
+                </div>
+                <div key={this.props.prop_key+'5'} className = 'col-1  css_margin_zero css_padding_zero'>
+                        <ul className="css_hud_bullets">
+                            <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>
+                            <li><span className="text-warning">P:</span><span className="text-white">{v_HUD.p}</span><span className="text-warning">º</span></li>
+                        </ul>
+                </div>
+                <div key={this.props.prop_key+'6'} className = 'col-2  css_margin_zero'>
+                        <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat1"} id={v_andruavUnit.partyID + "_ctrl_bat1"} m_title='Batt1' m_battery={v_andruavUnit.m_Power._FCB.p_Battery}/>
+                        <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat2"} id={v_andruavUnit.partyID + "_ctrl_bat2"} m_title='Batt2' m_battery={v_andruavUnit.m_Power._FCB.p_Battery2}/>
+                </div>
+                <div key={this.props.prop_key+'7'} className = 'col-1  css_margin_zero css_padding_zero '>
+                    <div className = 'row  css_margin_zero css_padding_zero'>
+                        <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}><span className='fss-4'>{v_gps1.value}</span></div>
+                    </div>
+                    <div className = 'row  css_margin_zero css_padding_zero'>
+                    <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}><span className='fss-4'>{v_gps2.value}</span></div>
+                    </div>
+                </div>
+                <div key={this.props.prop_key+'8'} className = 'col-1  css_margin_zero '>
+                    <div className = {'row  css_margin_zero' + v_speed.GS.css}>
+                        <div className = {'col-4  css_margin_zero text-warning' + v_speed.AS.css}>AS:</div>
+                        <div className = {'col-8  css_margin_zero text-white' + v_speed.AS.css}>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
+                    </div>
+                    <div className = {'row  css_margin_zero' + v_speed.GS.css}>
+                        <div className = 'col-4  css_margin_zero text-warning '>GS:</div>
+                        <div className = 'col-8  css_margin_zero text-white '>{v_speed.GS.value}<span className='text-warning'>{v_speed.GS.unit}</span></div>
+                    </div>
+                </div>
                 
-            </div>
-            <div key={this.props.prop_key+'5'} className = 'col-1  css_margin_zero css_padding_zero'>
-                    <ul className="css_hud_bullets">
-                        <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>
-                        <li><span className="text-warning">P:</span><span className="text-white">{v_HUD.p}</span><span className="text-warning">º</span></li>
-                    </ul>
-            </div>
-            <div key={this.props.prop_key+'6'} className = 'col-2  css_margin_zero'>
-                    <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat1"} id={v_andruavUnit.partyID + "_ctrl_bat1"} m_title='Batt1' m_battery={v_andruavUnit.m_Power._FCB.p_Battery}/>
-                    <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat2"} id={v_andruavUnit.partyID + "_ctrl_bat2"} m_title='Batt2' m_battery={v_andruavUnit.m_Power._FCB.p_Battery2}/>
-            </div>
-            <div key={this.props.prop_key+'7'} className = 'col-1  css_margin_zero css_padding_zero '>
-                <div className = 'row  css_margin_zero css_padding_zero'>
-                    <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}><span className='fss-4'>{v_gps1.value}</span></div>
+                <div key={this.props.prop_key+'9'} className = 'col-1  css_margin_zero '>
+                    <div className = {'row  css_margin_zero ' + v_alt.rel.css}>
+                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
+                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
+                    </div>
+                    <div className = 'row  css_margin_zero '>
+                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.terC.css}><span className='text-warning'>TC:</span>{v_alt.terC.value}<span className='text-warning'>{v_alt.terC.unit}</span></div>
+                        <div className = {'col-6  css_margin_zero al_l '+ v_alt.lidar.css}><span className='text-warning'>L:</span>{v_alt.lidar.value}<span className='text-warning'>{v_alt.lidar.unit}</span></div>
+                    </div>
                 </div>
-                <div className = 'row  css_margin_zero css_padding_zero'>
-                <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}><span className='fss-4'>{v_gps2.value}</span></div>
-                </div>
-             </div>
-            <div key={this.props.prop_key+'8'} className = 'col-1  css_margin_zero '>
-                <div className = {'row  css_margin_zero' + v_speed.GS.css}>
-                    <div className = {'col-4  css_margin_zero text-warning' + v_speed.AS.css}>AS:</div>
-                    <div className = {'col-8  css_margin_zero text-white' + v_speed.AS.css}>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
-                </div>
-                <div className = {'row  css_margin_zero' + v_speed.GS.css}>
-                    <div className = 'col-4  css_margin_zero text-warning '>GS:</div>
-                    <div className = 'col-8  css_margin_zero text-white '>{v_speed.GS.value}<span className='text-warning'>{v_speed.GS.unit}</span></div>
-                </div>
-            </div>
             
-            <div key={this.props.prop_key+'9'} className = 'col-1  css_margin_zero '>
-                <div className = {'row  css_margin_zero ' + v_alt.rel.css}>
-                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
-                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
+                <div key={this.props.prop_key+'10'} className = {'col-1  css_margin_zero ' + v_wind.WS.css}>
+                    <div className = 'row  css_margin_zero'>
+                        <div className = 'col-4  css_margin_zero text-warning al_l'>WS/Z:</div>
+                        <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
+                    </div>
+                    <div className = {'row  css_margin_zero  ' + v_wind.WD.css}>
+                        <div  className = 'col-4  css_margin_zero text-warning al_l'>WD:</div>
+                        <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
+                    </div>
                 </div>
-                <div className = 'row  css_margin_zero '>
-                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.terC.css}><span className='text-warning'>TC:</span>{v_alt.terC.value}<span className='text-warning'>{v_alt.terC.unit}</span></div>
-                    <div className = {'col-6  css_margin_zero al_l '+ v_alt.lidar.css}><span className='text-warning'>L:</span>{v_alt.lidar.value}<span className='text-warning'>{v_alt.lidar.unit}</span></div>
+                <div key={this.props.prop_key+'11'} className = 'col-1  css_margin_zero skinny'>
+                    <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
+                        <div className = 'col-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
+                        <div className = {'col-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
+                    </div>
                 </div>
-            </div>
-           
-            <div key={this.props.prop_key+'10'} className = {'col-1  css_margin_zero ' + v_wind.WS.css}>
-                <div className = 'row  css_margin_zero'>
-                    <div className = 'col-4  css_margin_zero text-warning al_l'>WS/Z:</div>
-                    <div className = 'col-8  css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
-                </div>
-                <div className = {'row  css_margin_zero  ' + v_wind.WD.css}>
-                    <div  className = 'col-4  css_margin_zero text-warning al_l'>WD:</div>
-                    <div  className = 'col-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
-                </div>
-            </div>
-            <div key={this.props.prop_key+'11'} className = 'col-1  css_margin_zero skinny'>
-                <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
-                    <div className = 'col-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
-                    <div className = {'col-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>>></span>{v_wp.count}</div>
-                </div>
-            </div>
-            <div key={this.props.prop_key+'12'} className = 'col-1  css_margin_zero'></div>
+                <div key={this.props.prop_key+'12'} className = 'col-1  css_margin_zero'></div>
             </div>
             
         );
@@ -855,13 +855,13 @@ class CLSS_AndruavUnitListArray extends React.Component {
             //unit.push (units_gcs);
         
             unit.push (<div key={'CLSS_AndruavUnitListArray1' + this.props.prop_key} className="card-header text-center">
-							<div className="row">
-							<div className="col-11">
-								<h3 className="text-success text-start">Units</h3>
-							</div>
-							<div key={'CLSS_AndruavUnitListArray2' + this.props.prop_key} className="col-1 float-right">
-							<span key={'CLSS_AndruavUnitListArray3' + this.props.prop_key} id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
-							</div>
+                            <div className="row">
+                                <div className="col-11">
+                                    <h3 className="text-success text-start">Units</h3>
+                                </div>
+                                <div key={'CLSS_AndruavUnitListArray2' + this.props.prop_key} className="col-1 float-right">
+                                    <span key={'CLSS_AndruavUnitListArray3' + this.props.prop_key} id ='obaq' className="cursor_hand bi bi-x-diamond" onClick={ (e) => this.fn_OnClick()}></span>
+                                </div>
 							</div>
                             {units_details} 
 						</div>);
