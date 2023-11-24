@@ -885,7 +885,17 @@ tr.IsShutdown_false td.camera.m_IsGCS_false
 		}
 	}
     
+	@media (min-width: 1200px) {
+		.border-bottom-xs {
+			border-bottom: none;
+		}
+	}
     
+	.border-bottom-xs
+	{
+		border-bottom: 1px solid
+	}
+
     a.navbar-brand img{
         max-width:100px; 
         margin-top: -7px;

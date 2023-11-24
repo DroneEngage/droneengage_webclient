@@ -270,91 +270,186 @@ function fn_handleKeyBoard() {
 			$('#div_video_control').show();
 		}
 
+
+		function fn_activateClassicalView()
+		{
+			$('#row_2').show();
+			$('#row_1').show();
+			$('#row_1').removeClass();
+			$('#row_2').removeClass();
+			$('#row_1').addClass('col-lg-8 col-xl-8 col-xxl-8 col-12');
+			$('#row_2').addClass('col-lg-4 col-xl-4 col-xxl-4 col-12');
+			
+			$('#div_map_view').show();
+			$('#andruav_unit_list_array_fixed').hide();
+			$('#andruav_unit_list_array_float').hide();
+			
+			$('#btn_showSettings').show();
+		}
+
+		function fn_activateMapCameraSectionOnly()
+		{
+			$('#row_2').hide();
+			$('#row_1').show();
+			$('#row_1').removeClass();
+			$('#row_1').addClass('col-12');
+			
+			$('#div_map_view').show();
+			$('#andruav_unit_list_array_fixed').hide();
+			$('#andruav_unit_list_array_float').hide();
+			
+			$('#btn_showSettings').hide();
+		}
+
+
+		function fn_activateFixedVehicleListOnly()
+		{
+			$('#row_2').hide();
+			$('#row_1').show();
+			$('#row_1').removeClass();
+			$('#row_1').addClass('col-12');
+					
+			$('#div_map_view').hide();
+			$('#andruav_unit_list_array_fixed').show();
+			$('#andruav_unit_list_array_float').hide();
+			
+			$('#btn_showSettings').hide();
+		}
 		
-		function fn_applyControl()
+		function fn_activateMapCameraSectionAndFloatingList()
+		{
+			$('#row_2').hide();
+			$('#row_1').show();
+			$('#row_1').removeClass();
+			$('#row_1').addClass('col-12');
+			
+			$('#div_map_view').show();
+			$('#andruav_unit_list_array_fixed').hide();
+			$('#andruav_unit_list_array_float').show();
+			$('#andruav_unit_list_array_float').css({top: 400, left: 10, position:'absolute'});
+			
+			$('#btn_showSettings').hide();
+		}
+
+		function fn_activateAllViews()
+		{
+			$('#row_2').show();
+			$('#row_1').show();
+			$('#row_1').removeClass();
+			$('#row_2').removeClass();
+			$('#row_1').addClass('col-lg-8 col-xl-8 col-xxl-8 col-12');
+			$('#row_2').addClass('col-lg-4 col-xl-4 col-xxl-4 col-12');
+					
+					
+			$('#div_map_view').show();
+			$('#andruav_unit_list_array_fixed').hide();
+			$('#andruav_unit_list_array_float').show();
+			$('#andruav_unit_list_array_float').css({top: 400, left: 10, position:'absolute'});
+			
+			$('#btn_showSettings').show();
+		}
+
+		function fn_activateVehicleCardOnly()
+		{
+			$('#row_2').show();
+			$('#row_1').hide();
+			$('#row_2').removeClass();
+			$('#row_2').addClass('col-12');
+
+			$('#div_map_view').hide();
+			$('#andruav_unit_list_array_fixed').hide();
+			$('#andruav_unit_list_array_float').hide();
+			
+			$('#btn_showSettings').show();
+		}
+
+		function fn_applyControl(v_small_mode)
 		{
 			var v_display_mode = window.AndruavLibs.LocalStorage.fn_getDisplayMode();
 		
 			if (v_display_mode==null) v_display_mode = 0;
-			switch (v_display_mode%5)
+			
+			if (v_small_mode===true)
 			{
-				case 0:
-					// Classic View
-					$('#row_2').show();
-					$('#row_1').removeClass();
-					$('#row_2').removeClass();
-					$('#row_1').addClass('col-lg-8 col-xl-8 col-xxl-8 col-12');
-					$('#row_2').addClass('col-lg-4 col-xl-4 col-xxl-4 col-12');
-					
-					$('#div_map_view').show();
-					$('#andruav_unit_list_array_fixed').hide();
-					$('#andruav_unit_list_array_float').hide();
-					$('#btn_showControl').html("<strong>DISPLAY-1</strong>")
-				break;
-					
-				case 1:
-					// Map or Camera Only
-					$('#row_2').hide();
-					$('#row_1').removeClass();
-					$('#row_1').addClass('col-12');
-					
-					$('#div_map_view').show();
-					$('#andruav_unit_list_array_fixed').hide();
-					$('#andruav_unit_list_array_float').hide();
-					$('#btn_showControl').html("<strong>DISPLAY-2</strong>")
-				break;
+				switch (v_display_mode%4)
+				{
+					case 0:
+						// Classic View
+						fn_activateClassicalView();
+						$('#btn_showControl').html("<strong>DISPLAY-1</strong>");
 
-				
-				case 2:
-					// Vehicle List
-					$('#row_2').hide();
-					$('#row_1').removeClass();
-					$('#row_1').addClass('col-12');
-					
-					$('#div_map_view').hide();
-					$('#andruav_unit_list_array_fixed').show();
-					$('#andruav_unit_list_array_float').hide();
-					$('#btn_showControl').html("<strong>DISPLAY-3</strong>")
-				break;
+					break;
+						
+					case 1:
+						// Map or Camera Only
+						fn_activateMapCameraSectionOnly();
+						$('#btn_showControl').html("<strong>DISPLAY-2</strong>");
+					break;
 
-				case 3:
-					// Map/Camera + Vehicle List
-					$('#row_2').hide();
-					$('#row_1').removeClass();
-					$('#row_1').addClass('col-12');
 					
-					$('#div_map_view').show();
-					$('#andruav_unit_list_array_fixed').hide();
-					$('#andruav_unit_list_array_float').show();
-					$('#andruav_unit_list_array_float').css({top: 400, left: 10, position:'absolute'});
-					$('#btn_showControl').html("<strong>DISPLAY-4</strong>")
-				break;
+					case 2:
+						// Vehicle List
+						fn_activateFixedVehicleListOnly();
+						$('#btn_showControl').html("<strong>DISPLAY-3</strong>");
+					break;
 
-				case 4:
-					// Map/Camera + Control + Vehicle List
-					$('#row_2').show();
-					$('#row_1').removeClass();
-					$('#row_2').removeClass();
-					$('#row_1').addClass('col-lg-8 col-xl-8 col-xxl-8 col-12');
-					$('#row_2').addClass('col-lg-4 col-xl-4 col-xxl-4 col-12');
+					case 3:
+						// Vehicle Control Cards
+						fn_activateVehicleCardOnly();
+						$('#btn_showControl').html("<strong>DISPLAY-4</strong>");
+					break;
+				}
+			}
+			else
+			{
+				switch (v_display_mode%6)
+				{
+					case 0:
+						// Classic View
+						fn_activateClassicalView();
+						$('#btn_showControl').html("<strong>DISPLAY-1</strong>");
+					break;
+						
+					case 1:
+						fn_activateMapCameraSectionOnly();
+						$('#btn_showControl').html("<strong>DISPLAY-2</strong>");
+					break;
+
+					
+					case 2:
+						fn_activateMapCameraSectionAndFloatingList();
+						$('#btn_showControl').html("<strong>DISPLAY-3</strong>");
+					break;
+
+					case 3:
+						fn_activateFixedVehicleListOnly();
+						$('#btn_showControl').html("<strong>DISPLAY-4</strong>");
+					break;
+
+					case 4:
+						fn_activateVehicleCardOnly();
+						$('#btn_showControl').html("<strong>DISPLAY-5</strong>");
+					break;
+					
+					case 5:
+						fn_activateAllViews();
+						$('#btn_showControl').html("<strong>DISPLAY-6</strong>");
+					break;
 					
 					
-					$('#div_map_view').show();
-					$('#andruav_unit_list_array_fixed').hide();
-					$('#andruav_unit_list_array_float').show();
-					$('#andruav_unit_list_array_float').css({top: 400, left: 10, position:'absolute'});
-					$('#btn_showControl').html("<strong>DISPLAY-5</strong>")
-				break;
+				}
 			}
 
 			window.AndruavLibs.LocalStorage.fn_setDisplayMode(v_display_mode);
 			window.AndruavLibs.AndruavMap.fn_invalidateSize();
 		}
 
-		function fn_showControl() {
+		function fn_showControl(v_small_mode) {
 			window.AndruavLibs.LocalStorage.fn_setDisplayMode(parseInt(window.AndruavLibs.LocalStorage.fn_getDisplayMode())+1);
-			fn_applyControl();
+			fn_applyControl(v_small_mode);
 		}
+
+		
 
 
 		function fn_showMap() {
