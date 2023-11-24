@@ -1096,7 +1096,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         imu.push (
                 <div key='imu_1' id='imu_1' className= 'row al_l  css_margin_zero '>
                     <div className = 'row al_l css_margin_zero d-flex '>
-                        <div className= 'col-6 col-sm-3 user-select-none '>
+                        <div className= 'col-6 col-md-3 user-select-none '>
                                 <p className=' rounded-3 text-warning cursor_hand textunit' title ='Ground Speed'>
                                 <span title={"decrease speed"} onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed - CONST_DEFAULT_SPEED_STEP )}>
                                     <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1116,19 +1116,19 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                 </p>
                                 
                         </div>
-                        <div key='gps' className= 'col-6 col-sm-3 user-select-none  '>
+                        <div key='gps' className= 'col-6 col-md-3 user-select-none  '>
                                 <p id='gps' className={' rounded-3 textunit text-center cursor_hand  ' + gps.m_gps_class} title ={gps.m_gps_status} onClick={ (e) => fn_switchGPS(v_andruavUnit)} >{gps.m_gps_source + gps.m_gps_text + ' ' + gps.m_gps_text2}</p>
                         </div>
-                        <div key='DFM' className= 'col-6 col-sm-3 user-select-none '>
+                        <div key='DFM' className= 'col-6 col-md-3 user-select-none '>
                                   <p id='DFM' className={' rounded-3 text-center textunit ' + v_distanceToMe_class} title ="Unit's distance from Me (Browser Location)" >{"DFM: " + v_distanceToMe_text}</p>
                          </div>
-                        <div key='fence' className= 'col-6 col-sm-3 user-select-none '>
+                        <div key='fence' className= 'col-6 col-md-3 user-select-none '>
                         <p id='fence' className={'rounded-3 textunit text-center cursor_hand ' + v_fence_class} title ='Fence Violation Status' onClick={ (e) => fn_openFenceManager(v_andruavUnit.partyID)} >{v_fence_text}</p>
                         </div>
                     </div>
 
                     <div key='alt_ctrl'   className = 'row al_l css_margin_zero d-flex '>
-                        <div key='alt_ctrl1'  className= 'col-6 col-sm-3 user-select-none  '>
+                        <div key='alt_ctrl1'  className= 'col-6 col-md-3 user-select-none  '>
                                   <p id='alt'   className=' rounded-3 cursor_hand textunit text-warning' >
                                         <span title={"decrease altitude"} onClick={ (e) => this.fn_doChangeAltitudeByStep(v_andruavUnit, v_andruavUnit.m_Nav_Info.p_Location.alt - fn_convertToMeter(window.AndruavLibs.LocalStorage.fn_getDefaultAltitude()) )}>
                                             <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1148,16 +1148,16 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                   </p>
                               
                         </div>
-                        <div key='alt_ctrl2'  className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
+                        <div key='alt_ctrl2'  className= 'col-6 col-md-3 css_margin_zero user-select-none '>
                                 <p id='alt'   className={' rounded-3  textunit text-center ' + v_flight_status_class} title = {'Total Flying: ' + v_totalFlyingTime}>
                                 {v_flight_status_text + " "}   <small> {v_flyingTime}</small>
                                 </p>
                         </div>
-                        <div key='alt_ctrl3'  className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
+                        <div key='alt_ctrl3'  className= 'col-6 col-md-3 css_margin_zero user-select-none '>
                             <p id='wpd' className={' rounded-3 textunit text-center ' + distanceToWP_class} title ='Distance to next waypoint' >{'wp: '+ wpdst_text}</p>
                             
                         </div>
-                        <div key='alt_ctrl4' className= 'col-6 col-sm-3 css_margin_zero user-select-none '>
+                        <div key='alt_ctrl4' className= 'col-6 col-md-3 css_margin_zero user-select-none '>
                         <p id='fcb_mode'  className={' rounded-3 textunit   text-center ' + v_flight_mode_class} title ={v_fcb_mode_title} onClick={ (e) => this.fn_connectToFCB(v_andruavUnit,true)}> {v_flight_mode_text } </p>
                         </div>
                     </div>
@@ -1465,13 +1465,13 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
      return (
             
              <div  key={id +"1"} id={id} className={"row mb-1 mt-0 me-0 ms-0 pt-1 user-select-none IsGCS_" + v_andruavUnit.m_IsGCS + " card border-light IsShutdown_" + v_andruavUnit.m_IsShutdown}>
-             <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none d-none d-sm-flex'>        	
-                <div key={id +"__1"} className= 'col-1  padding_zero'><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={module_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)}/></div>
-                <div key={id +"__2"} className= 'col-1  padding_zero'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit)}/></div>
-                <div key={id +"__3"} className= 'col-1  padding_zero'><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => toggleVideo(v_andruavUnit)}/></div>
-                <div key={id +"__4"} className= 'col-1  padding_zero'><img className={recvideo_class} src={recvideo_src} title='Start Recording on Drone' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit)}/></div>
+             <div  key={id +"_1"} id={v_andruavUnit.partyID + "_1"} className='row margin_2px padding_zero user-select-none '>        	
+                <div key={id +"__1"} className= 'col-1  padding_zero d-flex '><img className=' cursor_hand gcs IsGCS_false small_icon' src={getVehicleIcon(v_andruavUnit)}  title={module_version}  alt='Vehicle' onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)}/></div>
+                <div key={id +"__2"} className= 'col-1  padding_zero d-none d-sm-flex'><img className={camera_class  } src={camera_src} title='Take Photo' onClick={ (e) => this.fn_toggleCamera(v_andruavUnit)}/></div>
+                <div key={id +"__3"} className= 'col-1  padding_zero d-none d-sm-flex '><img className={video_class   } src={video_src} title='Start Live Stream' onClick={ (e) => toggleVideo(v_andruavUnit)}/></div>
+                <div key={id +"__4"} className= 'col-1  padding_zero d-none d-sm-flex '><img className={recvideo_class} src={recvideo_src} title='Start Recording on Drone' onClick={ (e) => toggleRecrodingVideo(v_andruavUnit)}/></div>
                 {rows}
-            </div>
+             </div>
              
                 <ul key={v_andruavUnit.partyID + 'ul'} className="nav nav-tabs">
                     <li key={v_andruavUnit.partyID + 'li1'} className="nav-item">
@@ -1576,7 +1576,9 @@ class CLSS_AndruavUnitList extends React.Component {
 
     fn_onPreferenceChanged(me)
     {
-        me.forceUpdate();
+        if (me._isMounted!==true) return ;
+        me.setState({'m_update': me.state.m_update +1});
+        //me.forceUpdate();
     }
 
     fn_updateMapStatus(p_andruavUnit)
