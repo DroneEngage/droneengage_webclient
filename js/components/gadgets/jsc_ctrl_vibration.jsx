@@ -4,7 +4,7 @@ export class CLSS_CTRL_VIBRATION extends React.Component {
 		super ();
 		    this.state = {
                 warning_level :  0,
-                is_compact : false
+                is_compact : true
 		};
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_EKFViewToggle,this,this.fn_toggle_global);
     }
