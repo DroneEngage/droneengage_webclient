@@ -3,7 +3,7 @@ export class CLSS_CTRL_BATTERY extends React.Component {
 	{
 		super ();
 		    this.state = {
-                is_compact : false
+                is_compact : true
 		};
 
         window.AndruavLibs.EventEmitter.fn_subscribe(EE_BattViewToggle,this,this.fn_toggle_global);
