@@ -39,23 +39,61 @@ class CLSS_AndruavUnit_Drone_Header extends React.Component{
 
     render()
     {
+
+        var css_speed_enabled = '';
+        var css_battery_enabled = '';
+        var css_ekf_enabled = '';
+        var css_alt_enabled = '';
+        var css_ws_enabled = '';
+        var css_wp_enabled = '';
+        
+        if (this.props.prop_speed != true)
+        {
+            css_speed_enabled = 'd-none';
+        }
+        
+        if (this.props.prop_battery != true)
+        {
+            css_battery_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_ekf != true)
+        {
+            css_ekf_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_alt != true)
+        {
+            css_alt_enabled = 'd-none';
+        }
+
+        if (this.props.prob_ws != true)
+        {
+            css_ws_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_wp != true)
+        {
+            css_wp_enabled = 'd-none';
+        }
+        
         return (
             <div className = 'row  d-none d-lg-flex mt-0 me-0 ms-0 mb-2 text-nowrap bg-body border css_padding_zero css_cur_default fss-4'>
-            <div className = 'col-1  d.none- css_margin_zero text-center fw-bold '>ID</div>
-            <div className = {'col-1  css_margin_zero text-center fw-bold '}>MODE</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
+            <div className = 'col-2  col-lg-1  css_margin_zero text-center fw-bold '>ID</div>
+            <div className = {'col-2  col-lg-1   css_margin_zero text-center fw-bold '}>MODE</div>
+            <div className = {'col-2  col-lg-1 d-none d-lg-flex css_margin_zero css_padding_zero cursor_hand fw-bold ' + css_ekf_enabled} onClick={ (e) => this.fn_toggleEKF()}>EKF/VIB</div>
             {/* heading is not there */}
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>HUD</div>
-            <div className = 'col-2  css_margin_zero css_padding_zero cursor_hand fw-bold ' onClick={ (e) => this.fn_toggleBattery()}>BATT</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>GPS</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>SPEED</div>
+            <div className = 'col-2  col-lg-1   css_margin_zero css_padding_zero fw-bold '>HUD</div>
+            <div className = {'col-4  col-lg-2   css_margin_zero css_padding_zero cursor_hand fw-bold ' + css_battery_enabled} onClick={ (e) => this.fn_toggleBattery()}>BATT</div>
+            <div className = 'col-2  col-lg-1   d-none d-lg-flex  css_margin_zero css_padding_zero fw-bold '>GPS</div>
+            <div className = {'col-2  col-lg-1   css_margin_zero css_padding_zero fw-bold ' + css_speed_enabled}  >SPEED</div>
             {/* not important for boat or rover */}
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>ALT</div> 
+            <div className = {'col-2  col-lg-1   css_margin_zero css_padding_zero fw-bold ' + css_alt_enabled}>ALT</div> 
             {/* not important for boat or rover */}
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>WIND</div>
+            <div className = {'col-2  col-lg-1   d-none d-lg-flex css_margin_zero css_padding_zero fw-bold '  + css_ws_enabled}>WIND</div>
             {/* always important */}
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '>WP</div>
-            <div className = 'col-1  css_margin_zero css_padding_zero fw-bold '></div>
+            <div className = {'col-2  col-lg-1   css_margin_zero css_padding_zero fw-bold '  + css_wp_enabled}>WP</div>
+            <div className = 'col-2  col-lg-1  css_margin_zero css_padding_zero fw-bold '></div>
             </div>
             
         );
@@ -133,10 +171,12 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         //const c_yaw = (CONST_RADIUS_TO_DEGREE * ((v_andruavUnit.m_Nav_Info.p_Orientation.yaw + CONST_PTx2) % CONST_PTx2)).toFixed(1);
         const c_pitch = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.pitch) ).toFixed(1);
         const c_roll = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.roll) ).toFixed(1);
+        const c_heading = ((CONST_RADIUS_TO_DEGREE * v_andruavUnit.m_Nav_Info.p_Orientation.yaw) ).toFixed(1);
         
         return {
             'p':c_pitch,
-            'r':c_roll
+            'r':c_roll,
+            'h':c_heading
         }
     }
 
@@ -608,10 +648,46 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
         }
 
         
+        var css_speed_enabled = '';
+        var css_battery_enabled = '';
+        var css_ekf_enabled = '';
+        var css_alt_enabled = '';
+        var css_ws_enabled = '';
+        var css_wp_enabled = '';
 
+        if (this.props.prop_speed != true)
+        {
+            css_speed_enabled = 'd-none';
+        }
+        
+        if (this.props.prop_battery != true)
+        {
+            css_battery_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_ekf != true)
+        {
+            css_ekf_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_alt != true)
+        {
+            css_alt_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_ws != true)
+        {
+            css_ws_enabled = 'd-none';
+        }
+        
+        if (this.props.prob_wp != true)
+        {
+            css_wp_enabled = 'd-none';
+        }
+        
         return (
             <div key={this.props.prop_key+'1'} className = 'row  mt-0 me-0 ms-0 mb-2 text-nowrap border-bottom bg-gradient'>
-                <div key={this.props.prop_key+'2'} className = {'col-1  css_margin_zero text-center cursor_hand ' + v_id_class} onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}>
+                <div key={this.props.prop_key+'2'} className = {'col-2  col-lg-1   css_margin_zero text-center cursor_hand ' + v_id_class} onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit.partyID)}>
                     <div key={this.props.prop_key+'23'} className = 'row  css_margin_zero '>
                         <div key={this.props.prop_key+'24'} className = {'col-12  css_margin_zero css_padding_zero '+ v_id_icon}>{v_id_text}</div>
                     </div>
@@ -619,7 +695,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                             <div key={this.props.prop_key+'26'} className = 'col-12  css_margin_zero '>{'mavid: ' + v_mav_id_text}</div>
                     </div>
                 </div>
-                <div key={this.props.prop_key+'3'} className = {'col-1  css_margin_zero text-center css_padding_zero '}>
+                <div key={this.props.prop_key+'3'} className = {'col-2  col-lg-1   css_margin_zero text-center css_padding_zero '}>
                     <div key={this.props.prop_key+'31'} className = 'row  css_margin_zero css_padding_zero '>
                         <div key={this.props.prop_key+'32'} className = {'col-12  css_margin_zero css_padding_zero '+ v_flight_mode.css} title ={v_flight_mode.title}>{v_flight_mode.txt}</div>
                     </div>
@@ -627,7 +703,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                         <div key={this.props.prop_key+'34'} className = {'col-12  css_margin_zero css_padding_zero '+ v_armed.css}>{v_armed.text}</div>
                     </div>
                 </div>
-                <div key={this.props.prop_key+'4'} className = 'col-1  css_margin_zero css_padding_zero'>
+                <div key={this.props.prop_key+'4'} className = {'col-2  col-lg-1   d-none d-lg-flex css_margin_zero css_padding_zero '   + css_ekf_enabled}>
                         <div key={this.props.prop_key+'41'} className = 'row  css_margin_zero  '>
                             {ctrl_ekf}
                         </div>
@@ -636,17 +712,18 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                         </div>
                     
                 </div>
-                <div key={this.props.prop_key+'5'} className = 'col-1  css_margin_zero css_padding_zero'>
+                <div key={this.props.prop_key+'5'} className = 'col-2  col-lg-1   css_margin_zero css_padding_zero'>
                         <ul className="css_hud_bullets">
                             <li><span className="text-warning">R:</span><span className="text-white">{v_HUD.r}</span><span className="text-warning">º</span></li>
                             <li><span className="text-warning">P:</span><span className="text-white">{v_HUD.p}</span><span className="text-warning">º</span></li>
+                            <li><span className="text-warning">H:</span><span className="text-white">{v_HUD.h}</span><span className="text-warning">º</span></li>
                         </ul>
                 </div>
-                <div key={this.props.prop_key+'6'} className = 'col-2  css_margin_zero'>
+                <div key={this.props.prop_key+'6'} className = {'col-4  col-lg-2   css_margin_zero ' + css_battery_enabled}>
                         <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat1"} id={v_andruavUnit.partyID + "_ctrl_bat1"} m_title='Batt1' m_battery={v_andruavUnit.m_Power._FCB.p_Battery}/>
                         <CLSS_CTRL_BATTERY key={v_andruavUnit.partyID + "_ctrl_bat2"} id={v_andruavUnit.partyID + "_ctrl_bat2"} m_title='Batt2' m_battery={v_andruavUnit.m_Power._FCB.p_Battery2}/>
                 </div>
-                <div key={this.props.prop_key+'7'} className = 'col-1  css_margin_zero css_padding_zero '>
+                <div key={this.props.prop_key+'7'} className = 'col-2  col-lg-1   d-none d-lg-flex css_margin_zero css_padding_zero '>
                     <div className = 'row  css_margin_zero css_padding_zero'>
                         <div className = {'col-12  css_margin_zero text-white'+ v_gps1.css}><span className='fss-4'>{v_gps1.value}</span></div>
                     </div>
@@ -654,7 +731,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     <div className = {'col-12  css_margin_zero text-white '+ v_gps2.css}><span className='fss-4'>{v_gps2.value}</span></div>
                     </div>
                 </div>
-                <div key={this.props.prop_key+'8'} className = 'col-1  css_margin_zero '>
+                <div key={this.props.prop_key+'8'} className = {'col-2  col-lg-1   css_margin_zero ' + css_speed_enabled}>
                     <div className = {'row  css_margin_zero' + v_speed.GS.css}>
                         <div className = {'col-4  css_margin_zero text-warning' + v_speed.AS.css}>AS:</div>
                         <div className = {'col-8  css_margin_zero text-white' + v_speed.AS.css}>{v_speed.AS.value}<span className='text-warning'>{v_speed.AS.unit}</span></div>
@@ -665,7 +742,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     </div>
                 </div>
                 
-                <div key={this.props.prop_key+'9'} className = 'col-1  css_margin_zero '>
+                <div key={this.props.prop_key+'9'} className = {'col-2  col-lg-1   css_margin_zero '  + css_alt_enabled}>
                     <div className = {'row  css_margin_zero ' + v_alt.rel.css}>
                         <div className = {'col-12  col-xxl-6 css_margin_zero al_l '+ v_alt.abs.css}><span className='text-warning'>A:</span>{v_alt.abs.value}<span className='text-warning'>{v_alt.abs.unit}</span></div>
                         <div className = {'col-12  col-xxl-6 css_margin_zero al_l '+ v_alt.rel.css}><span className='text-warning'>R:</span>{v_alt.rel.value}<span className='text-warning'>{v_alt.rel.unit}</span></div>
@@ -676,7 +753,7 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                     </div>
                 </div>
             
-                <div key={this.props.prop_key+'10'} className = {'col-1  css_margin_zero ' + v_wind.WS.css}>
+                <div key={this.props.prop_key+'10'} className = {'col-2  col-lg-1   d-none d-lg-flex  css_margin_zero ' + v_wind.WS.css   + css_ws_enabled}>
                     <div className = 'row  css_margin_zero'>
                         <div className = 'col-12  col-xxl-4 css_margin_zero text-warning al_l'>WS/Z:</div>
                         <div className = 'col-12  col-xxl-8 css_margin_zero text-white al_r' > {v_wind.WS.value} / {v_wind.WZ.value}<span className='text-warning'>{v_wind.WS.unit}</span></div>
@@ -686,13 +763,13 @@ class CLSS_AndruavUnit_Drone_Row extends React.Component{
                         <div  className = 'col-12  col-xxl-8  css_margin_zero text-white al_r'> {v_wind.WD.value}<span className="text-warning">{v_wind.WD.unit}</span></div>
                     </div>
                 </div>
-                <div key={this.props.prop_key+'11'} className = 'col-1  css_margin_zero skinny'>
+                <div key={this.props.prop_key+'11'} className = {'col-2  col-lg-1   css_margin_zero skinny '  + css_wp_enabled}>
                     <div className = {'row  css_margin_zero padding_zero' + v_wp.wp_dist.css}>
                         <div className = 'col-12  col-xxl-6  css_margin_zero text-white padding_zero '  >{v_wp.wp_dist.value}<span className='text-warning'>{v_wp.wp_dist.unit}</span></div>
                         <div className = {'col-12  col-xxl-6  css_margin_zero text-white padding_zero ' + v_wp.css}>{v_wp.cur}<span className='text-warning'>{'>>'}</span>{v_wp.count}</div>
                     </div>
                 </div>
-                <div key={this.props.prop_key+'12'} className = 'col-1  css_margin_zero'></div>
+                <div key={this.props.prop_key+'12'} className = 'col-2  col-lg-1   css_margin_zero'></div>
             </div>
             
         );
@@ -827,8 +904,9 @@ class CLSS_AndruavUnitListArray extends React.Component {
         }
         else 
             {
-                var me = this;
-                units_details.push(<CLSS_AndruavUnit_Drone_Header prop_key={this.props.prop_key} key={'drone_hdr'+ this.props.prop_key} />);
+                const me = this;
+                units_details.push(<CLSS_AndruavUnit_Drone_Header prop_key={me.props.prop_key} key={'drone_hdr'+ this.props.prop_key} 
+                                    prop_speed={me.props.prop_speed}  prop_battery={me.props.prop_battery}  prob_wp={me.props.prob_wp} prob_ekf={me.props.prob_ekf} prob_alt={me.props.prob_alt} prob_ws={me.props.prob_ws}  />);
                 this.state.andruavUnitPartyIDs.map(function (partyID)
                 {
                     var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
@@ -842,7 +920,8 @@ class CLSS_AndruavUnitListArray extends React.Component {
                     else 
                     if (v_andruavUnit.m_IsGCS===false)
                     {
-                        units_details.push(<CLSS_AndruavUnit_Drone_Row prop_key={me.props.prop_key+partyID} key={partyID + 'row' + me.props.prop_key} m_unit={v_andruavUnit}/>);
+                        units_details.push(<CLSS_AndruavUnit_Drone_Row prop_key={me.props.prop_key+partyID} key={partyID + 'row' + me.props.prop_key} m_unit={v_andruavUnit}
+                                            prop_speed={me.props.prop_speed}  prop_battery={me.props.prop_battery}  prob_wp={me.props.prob_wp} prob_ekf={me.props.prob_ekf} prob_alt={me.props.prob_alt} prob_ws={me.props.prob_ws}  />);
                     }
 
                     me.fn_updateMapStatus(v_andruavUnit);
@@ -879,7 +958,7 @@ if (CONST_TEST_MODE === true)
 
          ReactDOM.render(
              <React.StrictMode>
-             <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+             <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' prop_speed={true}  prop_battery={true}  prob_ekf={true} prob_alt={true} prob_ws={true} prob_wp={true} />,
              </React.StrictMode>,
 	 		window.document.getElementById('andruav_unit_list_array_float')
          );
@@ -889,7 +968,7 @@ if (CONST_TEST_MODE === true)
     
          ReactDOM.render(
              <React.StrictMode>
-             <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
+             <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2' prop_speed={true}  prop_battery={true}  prob_ekf={true} prob_alt={true} prob_ws={false} prob_wp={false} />,
              </React.StrictMode>,
 	 		window.document.getElementById('andruav_unit_list_array_fixed')
          );
@@ -901,7 +980,7 @@ else
     if ($('#andruav_unit_list_array_float').length != 0) {
 
          ReactDOM.render(
-             <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' />,
+             <CLSS_AndruavUnitListArray key='CLSS_AndruavUnitListArray1' prop_key='1' prop_speed={true}  prop_battery={true}  prob_ekf={true} prob_alt={true} prob_ws={true} prob_wp={true} />,
              window.document.getElementById('andruav_unit_list_array_float')
          );
      }
@@ -909,7 +988,7 @@ else
      if ($('#andruav_unit_list_array_fixed').length != 0) {
 
          ReactDOM.render(
-             <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'/>,
+             <CLSS_AndruavUnitListArray  key='CLSS_AndruavUnitListArray2' prop_key='2'  prop_speed={true}  prop_battery={true}  prob_ekf={true} prob_alt={true} prob_ws={false} prob_wp={false} />,
              window.document.getElementById('andruav_unit_list_array_fixed')
          );
     }
