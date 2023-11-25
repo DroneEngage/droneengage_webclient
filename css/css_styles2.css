@@ -2,6 +2,7 @@
 div.css_mainbody
 {
 	margin-right: 0px !important;
+	margin-top: 100px !important;
 }
 
 img.camera_switch
@@ -370,6 +371,14 @@ div#modal_ctrl_parameters #parameters_sublist
 
 
 div#andruav_unit_list_array
+{
+	position:fixed !important;
+	bottom:22% !important;
+	height: 40px !important;
+	/* width: inherit !important; */
+}
+
+div#andruav_unit_list_array_float
 {
 	position:fixed !important;
 	bottom:22% !important;
