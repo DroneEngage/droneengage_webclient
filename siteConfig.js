@@ -10,6 +10,7 @@
 /**
  * Communication Server
  */
+
 const CONST_TEST_MODE = false;
 const CONST_PROD_MODE_IP = 'airgap.droneengage.com'; 
 const CONST_TEST_MODE_IP = "192.168.1.144";
@@ -19,17 +20,10 @@ const CONST_TITLE = "Drone Extend";
 /**
  * Links that are used in Header
  */
-/*
 const CONST_HOME_URL = "https://cloud.ardupilot.org/";
 const CONST_MANUAL_URL = "https://cloud.ardupilot.org/";
 const CONST_FAQ_URL = "https://cloud.ardupilot.org/de-faq.html";
 const CONST_CONTACT_URL = "https://droneengage.com/contact.html";
-*/
-
-const CONST_HOME_URL = "";
-const CONST_MANUAL_URL = "https://www.droneextend.com";
-const CONST_FAQ_URL = "https://simpleunmanned.droneextend.com";
-const CONST_CONTACT_URL = "https://simpleunmanned.droneextend.com";
 
 /**
  * Location of GCS are not sent over network. Only The existence of connected GCS are shared.
@@ -50,6 +44,6 @@ const CONST_FEATURE =
 };
 
 const CONST_ICE_SERVERS =  [
-    {urls: 'turn:simpleunmanned.droneextend.com' , 'credential':'1234', 'username':'airgap' },
+    {urls: 'turn:cloud.ardupilot.org', 'credential':'1234', 'username':'andruav_ap'},
     {urls: "stun:stun1.l.google.com:19302"},
     ];
