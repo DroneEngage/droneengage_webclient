@@ -1358,9 +1358,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         <a className="nav-link  " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link  " data-bs-toggle="tab" href={"#sonar" + v_andruavUnit.partyID}>Sonar</a>
-                    </li>
-                    <li className="nav-item">
                         <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
                     </li>
                 </ul>
@@ -1374,9 +1371,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                     </div>
                     <div key={v_andruavUnit.partyID + 'myTabContent_3'} className="tab-pane fade" id={"details" + v_andruavUnit.partyID}>
                             <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
-                    </div>
-                    <div className="tab-pane fade" id={"sonar" + v_andruavUnit.partyID}>
-                            <CLSS_CTRL_SONAR p_unit={v_andruavUnit}/>
                     </div>
                     <div className="tab-pane fade" id={"empty" + v_andruavUnit.partyID}>
                     </div>
