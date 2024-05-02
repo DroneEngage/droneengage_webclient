@@ -123,6 +123,10 @@ const CONST_FLIGHT_PX4_POSCTL_ORBIT            			= 215;
 const CONST_FLIGHT_CONTROL_UNKNOWN            			= 999;
 
 
+// P2P Connection Type
+const CONST_TYPE_UNKNOWN								= 0;
+const CONST_TYPE_ESP32_MESH								= 1;
+
 function fn_getFullName(m_groupName, p_partyID)
 	{
 		//return m_groupName.replace(" ","_") + "_X_" + partyID.replace(" ","_");
@@ -319,6 +323,15 @@ class C_Swarm
 	};
 }
 
+class C_P2P
+{
+		constructor (p_parent)
+		{
+			
+		};
+
+}
+
 
 class C_Servo
 {
@@ -444,16 +457,6 @@ class C_Terrain
 	}
 }
 
-class C_NetWorkStatus
-{
-	constructor (p_parent)
-	{
-		this.m_parent 	= p_parent;
-		this.m_received_msg	= 0;
-		this.m_received_bytes = 0;
-		this.m_lastActiveTime = 0;
-	}
-}
 
 class C_EKF
 {
@@ -515,14 +518,14 @@ class C_GUIHelper
 	}
 }
 
+/**
+ * Handles message counters.
+ */
 class C_Messages
 {
 	constructor(p_parent)
 	{
-		this.m_parent = parent;
-		this.m_messages_repeat = {};
-		this.m_messages_in = {};
-		this.m_messages_in_mavlink = {};
+		this.fn_reset();
 	}
 
 	
@@ -538,6 +541,10 @@ class C_Messages
 		}
 	}
 
+	/**
+	 * message type counter.
+	 * @param {*} message_id 
+	 */
 	fn_addMsg (message_id)
 	{
 		if (this.m_messages_in.hasOwnProperty(message_id)==false)
@@ -550,7 +557,12 @@ class C_Messages
 		}
 	}
 
-
+	/**
+	 * Stores messages status to know what message is sent to or from this unit so we can ignore repeated messages.
+	 * @param {*} message_id message id
+	 * @param {*} interval_ms send it every ms
+	 * @param {*} from_time last time sent .
+	 */
 	fn_doNotRepeatMessageBefore(message_id, interval_ms,from_time)
 	{
 		this.m_messages_repeat[message_id] = {
@@ -559,6 +571,12 @@ class C_Messages
 		}
 	}
 
+	/**
+	 * Test if a message can be processed, sent or ignored.
+	 * if true then can be added or can be re-send.
+	 * @param {*} message_id 
+	 * @returns 
+	 */
 	fn_sendMessageAllowed(message_id)
 	{
 		const data = this.m_messages_repeat[message_id];
@@ -566,6 +584,18 @@ class C_Messages
 
 		const can_send =  (((new Date()) - data.from_time)>data.interval_ms);
 		return can_send;
+	}
+
+	fn_reset()
+	{
+		this.m_parent = parent;
+		this.m_messages_repeat = {};
+		this.m_messages_in = {};
+		this.m_messages_in_mavlink = {};
+
+		this.m_received_msg	= 0;
+		this.m_received_bytes = 0;
+		this.m_lastActiveTime = 0;
 	}
 }
 
@@ -633,6 +663,7 @@ class CAndruavUnitObject
 	init ()
 	{
 		var me = this;
+		this.m_time_sync				=0; // time sent by unit so that you can use it to measrue other time fields sent by the same module.
 		this.m_Permissions           	= 'X0X0X0X0X0X0';
 		this.m_IsShutdown				= false;	
 		this.m_WindSpeed				= null;
@@ -645,7 +676,6 @@ class CAndruavUnitObject
 		this.m_GPS_Info3				= new C_GPS (this);
 		this.m_Nav_Info 				= new C_NavInfo(this);
 		this.m_Terrain_Info 			= new C_Terrain (this);
-		this.m_NetworkStatus 			= new C_NetWorkStatus (this);
 		// create a buffer for flight path
 		Object.seal(this.m_NetworkStatus);
 		Object.seal(this.m_Nav_Info);
@@ -658,6 +688,7 @@ class CAndruavUnitObject
 		this.m_DetectedTargets			= new C_DetectedTargets(this);
 											
 		this.m_Swarm 					= new C_Swarm(this);
+		this.m_P2P						= new C_P2P(this);
 		this.m_SignalStatus				= {m_wifi:false, m_mobile:false, m_mobileSignalLevel:0, m_mobileNetworkType:0, m_mobileNetworkTypeRank:0};
 		
 		this.m_FCBParameters 			= new C_FCBParameters(this);
@@ -694,7 +725,31 @@ class CAndruavUnitList
 		this.count = 0;
 	}
 
+	fn_getUnitsArray()
+	{
+		return Object.entries(this.List);
+	}
 
+	fn_getUnitsSorted()
+    {
+        var sorted = Object.entries(this.List).sort(
+            function(a, b) {
+				const name_a = a[1].m_unitName? a[1].m_unitName:'' ;
+				const name_b = b[1].m_unitName? b[1].m_unitName:'';
+				if (name_a < name_b) {
+					return -1;
+				}
+				if (name_a > name_b) {
+				  return 1;
+				}
+				return 0;
+			  });
+
+		return sorted;
+    }
+
+
+    
 	Add (partyID,andruavUnit)
 	{
 		if (this.List[partyID]!=null) return ;

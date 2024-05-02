@@ -899,17 +899,29 @@ class CLSS_AndruavUnitListArray extends React.Component {
         if (this.state.andruavUnitPartyIDs.length == 0) 
         {
 
-            unit.push (<div key={'CLSS_AndruavUnitListArray_unit_length' + this.props.prop_key} className='bg-success'>NO ONLINE UNITS</div>);
+            unit.push (<div key={'CLSS_AndruavUnitListArray_unit_length_empty' + this.props.prop_key} className='bg-success'>NO ONLINE UNITS</div>);
         }
         else 
             {
                 const me = this;
                 units_details.push(<CLSS_AndruavUnit_Drone_Header prop_key={me.props.prop_key} key={'drone_hdr'+ this.props.prop_key} 
                                     prop_speed={me.props.prop_speed}  prop_battery={me.props.prop_battery}  prob_wp={me.props.prob_wp} prob_ekf={me.props.prob_ekf} prob_alt={me.props.prob_alt} prob_ws={me.props.prob_ws}  />);
-                this.state.andruavUnitPartyIDs.map(function (partyID)
+            
+                var sortedPartyIDs;
+                if (window.AndruavLibs.LocalStorage.fn_getUnitSortEnabled()===true)
                 {
-                    var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
-                    
+                    // Sort the array alphabetically
+                    sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSorted();
+                }
+                else
+                {
+                    sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsArray();
+                }
+                sortedPartyIDs.map(function (object)
+                {
+                    const partyID = object[0];
+                    const v_andruavUnit = object[1];
+                
                     if ((v_andruavUnit==null) || (v_andruavUnit.m_defined!==true))return ;
 
                     if (v_andruavUnit.m_IsGCS===true)

@@ -124,8 +124,12 @@ export class CLSS_LoginControl extends React.Component {
 						<div className={this.state.is_connected == true ? "hidden" : " "} >
 							<div className="form-group al_l"><label htmlFor="txtEmail" id="email" className="text-white">Email</label><input type="email" id="txtEmail" name="txtEmail" className="form-control" defaultValue={QueryString.email != null ? QueryString.email : window.AndruavLibs.LocalStorage.fn_getEmail()} /></div>
 							<div className="form-group al_l"><label htmlFor="txtAccessCode" id="account" className="text-white">Access Code</label><input type="password" id="txtAccessCode" name="txtAccessCode" className="form-control" defaultValue={QueryString.accesscode != null ? QueryString.accesscode : window.AndruavLibs.LocalStorage.fn_getAccessCode()} /></div>
-							<div className="form-group al_l hidden"><label id="group" className="text-white">Group Name</label> <input type="text" id="txtGroupName" name="txtGroupName" className="form-control" defaultValue={QueryString.groupName != null ? QueryString.groupName : window.AndruavLibs.LocalStorage.fn_getGroupName()} /></div>
-							<div className="form-group al_l"><label id="unitID" className="text-muted">GCS ID</label>
+							<div className="form-group al_l hidden">
+								<label htmlFor="txtGroupName" id="group" className="text-white">Group Name</label>
+								<input type="text" id="txtGroupName" name="txtGroupName" className="form-control" defaultValue={QueryString.groupName != null ? QueryString.groupName : window.AndruavLibs.LocalStorage.fn_getGroupName()} />
+							</div>
+							<div className="form-group al_l">
+								<label htmlFor="txtUnitID" id="unitID" className="text-muted">GCS ID</label>
 								<input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName != null ? QueryString.unitName : window.AndruavLibs.LocalStorage.fn_getUnitID()} />
 								<input type="hidden" id="txtUnitID_ext" name="txtUnitID_ext" value={"_" + fn_generateRandomString(2)}/></div>
 							<br />
@@ -156,10 +160,15 @@ export class CLSS_LoginControl extends React.Component {
 							<div className={this.state.is_connected == true ? "hidden" : " "} >
 								<div className="form-group al_l"><label htmlFor="txtEmail" id="email" className="text-white">Email</label><input type="email" id="txtEmail" name="txtEmail" className="form-control" defaultValue={QueryString.email != null ? QueryString.email : window.AndruavLibs.LocalStorage.fn_getEmail()} /></div>
 								<div className="form-group al_l"><label htmlFor="txtAccessCode" id="account" className="text-white" title="Access Code" >Password</label><input type="password" id="txtAccessCode" title="Access Code" name="txtAccessCode" className="form-control" defaultValue={QueryString.accesscode != null ? QueryString.accesscode : window.AndruavLibs.LocalStorage.fn_getAccessCode()} /></div>
-								<div className="form-group al_l hidden"><label id="group" className="text-white">Group Name</label> <input type="text" id="txtGroupName" name="txtGroupName" className="form-control" defaultValue={QueryString.groupName != null ? QueryString.groupName : window.AndruavLibs.LocalStorage.fn_getGroupName()} /></div>
-								<div className="form-group al_l"><label id="unitID" className="text-muted">GCS ID</label>
-								<input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName != null ? QueryString.unitName : window.AndruavLibs.LocalStorage.fn_getUnitID()} />
-								<input type="hidden" id="txtUnitID_ext" name="txtUnitID_ext" value={"_" + fn_generateRandomString(2)}/></div>
+								<div className="form-group al_l hidden">
+									<label htmlFor="txtGroupName" id="group" className="text-white">Group Name</label>
+									<input type="text" id="txtGroupName" name="txtGroupName" className="form-control" defaultValue={QueryString.groupName != null ? QueryString.groupName : window.AndruavLibs.LocalStorage.fn_getGroupName()} />
+								</div>
+								<div className="form-group al_l">
+									<label htmlFor="txtUnitID"  id="unitID" className="text-muted">GCS ID</label>
+									<input type="text" id="txtUnitID" name="txtUnitID" className="form-control" defaultValue={QueryString.unitName != null ? QueryString.unitName : window.AndruavLibs.LocalStorage.fn_getUnitID()} />
+									<input type="hidden" id="txtUnitID_ext" name="txtUnitID_ext" value={"_" + fn_generateRandomString(2)}/>
+								</div>
 								<br />
 							</div>
 							<div id='login_btn mb-2 ' className='text-center'>
@@ -167,8 +176,9 @@ export class CLSS_LoginControl extends React.Component {
 								<div className="form-group al_l"><label htmlFor="txtEmail" id="email" className="text-muted">Email</label>
 									<p>  {window.AndruavLibs.LocalStorage.fn_getEmail()} </p>
 								</div>
-								<div className="form-group al_l"><label id="unitID" className="text-muted">GCS ID</label>
-									<p> {window.AndruavLibs.LocalStorage.fn_getUnitID()} </p>
+								<div className="form-group al_l">
+									<label  id="unitID" className="text-muted">GCS ID</label>
+									<p > {window.AndruavLibs.LocalStorage.fn_getUnitID()} </p>
 								</div>
 							</div>
 							<button className={"button  button_large  rounded-3 m-2 user-select-none " + (this.state.is_connected == false ? 'btn-success' : 'btn-danger')} id="btnConnect" title={this.state.username} onClick={(e) => this.clickConnect(e)}>{this.state.btnConnectText}</button>

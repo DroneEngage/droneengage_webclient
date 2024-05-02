@@ -2,6 +2,8 @@
 
 // AndruaveMessageID
 
+const CONST_TYPE_AndruavMessage_GPS                         = 1002;
+const CONST_TYPE_AndruavMessage_POW                         = 1003;
 const CONST_TYPE_AndruavMessage_ID                          = 1004;
 const CONST_TYPE_AndruavMessage_RemoteExecute               = 1005;
 const CONST_TYPE_AndruavMessage_Telemetry                   = 1007;
@@ -9,8 +11,6 @@ const CONST_TYPE_AndruavMessage_Error                       = 1008;
 const CONST_TYPE_AndruavMessage_FlightControl               = 1010;
 const CONST_TYPE_AndruavMessage_VideoFrame                  = 1014;
 const CONST_TYPE_AndruavMessage_IMG                         = 1006;
-const CONST_TYPE_AndruavMessage_GPS                         = 1002;
-const CONST_TYPE_AndruavMessage_POW                         = 1003;
 const CONST_TYPE_AndruavMessage_CameraList                  = 1012; // RX: {"tg":"GCS1","sd":"zxcv","ty":"c","gr":"1","cm":"i","mt":1012,"ms":"{\"E\":2,\"P\":0,\"I\":\"zxcv\"}"}
 const CONST_TYPE_AndruavMessage_IMU                         = 1013;
 const CONST_TYPE_AndruavMessage_BinaryIMU                   = 1013;
@@ -59,8 +59,10 @@ const CONST_TYPE_AndruavMessage_UpdateSwarm                 = 1058;
 const CONST_TYPE_AndruavMessage_CommSignalsStatus           = 1059;
 const CONST_TYPE_AndruavMessage_Sync_EventFire              = 1061;
 const CONST_TYPE_AndruavMessage_SearchTargetList            = 1062;
-const CONST_TYPE_AndruavMessage_UdpProxy_Info               = 1071
-const CONST_TYPE_AndruavMessage_Unit_Name                   = 1072
+const CONST_TYPE_AndruavMessage_UdpProxy_Info               = 1071;
+const CONST_TYPE_AndruavMessage_Unit_Name                   = 1072;
+const CONST_TYPE_AndruavMessage_Ping_Unit                   = 1073;
+const CONST_TYPE_AndruavMessage_P2P_INFO                    = 1074;
 
 
 // Binary Messages
@@ -71,6 +73,10 @@ const CONST_TYPE_AndruavMessage_ServoChannel                = 6001;
 const CONST_TYPE_AndruavBinaryMessage_ServoOutput           = 6501;
 const CONST_TYPE_AndruavBinaryMessage_Mavlink               = 6502;
 const CONST_TYPE_AndruavBinaryMessage_SWARM_Mavlink         = 6503;
+const CONST_TYPE_AndruavMessage_P2P_ACTION                  = 6505;
+const CONST_TYPE_AndruavMessage_P2P_STATUS                  = 6506;
+const CONST_TYPE_AndruavMessage_P2P_InRange_BSSID           = 6507;
+const CONST_TYPE_AndruavMessage_P2P_InRange_Node            = 6508;
 
 // System Messages
 const CONST_TYPE_AndruavSystem_LoadTasks                    = 9001;
@@ -130,33 +136,43 @@ const CONST_RemoteCommand_SET_UDPPROXY_CLIENT_PORT          = 506;
 const CONST_RemoteCommand_MISSION_COUNT                     = 507;
 const CONST_RemoteCommand_MISSION_CURRENT                   = 508;
 
+// P2P Actions
+const CONST_P2P_ACTION_RESTART_TO_MAC                        = 0;
+const CONST_P2P_ACTION_CONNECT_TO_MAC                        = 1;
+const CONST_P2P_ACTION_CANDICATE_MAC                         = 2;
+const CONST_P2P_ACTION_SCAN_NETWORK                          = 3;
+
 
 
 var message_names = {
-    1002: "GPS",
-    1003: "POW",
-    1004: "ID",
-    1005: "Remote Execute",
-    1006: "Image",
-    1008: "Message",
-    1012: "CameraList",
-    1020: "Drone Report",
-    1021: "WBRTC Signaling",
-    1022: "Home Location",
-    1027: "WayPoints",
-    1036: "NAV_INFO",
-    1037: "Distination Location",
-    1049: "Camera Zoom",
-    1050: "Camera Switch",
-    1051: "Camera Flash",
-    1013: "BinaryIMU",
-    1016: "IMUStatistics",
-    1052: "RemoteControl2",
-    1071: "UdpProxy_Info",
-    6001: "ServoChannel",
-    6501: "ServoOutput",
-    6502: "Mavlink",
-    6503: "SWARM"
+    1002: "GPS - 1002",
+    1003: "POW - 1003",
+    1004: "ID - 1004",
+    1005: "Remote Execute - 1005",
+    1006: "Image - 1006",
+    1008: "Message - 1008",
+    1012: "CameraList - 1012",
+    1013: "BinaryIMU - 1013",
+    1016: "IMUStatistics - 1016",
+    1020: "Drone Report - 1020",
+    1021: "WBRTC Signaling - 1021",
+    1022: "Home Location - 1022",
+    1027: "WayPoints - 1027",
+    1036: "NAV_INFO - 1036",
+    1037: "Distination Location - 1037",
+    1049: "Camera Zoom - 1049",
+    1050: "Camera Switch - 1050",
+    1051: "Camera Flash - 1051",
+    1052: "RemoteControl2 - 1052",
+    1071: "UdpProxy_Info - 1071",
+    1073: "Ping Unit - 1073",
+    1074: "P2P Info - 1074",
+    6001: "ServoChannel - 6001",
+    6501: "ServoOutput - 6501",
+    6502: "Mavlink - 6502",
+    6503: "SWARM - 6503",
+    6506: "P2P Status - 6506",
+    6507: "P2P in Range - 6507"
 };
 
 var swarm_formation_names = {

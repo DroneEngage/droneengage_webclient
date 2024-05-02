@@ -7,24 +7,18 @@ export class CLSS_CTRL_SWARM extends React.Component {
         this.state = {
         };
 
-        window.AndruavLibs.EventEmitter.fn_subscribe(EE_BattViewToggle,this,this.fn_toggle_global);
     }
 
     fn_toggleMakeSwarm (p_formationID)
     {
         if (this.props.m_unit.m_Swarm.m_isLeader == true)
         {   // make not a leader
-            v_andruavClient.API_makeSwarm (this.props.m_unit.partyID, CONST_TASHKEEL_SERB_NO_SWARM);
+            v_andruavClient.API_makeSwarm (this.props.m_unit, CONST_TASHKEEL_SERB_NO_SWARM);
         }
         else
         {   // make leader and set formation.
-            v_andruavClient.API_makeSwarm (this.props.m_unit.partyID, p_formationID);
+            v_andruavClient.API_makeSwarm (this.props.m_unit, p_formationID);
         }
-    }
-
-    fn_updateSwarm(p_andruavUnit,leaderAndruavUnit)
-    {
-        v_andruavClient.API_updateSwarm (TASHKEEL_SERB_UPDATED, -1, p_partyID, p_leaderPartyID);
     }
 
     fn_requestToFollow (p_unit)
@@ -37,7 +31,7 @@ export class CLSS_CTRL_SWARM extends React.Component {
             v_partyID = p_unit.partyID;
             v_do_follow = CONST_TYPE_SWARM_FOLLOW;
         }
-        v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit.partyID, -1, v_partyID, v_do_follow);
+        v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit, -1, v_partyID, v_do_follow);
     }
 
 
@@ -48,11 +42,11 @@ export class CLSS_CTRL_SWARM extends React.Component {
           if (e.target.value == "NA")
           {
               // do not follow
-            v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit.partyID, -1, null);
+            v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit, -1, null);
           } 
           else
           {
-            v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit.partyID, -1, e.target.value);
+            v_andruavClient.API_requestFromDroneToFollowAnother(this.props.m_unit, -1, e.target.value);
           }
        }
     }
@@ -80,7 +74,7 @@ export class CLSS_CTRL_SWARM extends React.Component {
     
     render ()
     {
-        if (CONST_FEATURE.DISABLE_SWARM === true)
+        if ((CONST_FEATURE.DISABLE_SWARM === true) || (window.AndruavLibs.LocalStorage.fn_getAdvancedOptionsEnabled()!==true))
         {
             return (
                 <div></div>
@@ -161,7 +155,9 @@ export class CLSS_CTRL_SWARM extends React.Component {
                 var v_out = v_unit; // need a local copy 
                 // list drones that are not me and are leaders.
                 c_items.push(
-                     <a key={v_unit.m_unitName+"s"} className="dropdown-item" href="#" onClick={() => this.fn_requestToFollow(v_out)}>{v_unit.m_unitName}</a>
+                     <a key={v_unit.m_unitName+"s"} className="dropdown-item" href="#" onClick={(unit => {
+                        return () => this.fn_requestToFollow(unit);
+                      })(v_unit)}>{v_unit.m_unitName}</a>
                 );     
             }
         }

@@ -91,16 +91,18 @@ export  class CLSS_MESSAGE_LOG  extends React.Component {
     }
 
     render () {
-        var v_messages=[];
+        let v_messages=[];
 
-        const len = this.state.m_message.length>0?this.state.m_message.length:0;
-        for (var i=len-1; i>=0; --i) 
+        //TODO: make paging here
+        let len = this.state.m_message.length>0?this.state.m_message.length:0;
+        let min = Math.max(len - CONST_MAX_MESSAGE_LOG,0);
+        for (let i=len-1; i>=min; --i) 
         {
             v_messages.push(<CLSS_AndruavMessageItem key={this.props.p_unit.partyID + "_log" + i} p_index={i} p_msg={this.state.m_message[i]}/>)
         }
         
         return (
-            <div className="">
+            <div key={this.props.p_unit.partyID + "_msgctrl"} className="">
                  <div key='params' id="parameters_sublist" className='d-flex justify-content-end'>
                             <button type="button" className='btn btn-success btn-sm ctrlbtn me-5'  title='Clear Messages' onClick={(e) => this.fn_clear(e)}>Clear</button>
                  </div>

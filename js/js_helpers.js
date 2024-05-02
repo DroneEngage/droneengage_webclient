@@ -101,24 +101,25 @@ function fn_getStringOfTimeDiff_Shortest (dif)
     var displayLowerDigits = false;
     if (!isNaN(dif.days) && (dif.days !=0))
     {
-        str = str + dif.days + "d:" ;
+        str = str + dif.days + 'd:' ;
         displayLowerDigits = true;
     }
     if (displayLowerDigits || (!isNaN(dif.hours) && (dif.hours !=0)))
     {
-        str = str + dif.hours + "h:" ;
+        str = str + dif.hours + 'h:' ;
         displayLowerDigits = true;
     }
     if (displayLowerDigits || (!isNaN(dif.minutes) && (dif.minutes !=0)))
     {
-        str = str+ dif.minutes + "m:" ;
+        str = str+ dif.minutes + 'm:' ;
         displayLowerDigits = true;
     }
     if (displayLowerDigits || (!isNaN(dif.seconds) && (dif.seconds !=0)))
     {
-        str = str + dif.seconds.toFixed(0)+ "s" ;
+        str = str + dif.seconds.toFixed(0)+ 's' ;
     }
 
+    if (str=='') str='0s';
     return str;
 }
 

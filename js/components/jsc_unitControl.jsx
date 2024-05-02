@@ -127,13 +127,20 @@ class CLSS_AndruavUnit extends React.Component {
       fn_changeSpeed (p_andruavUnit);
     }
 
-    fn_changeSpeedByStep (e, p_andruavUnit, p_speed)
+    fn_changeSpeedByStep (e, p_andruavUnit, p_step)
     {
+        var p_speed = p_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed;
+        if (p_speed == 0)
+        {
+            p_speed = p_andruavUnit.m_Nav_Info.p_Location.ground_speed;
+        }
+        p_speed = parseFloat(p_speed) + p_step;
         if (p_speed == null) return ;
         
         if (p_speed <= 0 )
         {
             // BAD SPEED
+            // TODO: Put a popup message here.
             v_SpeakEngine.fn_speak('speed cannot be zero');
             return ;
         }
@@ -150,7 +157,7 @@ class CLSS_AndruavUnit extends React.Component {
         
         
         if (v_useMetricSystem == true) {
-            v_speak = v_speak + p_speed.toFixed(1) + "meter per second";
+            v_speak = v_speak + p_speed.toFixed(1) + " meter per second";
         }
         else {
             v_speak = v_speak + (p_speed * CONST_METER_TO_MILE).toFixed(1) + "mile per hour";
@@ -648,7 +655,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var v_flight_status_class;
         var distanceToWP_class;
         var wpdst_text;
-        var v_leader_class,v_leader_text;
         var v_flyingTime = " ";
         var v_totalFlyingTime = " ";
         var v_now = (new Date()).valueOf() ;
@@ -686,10 +692,6 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         v_totalFlyingTime = fn_getTimeDiffDetails_Shortest ( (c_delta + v_andruavUnit.m_FlyingTotalDuration));
         
         
-        v_leader_class = (v_andruavUnit.m_Swarm.m_isLeader==true)?"btn-success":"btn-danger";
-        v_leader_text  = (v_andruavUnit.m_Swarm.m_isLeader==true)?"Press to leave swarm":"press to become a leader";
-        
-
         if (v_andruavUnit.m_Nav_Info.p_Location.ground_speed==null) 
         {
             v_speed_text = 'NA'; 
@@ -968,11 +970,11 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
         var imu=[];
         // https://icons.getbootstrap.com/icons/caret-down-fill/
         imu.push (
-                <div key='imu_1' id='imu_1' className= 'row al_l  css_margin_zero'>
+                <div key={'imu_1' + v_andruavUnit.partyID} id='imu_1' className= 'row al_l  css_margin_zero'>
                     <div className = 'row al_l css_margin_zero d-flex '>
                         <div className= 'col-6 col-md-3 user-select-none  p-1'>
-                                <p className=' rounded-3 text-warning cursor_hand textunit' title ='Ground Speed'>
-                                <span title={"decrease speed"} onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed - CONST_DEFAULT_SPEED_STEP )}>
+                                <p className=' rounded-3 text-warning cursor_hand textunit_w135' title ='Ground Speed'>
+                                <span title={"decrease speed"} onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, - CONST_DEFAULT_SPEED_STEP )}>
                                     <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                     </svg>
@@ -982,7 +984,7 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                  {'GS: ' + v_speed_text}
                                  &nbsp;</b></small>
                                 </span>
-                                <span title="increase speed" onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, v_andruavUnit.m_Nav_Info.p_UserDesired.m_NavSpeed + CONST_DEFAULT_SPEED_STEP )}>
+                                <span title="increase speed" onClick={ (e) => this.fn_changeSpeedByStep(e,v_andruavUnit, + CONST_DEFAULT_SPEED_STEP )}>
                                     <svg className="bi bi-caret-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
                                     </svg>
@@ -1001,9 +1003,9 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         </div>
                     </div>
 
-                    <div key='alt_ctrl'   className = 'row al_l css_margin_zero d-flex '>
+                    <div key={'alt_ctrl' + v_andruavUnit.partyID}   className = 'row al_l css_margin_zero d-flex '>
                         <div key='alt_ctrl1'  className= 'col-6 col-md-3 user-select-none  p-1'>
-                                  <p id='alt'   className=' rounded-3 cursor_hand textunit_att_btn text-warning p-1' >
+                                  <p id='alt'   className=' rounded-3 cursor_hand textunit_att_btn text-warning ' >
                                         <span title={"decrease altitude"} onClick={ (e) => this.fn_doChangeAltitudeByStep(v_andruavUnit, v_andruavUnit.m_Nav_Info.p_Location.alt - fn_convertToMeter(window.AndruavLibs.LocalStorage.fn_getDefaultAltitude()) )}>
                                             <svg className="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
@@ -1022,21 +1024,21 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                                   </p>
                               
                         </div>
-                        <div key='alt_ctrl2'  className= 'col-6 col-md-3 css_margin_zero user-select-none  p-1'>
-                                <p id='alt'   className={' rounded-3  textunit_att_btn text-center p-1 ' + v_flight_status_class} title = {'Total Flying: ' + v_totalFlyingTime}>
+                        <div key={'alt_ctrl2'  + v_andruavUnit.partyID} className= 'col-6 col-md-3 css_margin_zero user-select-none  p-1'>
+                                <p id='fstatus'   className={' rounded-3  textunit_att_btn text-center p-1 ' + v_flight_status_class} title = {'Total Flying: ' + v_totalFlyingTime}>
                                 {v_flight_status_text + " "}   <small> {v_flyingTime}</small>
                                 </p>
                         </div>
-                        <div key='alt_ctrl3'  className= 'col-6 col-md-3 css_margin_zero user-select-none  p-1'>
+                        <div key={'wpd_ctrl3' + v_andruavUnit.partyID}  className= 'col-6 col-md-3 css_margin_zero user-select-none  p-1'>
                             <p id='wpd' className={' rounded-3 textunit_att_btn text-center p-1 ' + distanceToWP_class} title ='Distance to next waypoint' >{'wp: '+ wpdst_text}</p>
                             
                         </div>
-                        <div key='alt_ctrl4' className= 'col-6 col-md-3 css_margin_zero user-select-none  p-1'>
+                        <div key={'fcb_mode_ctrl4'  + v_andruavUnit.partyID}className= 'col-6 col-md-3 css_margin_zero user-select-none  p-1'>
                         <p id='fcb_mode'  className={' rounded-3 textunit_att_btn   text-center p-1 ' + v_flight_mode_class} title ={v_fcb_mode_title} onClick={ (e) => this.fn_connectToFCB(v_andruavUnit,true)}> {v_flight_mode_text } </p>
                         </div>
                     </div>
 
-                    <div key='yaw_ctrl' className = 'row al_l bg-gradient css_margin_zero user-select-none '>
+                    <div key={'yaw_ctrl'  + v_andruavUnit.partyID} className = 'row al_l bg-gradient css_margin_zero user-select-none '>
                         <div key='yaw_ctrl1' className= 'col-4   padding_zero'>
                                 <p id='yaw' className=' rounded-3 text-white css_margin_zero '><small>{v_yaw_text}</small></p><div id ='imu_v_yaw_knob'>{v_yaw_knob}</div>
                         </div>
@@ -1333,8 +1335,55 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
             rows.push (<div key={id +"fc5"} className= "col-4 padding_zero text-end"  onClick={ (e) => this.fn_gotoUnit_byPartyID(e,v_andruavUnit)} ><p id='id' className={'cursor_hand text-right ' + online_class2 } title={module_version}  onClick={ (e)=> this.fn_changeUnitInfo(v_andruavUnit)}><strong>{v_andruavUnit.m_unitName + " "}</strong><span className={' ' + online_class}>{online_text}</span></p></div>);
         }
 
-     
-      
+        ////////////////////////////////////TABS ---- START
+        var container_tabs=[];
+        var container_controls=[];
+         
+
+        container_tabs.push(<li key={v_andruavUnit.partyID + 'li1'} className="nav-item">
+                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#home" + v_andruavUnit.partyID}>Main</a>
+                        </li>);
+        container_tabs.push(<li key={v_andruavUnit.partyID + 'li2'} className="nav-item">
+                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#log" + v_andruavUnit.partyID}>Log</a>
+                        </li>);
+        container_tabs.push(<li key={v_andruavUnit.partyID + 'li3'} className="nav-item">
+                        <a className="nav-link  user-select-none " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
+                        </li>);
+
+
+        if ((CONST_FEATURE.DISABLE_P2P!=null) && (CONST_FEATURE.DISABLE_P2P===false)) 
+        {
+            container_tabs.push(<li key={v_andruavUnit.partyID + 'li4'} className="nav-item">
+            <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#p2p" + v_andruavUnit.partyID}>P2P</a>
+            </li>);
+        }
+       
+        // Adding an empty tab
+        container_tabs.push(<li key={v_andruavUnit.partyID + 'liempty'} className="nav-item">  
+                        <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
+                        </li>);
+        container_controls.push(<div key={v_andruavUnit.partyID + 'myTabContent_1'} className="tab-pane fade  active show pt-2" id={"home" + v_andruavUnit.partyID}>
+                            {this.renderIMU(v_andruavUnit)}
+                            {this.renderControl(v_andruavUnit)}
+                    </div>);
+        container_controls.push(<div key={v_andruavUnit.partyID + 'myTabCLSS_MESSAGE_LOG'} className="tab-pane fade pt-2" id={"log" + v_andruavUnit.partyID}>
+                            <CLSS_MESSAGE_LOG  p_unit={v_andruavUnit}/>
+                    </div>);
+        container_controls.push(<div key={v_andruavUnit.partyID + 'myTabCLSS_CTRL_SETTINGS'} className="tab-pane fade  pt-2" id={"details" + v_andruavUnit.partyID}>
+                            <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
+                    </div>);
+       
+        if ((CONST_FEATURE.DISABLE_P2P!=null) && (CONST_FEATURE.DISABLE_P2P===false)) 
+        {
+                container_controls.push(<div key={v_andruavUnit.partyID + 'myTabCLSS_CTRL_P2P'} className="tab-pane fade pt-2" id={"p2p" + v_andruavUnit.partyID}>
+                <CLSS_CTRL_P2P p_unit={v_andruavUnit}/>
+                </div>);
+        }
+       
+        // Adding an empty tab
+        container_controls.push(<div className="tab-pane fade" key={v_andruavUnit.partyID + 'myTabCLSS_CTRL_empty'} id={"empty" + v_andruavUnit.partyID}>
+                    </div>);
+        ////////////////////////////////////TABS ---- END
 
      return (
             
@@ -1348,32 +1397,10 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
              </div>
              
                 <ul key={v_andruavUnit.partyID + 'ul'} className="nav nav-tabs">
-                    <li key={v_andruavUnit.partyID + 'li1'} className="nav-item">
-                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#home" + v_andruavUnit.partyID}>Home</a>
-                    </li>
-                    <li key={v_andruavUnit.partyID + 'li2'} className="nav-item">
-                        <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#log" + v_andruavUnit.partyID}>Log</a>
-                    </li>
-                    <li key={v_andruavUnit.partyID + 'li3'} className="nav-item">
-                        <a className="nav-link  " data-bs-toggle="tab" href={"#details" + v_andruavUnit.partyID}>Details</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
-                    </li>
+                    {container_tabs}
                 </ul>
                 <div key={v_andruavUnit.partyID + 'myTabContent'} id="myTabContent" className="tab-content padding_zero">
-                    <div key={v_andruavUnit.partyID + 'myTabContent_1'} className="tab-pane fade  active show pt-2" id={"home" + v_andruavUnit.partyID}>
-                            {this.renderIMU(v_andruavUnit)}
-                            {this.renderControl(v_andruavUnit)}
-                    </div>
-                    <div key={v_andruavUnit.partyID + 'myTabContent_2'} className="tab-pane fade pt-2" id={"log" + v_andruavUnit.partyID}>
-                            <CLSS_MESSAGE_LOG  p_unit={v_andruavUnit}/>
-                    </div>
-                    <div key={v_andruavUnit.partyID + 'myTabContent_3'} className="tab-pane fade" id={"details" + v_andruavUnit.partyID}>
-                            <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
-                    </div>
-                    <div className="tab-pane fade" id={"empty" + v_andruavUnit.partyID}>
-                    </div>
+                    {container_controls}
                 </div>
             </div>		
        );
@@ -1543,9 +1570,24 @@ class CLSS_AndruavUnitList extends React.Component {
         else 
         {
             var me = this;
-            this.state.andruavUnitPartyIDs.map(function (partyID)
+
+            var sortedPartyIDs;
+            if (window.AndruavLibs.LocalStorage.fn_getUnitSortEnabled()===true)
             {
-                var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(partyID);
+                // Sort the array alphabetically
+                // returns array
+                sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSorted();
+            }
+            else
+            {
+                // returns list
+                sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsArray();
+            }
+            
+            sortedPartyIDs.map(function (object)
+            {
+                const partyID = object[0];
+                const v_andruavUnit = object[1];
                 
                 // dont display if unit is not defined yet.
                 if ((v_andruavUnit==null) || (v_andruavUnit.m_defined!==true))return ;
@@ -1563,7 +1605,7 @@ class CLSS_AndruavUnitList extends React.Component {
                         // Display in Tabs
                         var header_info = me.getHeaderInfo(v_andruavUnit);
                         units_header.push(
-                            <li key={'h' + partyID} className="nav-item nav-units">
+                            <li id={'h' + partyID} key={'h' + partyID} className="nav-item nav-units">
                                 <a className={"nav-link user-select-none "} data-bs-toggle="tab" href={"#tab_" + v_andruavUnit.partyID}><span className={header_info.classes}> {header_info.text}</span> </a>
                             </li>
                         );

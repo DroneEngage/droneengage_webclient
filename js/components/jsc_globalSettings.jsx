@@ -28,7 +28,7 @@ class CLSS_FireEvent extends React.Component {
   }
 
   render() {
-    if (window.AndruavLibs.LocalStorage.fn_getAdvancedOptionsEnabled()!=='true')
+    if (window.AndruavLibs.LocalStorage.fn_getAdvancedOptionsEnabled()!==true)
     {
       return (
                 <div></div>
@@ -38,7 +38,7 @@ class CLSS_FireEvent extends React.Component {
     {
       return (
         <div className="form-group">
-          <label htmlFor="txt_alt" className="user-select-none  form-label text-white "><small>Event&nbsp;No.</small></label>
+          <label htmlFor="txt_ev" className="user-select-none  form-label text-white "><small>Event&nbsp;No.</small></label>
           <div className="input-group mb-3">
             <input id="txt_ev"  type="number" min={0} max={2000} step="1.0" className="form-control input-sm input-sm txt_margin" placeholder="0" aria-label="0" />
             <button id="btn_ev"  type="button" className="btn btn-success" onClick={ (e) => this.fn_fireEvent()} >Fire</button>
@@ -74,7 +74,16 @@ class CLSS_DisplayItems extends React.Component {
           window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
         });
           
-    
+          
+    $('#check_unit_sort').prop("checked", v_enable_unit_sort);
+    $('#check_unit_sort').change(function (e)
+        {
+          var state = $(this).prop('checked');
+          v_enable_unit_sort = state;
+          window.AndruavLibs.LocalStorage.fn_setUnitSortEnabled(state);
+          window.AndruavLibs.EventEmitter.fn_dispatch(EE_onPreferenceChanged);
+        });
+     
     $('#toggle_GCS').change(function (e)
         {
           var state = $(this).prop('checked');
@@ -150,6 +159,8 @@ class CLSS_Preferences extends React.Component {
       $('#check_enable_speech')[0].checked = window.AndruavLibs.LocalStorage.fn_getSpeechEnabled();
       $('#volume_range')[0].value = window.AndruavLibs.LocalStorage.fn_getVolume();
       $('#check_tabs_display')[0].checked = window.AndruavLibs.LocalStorage.fn_getTabsDisplayEnabled();
+      $('#check_unit_sort')[0].checked = window.AndruavLibs.LocalStorage.fn_getUnitSortEnabled();
+      $('#check_advanced')[0].checked = window.AndruavLibs.LocalStorage.fn_getAdvancedOptionsEnabled();
   }
 
 
@@ -195,6 +206,14 @@ class CLSS_Preferences extends React.Component {
     window.AndruavLibs.EventEmitter.fn_dispatch (EE_onPreferenceChanged);
   }
 
+  fn_sortUnits ()
+  {
+    const enabled = $('#check_unit_sort')[0].checked;
+    v_enable_tabs_display = enabled;
+    window.AndruavLibs.LocalStorage.fn_setUnitSortEnabled(enabled);
+    window.AndruavLibs.EventEmitter.fn_dispatch (EE_onPreferenceChanged);
+  }
+
   fn_enableGCS ()
   {
     const enabled = $('#check_gcs_display')[0].checked;
@@ -218,21 +237,23 @@ class CLSS_Preferences extends React.Component {
     return (
           <fieldset>
             <div className="row mb-12 align-items-center">
-              <label className="col-sm-4 col-form-label al_l" >Enable Speech</label>
+              <label htmlFor="check_enable_speech" className="col-sm-4 col-form-label al_l" >Enable Speech</label>
               <input className="form-check-input col-sm-4 " type="checkbox" id="check_enable_speech" onClick={ () => this.fn_enableSpeech()} />
-              <label className="col-sm-4 col-form-label al_r" >Volume</label>
+              <label htmlFor="volume_range" className="col-sm-4 col-form-label al_r" >Volume</label>
               <input type="range" className="form-range col-sm-4 width_fit ps-5 " id="volume_range" disabled={v_speech_disabled=='true'}  onChange={ () => this.fn_changeVolume()}/>
             </div>
             <div className="row mb-12 align-items-center">
-              <label className="col-sm-4 col-form-label al_l " >Toggle Tabs</label>
-              <input className="form-check-input col-sm-8 " type="checkbox" id="check_tabs_display" onClick={ () => this.fn_enableTabsDisplay()} />
+              <label htmlFor="check_tabs_display" className="col-sm-4 col-form-label al_l " >Units in Tabs</label>
+              <input className="form-check-input col-sm-4 " type="checkbox" id="check_tabs_display" onClick={ () => this.fn_enableTabsDisplay()} />
+              <label htmlFor="check_unit_sort" className="col-sm-4 col-form-label al_r" >Sort Units</label>
+              <input className="form-check-input col-sm-4 " type="checkbox" id="check_unit_sort" onClick={ () => this.fn_sortUnits()} />
             </div>
             <div className="row mb-12 align-items-center">
-              <label className="col-sm-4 col-form-label al_l " >Advanced Options</label>
+              <label htmlFor="check_advanced" className="col-sm-4 col-form-label al_l " >Advanced Options</label>
               <input className="form-check-input col-sm-8 " type="checkbox" id="check_advanced" onClick={ () => this.fn_enableAdvanced()} />
             </div>
             <div className="row mb-12 align-items-center">
-              <label className="col-sm-4 col-form-label al_l " >Show Connected GCS</label>
+              <label htmlFor="check_gcs_display" className="col-sm-4 col-form-label al_l " >Show Connected GCS</label>
               <input className="form-check-input col-sm-8 " type="checkbox" id="check_gcs_display" onClick={ () => this.fn_enableGCS()} />
             </div>
           </fieldset>
