@@ -1602,7 +1602,7 @@ function fn_handleKeyBoard() {
 				sortedPartyIDs.map(function (object)
 				{
 
-					let p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(parseInt(object[0]));
+					let p_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(object[0]);
 					if ((p_andruavUnit != null) && (p_andruavUnit.m_IsGCS != true)) {
 						if ((p_andruavUnit.m_VehicleType == VEHICLE_ROVER)
 						 || (p_andruavUnit.m_VehicleType == VEHICLE_BOAT)) {
