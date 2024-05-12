@@ -33,6 +33,9 @@ class CLSS_HeaderControl extends React.Component {
                                 <li key="Contact" className="nav-item">
                                     <a className="nav-link" href={CONST_CONTACT_URL} target='_blank' >Contact</a>
                                 </li>
+                                <li className="nav-item text-warning">
+                                    <a className="nav-link" href={CONST_APK_DOWNLOAD} target='_blank' ><span className='text-warning'>AndruavAP APK</span></a>
+                                </li>
                                 <li key="Account" className="nav-item">
                                     <a className="nav-link" href="accounts.html" target='_blank' >Account</a>
                                 </li>

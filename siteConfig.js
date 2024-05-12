@@ -24,7 +24,7 @@ const CONST_HOME_URL = "https://cloud.ardupilot.org/";
 const CONST_MANUAL_URL = "https://cloud.ardupilot.org/";
 const CONST_FAQ_URL = "https://cloud.ardupilot.org/de-faq.html";
 const CONST_CONTACT_URL = "https://droneengage.com/contact.html";
-
+const CONST_APK_DOWNLOAD = "https://cloud.ardupilot.org/andruav-how-to-compile.html#apk-download";
 /**
  * Location of GCS are not sent over network. Only The existence of connected GCS are shared.
  */
