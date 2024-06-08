@@ -222,6 +222,16 @@ img.css_camera_zoom_out:after
 }
 
 
+img.css_camera_rotate
+{
+	content:url('../images/rotate_bg2_32x32.png');
+}
+
+
+img.css_camera_rotate:after 
+{
+	content:url('../images/rotate_bg2_32x32.png');
+}
 
 img.css_camera_flash_off  
 {

@@ -9,6 +9,8 @@ class CLSS_CVideoScreen extends React.Component {
                 m_zoom: 0.0
         };
         
+        this.m_rotation= 0;
+        this.m_rotations=[0,90,180,270];
         this.m_timerID = null;
         
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_videoStreamRedraw, this, this.fn_videoRedraw);
@@ -355,7 +357,14 @@ class CLSS_CVideoScreen extends React.Component {
         this.state.m_flash = v_flashValue;
     }
 
-
+    fnl_rotate(v_e, p_obj)
+    {
+        var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.obj.v_unit);
+		if ((v_andruavUnit==undefined) || (v_andruavUnit == null)) return ;
+		this.m_rotation = (this.m_rotation + 1) %3;
+        v_andruavClient.API_CONST_RemoteCommand_rotateVideo(v_andruavUnit,this.m_rotations[this.m_rotation], this.props.obj.v_track);
+        fn_console_log ("fnl_rotate p_cameraIndex: " + JSON.stringify(p_obj) + "  " + this.m_rotation[this.m_rotations]);
+    }
 
     fnl_div_clicked (e)
     {
@@ -428,7 +437,8 @@ class CLSS_CVideoScreen extends React.Component {
         
         var css_switchCam;
         const c_trackAttributes = andruavUnit.m_Video.m_videoTracks[this.props.obj.v_index];
-        if ((c_trackAttributes.hasOwnProperty("f")) && (c_trackAttributes.f===true))
+        //if ((c_trackAttributes.hasOwnProperty("f")) && (c_trackAttributes.f===true))
+        if (andruavUnit.m_Video.supportCameraSwitch(this.props.obj.v_index))
         {
             css_switchCam = "cursor_hand css_camera_switch";
         }
@@ -439,7 +449,8 @@ class CLSS_CVideoScreen extends React.Component {
 
         var css_zoomCam = '';
         var css_flashCam = '';
-        if ((c_trackAttributes.hasOwnProperty("z")) && (c_trackAttributes.z===true))
+        var css_rotateCam = '';
+        if (andruavUnit.m_Video.supportZoom(this.props.obj.v_index))
         {
             css_zoomCam = "cursor_hand ";
         }
@@ -448,11 +459,20 @@ class CLSS_CVideoScreen extends React.Component {
             css_zoomCam = 'hidden';
         }
 
+        if (andruavUnit.m_Video.supportRotation(this.props.obj.v_index))
+        {
+            css_rotateCam = "cursor_hand ";
+        }
+        else
+        {
+            css_rotateCam = 'hidden';
+        }
+    
         //CODEBLOCK_START
         var css_trackingBtn = "cursor_hand css_tracking_on";
         //CODEBLOCK_END
 
-        if ((c_trackAttributes.hasOwnProperty("f")) && (c_trackAttributes.f===true))
+        if (andruavUnit.m_Video.supportFlashing(this.props.obj.v_index))
         {
             if (this.state.m_flash === CONST_FLASH_ON)
             {
@@ -513,7 +533,8 @@ class CLSS_CVideoScreen extends React.Component {
             <div key="8" className="col-1"><img id="btn_takeimage" className="cursor_hand css_camera_ready" alt="Take Snapshot" title="Take Snapshot" onClick={ (e) => this.fnl_takeLocalImage(e)}/></div>
             <div key="9" className="col-1"><img id="btn_zoom_in" className={css_zoomCam + " css_camera_zoom_in"} alt="Zoom In" title="Zoom In" onClick={ (e) => this.fnl_zoomInOut(e, true,this.props.obj)}/></div>
             <div key="10" className="col-1"><img id="btn_zoom_out" className={ css_zoomCam + " css_camera_zoom_out"} alt="Zoom Out" title="Zoom Out" onClick={ (e) => this.fnl_zoomInOut(e, false, this.props.obj)}/></div>
-            <div key="11" className="col-1"><img id="btn_flash" className={ css_flashCam } alt="Flash (Tourch)" title="Flash (Tourch)" onClick={ (e) => this.fnl_flashOnOff(e, this.props.obj)}/></div>
+            <div key="11" className="col-1"><img id="btn_rotate" className={css_rotateCam + " css_camera_rotate"} alt="Rotate" title="Rotate" onClick={ (e) => this.fnl_rotate(e, true,this.props.obj)}/></div>
+            <div key="13" className="col-1"><img id="btn_flash" className={ css_flashCam } alt="Flash (Tourch)" title="Flash (Tourch)" onClick={ (e) => this.fnl_flashOnOff(e, this.props.obj)}/></div>
             <div key="12" className="col-3"></div>
             </div>);
             
@@ -530,11 +551,10 @@ class CLSS_CVideoScreen extends React.Component {
             <div key="7" className="col-1"><img id="btn_videorecord" className={btn_videorecordClass} title="Record Web" onClick={ (e) => this.fnl_recordVideo(e)}/></div>
             <div key="8" className="col-1"><img id="btn_takeimage" className="cursor_hand css_camera_ready" title="Take Snapshot" onClick={ (e) => this.fnl_takeLocalImage(e)}/></div>
             <div key="9" className="col-1"><img id="btn_zoom_in" className={css_zoomCam + " css_camera_zoom_in"} title="Zoom In" onClick={ (e) => this.fnl_zoomInOut(e, true,this.props.obj)}/></div>
-            <div key="10" className="col-1"><img id="btn_zoom_out" className={ css_zoomCam + " css_camera_zoom_out"} title="Zoom Out" onClick={ (e) => this.fnl_zoomInOut(e, false, this.props.obj)}/></div>
+            <div key="10" className="col-1"><img id="btn_rotate" className={css_rotateCam + " css_camera_rotate"} alt="Rotate" title="Rotate" onClick={ (e) => this.fnl_rotate(e, true,this.props.obj)}/></div>
             <div key="11" className="col-1"><img id="btn_flash" className={ css_flashCam } title="Flash (Tourch)" onClick={ (e) => this.fnl_flashOnOff(e, this.props.obj)}/></div>
-            <div key="12" className="col-1"></div>
-            <div key="13" className="col-1"><img id="btn_track" className={ css_trackingBtn } title="Track" onClick={ (e) => this.fnl_TrackingOnOff(e, this.props.obj)}/></div>
-            <div key="14" className="col-1"></div>
+            <div key="12" className="col-1"><img id="btn_track" className={ css_trackingBtn } title="Track" onClick={ (e) => this.fnl_TrackingOnOff(e, this.props.obj)}/></div>
+            
             </div>);
         }
 

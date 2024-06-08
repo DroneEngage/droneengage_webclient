@@ -1061,6 +1061,20 @@ class CAndruavClient {
 
     };
 
+    API_CONST_RemoteCommand_rotateVideo(p_andruavUnit, p_rotation_angle, p_channel) {
+
+        if (p_andruavUnit.partyID == null) return ;
+        var v_msg = {
+            C: CONST_RemoteCommand_ROTATECAM,
+            r: p_rotation_angle,
+            a: p_channel
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, v_msg);
+        window.AndruavLibs.EventEmitter.fn_dispatch("EVT_videoStateChanged", {unit: p_andruavUnit, onff:p_OnOff});
+
+    };
+
 
     /**
 		 * 
@@ -1717,10 +1731,13 @@ class CAndruavClient {
 								jsonVideoSource[CAMERA_UNIQUE_NAME "id"]            = deviceInfo.unique_name;
 								jsonVideoSource[CAMERA_ACTIVE "active"]             = deviceInfo.active;
 								jsonVideoSource[CAMERA_TYPE "p"]                    = EXTERNAL_CAMERA_TYPE_RTCWEBCAM;
-								jsonVideoSource[CAMERA_TYPE "f"]                    = ANDROID_DUAL_CAM; facing/rearing (true,false)
-								jsonVideoSource[CAMERA_TYPE "z"]					= Support Zooming 
+								// [deprecated] jsonVideoSource[CAMERA_TYPE "f"]                    = ANDROID_DUAL_CAM; facing/rearing (true,false)
+								// [deprecated] jsonVideoSource[CAMERA_TYPE "z"]					= Support Zooming 
 								jsonVideoSource[CAMERA_TYPE "r"]					= video recording now
+                                jsonVideoSource[CAMERA_TYPE "s"]					= SUPPORT ZOOMING/RECORDING/ROTATION/DUALCAM/FLASHING
 							*/
+
+                        
                         p_unit.m_Video.m_videoTracks = p_jmsg.T;
 
                         if (p_jmsg.R === true) { // this is a reply to request.

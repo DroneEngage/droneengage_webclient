@@ -103,6 +103,13 @@ const CONST_DESTINATION_GUIDED_POINT                        = 0;
 const CONST_DESTINATION_SWARM_MY_LOCATION                   = 1;
 
 
+// Camera_List_Specification Field
+const CONST_CAMERA_SUPPORT_ZOOMING                     = 0x1;
+const CONST_CAMERA_SUPPORT_ROTATION                    = 0x2;
+const CONST_CAMERA_SUPPORT_RECORDING                   = 0x4;
+const CONST_CAMERA_SUPPORT_PHOTO                       = 0x8;
+const CONST_CAMERA_SUPPORT_DUAL_CAM                    = 0x10;
+const CONST_CAMERA_SUPPORT_FLASHING                    = 0x20;
 
 
 // SWARM FORMATION

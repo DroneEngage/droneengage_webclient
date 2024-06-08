@@ -167,6 +167,75 @@ class C_Video
 	}
 
 
+	supportFlashing(index)
+	{
+		const track = this.m_videoTracks[index];
+		if (track==null) return false;
+
+		if (track.hasOwnProperty("s")=== true)
+		{
+			// new format
+			return (track.s & CONST_CAMERA_SUPPORT_FLASHING)
+		}
+		if (track.hasOwnProperty("f")===true)
+		{
+			// both flashing & dual camera uses f field om Andruav
+			return track.f
+		}
+		return false;
+	}
+
+	supportCameraSwitch(index)
+	{
+		const track = this.m_videoTracks[index];
+		if (track==null) return false;
+
+		if (track.hasOwnProperty("s")=== true)
+		{
+			// new format
+			return (track.s & CONST_CAMERA_SUPPORT_DUAL_CAM)
+		}
+		if (track.hasOwnProperty("f")===true)
+		{	// both flashing & dual camera uses f field om Andruav
+			return track.f
+		}
+		return false;
+	}
+
+	supportZoom(index)
+	{
+		const track = this.m_videoTracks[index];
+		if (track==null) return false;
+
+		if (track.hasOwnProperty("s")=== true)
+		{
+			// new format
+			return (track.s & CONST_CAMERA_SUPPORT_ZOOMING)
+		}
+		if (track.hasOwnProperty("z")===true)
+		{
+			return track.f
+		}
+		return false;
+	}
+
+	supportRotation(index)
+	{
+		const track = this.m_videoTracks[index];
+		if (track==null) return false;
+
+		if (track.hasOwnProperty("s")=== true)
+		{
+			// new format
+			return (track.s & CONST_CAMERA_SUPPORT_ROTATION)
+		}
+		if (track.hasOwnProperty("z")===true)
+		{
+			return track.f
+		}
+		return false;
+	}
+	
 	isAllActive ()
 	{
 		const c_activeTracks = Object.keys(this.m_videoactiveTracks);
