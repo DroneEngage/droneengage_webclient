@@ -159,7 +159,7 @@ class CLSS_StreamDialog extends React.Component
             fn_console_log ("stream:  NULL")
             
             return (
-                <div id="modal_ctrl_stream_dlg" title="Streaming Dialog" className="card width_fit_max css_ontop border-light p-2" >
+                <div id="modal_ctrl_stream_dlg" title="Streaming Video" className="card width_fit_max css_ontop border-light p-2" >
                             
                     <div className="card-header text-center">
 						<div className="row">
@@ -204,7 +204,7 @@ class CLSS_StreamDialog extends React.Component
             }
 
             return (
-                <div id="modal_ctrl_stream_dlg" title="Streaming Dialog" className="card width_fit_max css_ontop border-light p-2" >
+                <div id="modal_ctrl_stream_dlg" title="Streaming Video" className="card width_fit_max css_ontop border-light p-2" >
                             
                 <div className="card-header text-center">
                     <div className="row">
