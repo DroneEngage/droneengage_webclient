@@ -578,7 +578,6 @@ class CLSS_CVideoScreen extends React.Component {
             v_btns.push (<div key="btn" id="css_video_ctrl_panel" className="row  margin_2px css_padding_zero">
             <div key="1" className="col-1"><img id="btnclose" className="cursor_hand css_video_close"  alt="Close Camera" title="Close Camera" onClick={ (e) => this.fnl_stopVideo(e)}/></div>
             <div key="2" className="col-1"><img id="btnGoto" className="cursor_hand css_goto_drone" alt="Goto Agent" title="Goto Agent" onClick={ (e) => this.fn_gotoUnit_byPartyID(e)}/></div>
-            <div key="3" className="col-1"></div>
             <div key="4" className="col-1"><img id="btnPIP" className="cursor_hand css_video_pip"  alt="Picture in Picture" title="Picture in Picture" onClick={ (e) => this.fnl_requestPIP(e)}/></div>
             <div key="5" className="col-1"><img id="btn_fullscreen" className={btn_fullscreen} alt={btn_fullscreen_txt} title={btn_fullscreen_txt} onClick={ (e) => this.fnl_requestFullScreen(e)}/></div>
             <div key="6" className="col-1"><img id="btnSwitchCam" className={ css_switchCam } alt="Switch between Front & Back Cameras" title="Switch between Front & Back Cameras" onClick={ (e) => this.fnl_switchcam(e, this.props.obj)}/></div>
