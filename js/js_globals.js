@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 var build_number = "20240512-01";
+=======
+var build_number = "20240609-01";
+>>>>>>> d0fffc7 (version update)
 
 
 // auto connect variables
