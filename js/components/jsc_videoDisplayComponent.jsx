@@ -6,11 +6,21 @@ class CLSS_CVideoScreen extends React.Component {
         super ();
             this.state = {
                 m_flash: CONST_FLASH_DISABLED,
-                m_zoom: 0.0
+                m_zoom: 0.0,
+                intervalId: null,
+                m_mirrored: false
+                
+
         };
         
+        this.m_transform_rotated = "";
+        this.m_transform_mirrored  = "";
+        this.videoRef = React.createRef();
+        this.canvasRef = React.createRef();
         this.m_rotation= 0;
+        
         this.m_rotations=[0,90,180,270];
+        this.m_local_rotations= ["rotate(0deg)", "rotate(90deg)", "rotate(180deg)", "rotate(270deg)"];
         this.m_timerID = null;
         
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_videoStreamRedraw, this, this.fn_videoRedraw);
@@ -18,7 +28,7 @@ class CLSS_CVideoScreen extends React.Component {
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_cameraFlashChanged, this, this.fn_flashChanged);
         window.AndruavLibs.EventEmitter.fn_subscribe (EE_cameraZoomChanged, this, this.fn_zoomChanged);
     }
-
+   
 
     fn_gotoUnit_byPartyID (v_e)
     {
@@ -199,7 +209,6 @@ class CLSS_CVideoScreen extends React.Component {
         var v_video = window.document.getElementById("videoObject" + c_talk.targetVideoTrack);
         if (v_video == null) return ;
         v_video.srcObject = c_talk.stream;
-        //fn_console_log (c_talk.stream.getTracks()[0]);
     }
 
     fnl_canvas(p_targets)
@@ -357,13 +366,40 @@ class CLSS_CVideoScreen extends React.Component {
         this.state.m_flash = v_flashValue;
     }
 
-    fnl_rotate(v_e, p_obj)
+    fnl_rotate(v_e)
     {
         var v_andruavUnit = v_andruavClient.m_andruavUnitList.fn_getUnit(this.props.obj.v_unit);
 		if ((v_andruavUnit==undefined) || (v_andruavUnit == null)) return ;
-		this.m_rotation = (this.m_rotation + 1) %3;
+		this.m_rotation = (this.m_rotation + 1) %4;
         v_andruavClient.API_CONST_RemoteCommand_rotateVideo(v_andruavUnit,this.m_rotations[this.m_rotation], this.props.obj.v_track);
-        fn_console_log ("fnl_rotate p_cameraIndex: " + JSON.stringify(p_obj) + "  " + this.m_rotation[this.m_rotations]);
+    }
+
+    fnl_mirror_local(v_e)
+    {
+        var x = 1;
+        if (this.m_mirrored === true)
+        {
+            this.m_mirrored = false;
+            this.m_transform_mirrored = "scaleX(-1)";
+        }
+        else
+        {
+            this.m_mirrored = true;
+            this.m_transform_mirrored = "scaleX(1)";
+        }
+
+        this.forceUpdate();
+    }
+    
+    fnl_rotate_local(v_e)
+    {
+        
+        
+        this.m_rotation = (this.m_rotation + 1) %4;
+        this.m_transform_rotated = "transform: '" + this.m_local_rotations[this.m_rotation] + "'";
+        this.videoRef.current.style.transform = 
+
+        this.forceUpdate();
     }
 
     fnl_div_clicked (e)
@@ -401,6 +437,13 @@ class CLSS_CVideoScreen extends React.Component {
         window.AndruavLibs.EventEmitter.fn_unsubscribe (EE_cameraZoomChanged,this);
     } 
 
+    // drawVideoFrame (me) {
+    //     const ctx = me.canvasRef.current.getContext('2d');
+    //     ctx.drawImage(me.videoRef.current, 0, 0, v_canvas.width, v_canvas.height);
+    //     ctx.scale(-1,-1); //flip the image horizontally
+
+    //   };
+
     componentDidMount() {
         this.fn_lnkVideo();
         var me = this;
@@ -410,6 +453,11 @@ class CLSS_CVideoScreen extends React.Component {
             fn_console_log ("I AM CALLED");
             me.forceUpdate();
         });
+
+        //const intervalId = window.setInterval(this.drawVideoFrame, 1000 / 30,this); // 30 FPS
+        //this.setState({ intervalId });
+
+        
     }
 
     componentDidUpdate() {
@@ -518,6 +566,11 @@ class CLSS_CVideoScreen extends React.Component {
             btn_fullscreen_txt = "Full Screen";
         }
 
+        
+        const video_style = {
+            transform: this.m_local_rotations[this.m_rotation] + " " + this.m_transform_mirrored
+          };
+          
         var v_btns=[];
         if (CONST_EXPERIMENTAL_FEATURES_ENABLED===false)
 		{   
@@ -533,9 +586,11 @@ class CLSS_CVideoScreen extends React.Component {
             <div key="8" className="col-1"><img id="btn_takeimage" className="cursor_hand css_camera_ready" alt="Take Snapshot" title="Take Snapshot" onClick={ (e) => this.fnl_takeLocalImage(e)}/></div>
             <div key="9" className="col-1"><img id="btn_zoom_in" className={css_zoomCam + " css_camera_zoom_in"} alt="Zoom In" title="Zoom In" onClick={ (e) => this.fnl_zoomInOut(e, true,this.props.obj)}/></div>
             <div key="10" className="col-1"><img id="btn_zoom_out" className={ css_zoomCam + " css_camera_zoom_out"} alt="Zoom Out" title="Zoom Out" onClick={ (e) => this.fnl_zoomInOut(e, false, this.props.obj)}/></div>
-            <div key="11" className="col-1"><img id="btn_rotate" className={css_rotateCam + " css_camera_rotate"} alt="Rotate" title="Rotate" onClick={ (e) => this.fnl_rotate(e, true,this.props.obj)}/></div>
+            
+            <div key="11" className="col-1"><img id="btn_mirrorX" className={css_rotateCam + " css_camera_mirrorX"} alt="Mirror" title="Mirror" onClick={ (e) => this.fnl_mirror_local(e)}/></div>
+            <div key="12" className="col-1"><img id="btn_rotate" className={css_rotateCam + " css_camera_rotate"} alt="Rotate" title="Rotate" onClick={ (e) => this.fnl_rotate_local(e)}/></div>
             <div key="13" className="col-1"><img id="btn_flash" className={ css_flashCam } alt="Flash (Tourch)" title="Flash (Tourch)" onClick={ (e) => this.fnl_flashOnOff(e, this.props.obj)}/></div>
-            <div key="12" className="col-3"></div>
+            
             </div>);
             
         }
@@ -551,7 +606,7 @@ class CLSS_CVideoScreen extends React.Component {
             <div key="7" className="col-1"><img id="btn_videorecord" className={btn_videorecordClass} title="Record Web" onClick={ (e) => this.fnl_recordVideo(e)}/></div>
             <div key="8" className="col-1"><img id="btn_takeimage" className="cursor_hand css_camera_ready" title="Take Snapshot" onClick={ (e) => this.fnl_takeLocalImage(e)}/></div>
             <div key="9" className="col-1"><img id="btn_zoom_in" className={css_zoomCam + " css_camera_zoom_in"} title="Zoom In" onClick={ (e) => this.fnl_zoomInOut(e, true,this.props.obj)}/></div>
-            <div key="10" className="col-1"><img id="btn_rotate" className={css_rotateCam + " css_camera_rotate"} alt="Rotate" title="Rotate" onClick={ (e) => this.fnl_rotate(e, true,this.props.obj)}/></div>
+            <div key="10" className="col-1"><img id="btn_rotate" className={css_rotateCam + " css_camera_rotate"} alt="Rotate" title="Rotate" onClick={ (e) => this.fnl_rotate_local(e)}/></div>
             <div key="11" className="col-1"><img id="btn_flash" className={ css_flashCam } title="Flash (Tourch)" onClick={ (e) => this.fnl_flashOnOff(e, this.props.obj)}/></div>
             <div key="12" className="col-1"><img id="btn_track" className={ css_trackingBtn } title="Track" onClick={ (e) => this.fnl_TrackingOnOff(e, this.props.obj)}/></div>
             
@@ -577,11 +632,10 @@ class CLSS_CVideoScreen extends React.Component {
                             </div>
                         </div>
                     </div>
-                <div key="tv"  id={'css_tvideo-div' + talk.targetVideoTrack} className="css_videoContainer" onClick={ e => this.fnl_div_clicked(e)}>
-                <canvas key="c" id={"canvasoObject" + talk.targetVideoTrack} className="canvasOverlay"> ALLO </canvas>
-                    <video autoPlay className="videoObject" id={"videoObject" + talk.targetVideoTrack} data-number={talk.number}> </video>
-                </div>
-                
+                <div key={"tv"  + talk.targetVideoTrack}  id={'css_tvideo-div' + talk.targetVideoTrack} className="css_videoContainer" onClick={ e => this.fnl_div_clicked(e)}>
+                    
+                    <video autoPlay className='videoObject' id={"videoObject" + talk.targetVideoTrack}  style={video_style} data-number={talk.number} ref={this.videoRef}> </video>
+                </div> 
         </div>);
     }
 }
