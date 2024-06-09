@@ -1,4 +1,4 @@
-var build_number = "20240502-01";
+var build_number = "20240609-01";
 
 
 // auto connect variables
