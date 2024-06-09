@@ -17,7 +17,7 @@ class CLSS_CVideoScreen extends React.Component {
         this.m_transform_mirrored  = "";
         this.videoRef = React.createRef();
         this.canvasRef = React.createRef();
-        this.m_rotation= 0;
+        this.m_rotation= 1;
         
         this.m_rotations=[0,90,180,270];
         this.m_local_rotations= ["rotate(0deg)", "rotate(90deg)", "rotate(180deg)", "rotate(270deg)"];
