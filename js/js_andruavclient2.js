@@ -1071,7 +1071,6 @@ class CAndruavClient {
         };
 
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_RemoteExecute, v_msg);
-        window.AndruavLibs.EventEmitter.fn_dispatch("EVT_videoStateChanged", {unit: p_andruavUnit, onff:p_OnOff});
 
     };
 
