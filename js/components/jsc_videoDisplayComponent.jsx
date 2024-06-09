@@ -7,17 +7,17 @@ class CLSS_CVideoScreen extends React.Component {
             this.state = {
                 m_flash: CONST_FLASH_DISABLED,
                 m_zoom: 0.0,
-                intervalId: null,
-                m_mirrored: false
+                intervalId: null
+                
                 
 
         };
-        
+        this.m_mirrored= false;
         this.m_transform_rotated = "";
         this.m_transform_mirrored  = "";
         this.videoRef = React.createRef();
         this.canvasRef = React.createRef();
-        this.m_rotation= 1;
+        this.m_rotation= 0;
         
         this.m_rotations=[0,90,180,270];
         this.m_local_rotations= ["rotate(0deg)", "rotate(90deg)", "rotate(180deg)", "rotate(270deg)"];
@@ -380,12 +380,12 @@ class CLSS_CVideoScreen extends React.Component {
         if (this.m_mirrored === true)
         {
             this.m_mirrored = false;
-            this.m_transform_mirrored = "scaleX(-1)";
+            this.m_transform_mirrored = "scaleX(1)";
         }
         else
         {
             this.m_mirrored = true;
-            this.m_transform_mirrored = "scaleX(1)";
+            this.m_transform_mirrored = "scaleX(-1)";
         }
 
         this.forceUpdate();
