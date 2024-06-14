@@ -1593,11 +1593,11 @@ function fn_handleKeyBoard() {
 				if (window.AndruavLibs.LocalStorage.fn_getUnitSortEnabled()===true)
 				{
 					// Sort the array alphabetically
-					sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSorted();
+					sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSortedBy_APID();
 				}
 				else
 				{
-					sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsArray();
+					sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSorted();
 				}
 				sortedPartyIDs.map(function (object)
 				{

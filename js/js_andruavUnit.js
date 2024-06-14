@@ -817,7 +817,34 @@ class CAndruavUnitList
 		return sorted;
     }
 
+	fn_getUnitsSortedBy_APID()
+    {
+        var sorted = Object.entries(this.List).sort(
+            function(a, b) {
+				const name_a = a[1].m_FCBParameters.m_systemID? a[1].m_FCBParameters.m_systemID:'' ;
+				const name_b = b[1].m_FCBParameters.m_systemID? b[1].m_FCBParameters.m_systemID:'';
+				if (name_a < name_b) {
+					return -1;
+				}
+				if (name_a > name_b) {
+				  return 1;
+				}
+				return 0;
+			  });
 
+		return sorted;
+    }
+
+	fn_getUnitByP2PMac(mac)
+	{
+		for (var name in this.List)
+		{
+			const unit = this.List[name];
+			if (unit.m_P2P.fn_isMyMac(mac)) return unit;
+		}
+
+		return null;
+	}
     
 	Add (partyID,andruavUnit)
 	{

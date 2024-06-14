@@ -1576,12 +1576,12 @@ class CLSS_AndruavUnitList extends React.Component {
             {
                 // Sort the array alphabetically
                 // returns array
-                sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSorted();
+                sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSortedBy_APID();
             }
             else
             {
                 // returns list
-                sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsArray();
+                sortedPartyIDs = v_andruavClient.m_andruavUnitList.fn_getUnitsSorted();
             }
             
             sortedPartyIDs.map(function (object)

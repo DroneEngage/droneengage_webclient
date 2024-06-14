@@ -245,7 +245,7 @@ class CLSS_Preferences extends React.Component {
             <div className="row mb-12 align-items-center">
               <label htmlFor="check_tabs_display" className="col-sm-4 col-form-label al_l " >Units in Tabs</label>
               <input className="form-check-input col-sm-4 " type="checkbox" id="check_tabs_display" onClick={ () => this.fn_enableTabsDisplay()} />
-              <label htmlFor="check_unit_sort" className="col-sm-4 col-form-label al_r" >Sort Units</label>
+              <label htmlFor="check_unit_sort" className="col-sm-4 col-form-label al_r" title='sort by unit name of mavlink id'>Sort Units (mav_id)</label>
               <input className="form-check-input col-sm-4 " type="checkbox" id="check_unit_sort" onClick={ () => this.fn_sortUnits()} />
             </div>
             <div className="row mb-12 align-items-center">
