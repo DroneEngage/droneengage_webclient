@@ -396,9 +396,30 @@ class C_P2P
 {
 		constructor (p_parent)
 		{
-			
+			this.m_initialized = false;
+			this.m_parent = p_parent;
+			this.m_address_1='';
+			this.m_address_2='';
+			this.m_wifi_channel=0;
+			this.m_wifi_password='';
+			this.m_firmware='';
+			this.m_connection_type = CONST_TYPE_UNKNOWN;
+			this.m_parent_address = '';
+			this.m_parent_connected = false;
+			this.m_logical_parent_address = '';
+			this.m_detected_bssid = {};
+			this.m_detected_node = {};
+			this.m_driver_connected= false;
+			this.m_p2p_connected = false;
 		};
 
+		fn_isMyMac(mac)
+		{
+			if ((mac == this.m_address_1) || (mac == this.m_address_2))
+				return true;
+
+			return false;
+		}
 }
 
 
@@ -745,7 +766,6 @@ class CAndruavUnitObject
 		this.m_GPS_Info3				= new C_GPS (this);
 		this.m_Nav_Info 				= new C_NavInfo(this);
 		this.m_Terrain_Info 			= new C_Terrain (this);
-		// create a buffer for flight path
 		Object.seal(this.m_NetworkStatus);
 		Object.seal(this.m_Nav_Info);
 		this.m_gui						= new C_GUIHelper(this);
@@ -758,6 +778,8 @@ class CAndruavUnitObject
 											
 		this.m_Swarm 					= new C_Swarm(this);
 		this.m_P2P						= new C_P2P(this);
+		Object.seal(this.m_Swarm);
+		Object.seal(this.m_P2P);
 		this.m_SignalStatus				= {m_wifi:false, m_mobile:false, m_mobileSignalLevel:0, m_mobileNetworkType:0, m_mobileNetworkTypeRank:0};
 		
 		this.m_FCBParameters 			= new C_FCBParameters(this);
