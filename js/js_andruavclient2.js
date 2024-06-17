@@ -2855,7 +2855,7 @@ class CAndruavClient {
 
                     if (p_old_param != null)
                     {
-                        var now = Date.now();
+                        const now = Date.now();
                         if (now - this.m_lastparamatersUpdateTime > CONST_PARAMETER_REPEATED)
                         {
                             this.m_lastparamatersUpdateTime = now;
