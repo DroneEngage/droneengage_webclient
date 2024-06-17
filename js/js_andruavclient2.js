@@ -200,7 +200,7 @@ class CAndruavClient {
         
         const now = Date.now();
         const units = this.m_andruavUnitList.fn_getUnitValues();
-
+        if (units==null) return ;
         units.forEach((unit) => {
             if (!unit.m_IsMe) {
             const timeSinceLastActive = now - unit.m_Messages.m_lastActiveTime;
