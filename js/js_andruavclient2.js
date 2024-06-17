@@ -213,8 +213,8 @@ class CAndruavClient {
             } else if (unit.m_IsShutdown) {
                 unit.m_IsShutdown = false;
                 window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, unit);
-                    }
-                }
+            }
+            }
         });
     }
 
@@ -703,6 +703,25 @@ class CAndruavClient {
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_TrackingTarget, msg);
     };
     // CODEBLOCK_END
+
+    API_SetCommunicationChannel(p_andruavUnit, comm_on_off, p2p_on_off) {
+
+        var msg = {
+        };
+
+        if (comm_on_off!=null)
+        {
+            msg.ws = comm_on_off;
+        }
+
+        if (p2p_on_off!=null)
+        {
+            msg.p2p = p2p_on_off;
+        }
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Set_Communication_Line , msg);
+    }
+
 
     API_requestIMU(p_andruavUnit, on_off) {
 
@@ -2016,7 +2035,38 @@ class CAndruavClient {
                 }
                 break;
             
-            
+            case CONST_TYPE_AndruavMessage_P2P_INFO: {
+                if (p_unit == null) { // p_unit not defined here ... send a request for ID
+                    Me.API_requestID(msg.senderName);
+                    return;
+                }
+                p_jmsg = msg.msgPayload;
+                    // p2p communication is available.
+                p_unit.m_P2P.m_initialized              = true;
+                p_unit.m_P2P.m_connection_type          = p_jmsg.c;
+                p_unit.m_P2P.m_address_1                = p_jmsg.a1;
+                p_unit.m_P2P.m_address_2                = p_jmsg.a2;
+                p_unit.m_P2P.m_wifi_channel             = p_jmsg.wc;
+                p_unit.m_P2P.m_wifi_password            = p_jmsg.wp;
+                p_unit.m_P2P.m_parent_address           = p_jmsg.pa;
+                p_unit.m_P2P.m_parent_connected         = p_jmsg.pc;
+                p_unit.m_P2P.m_logical_parent_address   = p_jmsg.lp;
+                p_unit.m_P2P.m_firmware                 = p_jmsg.f;
+                p_unit.m_P2P.m_driver_connected         = p_jmsg.a;
+                p_unit.m_P2P.m_p2p_connected            = p_jmsg.o;
+                if (p_jmsg.d!= null)
+                { // remove the if in release and keep the m_p2p_disabled field.
+                    p_unit.m_P2P.m_p2p_disabled             = p_jmsg.d;
+                }
+                else
+                {   // backward compatibility
+                    p_unit.m_P2P.m_p2p_disabled             = false;
+                }
+                
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitP2PUpdated, p_unit);
+                    
+            }
+            break;
             case CONST_TYPE_AndruavMessage_RemoteExecute: 
             {
                 if (p_unit == null) { // p_unit not defined here ... send a request for ID

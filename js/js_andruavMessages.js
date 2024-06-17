@@ -77,6 +77,7 @@ const CONST_TYPE_AndruavMessage_P2P_ACTION                  = 6505;
 const CONST_TYPE_AndruavMessage_P2P_STATUS                  = 6506;
 const CONST_TYPE_AndruavMessage_P2P_InRange_BSSID           = 6507;
 const CONST_TYPE_AndruavMessage_P2P_InRange_Node            = 6508;
+const CONST_TYPE_AndruavMessage_Set_Communication_Line      = 6509;
 
 // System Messages
 const CONST_TYPE_AndruavSystem_LoadTasks                    = 9001;
@@ -148,7 +149,6 @@ const CONST_P2P_ACTION_RESTART_TO_MAC                        = 0;
 const CONST_P2P_ACTION_CONNECT_TO_MAC                        = 1;
 const CONST_P2P_ACTION_CANDICATE_MAC                         = 2;
 const CONST_P2P_ACTION_SCAN_NETWORK                          = 3;
-
 
 
 var message_names = {
