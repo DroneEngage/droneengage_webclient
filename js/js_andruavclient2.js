@@ -198,22 +198,21 @@ class CAndruavClient {
     _fn_checkStatus() {
 
         
-        var now = Date.now();
-        var len = this.m_andruavUnitList.fn_getUnitCount();
-        var arr = this.m_andruavUnitList.fn_getUnitValues();
-        var v_unit;
-        for (var i = 0; i < len; ++ i) {
-            v_unit = arr[i];
-            if (v_unit.m_IsMe == false) {
-                if ((now - v_unit.m_Messages.m_lastActiveTime) > CONST_checkStatus_Interverl1) {
-                    v_unit.m_IsShutdown = true;
-                    window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, v_unit);
-                } else if ((now - v_unit.m_Messages.m_lastActiveTime) > CONST_checkStatus_Interverl0) { // less time
-                    this.API_requestID(v_unit.partyID);
-                } else {
-                    if (v_unit.m_IsShutdown == false) { // received a message from a v_unit that where marked off
-                        v_unit.m_IsShutdown = false;
-                        window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, v_unit);
+        const now = Date.now();
+        const units = this.m_andruavUnitList.fn_getUnitValues();
+
+        units.forEach((unit) => {
+            if (!unit.m_IsMe) {
+            const timeSinceLastActive = now - unit.m_Messages.m_lastActiveTime;
+
+            if (timeSinceLastActive > CONST_checkStatus_Interverl1) {
+                unit.m_IsShutdown = true;
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, unit);
+            } else if (timeSinceLastActive > CONST_checkStatus_Interverl0) {
+                this.API_requestID(unit.partyID);
+            } else if (unit.m_IsShutdown) {
+                unit.m_IsShutdown = false;
+                window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, unit);
                     }
                 }
             }
