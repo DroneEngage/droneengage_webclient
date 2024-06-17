@@ -215,8 +215,7 @@ class CAndruavClient {
                 window.AndruavLibs.EventEmitter.fn_dispatch(EE_unitUpdated, unit);
                     }
                 }
-            }
-        }
+        });
     }
 
     // EVENT HANDLER AREA
