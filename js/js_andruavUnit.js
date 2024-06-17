@@ -410,7 +410,10 @@ class C_P2P
 			this.m_detected_bssid = {};
 			this.m_detected_node = {};
 			this.m_driver_connected= false;
+			// there is a p2p module available.
 			this.m_p2p_connected = false;
+			// there is a p2p module but p2p communication is paused.
+			this.m_p2p_disabled = true;
 		};
 
 		fn_isMyMac(mac)
