@@ -78,6 +78,7 @@ const CONST_TYPE_AndruavMessage_P2P_STATUS                  = 6506;
 const CONST_TYPE_AndruavMessage_P2P_InRange_BSSID           = 6507;
 const CONST_TYPE_AndruavMessage_P2P_InRange_Node            = 6508;
 const CONST_TYPE_AndruavMessage_Set_Communication_Line      = 6509;
+const CONST_TYPE_AndruavMessage_Communication_Line_Status   = 6510;
 
 // System Messages
 const CONST_TYPE_AndruavSystem_LoadTasks                    = 9001;

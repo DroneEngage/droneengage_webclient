@@ -704,7 +704,7 @@ class CAndruavClient {
     };
     // CODEBLOCK_END
 
-    API_SetCommunicationChannel(p_andruavUnit, comm_on_off, p2p_on_off) {
+    API_SetCommunicationChannel(p_andruavUnit, comm_on_off, p2p_on_off, comm_on_off_duration, p2p_on_off_duration) {
 
         var msg = {
         };
@@ -712,11 +712,21 @@ class CAndruavClient {
         if (comm_on_off!=null)
         {
             msg.ws = comm_on_off;
+            if (comm_on_off_duration!=null)
+            {
+                msg.wsd = comm_on_off_duration;
+            }
         }
+
+        
 
         if (p2p_on_off!=null)
         {
             msg.p2p = p2p_on_off;
+            if (p2p_on_off_duration!=null)
+            {
+                msg.p2pd = p2p_on_off_duration;
+            }
         }
 
         this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_Set_Communication_Line , msg);
@@ -1779,6 +1789,21 @@ class CAndruavClient {
                     p_unit.m_SignalStatus.m_mobileNetworkTypeRank = fn_getNetworkType(p_jmsg.s);
                 }
                 break;
+
+            
+            case CONST_TYPE_AndruavMessage_Communication_Line_Status: {
+                    p_jmsg = msg.msgPayload;
+                    if (p_jmsg.ws!=null)
+                    {
+                        p_unit.m_SignalStatus.m_websocket = p_jmsg.ws;
+                    }
+                    if (p_jmsg.p2p!=null)
+                    {
+                        p_unit.m_P2P.m_p2p_disabled = !p_jmsg.p2p;
+                    }
+                }
+                break;
+
 
             case CONST_TYPE_AndruavMessage_ID: {
                     var v_trigger_on_vehicleblocked = false;
