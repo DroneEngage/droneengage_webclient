@@ -38,9 +38,16 @@ export class CLSS_CTRL_P2P extends React.Component {
         v_andruavClient.API_scanP2P(p_andruavUnit);
     }
 
-    fn_setCommunicationChannel (p_andruavUnit, ws_state, p2p_state)
+    fn_setCommunicationChannel_P2P (p_andruavUnit, p2p_state)
     {
-        v_andruavClient.API_SetCommunicationChannel (p_andruavUnit, ws_state, p2p_state);
+        //v_andruavClient.API_SetCommunicationChannel (p_andruavUnit, ws_state, p2p_state);
+        v_andruavClient.API_SetCommunicationChannel (p_andruavUnit, false, null);
+    }
+
+    fn_setCommunicationChannel_WS (p_andruavUnit, ws_state, duration)
+    {
+        //v_andruavClient.API_SetCommunicationChannel (p_andruavUnit, ws_state, p2p_state);
+        v_andruavClient.API_SetCommunicationChannel (p_andruavUnit, ws_state, null,duration);
     }
     
     fn_unitUpdated (p_me,p_andruavUnit)
@@ -112,20 +119,14 @@ export class CLSS_CTRL_P2P extends React.Component {
         var txt_parent_name = '';
         var txt_logical_parent_mac='--:--:--:--:--';
         var txt_logical_parent_name = '';
-        var txt_channel_offline = 'DC';
-        var css_txt_channel_offline = ' text-white bg-danger ';
+        var txt_channel_p2p_offline = 'P2PDC';
+        var txt_channel_ws_offline = 'WSDC';
+        var css_txt_channel_p2p_offline = ' text-white bg-danger ';
+        var css_txt_channel_ws_offline = ' text-white bg-danger ';
         if (v_andruavUnit.m_P2P.m_p2p_disabled===true)
         {
-            txt_channel_offline = 'C';
-            css_txt_channel_offline = ' text-white bg-primary ';
-        }
-        else
-        {
-            if (v_andruavUnit.m_P2P.m_p2p_disabled===true)
-            {
-                txt_channel_offline = 'DC';
-                css_txt_channel_offline = ' text-white bg-danger ';
-            }
+            txt_channel_p2p_offline = 'P2PC';
+            css_txt_channel_p2p_offline = ' text-white bg-primary ';
         }
         if (v_andruavUnit.m_P2P.m_parent_address!="")
         {
@@ -166,7 +167,10 @@ export class CLSS_CTRL_P2P extends React.Component {
                     <p key={v_andruavUnit.partyID + 'p2p_2212'} className=' rounded-3 text-white bg-primary cursor_hand textunit_nowidth al_c' title ='Scan Nearby WIFI' onClick={() => this.fn_scanP2P(v_andruavUnit)}>Scan P2P</p>
                     </div>
                     <div key={v_andruavUnit.partyID + 'p2p_223'} className= 'col-4 col-sm-3 user-select-none '>
-                    <p key={v_andruavUnit.partyID + 'p2p_2213'} className={css_txt_channel_offline + ' rounded-3 cursor_hand text unit_nowidth al_c'} title ='Set Channel online/offline' onClick={() => this.fn_setCommunicationChannel(v_andruavUnit, false, v_andruavUnit.m_P2P.m_p2p_disabled)}>{txt_channel_offline}</p>
+                    <p key={v_andruavUnit.partyID + 'p2p_2213'} className={css_txt_channel_p2p_offline + ' rounded-3 cursor_hand text unit_nowidth al_c'} title ='Set Channel online/offline' onClick={() => this.fn_setCommunicationChannel_P2P(v_andruavUnit, false, v_andruavUnit.m_P2P.m_p2p_disabled)}>{txt_channel_p2p_offline}</p>
+                    </div>
+                    <div key={v_andruavUnit.partyID + 'p2p_224'} className= 'col-4 col-sm-3 user-select-none '>
+                    <p key={v_andruavUnit.partyID + 'p2p_2214'} className={css_txt_channel_ws_offline + ' rounded-3 cursor_hand text unit_nowidth al_c'} title ='Set Channel online/offline' onClick={() => this.fn_setCommunicationChannel_WS(v_andruavUnit, false, 10)}>{txt_channel_ws_offline}</p>
                     </div>
                 </div>
                 </div>

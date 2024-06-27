@@ -392,6 +392,19 @@ class C_Swarm
 	};
 }
 
+class C_SignalStatus
+{
+	constructor (p_parent)
+	{
+		this.m_parent = p_parent;
+		this.m_websocket = false;
+		this.m_wifi = false;
+		this.m_mobile = false;
+		this.m_mobileSignalLevel = 0;
+		this.m_mobileNetworkType = 0;
+		this.m_mobileNetworkTypeRank = 0;
+	};
+}
 class C_P2P
 {
 		constructor (p_parent)
@@ -783,7 +796,7 @@ class CAndruavUnitObject
 		this.m_P2P						= new C_P2P(this);
 		Object.seal(this.m_Swarm);
 		Object.seal(this.m_P2P);
-		this.m_SignalStatus				= {m_wifi:false, m_mobile:false, m_mobileSignalLevel:0, m_mobileNetworkType:0, m_mobileNetworkTypeRank:0};
+		this.m_SignalStatus				= new C_SignalStatus(this);
 		
 		this.m_FCBParameters 			= new C_FCBParameters(this);
 		this.m_EKF 						= new C_EKF(this);
