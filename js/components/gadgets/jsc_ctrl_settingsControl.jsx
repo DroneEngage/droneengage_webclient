@@ -56,29 +56,29 @@ export  class CLSS_CTRL_SETTINGS   extends React.Component {
         const v_andruavUnit = this.props.p_unit;
         if (v_andruavUnit.m_isDE==false)
         {
-            module_version.push(<span key={v_andruavUnit.partyID + 'settings_andruav'} >Andruav</span>);
+            module_version.push(<span key={v_andruavUnit.partyID + 'set_andruav'} >Andruav</span>);
         }
         else
         {
-            module_version.push(<span key={v_andruavUnit.partyID + 'settings_dev'} className=''>DE&nbsp;version:&nbsp;{v_andruavUnit.m_version}</span>);
-            const len = v_andruavUnit.m_modules.length;
+            module_version.push(<span key={v_andruavUnit.partyID + 'set_dev'} className=''>DE&nbsp;version:&nbsp;{v_andruavUnit.m_version}</span>);
+            const len = v_andruavUnit.m_modules.m_list.length;
             if (len==0)
             {
-                module_version.push(<span key={v_andruavUnit.partyID + 'settings_nm'}  className='text-warning'>&nbsp;( no modules connected ) </span>);
+                module_version.push(<span key={v_andruavUnit.partyID + 'set_nm'}  className='text-warning'>&nbsp;( no modules connected ) </span>);
             }
             else
             {
                 for (var i=0; i< len; ++i)
                 {
-                    const module = v_andruavUnit.m_modules[i];
+                    const module = v_andruavUnit.m_modules.m_list[i];
                     
                     if (module.d == true)
                     {
-                        module_version.push(<span key={v_andruavUnit.partyID + 'settings_mod_d' + module.i}  >&nbsp;-&nbsp;<span className='text-danger'>{module.i}&nbsp;{module.v}</span> <span className='blink_alert animate_iteration_5s'>OFFLINE</span></span>);
+                        module_version.push(<span key={v_andruavUnit.partyID + 'set_mod_d' + module.i}  >&nbsp;-&nbsp;<span className='text-danger'>{module.i}&nbsp;{module.v}</span> <span className='blink_alert animate_iteration_5s'>OFFLINE</span></span>);
                     }
                     else
                     {
-                        module_version.push(<span key={v_andruavUnit.partyID + 'settings_mod_d' + module.i}  >&nbsp;-&nbsp;<span className='text-success'>{module.i}&nbsp;{module.v}</span></span>);
+                        module_version.push(<span key={v_andruavUnit.partyID + 'set_mod_d' + module.i}  >&nbsp;-&nbsp;<span className='text-success'>{module.i}&nbsp;{module.v}</span></span>);
                     }
                 }
             }
