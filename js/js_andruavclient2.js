@@ -868,6 +868,61 @@ class CAndruavClient {
     };
 
 
+    API_requestP2P(p_partyID) {
+        var msg = {
+            C: CONST_TYPE_AndruavMessage_P2P_INFO
+        };
+        this.API_sendCMD(p_partyID, CONST_TYPE_AndruavMessage_RemoteExecute, msg);
+    };
+
+
+    API_soundTextToSpeech(p_andruavUnit, p_text, p_language, p_pitch, p_volume) {
+        if (p_andruavUnit.partyID == null) return ;
+        
+        let p_msg = {
+            t: p_text
+        };
+        
+        if (p_language!='')
+        {
+            p_msg.l = p_language;
+        }
+
+        if (p_pitch!='')
+        {
+            p_msg.p = p_pitch;
+        }
+
+        if (p_volume!='')
+        {
+            p_msg.v = p_volume;
+        }
+    
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_SOUND_TEXT_TO_SPEECH, p_msg);
+    }
+
+    // CODEBLOCK_START
+
+    API_scanP2P(p_andruavUnit) {
+        if (p_andruavUnit.partyID == null) return ;
+        
+        let p_msg = {
+            a: CONST_P2P_ACTION_SCAN_NETWORK,
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_P2P_ACTION, p_msg);
+    }
+    
+    API_resetP2P(p_andruavUnit) {
+        if (p_andruavUnit.partyID == null) return ;
+        
+        let p_msg = {
+            a: CONST_P2P_ACTION_RESTART_TO_MAC,
+        };
+
+        this.API_sendCMD(p_andruavUnit.partyID, CONST_TYPE_AndruavMessage_P2P_ACTION, p_msg);
+    }
+
     API_makeSwarm(p_andruavUnit, p_formationID) {
         if (p_andruavUnit.partyID == null) return ;
         
@@ -1839,11 +1894,11 @@ class CAndruavClient {
                         }
                         
                         if (p_jmsg.hasOwnProperty('m1') == true) {
-                            if (p_jmsg.m1.length != p_unit.m_modules.length)
+                            if (p_jmsg.m1.length != p_unit.m_modules.m_list.length)
                             {
                                 v_trigger_on_module_changed = true;
                             }
-                            p_unit.m_modules = p_jmsg.m1;
+                            p_unit.m_modules.addModules (p_jmsg.m1);
                         }
 
                         
@@ -1954,7 +2009,7 @@ class CAndruavClient {
                         p_unit.m_useFCBIMU = p_jmsg.FI;
                         
                         if (p_jmsg.hasOwnProperty('m1') == true) {
-                            p_unit.m_modules = p_jmsg.m1;
+                            p_unit.m_modules.addModules (p_jmsg.m1);
                         }
 
                         if (p_jmsg.hasOwnProperty('dv') == true) {

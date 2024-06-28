@@ -624,6 +624,50 @@ class C_GUIHelper
 	}
 }
 
+class C_Modules
+{
+	constructor(p_parent)
+	{
+		this.has_fcb = false;
+		this.has_camera = false;
+		this.has_sound = false;
+		this.has_gpio = false;
+		this.m_list = [];
+	}
+
+	
+	addModules (jsonmodules)
+	{
+		// check uavos_camera_plugin
+		/*
+		{"v", module_item->version},
+		{"i", module_item->module_id},
+		{"c", module_item->module_class},
+		{"t", module_item->time_stamp},
+		{"d", module_item->is_dead},
+		*/
+		for (var i =0; i< jsonmodules.length;++i)
+		{
+			var module = jsonmodules[i];
+			switch (module.c.toLowerCase())
+			{
+				case TYPE_MODULE_CLASS_FCB:
+					this.has_fcb = true;	
+				break;
+
+				case TYPE_MODULE_CLASS_GPIO:
+					this.has_gpio = true;	
+				break;
+				
+				case TYPE_MODULE_CLASS_SOUND:
+					this.has_sound = true;	
+				break;
+			}
+		}
+		this.m_list = jsonmodules;
+		
+	}
+}
 /**
  * Handles message counters.
  */
@@ -733,7 +777,7 @@ class CAndruavUnitObject
 		this.m_telemetry_protocol 		= CONST_No_Telemetry;
 		this.m_enum_userStatus 			= 0;	
 		this.m_version 					= "null";
-		this.m_modules					= [];
+		this.m_delayedTimeout			= null; // used for delayed actions.
 		this.init();
 	}
 
@@ -775,6 +819,7 @@ class CAndruavUnitObject
 		this.m_WindSpeed				= null;
 		this.m_WindSpeed_z				= null;
 		this.m_WindDirection			= null;
+		this.m_modules					= new C_Modules(this);
 		this.m_Messages					= new C_Messages(this);
 		this.m_Power 					= new C_Power (this);
 		this.m_GPS_Info1				= new C_GPS (this);

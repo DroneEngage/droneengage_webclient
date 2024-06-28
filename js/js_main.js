@@ -138,21 +138,32 @@ function enableDragging() {
 function fn_handleKeyBoard() {
 
 	$('body').keydown(function (p_event) {
-
+		p_event = p_event || window.event;
 	if (p_event.key == null) return ;
-				
+
 	if (p_event.type === "keydown")
 	{
 		if (p_event.altKey === true) {
 
 		}
 
-		if (p_event.key.toLowerCase() == 'm') {
-			fn_showMap();
-		}
+		if (p_event.ctrlKey) {
+            var c = p_event.which || p_event.keyCode;
+            if (c == 82) {
+                p_event.preventDefault();
+                p_event.stopPropagation();
+            }
+        }
 		
-		if (p_event.key.toLowerCase() == 'r') {
-			fn_showVideoMainTab();
+		if (p_event.target.type != 'textarea')
+		{
+			if (p_event.key.toLowerCase() == 'm') {
+				fn_showMap();
+			}
+			
+			if (p_event.key.toLowerCase() == 'r') {
+				fn_showVideoMainTab();
+			}
 		}
 	}
 	});

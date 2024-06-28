@@ -6,7 +6,7 @@ import {CLSS_CTRL_DIRECTIONS} from './gadgets/jsc_ctrl_directionsControl.jsx'
 import {CLSS_CTRL_ARDUPILOT_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_ardupilot_flightControl.jsx'
 import {CLSS_CTRL_PX4_FLIGHT_CONTROL} from './flight_controllers/jsc_ctrl_px4_flightControl.jsx'
 import {CLSS_CTRL_SWARM} from './gadgets/jsc_ctrl_swarm.jsx'
-
+import {CLSS_CTRL_AUDIO} from './gadgets/jsc_ctrl_audio.jsx'
 
 class CLSS_AndruavUnit extends React.Component {
     constructor(props)
@@ -1351,13 +1351,22 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                         </li>);
 
 
-        if ((CONST_FEATURE.DISABLE_P2P!=null) && (CONST_FEATURE.DISABLE_P2P===false)) 
+        if ((CONST_FEATURE.DISABLE_P2P!=null) && (CONST_FEATURE.DISABLE_P2P===false) && (v_andruavUnit.m_modules.has_p2p===true)) 
         {
             container_tabs.push(<li key={v_andruavUnit.partyID + 'li4'} className="nav-item">
             <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#p2p" + v_andruavUnit.partyID}>P2P</a>
             </li>);
         }
        
+        if ((CONST_FEATURE.DISABLE_VOICE!=null) && (CONST_FEATURE.DISABLE_VOICE===false) && (v_andruavUnit.m_modules.has_sound===true)  || (v_andruavUnit.m_isDE === false)) 
+        {
+            container_tabs.push(<li key={v_andruavUnit.partyID + 'li5'} className="nav-item">
+            <a className="nav-link user-select-none " data-bs-toggle="tab" href={"#audio" + v_andruavUnit.partyID}>Audio</a>
+            </li>);
+        }
+           
+    
+
         // Adding an empty tab
         container_tabs.push(<li key={v_andruavUnit.partyID + 'liempty'} className="nav-item">  
                         <a className="nav-link user-select-none text-dark" data-bs-toggle="tab" href={"#empty" + v_andruavUnit.partyID}>Collapse</a>
@@ -1373,13 +1382,20 @@ class CLSS_AndruavUnit_Drone extends CLSS_AndruavUnit {
                             <CLSS_CTRL_SETTINGS p_unit={v_andruavUnit}/>
                     </div>);
        
-        if ((CONST_FEATURE.DISABLE_P2P!=null) && (CONST_FEATURE.DISABLE_P2P===false)) 
+        if ((CONST_FEATURE.DISABLE_P2P!=null) && (CONST_FEATURE.DISABLE_P2P===false) && (v_andruavUnit.m_modules.has_p2p===true)) 
         {
                 container_controls.push(<div key={v_andruavUnit.partyID + 'myTabCLSS_CTRL_P2P'} className="tab-pane fade pt-2" id={"p2p" + v_andruavUnit.partyID}>
                 <CLSS_CTRL_P2P p_unit={v_andruavUnit}/>
                 </div>);
         }
-       
+
+        if ((CONST_FEATURE.DISABLE_VOICE!=null) && (CONST_FEATURE.DISABLE_VOICE===false) && ((v_andruavUnit.m_modules.has_sound===true) || (v_andruavUnit.m_isDE === false))) 
+        {
+            container_controls.push(<div key={v_andruavUnit.partyID + 'myTabCLSS_CTRL_AUDIO'} className="tab-pane fade pt-2" id={"audio" + v_andruavUnit.partyID}>
+                <CLSS_CTRL_AUDIO p_unit={v_andruavUnit}/>
+            </div>);
+        }
+            
         // Adding an empty tab
         container_controls.push(<div className="tab-pane fade" key={v_andruavUnit.partyID + 'myTabCLSS_CTRL_empty'} id={"empty" + v_andruavUnit.partyID}>
                     </div>);

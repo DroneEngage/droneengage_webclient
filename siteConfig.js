@@ -42,6 +42,7 @@ const CONST_FEATURE =
     DISABLE_SWARM: false,
     DISABLE_SWARM_DESTINATION_PONTS: false,
     DISABLE_P2P: true,
+    DISABLE_VOICE: false,
 };
 
 const CONST_ICE_SERVERS =  [
