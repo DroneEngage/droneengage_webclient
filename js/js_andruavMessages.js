@@ -79,6 +79,8 @@ const CONST_TYPE_AndruavMessage_P2P_InRange_BSSID           = 6507;
 const CONST_TYPE_AndruavMessage_P2P_InRange_Node            = 6508;
 const CONST_TYPE_AndruavMessage_Set_Communication_Line      = 6509;
 const CONST_TYPE_AndruavMessage_Communication_Line_Status   = 6510;
+const CONST_TYPE_AndruavMessage_SOUND_TEXT_TO_SPEECH        = 6511;
+const CONST_TYPE_AndruavMessage_SOUND_PLAY_FILE             = 6512;
 
 // System Messages
 const CONST_TYPE_AndruavSystem_LoadTasks                    = 9001;
@@ -189,3 +191,12 @@ var swarm_formation_names = {
     2 : 'V-Shape',
     3 : 'V-Shape2'
 };
+
+
+const TYPE_MODULE_CLASS_COMM                       = "comm";
+const TYPE_MODULE_CLASS_FCB                        = "fcb";
+const TYPE_MODULE_CLASS_VIDEO                      = "camera";
+const TYPE_MODULE_CLASS_P2P                        = "p2p";
+const TYPE_MODULE_CLASS_SOUND                      = "snd";
+const TYPE_MODULE_CLASS_GPIO                       = "gpio";
+const TYPE_MODULE_CLASS_GENERIC                    = "gen";
