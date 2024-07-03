@@ -205,7 +205,7 @@ class CLSS_AndruavMissionPlan
 	fn_addMarker (p_marker)
 	{
 		p_marker.m_mission = this;
-		p_marker.id = counter;
+		p_marker.id = this.m_missionCounter;
 		p_marker.order = 99;
 		p_marker.m_missionItem = {
 			alt:30,
@@ -217,7 +217,7 @@ class CLSS_AndruavMissionPlan
 			yaw: 0
 		};
 				
-		counter+=1;
+		this.m_missionCounter+=1;
 		this.v_markers.push (p_marker);
 		this.fn_orderItems();
 		this.fn_updatePath();
