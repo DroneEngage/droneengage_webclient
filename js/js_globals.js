@@ -1,4 +1,5 @@
-var build_number = "20240609-01";
+const build_number = "20240703-01";
+
 
 
 // auto connect variables
