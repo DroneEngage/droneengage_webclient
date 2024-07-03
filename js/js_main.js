@@ -1708,30 +1708,6 @@ function fn_handleKeyBoard() {
 			this.fn_setLapout();
 			this.fn_gps_getLocation();
 
-			// elevator = new google.maps.ElevationService;
-			// fn_gps_getLocation(fn_gps_showPosition);
-
-			// infowindow = new google.maps.InfoWindow({
-			// 	size: new google.maps.Size(150, 50)
-			// });
-
-			// var update_timeout = null;
-			// var dontexecute = false;
-			// google.maps.event.addListener(map, 'click', function (event) {
-			// 	update_timeout = setTimeout(function () {
-			// 		//if (dontexecute) return ;
-			// 		$('.contextmenu').remove();
-			// 	}, 300);
-			// });
-
-			// google.maps.event.addListener(map, 'dblclick', function (event) {
-			// 	clearTimeout(update_timeout);
-			// 	dontexecute = true;
-			// 	fn_contextMenu(event)
-			// });
-
-
-			// isMapInit = true;
 		};
 
 
