@@ -82,17 +82,17 @@
 	<div id="header_div"></div>
     </div>
 	  
-	<div class='container-fluid text-center' id='mainBody'>
+	<div id='mainBody' class='row css_mainbody' >
 		  
 	  
-    <div id="row1" class="row margin_zero">
-                <div id="row12" class="col col-sm-6 col-md-8">
+    <div id="row_1" class="col-8">
+		<div id="row_1_1" class="row margin_zero">
                     <div id="displays" class="container-fluid localcontainer">
                         <!--  Maps & Displays -->
-                        <div class="monitorview " id="map_view">
-                            <div class="monitorview" id="message_log" style='display:none;'>&nbsp;</div>
-                            <div id='mapid' class="org_border fullscreen"></div>
-                        </div>
+                        <div class="monitorview " id="div_map_view">
+							<div id='mapid' class="org_border fullscreen"></div>
+						</div>
+						
                     </div>
    
 
@@ -140,29 +140,30 @@
 					</div>
 
 					
-					<div id="row11" class="col col-sm-6 col-md-4">
-								<div class="row">	
-									<div id="main_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
-									type="button" id="btn_missions" class="btn btn-success btn-sm button_large">Mission Plans</button><button
-									type="button" id="btn_geofences" class="btn btn-success btn-sm button_large">Geo Fences</button>
-									</div>
-								</div>
-								<div id="fenceControl_section" class="row">	
-									<div id="fenceControl" class='col  col-sm-12 m-1 p-1'></div>
-								</div>
-								<div id="c_missioncontrol_section" class="row">	
-									<div id="c_missioncontrol" class='col  col-sm-12 container-fluid localcontainer'></div>
-								</div>
-								<div id="fence_global_section" class="row">	
-									<div id="fence_global" class='col  col-sm-12 container-fluid localcontainer'></div>
-								</div>
-					</div>
+					
 		</div>
     
    
-   
+		<div id="row_2" class="col col-sm-6 col-md-4">
+			<div class="row">	
+				<div id="main_btn_group" class="btn-group" role="group" aria-label="Basic example"><button
+				type="button" id="btn_missions" class="btn btn-success btn-sm button_large">Mission Plans</button><button
+				type="button" id="btn_geofences" class="btn btn-success btn-sm button_large">Geo Fences</button>
+				</div>
+			</div>
+			<div id="fenceControl_section" class="row">	
+				<div id="fenceControl" class='col  col-sm-12 m-1 p-1'></div>
+			</div>
+			<div id="c_missioncontrol_section" class="row">	
+				<div id="c_missioncontrol" class='col  col-sm-12 container-fluid localcontainer'></div>
+			</div>
+			<div id="fence_global_section" class="row">	
+				<div id="fence_global" class='col  col-sm-12 container-fluid localcontainer'></div>
+			</div>
+		</div>
 	
 	</div>
+		
    <div id="footer_div"></div>
   </body>
 
