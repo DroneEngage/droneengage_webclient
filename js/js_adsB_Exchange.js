@@ -113,7 +113,7 @@ var AndruavLibs = AndruavLibs || { REVISION: 'BETA' };
 
         function _parseData (_data,_droneAlt)
         {
-            var now = Date.now();
+            const now = Date.now();
             
             var len = _data.acList.length;
             for (var i=0;i<len;++i)
@@ -151,7 +151,7 @@ var AndruavLibs = AndruavLibs || { REVISION: 'BETA' };
         {
             if (v_EnableADSB == false) return ;
 
-            var now = Date.now();
+            const now = Date.now();
             if (__callsTimeTable.hasOwnProperty (p_andruavUnit.partyID) == false)
             {
                 __callsTimeTable[p_andruavUnit.partyID] = now;
