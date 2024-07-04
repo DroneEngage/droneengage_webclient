@@ -3349,7 +3349,7 @@ function fn_handleKeyBoard() {
 			$("#alert").hide();
 
 			fn_handleKeyBoard();
-
+			fn_missionTab();
 		};  // end of onReady
 
 		$(document).ready(fn_on_ready);
